@@ -1,0 +1,48 @@
+Current version: 0.0
+
+-> 0.0:
+    - redefinition of weighted_residuals; weights of the weighted residuals are now the square of the errors.
+    - changed function names from lowerCamelCase to lower_snake_case in line with Python naming convention
+
+
+Previous versions under name "coherent_libraries_vX":
+0.0 -> 1.0:
+    - ! Depreciation: "cache" keyword for all Run class methods is removed. Replaced with the "use_cache" and "make_cache"
+    keywords. Make sure to use these new keywords esp. in the Jupyter notebooks!
+    
+    - Bugfix: Run class methods now work for datasets when dim(dataset)=1. (Previously concatenated them together by
+    accident)
+    
+    - Inclusion: added gaussians function to common_functions.py
+  
+1.0 -> 2.0:
+    - Bugfix: the rebinning function from common_functions.py now has the correct edge values
+    when the new range is wider than the old range
+
+    - Bugfix: the RunSet.give_rundata method no longer gives additional data when getting datasets
+    which are 1-dimensional and do not have the same shape as the bunches i.e. file-by-file data
+    e.g. 'seed_wavelength'.
+    
+2.0 -> 3.0
+    - Behaviour change: changed the Run.yield_file_data(dataname) method to not raise an Error
+    if dataname does not exist in some of the files. If it doesn't not exists for ALL of the files,
+    only then it will raise an Error.
+   
+3.0 -> 4.0
+    - Bugfix: the Run.yield_file_data(dataname) method was able to skip file reading errors for
+    both 0- and 1-dimensional data (e.g. Background_Period and 
+    photon_source/SeedLaserSpectrum_FEL01/LambdaMeta), but not for 2-dimensional data. This is
+    now fixed.
+
+4.0 -> 5.0
+    - Bugfix: the filtering functionality provided by the dictionary_search.py module did not work
+    when the dataset is only a single number and is not a boolean. Now it's fixed (previously only
+    detected whether it the dataset was a bool or np.ndarray, but forgot about the np.bool_ case).
+
+    - Bugfix: the filtering rules only worked for datanames which were defined in the alias_dict.
+    Now they work even if not defined (e.g. filtering the "electron_tof" dataset with the 
+    (pressure>0) worked if "pressure" is defined in the alias_dict, but something like
+    (photon_diagnostics/FEL01/Gas_Attenuator/Pressure > 0) did not work previously).
+
+5.0 -> 6.0
+    -Bugfix: the Run.average_file_data() did not work. Now it is fixed.
