@@ -1,0 +1,4 @@
+[project]
+name = "fermi_libraries"
+version = "0.0.0"
+description = "A collection of scripts with functions that help extract and organize raw data from the file structure of server at FERMI@Elettra."
