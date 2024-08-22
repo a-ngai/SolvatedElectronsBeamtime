@@ -1,7 +1,3 @@
-'''
-Current status: The many plot outputs are here to test the shape='half' option.
-Still in progress
-'''
 # %%
 import numpy as np
 import matplotlib as mpl
@@ -9,17 +5,22 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 from cpbasex import pbasex, loadG
 from quadrant import foldQuadrant, resizeFolded, unfoldQuadrant
+import h5py
+
+_debug = False
 
 def unfoldHalf(M):
 	"""
-	Unfold the image-half into a symmetric full image.
+	Unfold the image-half into a symmetric full image. Image completion along
+	axis=0.
 	"""
 
-	return np.hstack((np.fliplr(M),M))
+	return np.vstack((np.flipud(M),M))
 
 def resizeFoldedHalf(M, r_max):
 	"""
-	Resize a half-folded image to a certain max radius.
+	Resize a half-folded image to a certain max radius. Final shape (r_max,
+	2*r_max, ...).
 	"""
 
 	sy,sx = M.shape[:2]
@@ -32,17 +33,18 @@ def resizeFoldedHalf(M, r_max):
 		y0, y1 = 0, 2*r_max
 		y0_m, y1_m = sy//2-r_max, sy//2+r_max
 	else:
-		y0, y1 = r_max-sy//2, r_max+sy//2
+		y0, y1 = r_max-sy, r_max+sy
 		y0_m, y1_m = None, None
 	
-	resized = np.zeros((2*r_max, r_max) + M.shape[2:])
-	resized[y0:y1, x0:x1] = M[y0_m:y1_m, x0:x1]
+	resized = np.zeros((r_max, 2*r_max) + M.shape[2:])
+	resized[x0:x1, y0:y1] = M[x0:x1, y0_m:y1_m]
 
-	return resized
+	return resized  # not sure if tranpose is a good solution
 
 def foldHalf(M, x0=None, y0=None, half_filter=[1,1]):
 	"""
-	Fold the halves of a full image onto each other.
+	Fold the halves of a full image onto each other. Fold/Collapse along
+	axis=0.
 	"""
 
 	default_big_int = 99999999
@@ -70,26 +72,18 @@ def foldHalf(M, x0=None, y0=None, half_filter=[1,1]):
 	ly = min(ly, y0)
 	ly = min(ly, sy-y0)
 	
-	Mout = np.zeros((2*ly,lx) + M.shape[2:])
+	Mout = np.zeros((lx, 2*ly) + M.shape[2:])
 
 	for i in range(2):
 		if half_filter[i]:
 			xf = x0 + hsigns[i]*lx
 			if xf == -1:
 				xf = None
-			Mout += M[y0-ly:y0+ly, x0:xf:hsigns[i]]
+			Mout += M[x0:xf:hsigns[i], y0-ly:y0+ly]
 
 	return Mout
 
 # Load images
-
-# samples = [
-# 	'cpbasex_images/low_counts.bin',
-# 	'cpbasex_images/high_counts.bin',
-# 	'cpbasex_images/fancy.bin',
-# 	'cpbasex_images/fancier.bin'
-# 	]
-
 samples = [
 	'cpbasex_images/low_counts',
 	'cpbasex_images/high_counts',
@@ -100,21 +94,15 @@ samples = [
 raw = np.dstack(tuple(np.loadtxt(sample) for sample in samples))
 
 # Fold images into half-images
-x0, y0 = 128, 128
+x0, y0 = 256, 256
 half_filter = [1,1]
-half_folded = resizeFoldedHalf(foldHalf(raw, x0=x0, y0=y0, half_filter=half_filter), 128)
+half_folded = resizeFoldedHalf(foldHalf(raw, x0=x0, y0=y0, half_filter=half_filter), 256)
 
-x0, y0 = 128, 128
+x0, y0 = 256, 256
 quadrant_filter = [1,1,1,1]
-quadrant_folded = resizeFolded(foldQuadrant(raw, x0=x0, y0=y0, quadrant_filter=quadrant_filter), 128)
-
-
-# plt.imshow(foldHalf(raw, x0=x0, y0=y0, half_filter=half_filter)[:,:,3])
-# plt.show()
-# raise Exception
+quadrant_folded = resizeFolded(foldQuadrant(raw, x0=x0, y0=y0, quadrant_filter=quadrant_filter), 256)
 
 # Load inversion data
-# gData = loadG('G_r128_k32_l4.h5', 1)
 
 def invert(half_image, gData, regularization):
     nx, ny, nk, nl = len(gData['x']), len(gData['y']),  gData['nk'], gData['nl']
@@ -128,8 +116,6 @@ def invert(half_image, gData, regularization):
     b = (out['betas'][:,:])
     return [pes, b]
 
-import h5py
-
 def load_gData(path_gData):
 	gData = {}
 	with h5py.File(path_gData, 'r') as gData_file:
@@ -142,14 +128,10 @@ def load_gData(path_gData):
 			gData['y'] = gData_file['x'][()]
 	return gData
 
-
-
 def cpbasex(images, gData, make_images=False, weights=None, regularization=0, alpha=1.0, shape='half'):
 	
 	gData  = loadG(gData, make_images)
 	ny, nx, nk, nl = len(gData['y']), len(gData['x']), gData['nk'], gData['nl']
-	# print(ny, nx, nk, nl)
-	# print(np.shape(gData['Ginv']))
 
 	try:
 		nim = images.shape[2]
@@ -174,8 +156,8 @@ def cpbasex(images, gData, make_images=False, weights=None, regularization=0, al
 
 	if make_images:
 		if shape=='half':
-			fit = unfoldHalf(gData['Up'].T.dot(np.diag((gData['S']**2+regularization)/gData['S']).dot(gData['V'].T.dot(c))).reshape(ny,nx,nim))
-			inv = unfoldHalf(gData['Ginv'].dot(c).reshape(nx,ny,nim).transpose(1,0,2))
+			fit = unfoldHalf(gData['Up'].T.dot(np.diag((gData['S']**2+regularization)/gData['S']).dot(gData['V'].T.dot(c))).reshape(nx,ny,nim))
+			inv = unfoldHalf(gData['Ginv'].dot(c).reshape(nx,ny,nim))
 
 	if make_images:
 		if shape=='quadrant':
@@ -188,54 +170,13 @@ def cpbasex(images, gData, make_images=False, weights=None, regularization=0, al
 
 	return out
 
-
-
-plt.imshow(quadrant_folded[:,:,3])
-plt.colorbar()
-plt.show()
-
-# pes, b = invert(folded[:,:,3], gData, 0)
-# plt.plot(pes)
-# plt.show()
-
-# PBASEX part!
 image_i = 0
-if True:
-	i = image_i
-	print(f'pbasex, quadrant, image {i}')
-	pbasex_gData = load_gData('G_r128_k32_l4_pbasex.h5')
-	out = pbasex(quadrant_folded, pbasex_gData, make_images=True, weights=None, regularization=0, alpha=1.0)
-	fig, (ax1, ax2, ax3, ax4, ax5) = plt.subplots(1,5,figsize=(16,4))
-	cax1 = ax1.imshow(raw[:,:,i])
-	ax1.set_title('raw')
-	cbar = fig.colorbar(cax1, ax=ax1)
-
-	cax2 = ax2.imshow(out['inv'][:,:,i])
-	ax2.set_title('inv')
-	cbar = fig.colorbar(cax2, ax=ax2)
-
-	cax3 = ax3.imshow(out['fit'][:,:,i] - unfoldQuadrant(quadrant_folded[:,:,i]))
-	ax3.set_title('fit')
-	cbar = fig.colorbar(cax3, ax=ax3)
-
-	cax4 = ax4.imshow(pbasex_gData['Ginv'].reshape(
-		len(pbasex_gData['y']), len(pbasex_gData['x']), pbasex_gData['nl'], pbasex_gData['nk'])[:,:,1,10]
-		)
-	cbar = fig.colorbar(cax4, ax=ax4)
-
-	pbasex_G = pbasex_gData['Up'].T @ np.diag(pbasex_gData['S']) @ pbasex_gData['V'].T
-	reshaped_G = pbasex_G.reshape(len(pbasex_gData['y']), len(pbasex_gData['x']), pbasex_gData['nl'], pbasex_gData['nk'])
-	print(np.shape(pbasex_G))
-	ax5.imshow(reshaped_G[:,:,2,11])
-
-	plt.show()
-
-if True:
+if _debug and False:
 	i = image_i
 	print(f'cpbasex, quadrant, image {i}')
-	cpbasex_gData = load_gData('G_r128_k32_l4_quadrant.h5')
+	cpbasex_gData = load_gData('G_r256_k64_l4_quadrant.h5')
 	out = cpbasex(quadrant_folded, cpbasex_gData, make_images=True, weights=None, regularization=0, alpha=1.0, shape='quadrant')
-	fig, (ax1, ax2, ax3, ax4, ax5) = plt.subplots(1,5,figsize=(16,4))
+	fig, (ax1, ax2, ax3, ax4, ax5, ax6) = plt.subplots(1,6,figsize=(20,4))
 	cax1 = ax1.imshow(raw[:,:,i])
 	ax1.set_title('raw')
 	cbar = fig.colorbar(cax1, ax=ax1)
@@ -257,14 +198,18 @@ if True:
 	reshaped_G = cpbasex_G.reshape(len(cpbasex_gData['y']), len(cpbasex_gData['x']), cpbasex_gData['nl'], cpbasex_gData['nk'])
 	print(np.shape(cpbasex_G))
 	ax5.imshow(reshaped_G[:,:,2,11])
+
+	cax6 = ax6.imshow(quadrant_folded[:,:,0])
+	cbar = fig.colorbar(cax6, ax=ax6)
+
 	plt.show()
 
-if True:
+if _debug and True:
 	i = image_i
 	print(f'cpbasex, half, image {i}')
-	cpbasex_gData = load_gData('G_r128_k32_l4.h5')
+	cpbasex_gData = load_gData('G_r256_k64_l4.h5')
 	out = cpbasex(half_folded, cpbasex_gData, make_images=True, weights=None, regularization=0, alpha=1.0, shape='half')
-	fig, (ax1, ax2, ax3, ax4, ax5) = plt.subplots(1,5,figsize=(16,4))
+	fig, (ax1, ax2, ax3, ax4, ax5, ax6) = plt.subplots(1,6,figsize=(20,4))
 	cax1 = ax1.imshow(raw[:,:,i])
 	ax1.set_title('raw')
 	cbar = fig.colorbar(cax1, ax=ax1)
@@ -274,6 +219,7 @@ if True:
 	cbar = fig.colorbar(cax2, ax=ax2)
 
 	cax3 = ax3.imshow(out['fit'][:,:,i] - unfoldHalf(half_folded[:,:,i]))
+	# cax3 = ax3.imshow(out['fit'][:,:,i])
 	ax3.set_title('fit')
 	cbar = fig.colorbar(cax3, ax=ax3)
 
@@ -285,20 +231,18 @@ if True:
 	cpbasex_G = cpbasex_gData['Up'].T @ np.diag(cpbasex_gData['S']) @ cpbasex_gData['V'].T
 	reshaped_G = cpbasex_G.reshape(len(cpbasex_gData['x']), len(cpbasex_gData['y']), cpbasex_gData['nl'], cpbasex_gData['nk'])
 	ax5.imshow(reshaped_G[:,:,2,11])
+
+	cax6 = ax6.imshow(half_folded[:,:,0])
+	cbar = fig.colorbar(cax6, ax=ax6)
+
 	plt.show()
 
+folded = half_folded
 
-
-raise Exception
-
-folded = quadrant_folded
-
-### CPBasex code, won't use this.
-
-gData = loadG('G_r128_k32_l4.h5', 1)
+gData = load_gData('G_r256_k64_l4.h5')
 
 # Apply the pBASEX algorithm
-out = pbasex(folded, gData, make_images=True, alpha=4.1e-5)
+out = cpbasex(folded, gData, make_images=True, alpha=4.1e-5, shape='half')
 
 # Plot some results
 plt.figure(figsize=(12,9))
@@ -320,31 +264,32 @@ for i, sample in enumerate(samples):
 	plt.gca().twinx()
 	plt.plot(out['E'], out['betas'][:,:,i], '.', markersize=5, alpha=0.6)
 	if i==0:
-		plt.text(-3, 3.5, 'counts per eV', size='small')
-		plt.text(12, 3.5, 'beta', size='small')
-		plt.text(3.5, 3.25, 'I(E), ', color='black', size='large')
-		plt.text(6, 3.25, 'B2', color=u'#1f77b4', size='large')
-		plt.text(7.5, 3.25, ', ', color='black', size='large')
-		plt.text(8, 3.25, 'B4', color=u'#ff7f0e', size='large')
+		# plt.text(-3, 3.5, 'counts per eV', size='small')
+		# plt.text(12, 3.5, 'beta', size='small')
+		# plt.text(3.5, 3.25, 'I(E), ', color='black', size='large')
+		# plt.text(6, 3.25, 'B2', color=u'#1f77b4', size='large')
+		# plt.text(7.5, 3.25, ', ', color='black', size='large')
+		# plt.text(8, 3.25, 'B4', color=u'#ff7f0e', size='large')
+		pass
 	plt.ylim(-1,3)
 	plt.subplot(4,5,5*i+3)
-	plt.imshow(out['fit'][:,:,i]/4)
+	plt.imshow(out['fit'][:,:,i]/2)
 	plt.xticks([])
 	plt.yticks([])
 	plt.clim(0,clim[1])
 	if i==0:
 		plt.title('Fitted Image')
 	plt.subplot(4,5,5*i+4)
-	plt.imshow(out['fit'][:,:,i]/4-raw[:,:,i])
+	plt.imshow(out['fit'][:,:,i]/2-raw[:,:,i])
 	plt.xticks([])
 	plt.yticks([])
 	if i==0:
 		plt.title('Fit Residual')
 	plt.subplot(4,5,5*i+5)
-	plt.imshow(out['inv'][:,:,i]/4)
+	plt.imshow(out['inv'][:,:,i]/2)
 	plt.xticks([])
 	plt.yticks([])
-	plt.clim(0,clim[1]/10)
+	plt.clim(0,clim[1]/5)
 	if i==0:
 		plt.title('Inverted Image')
 plt.tight_layout()

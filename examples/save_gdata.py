@@ -11,9 +11,7 @@ import time
 # Settings
 save_path = None # Automatic file naming if none
 save_dir = None # Directory to save the data
-# nx = 512  # 512x512 quadrant
-nx = 225  # 450x225 half-image
-nx = 128  # 256x128 half-image
+nx = 256  # 512x256 half-image, or 256x256 quadrant
 xkratio = 4 # Ratio of radial basis functions to pixel radii
 l_values = np.arange(5) # Up to l=4
 l_values = np.arange(0, 5, 2) # Up to l=4, even l only
@@ -58,13 +56,9 @@ else:
 np.seterr("ignore")
 
 t0 = time.time()
-# get_gData(gData, save_path=save_path, save_dir=save_dir, custom_rBF=custom_rBF)
 
-from pbasex import get_gData
-get_gData(gData, save_path="G_r128_k32_l4_pbasex.h5", 
-		  save_dir=save_dir, custom_rBF=custom_rBF, nProc=1)
 from cpbasex import get_gData
 get_gData(gData, save_path=save_path, save_dir=save_dir, custom_rBF=custom_rBF, nProc=1, shape='half')
-get_gData(gData, save_path="G_r128_k32_l4_quadrant.h5", save_dir=save_dir, custom_rBF=custom_rBF, nProc=1, shape='quadrant')
+# get_gData(gData, save_path="G_r256_k64_l4_quadrant.h5", save_dir=save_dir, custom_rBF=custom_rBF, nProc=1, shape='quadrant')
 
 print(time.time()-t0, "seconds elapsed")
