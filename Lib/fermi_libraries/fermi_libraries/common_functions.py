@@ -4,7 +4,7 @@ import lmfit
 import numpy as np
 import matplotlib as pl
 from matplotlib import ticker
-from scipy.integrate import cumtrapz, simps
+from scipy.integrate import cumulative_simpson
 from scipy.interpolate import interp1d
 from scipy.stats import mode
 
@@ -67,7 +67,7 @@ def rebinning(xnew, x, y, axis=None):
         nans_indices = np.where(np.isnan(y))[0]
         y_remove_nans[nans_indices]=0#y_remove_nans[nans_indices-1]
 
-        y_integral = cumtrapz(y_remove_nans, x=x, initial=0)
+        y_integral = cumulative_simpson(y_remove_nans, x=x, initial=0)
         y_interpolate = interp1d(x, y_integral, kind='linear')
 
         ynew_integral = np.zeros(shape=np.shape(xnew))
@@ -103,7 +103,7 @@ def rebinning(xnew, x, y, axis=None):
         y_remove_nans = np.copy(y_transpose)
         y_remove_nans[np.isnan(y_transpose)]=0
 
-        y_integral = cumtrapz(y_remove_nans, x=x, initial=0, axis=0)
+        y_integral = cumulative_simpson(y_remove_nans, x=x, initial=0, axis=0)
         y_interpolate = interp1d(x, y_integral, kind='linear',axis=0)
 
         ynew_integral = np.zeros(shape=new_y_shape)
@@ -965,3 +965,28 @@ def lrange(start, end, step=1, remove=None):
 def closest(locs, array):
     indices = [np.where(np.min((loc-array)**2) == (loc-array)**2)[0][0] for loc in locs]
     return np.array(indices)
+
+def non_normalized_gaussians(params, x):
+    '''
+    Can have as many individual gaussian profiles as needed, as long as the params are in the form:
+        {amp0, center0, width0, amp1, center1, width1, ...}
+    '''
+
+    param_abbrev = ['amp','center','width']
+    Npeaks = 0
+    for i in range(len(list(params.keys()))//3):
+        for abbrev in param_abbrev:
+            name = f'{abbrev}{i}'
+            try:
+                params[name]
+                Npeaks = i+1
+            except KeyError:
+                print(f'Only 3*{i-1} gaussian parameters found; assuming {i-1} gaussian profiles')
+                Npeaks = i
+                break
+    accumulation = 0.*x
+    for i in range(Npeaks):
+        amp, center, width = params[f'amp{i}'], params[f'center{i}'], params[f'width{i}']
+        next_gaussian = amp * np.exp(-((x-center)/width)**2/2.)
+        accumulation += next_gaussian
+    return accumulation

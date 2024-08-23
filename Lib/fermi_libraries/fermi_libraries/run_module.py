@@ -6,9 +6,7 @@ import re
 import hashlib
 import numpy as np
 import h5py
-from time import ctime
 from scipy.interpolate import interp1d
-from scipy.integrate import cumtrapz
 from .dictionary_search import SearchClass, search_symbols as default_search_symbols
 from .common_functions import single_pass_moment_sums
 
@@ -1008,7 +1006,7 @@ class RunSets:
     @_alias
     def average_run_data(self, dataname, back_sep=False, slu_sep=False, slice_range=None,
                          rules=[None,], use_cache=True, make_cache=True):
-        return self.average_run_data_weights(dataname=dataname, back_sep=back_sep, slu_sep=slu_sep,
+        return self.average_run_data_weights(dataname, back_sep=back_sep, slu_sep=slu_sep,
                                          slice_range=slice_range, rules=rules,
                                          use_cache=use_cache, make_cache=make_cache)[0]
 

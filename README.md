@@ -60,3 +60,5 @@ Cython-3.0.11
 quadrant-1.0
 dill-0.3.8
 scipy-1.14.1
+lmfit-1.3.2
+ipynb-py-convert-0.4.6
