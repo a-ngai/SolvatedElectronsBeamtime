@@ -7,6 +7,7 @@ testing the behaviour of this option.
 # %%
 import numpy as np
 import time
+from cpbasex import get_gData
 
 # Settings
 save_path = None # Automatic file naming if none
@@ -57,8 +58,7 @@ np.seterr("ignore")
 
 t0 = time.time()
 
-from cpbasex import get_gData
 get_gData(gData, save_path=save_path, save_dir=save_dir, custom_rBF=custom_rBF, nProc=1, shape='half')
-# get_gData(gData, save_path="G_r256_k64_l4_quadrant.h5", save_dir=save_dir, custom_rBF=custom_rBF, nProc=1, shape='quadrant')
+get_gData(gData, save_path=save_path, save_dir=save_dir, custom_rBF=custom_rBF, nProc=1, shape='quadrant')
 
 print(time.time()-t0, "seconds elapsed")
