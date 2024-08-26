@@ -30,7 +30,7 @@ def loadG(gData, make_images=False):
 			return loadG(gData, make_images)
 	elif isinstance(gData, File):
 		gData_dict = {}
-		for key in ['x','nk','nl','Up','S','V','frk']+make_images*['Ginv']:
+		for key in ['y','x','nk','nl','Up','S','V','frk']+make_images*['Ginv']:
 			gData_dict[key] = gData[key][()]
 		return loadG(gData_dict, make_images)
 	else:

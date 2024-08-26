@@ -1,4 +1,5 @@
 # %%
+
 """
 # Set-up for Intensity-binning analysis
 """
@@ -261,40 +262,9 @@ plt.show()
 
 # %%
 
-ion_tof_mq_peaks = np.array([
-    # [5000, 999],
-    [6000, 0],
-    [10500, 14],
-    [12000, 28],
-    [13100, 36],
-])
-tof_points, mq_points = ion_tof_mq_peaks.T
-
-ion_cal_rawdata = RunCollection[calibration_run_number].average_run_data('ion_tof', back_sep=BACKGROUND,
-                                    slice_range=ion_tof_slices,
-                                    make_cache=MAKE_CACHE, use_cache=LOAD_FROM_CACHE)
-fore_ion_rundata, back_ion_rundata = simplify_data(ion_cal_rawdata)
-cal_sub_spectrum = back_ion_rundata[:,0] - fore_ion_rundata[:,0]
-
-
-ion_calibration_dict = tof_mq_calibration(peaks=ion_tof_mq_peaks)
-(tof_mq_coor_func, tof_mq_jaco_func,
- mq_tof_coor_func, mq_tof_jaco_func,
- ion_constants_dict) = list(ion_calibration_dict.values())
-print(f'calibration constants:  {ion_constants_dict}')
-ion_constants = ion_constants_dict['timezero'], ion_constants_dict['C']
-
-model_tof = np.linspace(np.min(tof_points), np.max(tof_points), num=1000)
-
-fig, (ax1, ax2) = plt.subplots(1,2,figsize=(12,4))
-ax1.plot(tof_points, cal_sub_spectrum[closest(tof_points, ion_tof)], marker='v', linestyle='')
-ax1.plot(raw_ion_tof, cal_sub_spectrum)
-# ax1.set_xlim(5000,7000)
-set_default_labels(ax1, title='calibration points', xlabel='tof (ns)', ylabel='tof (ns)')
-ax2.plot(tof_points, mq_points, marker='o', linestyle='')
-ax2.plot(model_tof, tof_mq_coor_func(model_tof), color='black')
-set_default_labels(ax2, title='calibration fit', xlabel='tof (ns)', ylabel='m/q')
-plt.show()
+ion_t0 = 6014.427540823292
+ion_propconst = 7.343920984670405e-07 
+ion_constants = ion_t0, ion_propconst
 
 print(f"Using ion constants: (t0, C) = {ion_constants}")
 tof_to_mq = lambda tof, spec, axis=None: tof_to_mq_conversion(tof, spec, *ion_constants, axis=axis)
@@ -379,8 +349,98 @@ runset_vmi = BasicRunSet.average_run_data('vmi',back_sep=BACKGROUND,
                                     make_cache=MAKE_CACHE, use_cache=LOAD_FROM_CACHE)
 fore_vmi, back_vmi = simplify_data(runset_vmi, single_rule=True, single_run=False)
 
-# %%
+# %% Show VMI and resizing
+
+import importlib
+import cpbasex
+importlib.reload(cpbasex)
+
+from cpbasex import resizeFoldedHalf, foldHalf, loadG
+from cpbasex import cpbasex as cpbasex_inversion
+
 sub_vmi = fore_vmi - back_vmi
+sub_vmi = sub_vmi.transpose(1,2,0)
 print(np.shape(sub_vmi))
-plt.imshow(np.average(sub_vmi, axis=0))
+plt.imshow(sub_vmi[:,:,0])
 plt.show()
+
+rebinned_vmi = rebinning(np.linspace(0, 900, 512), np.arange(900), sub_vmi, axis=1)
+rebinned_vmi = rebinning(np.linspace(0, 900, 512), np.arange(900), rebinned_vmi, axis=0)
+
+plt.imshow(rebinned_vmi[:,:,0])
+plt.grid()
+plt.show()
+
+x0, y0 = 264, 260
+half_filter = [1,1]
+folded = foldHalf(rebinned_vmi, x0=x0, y0=y0, half_filter=half_filter)
+resized = resizeFoldedHalf(folded, 256)
+
+plt.imshow(resized[:,:,0])
+plt.title('half-folded')
+plt.grid()
+plt.show()
+
+
+# %%
+# Perform Abel inversion
+
+
+gData = loadG('G_r256_k64_l4_half.h5', make_images=True)
+
+# Apply the pBASEX algorithm
+out = cpbasex_inversion(resized, gData, make_images=True, alpha=4.1e-5, shape='half')
+
+raw = rebinned_vmi
+
+# Plot some results
+plt.figure(figsize=(12,9))
+for i, sample in enumerate(np.arange(np.shape(folded)[2])):
+	plt.subplot(4,5,5*i+1)
+	plt.imshow(raw[:,:,i])
+	plt.xticks([])
+	plt.yticks([])
+	plt.ylabel(sample)
+	clim = plt.gci().get_clim()
+	plt.clim(0,clim[1])
+	if i==0:
+		plt.title('Raw Image')
+	plt.subplot(4,5,5*i+2)
+	plt.plot(out['E'], out['IE'][:,i], 'k')
+	plt.gca().ticklabel_format(axis='y', style='sci', scilimits=(-2,2))
+	if i==3:
+		plt.xlabel('Energy (eV)')
+	plt.gca().twinx()
+	plt.plot(out['E'], out['betas'][:,:,i], '.', markersize=5, alpha=0.6)
+	if i==0:
+		# plt.text(-3, 3.5, 'counts per eV', size='small')
+		# plt.text(12, 3.5, 'beta', size='small')
+		# plt.text(3.5, 3.25, 'I(E), ', color='black', size='large')
+		# plt.text(6, 3.25, 'B2', color=u'#1f77b4', size='large')
+		# plt.text(7.5, 3.25, ', ', color='black', size='large')
+		# plt.text(8, 3.25, 'B4', color=u'#ff7f0e', size='large')
+		pass
+	plt.ylim(-1,3)
+	plt.subplot(4,5,5*i+3)
+	plt.imshow(out['fit'][:,:,i]/2)
+	plt.xticks([])
+	plt.yticks([])
+	plt.clim(0,clim[1])
+	if i==0:
+		plt.title('Fitted Image')
+	plt.subplot(4,5,5*i+4)
+	plt.imshow(out['fit'][:,:,i]/2-raw[:,:,i])
+	plt.xticks([])
+	plt.yticks([])
+	if i==0:
+		plt.title('Fit Residual')
+	plt.subplot(4,5,5*i+5)
+	plt.imshow(out['inv'][:,:,i]/2)
+	plt.xticks([])
+	plt.yticks([])
+	plt.clim(0,clim[1]/5)
+	if i==0:
+		plt.title('Inverted Image')
+plt.tight_layout()
+plt.show()
+

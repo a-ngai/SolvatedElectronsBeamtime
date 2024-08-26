@@ -21,17 +21,8 @@ from fermi_libraries.common_functions import (
     rebinning, tof_mq_calibration, simplify_data, 
     tof_to_mq_conversion, mq_to_tof_conversion,
     tof_mq_coordinate_func, mq_tof_coordinate_func,
-    name_from_runs,
-    set_default_labels,
-    closest)
+    name_from_runs, set_default_labels, closest)
 from fermi_libraries.dictionary_search import search_symbols
-
-# %%
-"""
-### Function definitions (that you might change)
-"""
-
-# %%
 
 def keyword_functions(keyword, aliasFunc, DictionaryObject):
     return DictionaryObject[aliasFunc(keyword)]
@@ -55,7 +46,6 @@ def newfig(id, *args, **kwargs):
 # Alternative names for the HDF5 groupnames
 alias_dict = {
     'i0m' : 'photon_diagnostics/FEL01/I0_monitor/iom_sh_a',
-    'i0m_current' : 'photon_diagnostics/FEL01/I0_monitor/iom_sh_a_pc',
     'vmi' : 'vmi/andor',
     'ion_tof' : 'digitizer/channel1',
     'delay' : 'user_laser/delay_line/position',
@@ -90,27 +80,24 @@ SAVE_DIR = BEAMTIME_DIR+'results/evaluation/'#'/net/online4ldm/store/20209134/re
 
 SAVE_FILES = False
 
-BACKGROUND = True  # Only set to False if you want to sum up everything
 NAMEADD = 'test' # your name here
-run_numbers = np.arange(1,3)
+run_numbers = np.arange(1,3)  # Run numbers to be analyzed in this script
 
+ION_TOF_REBIN = 5  # rebinning factor for data visualization
+ion_tof_range = (4000, 30000, 1) # select ion tof range for extraction
 
-# variables for data extraction ans rebinning
-ION_TOF_REBIN = 10
-ion_tof_range = (4000, 30000, 1) # select ion tof range for plotting
-new_ion_mq = np.linspace(0.1,200,num=1200)
-
-ion_tof_slices = [ion_tof_range]
-
-raw_ion_tof = np.arange(*ion_tof_slices[0])
-ion_tof = raw_ion_tof[::ION_TOF_REBIN]
-
-MAKE_CACHE = True
-LOAD_FROM_CACHE = False
+BACKGROUND = True  # Only set to False if you want to sum up everything
+MAKE_CACHE = True  # You can keep this True
+LOAD_FROM_CACHE = False # if data looks weird, set to False to refresh the cache
 
 CALIBRATION_RUN_NUMBER = 1
 
+# %%
+
 print(run_numbers)
+ion_tof_slices = [ion_tof_range]
+raw_ion_tof = np.arange(*ion_tof_slices[0])
+ion_tof = raw_ion_tof[::ION_TOF_REBIN]
 
 # %%
 """
