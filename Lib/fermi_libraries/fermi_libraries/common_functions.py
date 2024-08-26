@@ -6,7 +6,19 @@ import matplotlib as pl
 from matplotlib import ticker
 from scipy.integrate import cumulative_simpson
 from scipy.interpolate import interp1d
-from scipy.stats import mode
+import scipy.constants as spc
+from functools import wraps
+from scipy.special import erf
+
+def transpose_axis_to_zero(y, axis=None):
+    if (axis is None) or (np.ndim(y)==1):
+        transpose = y
+    else:
+        transpose_order = np.arange(np.ndim(y))
+        if axis!=0:
+            transpose_order[0], transpose_order[axis] = axis, 0
+        transpose = np.transpose(y, axes=transpose_order)
+    return transpose
 
 
 def combination(list_of_lists):
@@ -358,6 +370,60 @@ def tof_mq_calibration(peaks=None, constants=None):
 
     return calibration_dict
 
+
+
+def tof_mq_coordinate_func(tof_in, timezero, propconst):
+    """ See tof_mq_calibration() """
+    mq_coordinate = tof_in*np.nan
+    mq_coordinate[tof_in>=timezero] = propconst * (tof_in[tof_in>=timezero]-timezero)**2
+    return mq_coordinate
+
+def tof_mq_jacobian_func(tof_in, timezero, propconst):
+    """ See tof_mq_calibration() """
+    # |dT/dmq_in|
+    jacobian = tof_in*np.nan
+    jacobian[tof_in>timezero] = 1/(propconst*2*(tof_in[tof_in>timezero]-timezero))
+    return jacobian
+
+def mq_tof_coordinate_func(mq_in, timezero, propconst):
+    """ See tof_mq_calibration() """
+    tof_in = np.sqrt(mq_in/propconst) + timezero
+    tof_in[mq_in<0] = np.nan
+    return tof_in
+
+def mq_tof_jacobian_func(mq_in, timezero, propconst):
+    """ See tof_mq_calibration() """
+    # |dmq_in/dT|
+    jacobian = (propconst*2*(mq_tof_coordinate_func(mq_in)-timezero))
+    jacobian[mq_in<0] = np.nan
+    return jacobian
+
+def tof_to_mq_conversion(tof, spectrum, t0, propconst, axis=None):
+    """ Helper function that converts TOF into KE spectra with the Jacobian correction """
+    spectrum = transpose_axis_to_zero(spectrum, axis=axis)
+    mq = tof_mq_coordinate_func(tof, t0, propconst)
+    mask = tof>t0
+    jacobian = tof_mq_jacobian_func(tof, t0, propconst)
+    if np.ndim(spectrum)>1:
+        jacobian = jacobian[:,np.newaxis]
+    mq_coor = mq[mask]
+    mq_spec = (spectrum * jacobian)[mask]
+    mq_spec = transpose_axis_to_zero(mq_spec, axis=axis)  # revert transposition
+    return mq_coor, mq_spec
+
+def mq_to_tof_conversion(mq, spectrum, t0, propconst, axis=None):
+    """ Helper function that converts KE into TOF spectra with the Jacobian correction """
+    spectrum = transpose_axis_to_zero(spectrum, axis=axis)
+    tof = mq_tof_coordinate_func(mq, t0, propconst)
+    mask = tof>t0
+    jacobian = mq_tof_jacobian_func(mq, t0, propconst)
+    if np.ndim(spectrum)>1:
+        jacobian = jacobian[:,np.newaxis]
+    tof_coor = tof[mask]
+    tof_spec = (spectrum * jacobian)[mask]
+    tof_spec = transpose_axis_to_zero(tof_spec, axis=axis)  # revert transposition
+    return tof_coor, tof_spec
+
 def tof_ke_calibration(peaks=None, constants=None):
     """
     Formulas are: ke = 1 / (C*(t-T0)^2) + ke0, d(ke) = -2 / (C*(t-T0)^3) dt
@@ -537,6 +603,58 @@ def tof_ke_calibration(peaks=None, constants=None):
         raise ValueError(f'nan found in calibration constants {constants_dict}')
 
     return calibration_dict
+
+def tof_ke_coordinate_func(tof_in, t0, propconst, ke0):
+    """ See tof_ke_calibration() """
+    ke_coordinate = tof_in*np.nan
+    ke_coordinate[tof_in>t0] = 1/propconst / (tof_in[tof_in>t0] - t0+0.)**2 + ke0
+    return ke_coordinate
+
+def tof_ke_jacobian_func(tof_in, t0, propconst, ke0):
+    """ See tof_ke_calibration() """
+    # |dT/dke_in|
+    jacobian = tof_in*np.nan
+    jacobian[tof_in>t0] = (tof_in[tof_in>t0] - t0+0.)**3 / (-2 * 1/propconst)
+
+    return jacobian
+
+def ke_tof_coordinate_func(ke_in, t0, propconst, ke0):
+    """ See tof_ke_calibration() """
+    tof_in = ke_in*np.nan
+    tof_in[ke_in>ke0] = np.sqrt(1/propconst / (ke_in[ke_in>ke0] - ke0+0.)) + t0
+    return tof_in
+
+def ke_tof_jacobian_func(ke_in, t0, propconst, ke0):
+    """ See tof_ke_calibration() """
+    # |dke_in/dT|
+    jacobian = (-2 * 1/propconst) / (ke_tof_coordinate_func(ke_in, t0, propconst, ke0) - t0+0.)**3
+    return jacobian
+
+def tof_to_ke_conversion(tof, spectrum, t0, propconst, ke0, axis=None):
+    """ Helper function that converts TOF into KE spectra with the Jacobian correction """
+    spectrum = transpose_axis_to_zero(spectrum, axis=axis)
+    ke = tof_ke_coordinate_func(tof, t0, propconst, ke0)
+    mask = ke>ke0
+    jacobian = tof_ke_jacobian_func(tof, t0, propconst, ke0)
+    if np.ndim(spectrum)>1:
+        jacobian = jacobian[:,np.newaxis]
+    ke_coor = ke[mask]
+    ke_spec = (spectrum * jacobian)[mask]
+    ke_spec = transpose_axis_to_zero(ke_spec, axis=axis)  # revert transposition
+    return ke_coor, ke_spec
+
+def ke_to_tof_conversion(ke, spectrum, t0, propconst, ke0, axis=None):
+    """ Helper function that converts KE into TOF spectra with the Jacobian correction """
+    spectrum = transpose_axis_to_zero(spectrum, axis=axis)
+    tof = ke_tof_coordinate_func(ke, t0, propconst, ke0)
+    mask = ke>0
+    jacobian = ke_tof_jacobian_func(ke, t0, propconst, ke0)
+    if np.ndim(spectrum)>1:
+        jacobian = jacobian[:,np.newaxis]
+    tof_coor = tof[mask]
+    tof_spec = (spectrum * jacobian)[mask]
+    tof_spec = transpose_axis_to_zero(tof_spec, axis=axis)  # revert transposition
+    return tof_coor, tof_spec
 
 def single_pass_moment_sums(generator1, generator2=None, filter1=None, filter2=None, _weight=1):
     """
@@ -990,3 +1108,144 @@ def non_normalized_gaussians(params, x):
         next_gaussian = amp * np.exp(-((x-center)/width)**2/2.)
         accumulation += next_gaussian
     return accumulation
+
+def nm_to_ev(nm):
+    '''Convert from nm to eV.'''
+    return spc.h*spc.c/spc.nano/spc.e/nm
+
+def ev_to_nm(eV):
+    '''Convert from eV to nm.'''
+    return spc.h*spc.c/spc.nano/spc.e/eV
+
+def swap_rules_runs(data, single_rule=False, single_run=False, single_shot = False, file_level=False):
+    '''
+    Takes either the axes conditions:
+        axes = (conditions, runs, rules, data)
+    and returns the axes:
+        axes = (conditions, rules, runs, data)
+    OR the axes conditions:
+        axes = (conditions, rules, data)
+    and returns the axes:
+        axes = (conditions, rules, data)
+
+   IMPORTANT: 
+        The names "single_rule" and "single_run" make sense ONLY for the averaging functions
+            e.g. Run.average_rundata_weights()
+            i.e. the data has axes average_data = (conditions, runs, rules, shot_data).
+        When you use this on the file-yielding generators, the axes are different
+            e.g. Run.yield_filedata()
+            i.e. the data has axes file_data = (conditions, rules, shot_data).
+        So when using this on the file-yielding generators, treat 
+            "single_run" -> "single_rule"
+            "single_rule"-> "single_shot"
+
+    single_rule : bool (optional)
+        if True, collapses the "rules" dimension of the data and only gives the first element
+    '''
+    output = []
+    for condition in data:
+        ndim = np.ndim(data[0])
+
+        if file_level:
+            if ndim < 2:
+                raise Exception(f'ndim of condition ({ndim}) should be >=2 if file_level=True')
+
+            transposed = np.array(condition)
+            if single_shot:
+                transposed = transposed[:,0]
+            if single_rule:
+                transposed = transposed[0]
+            output.append(np.array(transposed))
+
+        elif not file_level and ndim < 2:
+            raise Exception(f'ndim of condition ({ndim}) should be >=2 if file_level=False')
+        else:
+
+            transposed = np.array(np.swapaxes(condition, 1,0))
+            if single_shot and ndim < 4:
+                print('single_shot keyword not valid here')
+            elif single_shot:
+                transposed = transposed[:,:,0]
+            if single_run:
+                transposed = transposed[:,0]
+            if single_rule:
+                transposed = transposed[0]
+            output.append(np.array(transposed))
+
+    return output
+
+def simplify_data(data, single_rule=False, single_run=False, file_level=False):
+    return swap_rules_runs(remove_slu_cycling(data), 
+                           single_rule=single_rule, single_run=single_run, file_level=file_level)
+
+def remove_slu_cycling(data):
+    '''
+    Remove the part corresponding to the keyword "slu_sep=True" in the Run() methods.
+    For reference:
+        data = (ff_fs, bf_fs, ff_bs, bf_bs)
+    where:
+        ff = FEL ON  (foreground fel)
+        bf = FEL OFF (background fel)
+
+        _fs = SLU ON  (foreground slu)
+        _bs = SLU OFF (background slu)
+    '''
+
+    return data[:2]
+
+def name_from_runs(run_numbers):
+    if len(run_numbers) > 1:
+        run_string = f"run_{min(run_numbers):04d}-{max(run_numbers):04d}"
+    elif run_numbers:
+        run_string = f"run_{run_numbers[0]:04d}"
+    else:
+        raise IndexError('run_numbers ({run_numbers}) must be a list!')
+    return run_string
+
+def avg_from_moments(x, y, L=0.5):
+    above_half_max = y > np.max(y) * L
+    moment_0 = np.sum(x**0 * y * above_half_max, axis=1)
+    moment_1 = np.sum(x**1 * y * above_half_max, axis=1)
+    mu = moment_1 / moment_0
+
+    return mu
+
+def stdev_from_moments(x, y, L=0.5):
+    L = 0.5  # include all data points from 0 < L*max < max
+    above_half_max = y > np.max(y) * L
+    moment_0 = np.sum(x**0 * y * above_half_max, axis=1)
+    moment_1 = np.sum(x**1 * y * above_half_max, axis=1)
+    moment_2 = np.sum(x**2 * y * above_half_max, axis=1)
+    
+    biased_sigma = np.sqrt(1/moment_0 * (moment_2 - moment_1**2/moment_0))
+    bias_correction = 1 / np.sqrt(1 - np.sqrt(-np.log(L)/np.pi) * 2*L / (erf(np.sqrt(-np.log(L)))) )
+    stdev = biased_sigma * bias_correction
+    return stdev
+
+def set_default_labels(ax, **kwargs):
+    if 'title' in kwargs.keys():
+        ax.set_title(kwargs['title'], fontsize=18)
+    if 'xlabel' in kwargs.keys():
+        ax.set_xlabel(kwargs['xlabel'], fontsize=14)
+    if 'ylabel' in kwargs.keys():
+        ax.set_ylabel(kwargs['ylabel'], fontsize=14)
+    ax.grid()
+    ax.legend()
+
+def set_recursion_limit(max_depth):
+    def callcounter(func):
+        callcounter.ncalls  = 0
+        def wrapper(*args, **kwargs): 
+            initial_calls = callcounter.ncalls
+            callcounter.ncalls += 1
+            wrapper.ncalls = callcounter.ncalls - initial_calls
+            if (depth := wrapper.ncalls) > max_depth:
+                raise RecursionError(f'Current recursion depth ({depth}) exceeds maximum ({max_depth})!')
+            result = func(*args, **kwargs)
+            return result
+        return wrapper
+    return callcounter
+
+def closest(locs, array):
+    indices = [np.where(np.min((loc-array)**2) == (loc-array)**2)[0][0] for loc in locs]
+    return np.array(indices)
