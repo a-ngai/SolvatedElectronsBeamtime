@@ -23,7 +23,6 @@ from fermi_libraries.run_module import Run, RunSets
 from fermi_libraries.common_functions import (
     rebinning, tof_mq_calibration, simplify_data, 
     tof_to_mq_conversion, mq_to_tof_conversion,
-    tof_to_ke_conversion, ke_to_tof_conversion, 
     name_from_runs,
     avg_from_moments, stdev_from_moments,
     set_default_labels,
@@ -166,10 +165,10 @@ new_eKE = np.linspace(0.5, 50, num=400)
 ion_tof_slices = [ion_tof_range]
 eon_tof_slices = [eon_tof_range]
 
-ion_tof = np.arange(*ion_tof_slices[0])
-rebin_ion_tof = ion_tof[::ION_TOF_REBIN]
-eon_tof = np.arange(*eon_tof_slices[0])
-rebin_eon_tof = eon_tof[::EON_TOF_REBIN]
+raw_ion_tof = np.arange(*ion_tof_slices[0])
+ion_tof = raw_ion_tof[::ION_TOF_REBIN]
+raw_eon_tof = np.arange(*eon_tof_slices[0])
+eon_tof = raw_eon_tof[::EON_TOF_REBIN]
 
 MAKE_CACHE = True
 LOAD_FROM_CACHE = False
@@ -239,30 +238,25 @@ axes shape (rule, condition, run, data):
 runset_ion_tof_data = BasicRunSet.average_run_data('ion_tof', back_sep=BACKGROUND,
                                     slice_range=ion_tof_slices,
                                     make_cache=MAKE_CACHE, use_cache=LOAD_FROM_CACHE)
-fore_ion_rundata, back_ion_rundata = simplify_data(runset_ion_tof_data, single_rule=True)
+fore_ion_tof_rawdata, back_ion_tof_rawdata = simplify_data(runset_ion_tof_data, single_rule=True)
 
 # %%
 overall_integral_eKE = []
 # fel_energys = nm_to_ev(fel_wavelengths)
 
-subt_ion_tof_rundata = -(fore_ion_rundata - back_ion_rundata)
-rebin_ion_tof_rundata = rebinning(rebin_ion_tof, ion_tof, subt_ion_tof_rundata, axis=1)
+subt_ion_tof_rawdata = -(fore_ion_tof_rawdata - back_ion_tof_rawdata)
+ion_tof_spec = rebinning(ion_tof, raw_ion_tof, subt_ion_tof_rawdata, axis=1)
 
 fig, ax = plt.subplots(1,1,figsize=(12,4))
-for (runnumber, ion_spectrum_tof) in zip(
-    run_numbers, rebin_ion_tof_rundata):
-    ax.plot(rebin_ion_tof, ion_spectrum_tof, label=f"Run_{runnumber:03d}")
-
+for (runnumber, ion_tof_spec_i) in zip( run_numbers, ion_tof_spec):
+    ax.plot(ion_tof, ion_tof_spec_i, label=f"Run_{runnumber:03d}")
 ax.legend(bbox_to_anchor=(1.04, 1), borderaxespad=0, ncol = 2)
 ax.set_xlabel('ion TOF')
 ax.set_ylabel('ion TOF signal; rebinned (arb.u.)')
 ax.set_title(f'{run_name}: run averages')
-
-# if SAVE_FILES:
-#     fig.savefig(outdir+'/Average_of_complete_run.png')
-#     fig1.savefig(outdir+'/Average_of_complete_run_eV.png')
 ax.set_ylim(-1,1)
 
+if SAVE_FILES: fig.savefig(outdir+'/Average_of_complete_run.png')
 plt.show()
 
 # %%
@@ -273,14 +267,13 @@ ion_tof_mq_peaks = np.array([
     [10500, 14],
     [12000, 28],
     [13100, 36],
-
 ])
 tof_points, mq_points = ion_tof_mq_peaks.T
 
-ion_cal_rundata = RunCollection[calibration_run_number].average_run_data('ion_tof', back_sep=BACKGROUND,
+ion_cal_rawdata = RunCollection[calibration_run_number].average_run_data('ion_tof', back_sep=BACKGROUND,
                                     slice_range=ion_tof_slices,
                                     make_cache=MAKE_CACHE, use_cache=LOAD_FROM_CACHE)
-fore_ion_rundata, back_ion_rundata = simplify_data(ion_cal_rundata)
+fore_ion_rundata, back_ion_rundata = simplify_data(ion_cal_rawdata)
 cal_sub_spectrum = back_ion_rundata[:,0] - fore_ion_rundata[:,0]
 
 
@@ -295,7 +288,7 @@ model_tof = np.linspace(np.min(tof_points), np.max(tof_points), num=1000)
 
 fig, (ax1, ax2) = plt.subplots(1,2,figsize=(12,4))
 ax1.plot(tof_points, cal_sub_spectrum[closest(tof_points, ion_tof)], marker='v', linestyle='')
-ax1.plot(ion_tof, cal_sub_spectrum)
+ax1.plot(raw_ion_tof, cal_sub_spectrum)
 # ax1.set_xlim(5000,7000)
 set_default_labels(ax1, title='calibration points', xlabel='tof (ns)', ylabel='tof (ns)')
 ax2.plot(tof_points, mq_points, marker='o', linestyle='')
@@ -304,15 +297,14 @@ set_default_labels(ax2, title='calibration fit', xlabel='tof (ns)', ylabel='m/q'
 plt.show()
 
 print(f"Using ion constants: (t0, C) = {ion_constants}")
-tof_to_mq = lambda tof, spec: tof_to_mq_conversion(tof, spec, *ion_constants)
-mq_to_tof = lambda mq, spec: mq_to_tof_conversion(mq, spec, *ion_constants)
+tof_to_mq = lambda tof, spec, axis=None: tof_to_mq_conversion(tof, spec, *ion_constants, axis=axis)
+mq_to_tof = lambda mq, spec, axis=None: mq_to_tof_conversion(mq, spec, *ion_constants, axis=axis)
 
 # %%
 
 fig, (ax1, ax2) = plt.subplots(1,2,figsize=(12,4))
-for (runnumber, ion_spectrum_tof) in zip(
-    run_numbers, rebin_ion_tof_rundata):
-    ax1.plot(rebin_ion_tof, ion_spectrum_tof, label=f"Run_{runnumber:03d}")
+for (runnumber, ion_tof_spec_i) in zip(run_numbers, ion_tof_spec):
+    ax1.plot(ion_tof, ion_tof_spec_i, label=f"Run_{runnumber:03d}")
 
 ax1.legend(bbox_to_anchor=(1.04, 1), borderaxespad=0, ncol = 2)
 ax1.set_xlabel('ion TOF')
@@ -322,19 +314,24 @@ ax1.set_yscale('log')
 ylim = ax1.set_ylim()
 ax1.set_ylim(ylim[1]*1e-4, ylim[1])
 
-for (runnumber, ion_spectrum_tof) in zip(
-    run_numbers, rebin_ion_tof_rundata):
-    mq_coor, mq_spectrum = tof_to_mq(rebin_ion_tof, -ion_spectrum_tof)
-    rebin_mq = np.linspace(0.1, 70, num=1000)
-    rebin_mq_spectrum = rebinning(rebin_mq, mq_coor, mq_spectrum)
-    ax2.plot(rebin_mq, rebin_mq_spectrum, label=f"Run_{runnumber:03d}")
+mq_raw_coor, mq_raw_spectrum = tof_to_mq(ion_tof, ion_tof_spec, axis=1)
+mq_coor = np.linspace(0.1, 70, num=1000)
+mq_spectra = rebinning(mq_coor, mq_raw_coor, mq_raw_spectrum, axis=1)
+for (runnumber, mq_spec_i) in zip(run_numbers, mq_spectra):
+    ax2.plot(mq_coor, mq_spec_i, label=f"Run_{runnumber:03d}")
+
+# for (runnumber, ion_tof_spec_i) in zip(run_numbers, ion_tof_spec):
+#     mq_coor, mq_spectrum = tof_to_mq(rebin_ion_tof, ion_tof_spec_i)
+#     rebin_mq = np.linspace(0.1, 70, num=1000)
+#     rebin_mq_spectrum = rebinning(rebin_mq, mq_coor, mq_spectrum)
+#     ax2.plot(rebin_mq, rebin_mq_spectrum, label=f"Run_{runnumber:03d}")
 
 ax2.legend(bbox_to_anchor=(1.04, 1), borderaxespad=0, ncol = 2)
 ax2.set_xlabel('mq')
 ax2.set_ylabel('ion TOF signal; rebinned (arb.u.)')
-ax2.set_yscale('log')
+# ax2.set_yscale('log')
 ylim = ax2.set_ylim()
-ax2.set_ylim(ylim[1]*1e-4, ylim[1])
+# ax2.set_ylim(ylim[1]*1e-4, ylim[1])
 ax2.set_title(f'{run_name}: run averages')
 
 # %%

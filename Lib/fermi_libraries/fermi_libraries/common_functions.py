@@ -238,6 +238,102 @@ def weighted_residuals(params, model, xdata, ydata, yerr):
     ''' scipy squares this for its residuals, hence the square root for the error here '''
     return 1/yerr*(ydata-model(params, xdata))
 
+def get_tof_mq_constants(peaks=None, constants=None):
+    """
+    Formulas are: m/q = C * (t-T0)^2, d(m/q) = C * 2 (t-T0) dt
+
+    # m/q = C * (t-T0)^2
+    # d(m/q) = C * 2 (t-T0) dt
+    Alternate names:
+        m/q = mq
+        t = tof
+        C = propconst (proportionality constant)
+        T0 = timezero
+
+    Parameters
+    ----------
+    peaks : array, optional
+        Must have form:
+            [[tof1, mq1],
+             [tof2, mq2],
+             ...
+             [tofn, mqn]]. 
+            The default is None.
+    constants : TYPE, optional
+        Must have form:
+            [T0, C]. 
+            The default is None.
+
+    Raises
+    ------
+    Exception
+        DESCRIPTION.
+
+    Returns
+    -------
+    t0 : float
+    propconst : float
+    """
+
+    if peaks is constants is None:
+        raise AssertionError("Either keyword 'peaks' or 'constants' must be used; no defaults!")
+
+    if constants is not None:
+        try:
+            length = len(constants)
+        except TypeError:
+            raise AssertionError(f"keyword 'constants' ({constants}) must be of form (T0, C)")
+        if length != 2:
+            raise AssertionError(f"keyword 'constants' length ({len(constants)}) must have length 2")
+        timezero, propconst = constants
+    elif peaks is not None:
+        if np.ndim(peaks) != 2:
+            raise AssertionError(f"keyword 'peaks' dimension ({np.ndim(peaks)}) must have dimension 2")
+
+        tof_peaks, mq_peaks = np.transpose(peaks)
+        if len(peaks)==1:
+            (tof1), (mq1) = tof_peaks, mq_peaks
+            timezero = 0
+            propconst = mq1/tof1**2
+
+        elif len(peaks)==2:
+            (tof1, tof2), (mq1, mq2) = tof_peaks, mq_peaks
+            timezero = (tof2*np.sqrt(mq1) - tof1*np.sqrt(mq2)) / (np.sqrt(mq1)-np.sqrt(mq2))
+            propconst = ((np.sqrt(mq1)-np.sqrt(mq2))/(tof1-tof2))**2
+
+        elif len(peaks)>2:
+            def mq_fit_model(params, tof):
+                # C = params['C']
+                # T0 = params['T0']
+                # mq = C * (tof - T0)**2
+
+                C = params['C']
+                T0 = params['T0']
+                sqrt_mq = np.sqrt(C) * (tof - T0)
+                return sqrt_mq
+
+            (tof1, tof2, *_), (mq1, mq2, *_) = tof_peaks, mq_peaks
+            timezero_guess = (tof2*np.sqrt(mq1) - tof1*np.sqrt(mq2)) / (np.sqrt(mq1)-np.sqrt(mq2))
+            propconst_guess = ((np.sqrt(mq1)-np.sqrt(mq2))/(tof1-tof2))**2
+
+            initial_params = lmfit.Parameters()
+            initial_params.add_many(
+                    ('C', propconst_guess, True, 0, None),
+                    ('T0', timezero_guess, True, None, np.max(tof_peaks)),
+                    )
+
+            fit_results = lmfit.minimize(residuals, initial_params,
+                                         args=(mq_fit_model, tof_peaks, np.sqrt(mq_peaks)))
+            fit_params = fit_results.params
+            propconst = fit_params['C'].value
+            timezero = fit_params['T0'].value
+
+    calibration_constants = timezero, propconst
+    if np.isnan(calibration_constants):
+        raise ValueError(f'nan found in calibration constants {calibration_constants}')
+
+    return timezero, propconst
+
 def tof_mq_calibration(peaks=None, constants=None):
     """
     Formulas are: m/q = C * (t-T0)^2, d(m/q) = C * 2 (t-T0) dt
