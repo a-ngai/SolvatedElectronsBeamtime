@@ -1,5 +1,4 @@
 # %%
-
 """
 # Set-up for Intensity-binning analysis
 """
@@ -12,7 +11,6 @@
 # %%
 # uncomment the following line when you want to interact with the matplotlib plots
 #%matplotlib widget
-
 import os
 
 import numpy as np
@@ -35,8 +33,6 @@ from fermi_libraries.dictionary_search import search_symbols
 """
 
 # %%
-
-
 @set_recursion_limit(1)
 def keyword_functions(keyword, aliasFunc, DictionaryObject):
 
@@ -91,8 +87,6 @@ def keyword_functions(keyword, aliasFunc, DictionaryObject):
 
     else:
         return DictionaryObject[aliasFunc(keyword)]
-
-
 # %%
 """
 ### Alias definitions
@@ -130,8 +124,10 @@ alias_dict = {
 
 # %%
 """
-# ------------------------------------------------------------------------------------------------
-# ! Data selection ! -----------------------------------------------------------------------------
+
+---
+
+# ! Data selection !
 
 This block contains the variables you might change every different Run. 
 Changing "ion_tof_range" or "eon_tof_range" __does not__ make the program run faster; we are limited
@@ -214,16 +210,13 @@ if SAVE_FILES:
     if not os.path.exists(outdir):
         os.mkdir(outdir)
 
-# %% testing here, delete when done!
-
-runset_ion_tof_data = BasicRunSet.average_run_data('fel_wavelengths_avg', back_sep=BACKGROUND,
-                                    make_cache=MAKE_CACHE, use_cache=LOAD_FROM_CACHE)
-
 
 # %%
 """
-# ------------------------------------------------------------------------------------------------
-# Show the average background-subtracted electron TOF for each Run ---------------------
+
+---
+
+# Show Run-averaged background-subtracted ion TOF
 
 The output for Runset.averageRunData and Runset.average_run_data_weights has the
 axes shape (rule, condition, run, data):
@@ -259,7 +252,11 @@ if SAVE_FILES: fig.savefig(outdir+'/Average_of_complete_run.png')
 plt.show()
 
 # %%
+"""
+Ion TOF calibration constants obtained from "tof_to_mq_calibration.ipynb"
+"""
 
+# %%
 ion_t0 = 6014.427540823292
 ion_propconst = 7.343920984670405e-07 
 ion_constants = ion_t0, ion_propconst
@@ -269,7 +266,6 @@ tof_to_mq = lambda tof, spec, axis=None: tof_to_mq_conversion(tof, spec, *ion_co
 mq_to_tof = lambda mq, spec, axis=None: mq_to_tof_conversion(mq, spec, *ion_constants, axis=axis)
 
 # %%
-
 fig, (ax1, ax2) = plt.subplots(1,2,figsize=(12,4))
 for (runnumber, ion_tof_spec_i) in zip(run_numbers, ion_tof_spec):
     ax1.plot(ion_tof, ion_tof_spec_i, label=f"Run_{runnumber:03d}")
@@ -288,12 +284,6 @@ mq_spectra = rebinning(mq_coor, mq_raw_coor, mq_raw_spectrum, axis=1)
 for (runnumber, mq_spec_i) in zip(run_numbers, mq_spectra):
     ax2.plot(mq_coor, mq_spec_i, label=f"Run_{runnumber:03d}")
 
-# for (runnumber, ion_tof_spec_i) in zip(run_numbers, ion_tof_spec):
-#     mq_coor, mq_spectrum = tof_to_mq(rebin_ion_tof, ion_tof_spec_i)
-#     rebin_mq = np.linspace(0.1, 70, num=1000)
-#     rebin_mq_spectrum = rebinning(rebin_mq, mq_coor, mq_spectrum)
-#     ax2.plot(rebin_mq, rebin_mq_spectrum, label=f"Run_{runnumber:03d}")
-
 ax2.legend(bbox_to_anchor=(1.04, 1), borderaxespad=0, ncol = 2)
 ax2.set_xlabel('mq')
 ax2.set_ylabel('ion TOF signal; rebinned (arb.u.)')
@@ -304,8 +294,11 @@ ax2.set_title(f'{run_name}: run averages')
 
 # %%
 """
-# ------------------------------------------------------------------------------------------------
-# I0M filtering -----------------------------------------------------------------------------------
+
+---
+
+# I0M filtering
+
 """
 
 # %%
@@ -347,8 +340,12 @@ runset_vmi = BasicRunSet.average_run_data('vmi',back_sep=BACKGROUND,
                                     make_cache=MAKE_CACHE, use_cache=LOAD_FROM_CACHE)
 fore_vmi, back_vmi = simplify_data(runset_vmi, single_rule=True, single_run=False)
 
-# %% Show VMI and resizing
+# %%
+"""
+Show VMI and resizing
+"""
 
+# %%
 from cpbasex import loadG, cpbasex as cpbasex_inversion
 from cpbasex.image_mod import resizeFoldedHalf, foldHalf
 
@@ -375,19 +372,30 @@ plt.title('half-folded')
 plt.grid()
 plt.show()
 
+# %%
+"""
+Load Abel inversion data
+"""
 
 # %%
-# Perform Abel inversion
-
-
 gData = loadG('G_r256_k64_l4_half.h5', make_images=True)
 
-# Apply the pBASEX algorithm
+# %%
+"""
+Apply the pBASEX algorithm
+"""
+
+# %%
 out = cpbasex_inversion(resized, gData, make_images=True, alpha=4.1e-5, shape='half')
 
 raw = rebinned_vmi
 
-# Plot some results
+# %%
+"""
+Plot the results
+"""
+
+# %%
 plt.figure(figsize=(12,9))
 for i, sample in enumerate(np.arange(np.shape(folded)[2])):
 	plt.subplot(4,5,5*i+1)
@@ -437,4 +445,3 @@ for i, sample in enumerate(np.arange(np.shape(folded)[2])):
 		plt.title('Inverted Image')
 plt.tight_layout()
 plt.show()
-

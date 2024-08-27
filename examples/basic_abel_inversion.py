@@ -50,8 +50,10 @@ alias_dict = {
 
 # %%
 """
-# ------------------------------------------------------------------------------------------------
-# ! Data selection ! -----------------------------------------------------------------------------
+
+---
+
+# ! Data selection !
 
 This block contains the variables you might change every different Run. 
 Changing "ion_tof_range" or "eon_tof_range" __does not__ make the program run faster; we are limited
@@ -116,8 +118,17 @@ if SAVE_FILES:
     if not os.path.exists(outdir):
         os.mkdir(outdir)
 
+# %%
+"""
+
+---
+
+# VMI images section
+
+"""
 
 # %%
+
 ##%%time
 runset_vmi = BasicRunSet.average_run_data('vmi',back_sep=BACKGROUND,
                                     make_cache=MAKE_CACHE, use_cache=LOAD_FROM_CACHE)
@@ -127,9 +138,12 @@ fore_vmi, back_vmi = simplify_data(runset_vmi, single_rule=True, single_run=Fals
 """
 By convention, the data axes will be (x-axis, y-axis, images). This shape is
 necessary for cpbasex to work easily.
+
+Show the VMI images
+
 """
 
-# %% Show VMI
+# %%
 
 from cpbasex import resizeFoldedHalf, foldHalf, loadG, cpbasex as cpbasex_inversion
 from cpbasex.image_mod import resize
@@ -152,7 +166,12 @@ fig.colorbar(cax2, ax=ax2)
 ax2.grid()
 plt.show()
 
-# %% Preliminary values for image correction
+# %%
+"""
+Correcting the VMI images
+"""
+
+# %%
 
 test_image = vmi[:,:,0]
 
@@ -186,7 +205,12 @@ if False: # to make image correction easier, these should "commute"
     find_ellipticity()
     find_center()
 
-# %% Image centering and folding
+# %%
+"""
+Fold the VMI images in preparation for the Abel inversion
+"""
+
+# %%
 
 x0, y0 = 264, 260
 half_filter = [True, True]
@@ -198,8 +222,12 @@ plt.title(f'Half-folded. [left, right]={half_filter}')
 plt.grid()
 plt.show()
 
+# %%
+"""
+Perform the Abel inversion
+"""
 
-# %% Perform Abel inversion
+# %%
 
 # load inversion object
 MAKE_IMAGES = True

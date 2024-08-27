@@ -64,8 +64,10 @@ alias_dict = {
 
 # %%
 """
-# ------------------------------------------------------------------------------------------------
-# ! Data selection ! -----------------------------------------------------------------------------
+
+---
+
+# ! Data selection !
 
 This block contains the variables you might change every different Run. 
 Changing "ion_tof_range" or "eon_tof_range" __does not__ make the program run faster; we are limited
@@ -140,8 +142,10 @@ if SAVE_FILES:
 
 # %%
 """
-# ------------------------------------------------------------------------------------------------
-# Show the average background-subtracted electron TOF for each Run ---------------------
+
+---
+
+# Show the average background-subtracted electron TOF for each Run
 
 The output for Runset.averageRunData and Runset.average_run_data_weights has the
 axes shape (rule, condition, run, data):
