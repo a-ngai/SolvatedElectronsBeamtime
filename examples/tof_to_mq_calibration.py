@@ -18,10 +18,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 from fermi_libraries.run_module import Run, RunSets
 from fermi_libraries.common_functions import (
-    rebinning, tof_mq_calibration, simplify_data, 
-    tof_to_mq_conversion, mq_to_tof_conversion,
-    tof_mq_coordinate_func, mq_tof_coordinate_func,
+    rebinning, simplify_data, 
     name_from_runs, set_default_labels, closest)
+from fermi_libraries.calibration_tools import (
+    tof_mq_calibration, tof_to_mq_conversion, mq_to_tof_conversion, 
+    tof_mq_coordinate_func, mq_tof_coordinate_func)
 from fermi_libraries.dictionary_search import search_symbols
 
 def keyword_functions(keyword, aliasFunc, DictionaryObject):
