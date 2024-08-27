@@ -351,12 +351,8 @@ fore_vmi, back_vmi = simplify_data(runset_vmi, single_rule=True, single_run=Fals
 
 # %% Show VMI and resizing
 
-import importlib
-import cpbasex
-importlib.reload(cpbasex)
-
-from cpbasex import resizeFoldedHalf, foldHalf, loadG
-from cpbasex import cpbasex as cpbasex_inversion
+from cpbasex import loadG, cpbasex as cpbasex_inversion
+from cpbasex.image_mod import resizeFoldedHalf, foldHalf
 
 sub_vmi = fore_vmi - back_vmi
 sub_vmi = sub_vmi.transpose(1,2,0)
