@@ -22,11 +22,11 @@ def get_tof_mq_constants(peaks=None, constants=None):
              [tof2, mq2],
              ...
              [tofn, mqn]]. 
-            The default is None.
+        The default is None.
     constants : TYPE, optional
         Must have form:
             [T0, C]. 
-            The default is None.
+        The default is None.
 
     Raises
     ------
@@ -59,38 +59,10 @@ def get_tof_mq_constants(peaks=None, constants=None):
             (tof1), (mq1) = tof_peaks, mq_peaks
             timezero = 0
             propconst = mq1/tof1**2
-
-        elif len(peaks)==2:
-            (tof1, tof2), (mq1, mq2) = tof_peaks, mq_peaks
-            timezero = (tof2*np.sqrt(mq1) - tof1*np.sqrt(mq2)) / (np.sqrt(mq1)-np.sqrt(mq2))
-            propconst = ((np.sqrt(mq1)-np.sqrt(mq2))/(tof1-tof2))**2
-
-        elif len(peaks)>2:
-            def mq_fit_model(params, tof):
-                # C = params['C']
-                # T0 = params['T0']
-                # mq = C * (tof - T0)**2
-
-                C = params['C']
-                T0 = params['T0']
-                sqrt_mq = np.sqrt(C) * (tof - T0)
-                return sqrt_mq
-
-            (tof1, tof2, *_), (mq1, mq2, *_) = tof_peaks, mq_peaks
-            timezero_guess = (tof2*np.sqrt(mq1) - tof1*np.sqrt(mq2)) / (np.sqrt(mq1)-np.sqrt(mq2))
-            propconst_guess = ((np.sqrt(mq1)-np.sqrt(mq2))/(tof1-tof2))**2
-
-            initial_params = lmfit.Parameters()
-            initial_params.add_many(
-                    ('C', propconst_guess, True, 0, None),
-                    ('T0', timezero_guess, True, None, np.max(tof_peaks)),
-                    )
-
-            fit_results = lmfit.minimize(residuals, initial_params,
-                                         args=(mq_fit_model, tof_peaks, np.sqrt(mq_peaks)))
-            fit_params = fit_results.params
-            propconst = fit_params['C'].value
-            timezero = fit_params['T0'].value
+        else:
+            slope, const = weighted_linear_regression(np.sqrt(mq_peaks), tof_peaks)
+            timezero = const
+            propconst = 1/slope**2
 
     calibration_constants = timezero, propconst
     if np.isnan(calibration_constants):
@@ -100,34 +72,7 @@ def get_tof_mq_constants(peaks=None, constants=None):
 
 def tof_mq_calibration(peaks=None, constants=None):
     """
-    Formulas are: m/q = C * (t-T0)^2, d(m/q) = C * 2 (t-T0) dt
-
-    # m/q = C * (t-T0)^2
-    # d(m/q) = C * 2 (t-T0) dt
-    Alternate names:
-        m/q = mq
-        t = tof
-        C = propconst (proportionality constant)
-        T0 = timezero
-
-    Parameters
-    ----------
-    peaks : array, optional
-        Must have form:
-            [[tof1, mq1],
-             [tof2, mq2],
-             ...
-             [tofn, mqn]]. 
-            The default is None.
-    constants : TYPE, optional
-        Must have form:
-            [T0, C]. 
-            The default is None.
-
-    Raises
-    ------
-    Exception
-        DESCRIPTION.
+    A convienient wrapper for the get_tof_mq_constants() function.
 
     Returns
     -------
@@ -141,31 +86,7 @@ def tof_mq_calibration(peaks=None, constants=None):
         Jacobian correction when converting m/q -> TOF coordinates.
     """
 
-    if peaks is constants is None:
-        raise AssertionError("Either keyword 'peaks' or 'constants' must be used; no defaults!")
-
-    if constants is not None:
-        try:
-            length = len(constants)
-        except TypeError:
-            raise AssertionError(f"keyword 'constants' ({constants}) must be of form (T0, C)")
-        if length != 2:
-            raise AssertionError(f"keyword 'constants' length ({len(constants)}) must have length 2")
-        timezero, propconst = constants
-    elif peaks is not None:
-        if np.ndim(peaks) != 2:
-            raise AssertionError(f"keyword 'peaks' dimension ({np.ndim(peaks)}) must have dimension 2")
-
-        tof_peaks, mq_peaks = np.transpose(peaks)
-        if len(peaks)==1:
-            (tof1), (mq1) = tof_peaks, mq_peaks
-            timezero = 0
-            propconst = mq1/tof1**2
-        else:
-            slope, const = weighted_linear_regression(np.sqrt(mq_peaks), tof_peaks)
-            timezero = const
-            propconst = 1/slope**2
-
+    timezero, propconst = get_tof_mq_constants(peaks=peaks, constants=constants)
     mq_coordinate_func = lambda tof_in: tof_mq_coordinate_func(tof_in, timezero, propconst)
     mq_jacobian_func = lambda tof_in: tof_mq_jacobian_func(tof_in, timezero, propconst)
     tof_coordinate_func = lambda mq_in: mq_tof_coordinate_func(mq_in, timezero, propconst)
@@ -235,7 +156,7 @@ def mq_to_tof_conversion(mq, spectrum, t0, propconst, axis=None):
     tof_spec = transpose_axis_to_zero(tof_spec, axis=axis)  # revert transposition
     return tof_coor, tof_spec
 
-def tof_ke_calibration(peaks=None, constants=None):
+def get_tof_ke_constants(peaks=None, constants=None):
     """
     Formulas are: ke = 1 / (C*(t-T0)^2) + ke0, d(ke) = -2 / (C*(t-T0)^3) dt
 
@@ -379,6 +300,25 @@ def tof_ke_calibration(peaks=None, constants=None):
             timezero = fit_params['T0'].value
             ke0 = fit_params['KE0'].value
 
+    return timezero, propconst, ke0
+
+def tof_ke_calibration(peaks=None, constants=None):
+    """
+    A convienient wrapper for the get_tof_ke_constants() function.
+
+    Returns
+    -------
+    ke_coordinate_func : func
+        Conversion function for TOF -> ke coordinates. Input can be either a number or an array
+    ke_jacobian_func : func
+        Jacobian correction when converting TOF -> ke coordinates.
+    tof_coordinate_func : func
+        Conversion function for ke -> TOF coordinates. Input can be either a number or an array
+    tof_jacobian_func : func
+        Jacobian correction when converting ke -> TOF coordinates.
+    """
+
+    timezero, propconst, ke0 = get_tof_ke_constants(peaks=peaks, constants=constants)
     ke_coordinate_func = lambda tof_in: tof_ke_coordinate_func(tof_in, timezero, propconst, ke0)
     ke_jacobian_func = lambda tof_in: tof_ke_jacobian_func(tof_in, timezero, propconst, ke0)
     tof_coordinate_func = lambda ke_in: ke_tof_coordinate_func(ke_in, timezero, propconst, ke0)
