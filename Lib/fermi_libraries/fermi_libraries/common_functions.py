@@ -238,6 +238,20 @@ def weighted_residuals(params, model, xdata, ydata, yerr):
     ''' scipy squares this for its residuals, hence the square root for the error here '''
     return 1/yerr*(ydata-model(params, xdata))
 
+def weighted_linear_regression(x, y, w=None, zero_intercept=False):
+    ''' Weighted linear regression both with and without a zero-intercept term '''
+    if w is None: w = x*0+1
+    if (Nx:=len(x)) != (Ny:=len(y)):
+        raise ValueError(f'length of x ({Nx}) != length of y ({Ny})')
+    N = Nx
+    if zero_intercept:
+        constant = 0
+        slope = np.sum(x*w*y) / np.sum(x**2*w)
+    else:
+        slope = (N * np.sum(w*x*y) - np.sum(w*x)*np.sum(w*y) ) / (N * np.sum(w*x**2) - np.sum(w*x)**2)
+        constant = (np.sum(w*y) - slope*np.sum(w*x))/N
+    
+    return slope, constant
 
 def single_pass_moment_sums(generator1, generator2=None, filter1=None, filter2=None, _weight=1):
     """

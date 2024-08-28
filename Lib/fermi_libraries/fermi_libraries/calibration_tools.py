@@ -1,6 +1,6 @@
 import numpy as np
 import lmfit
-from .common_functions import residuals, transpose_axis_to_zero
+from .common_functions import residuals, transpose_axis_to_zero, weighted_linear_regression
 
 def get_tof_mq_constants(peaks=None, constants=None):
     """
@@ -161,60 +161,15 @@ def tof_mq_calibration(peaks=None, constants=None):
             (tof1), (mq1) = tof_peaks, mq_peaks
             timezero = 0
             propconst = mq1/tof1**2
+        else:
+            slope, const = weighted_linear_regression(np.sqrt(mq_peaks), tof_peaks)
+            timezero = const
+            propconst = 1/slope**2
 
-        elif len(peaks)==2:
-            (tof1, tof2), (mq1, mq2) = tof_peaks, mq_peaks
-            timezero = (tof2*np.sqrt(mq1) - tof1*np.sqrt(mq2)) / (np.sqrt(mq1)-np.sqrt(mq2))
-            propconst = ((np.sqrt(mq1)-np.sqrt(mq2))/(tof1-tof2))**2
-
-        elif len(peaks)>2:
-            def mq_fit_model(params, tof):
-                # C = params['C']
-                # T0 = params['T0']
-                # mq = C * (tof - T0)**2
-
-                C = params['C']
-                T0 = params['T0']
-                sqrt_mq = np.sqrt(C) * (tof - T0)
-                return sqrt_mq
-
-            (tof1, tof2, *_), (mq1, mq2, *_) = tof_peaks, mq_peaks
-            timezero_guess = (tof2*np.sqrt(mq1) - tof1*np.sqrt(mq2)) / (np.sqrt(mq1)-np.sqrt(mq2))
-            propconst_guess = ((np.sqrt(mq1)-np.sqrt(mq2))/(tof1-tof2))**2
-
-            initial_params = lmfit.Parameters()
-            initial_params.add_many(
-                    ('C', propconst_guess, True, 0, None),
-                    ('T0', timezero_guess, True, None, np.max(tof_peaks)),
-                    )
-
-            fit_results = lmfit.minimize(residuals, initial_params,
-                                         args=(mq_fit_model, tof_peaks, np.sqrt(mq_peaks)))
-            fit_params = fit_results.params
-            propconst = fit_params['C'].value
-            timezero = fit_params['T0'].value
-
-    def mq_coordinate_func(tof_in):
-        mq_coordinate = tof_in*np.nan
-        mq_coordinate[tof_in>=timezero] = propconst * (tof_in[tof_in>=timezero]-timezero)**2
-        return mq_coordinate
-
-    def mq_jacobian_func(tof_in):
-        # |dT/dmq_in|
-        jacobian = tof_in*np.nan
-        jacobian[tof_in>timezero] = 1/(propconst*2*(tof_in[tof_in>timezero]-timezero))
-        return jacobian
-
-    def tof_coordinate_func(mq_in):
-        tof_in = np.sqrt(mq_in/propconst) + timezero
-        tof_in[mq_in<0] = np.nan
-        return tof_in
-
-    def tof_jacobian_func(mq_in):
-        # |dmq_in/dT|
-        jacobian = (propconst*2*(tof_coordinate_func(mq_in)-timezero))
-        jacobian[mq_in<0] = np.nan
-        return jacobian
+    mq_coordinate_func = lambda tof_in: tof_mq_coordinate_func(tof_in, timezero, propconst)
+    mq_jacobian_func = lambda tof_in: tof_mq_jacobian_func(tof_in, timezero, propconst)
+    tof_coordinate_func = lambda mq_in: mq_tof_coordinate_func(mq_in, timezero, propconst)
+    tof_jacobian_func = lambda mq_in: mq_tof_jacobian_func(mq_in, timezero, propconst)
 
     calibration_dict = {
             'tof_to_mq_coor' : mq_coordinate_func,
@@ -229,8 +184,6 @@ def tof_mq_calibration(peaks=None, constants=None):
         raise ValueError(f'nan found in calibration constants {constants_dict}')
 
     return calibration_dict
-
-
 
 def tof_mq_coordinate_func(tof_in, timezero, propconst):
     """ See tof_mq_calibration() """
@@ -426,27 +379,10 @@ def tof_ke_calibration(peaks=None, constants=None):
             timezero = fit_params['T0'].value
             ke0 = fit_params['KE0'].value
 
-    def ke_coordinate_func(tof_in):
-        ke_coordinate = tof_in*np.nan
-        ke_coordinate[tof_in>timezero] = 1/propconst / (tof_in[tof_in>timezero] - timezero+0.)**2 + ke0
-        return ke_coordinate
-
-    def ke_jacobian_func(tof_in):
-        # |dT/dke_in|
-        jacobian = tof_in*np.nan
-        jacobian[tof_in>timezero] = (tof_in[tof_in>timezero] - timezero+0.)**3 / (-2 * 1/propconst)
-
-        return jacobian
-
-    def tof_coordinate_func(ke_in):
-        tof_in = ke_in*np.nan
-        tof_in[ke_in>ke0] = np.sqrt(1/propconst / (ke_in[ke_in>ke0] - ke0+0.)) + timezero
-        return tof_in
-
-    def tof_jacobian_func(ke_in):
-        # |dke_in/dT|
-        jacobian = (-2 * 1/propconst) / (tof_coordinate_func(ke_in) - timezero+0.)**3
-        return jacobian
+    ke_coordinate_func = lambda tof_in: tof_ke_coordinate_func(tof_in, timezero, propconst, ke0)
+    ke_jacobian_func = lambda tof_in: tof_ke_jacobian_func(tof_in, timezero, propconst, ke0)
+    tof_coordinate_func = lambda ke_in: ke_tof_coordinate_func(ke_in, timezero, propconst, ke0)
+    tof_jacobian_func = lambda ke_in: ke_tof_jacobian_func(ke_in, timezero, propconst, ke0)
 
     calibration_dict = {
             'tof_to_ke_coor' : ke_coordinate_func,
