@@ -180,11 +180,10 @@ plt.show()
 # %%
 
 ion_tof_mq_peaks = np.array([
-    # [5000, 999],
     [6000, 0],
-    [10500, 14],
-    [12000, 28],
-    [13100, 36],
+    [10625, 14],
+    [12060, 28],
+    [12980, 36],
 ])
 tof_points, mq_points = ion_tof_mq_peaks.T
 
@@ -205,9 +204,9 @@ mq_to_tof = lambda mq, spec, axis=None: mq_to_tof_conversion(mq, spec, *ion_cons
 
 model_tof = np.linspace(np.min(tof_points), np.max(tof_points), num=1000)
 fig, (ax1, ax2) = plt.subplots(1,2,figsize=(12,4))
-ax1.plot(tof_points, cal_sub_spectrum[closest(tof_points, ion_tof)], marker='v', linestyle='')
+ax1.plot(tof_points, cal_sub_spectrum[closest(tof_points, raw_ion_tof)], marker='v', linestyle='')
 ax1.plot(raw_ion_tof, cal_sub_spectrum)
-# ax1.set_xlim(5000,7000)
+ax1.set_xlim(5000, 16000)
 set_default_labels(ax1, title='calibration points', xlabel='tof (ns)', ylabel='tof (ns)')
 ax2.plot(tof_points, mq_points, marker='o', linestyle='')
 ax2.plot(model_tof, tof_mq_coor_func(model_tof), color='black')
