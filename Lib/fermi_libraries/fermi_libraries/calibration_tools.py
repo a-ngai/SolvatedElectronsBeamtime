@@ -264,8 +264,7 @@ def tof_to_mq_conversion(tof, spectrum, t0, propconst, axis=None):
     mq = tof_mq_coordinate_func(tof, t0, propconst)
     mask = tof>t0
     jacobian = tof_mq_jacobian_func(tof, t0, propconst)
-    if np.ndim(spectrum)>1:
-        jacobian = jacobian[:,np.newaxis]
+    jacobian = np.expand_dims(jacobian, list(np.arange(-1, -spectrum.ndim, -1)))
     mq_coor = mq[mask]
     mq_spec = (spectrum * jacobian)[mask]
     mq_spec = transpose_axis_to_zero(mq_spec, axis=axis)  # revert transposition
@@ -277,8 +276,7 @@ def mq_to_tof_conversion(mq, spectrum, t0, propconst, axis=None):
     tof = mq_tof_coordinate_func(mq, t0, propconst)
     mask = tof>t0
     jacobian = mq_tof_jacobian_func(mq, t0, propconst)
-    if np.ndim(spectrum)>1:
-        jacobian = jacobian[:,np.newaxis]
+    jacobian = np.expand_dims(jacobian, list(np.arange(-1, -spectrum.ndim, -1)))
     tof_coor = tof[mask]
     tof_spec = (spectrum * jacobian)[mask]
     tof_spec = transpose_axis_to_zero(tof_spec, axis=axis)  # revert transposition
@@ -496,8 +494,7 @@ def tof_to_ke_conversion(tof, spectrum, t0, propconst, ke0, axis=None):
     ke = tof_ke_coordinate_func(tof, t0, propconst, ke0)
     mask = ke>ke0
     jacobian = tof_ke_jacobian_func(tof, t0, propconst, ke0)
-    if np.ndim(spectrum)>1:
-        jacobian = jacobian[:,np.newaxis]
+    jacobian = np.expand_dims(jacobian, list(np.arange(-1, -spectrum.ndim, -1)))
     ke_coor = ke[mask]
     ke_spec = (spectrum * jacobian)[mask]
     ke_spec = transpose_axis_to_zero(ke_spec, axis=axis)  # revert transposition
@@ -509,8 +506,7 @@ def ke_to_tof_conversion(ke, spectrum, t0, propconst, ke0, axis=None):
     tof = ke_tof_coordinate_func(ke, t0, propconst, ke0)
     mask = ke>0
     jacobian = ke_tof_jacobian_func(ke, t0, propconst, ke0)
-    if np.ndim(spectrum)>1:
-        jacobian = jacobian[:,np.newaxis]
+    jacobian = np.expand_dims(jacobian, list(np.arange(-1, -spectrum.ndim, -1)))
     tof_coor = tof[mask]
     tof_spec = (spectrum * jacobian)[mask]
     tof_spec = transpose_axis_to_zero(tof_spec, axis=axis)  # revert transposition
