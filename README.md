@@ -1,64 +1,83 @@
+# Quick start guide
+
+### How to install
+
+Python3 is required, as well as Python's pip for install modules. Install the necessary modules through pip, which includes our custom libraries:
+> pip install -r requirements.txt
+
+### What to look at
+
+
+
+1. tof_to_mq_calibration.ipynb
+2. basic_filtering.ipynb
+3. basic_abel_inversion.ipynb
+4. basic_data_extraction.ipynb
+
+
 # Introduction
 
 During the beamtime, the main task of the on-demand data analysis is to
 transform raw velocity-map-imaging (VMI) images into photoelectron spectra
-(PES).
+(PES). So why are these libraries so large and complicated? Answer: FERMI generates a large amount of raw data, and reading/compiling this raw data is 1. slow (i.e. I/O-rate limited) 2. leads to a lot of code bloat. The purpose of these libraries is to make the following easier and hopefully more intuitive:
 
-## Raw data
+- compilation of raw data from h5 files
+- filtering of raw data based on adjustable rules
+- separation of "foreground" and "background" data
+- calibration of ion TOF -> ion m/q
 
-We expect to have two main types of raw data: data from the ion time-of-flight
-(TOF) spectrometer, and data from the VMI spectrometer. The discussion for both
-of these will be the same; the only difference is that TOF spectra do not use
-the Abel inverse transform, otherwise the steps are analogous.
+To understand the scripts, I recommend looking at the scripts in increasing order of complexity:
 
-The "main" raw data, i.e. TOF and VMI images, fall into 4 categories, determined
-by the combination of having either the **FEL** and **SLU** lasers *ON* or *OFF*. The 4
-categories are:
+1. tof_to_mq_calibration.ipynb
+2. basic_filtering.ipynb
+3. basic_abel_inversion.ipynb
+4. basic_data_extraction.ipynb
 
-    1. FEL/*ON* + SLU/*ON*,
-    2. FEL/*ON* + SLU/*OFF*,
-    3. FEL/*OFF* + SLU/*ON*,
-    4. FEL/*OFF* + SLU/*OFF*;
+If the .ipynb are too annoying to use, you can also look at the .py versions of these scripts in the IDE of your choice (I recommend either Spyder for a simple standalone installation, or VScode for more feature-richness). These .py files were used to generate the .ipynb files through ipynb-py-convert library. **HOWEVER**, conventional online data analysis is done using Jupyter Labs hosted on the FERMI server, where we do use only .ipynb files. So I recommend you to at least get used to this format.
 
-and raw data must be separated accordingly. We will typicallly refer to a
-combination of these 4 as the **"Foreground"** (e.g. FEL/*ON*+SLU/*ON*), and another
-combination as the **"Background"** (e.g. FEL/*ON*+SLU/*OFF*).
 
-"Diagnostic" data e.g. FEL intensity (I0-monitor), FEL spectrum, etc.; is also
-available in conjunction with the "main" data. These will typically be used to
-further filter out the "main" raw data on top of the FEL/SLU/ON/OFF
-combinations. For example, we may only consider VMI images with a narrow range
-of FEL intensities. This can be done by filtering the VMI data based on
-I0-monitor data i.e. through a **filter rule** (our scripts handle this).
+# Raw data
 
-## Workflow
+We expect to have two main types of raw data: data from the ion time-of-flight (TOF) spectrometer, and data from the VMI spectrometer. The discussion for both of these will be the same; the only difference is that TOF spectra do not use the Abel inverse transform, otherwise the steps are analogous.
+
+### "Main" data
+
+"Main" raw data, i.e. TOF and VMI images, fall into 4 categories. These are determined by the combination of having either the **FEL** and **SLU** lasers *ON* or *OFF*:
+
+1. FEL/*ON* + SLU/*ON*,
+2. FEL/*ON* + SLU/*OFF*,
+3. FEL/*OFF* + SLU/*ON*,
+4. FEL/*OFF* + SLU/*OFF*;
+
+and raw data must be separated accordingly. We will typicallly refer to a combination of these 4 as the **"Foreground"** (e.g. FEL/*ON*+SLU/*ON*), and another combination as the **"Background"** (e.g. FEL/*ON*+SLU/*OFF*).
+
+### "Diagnostic" data
+
+"Diagnostic" data e.g. FEL intensity (I0-monitor), FEL spectrum, etc.; is also available in conjunction with the "main" data. These will typically be used to further filter out the "main" raw data on top of the FEL/SLU/ON/OFF combinations. For example, we may only consider VMI images with a narrow range of FEL intensities. This can be done by filtering the VMI data based on I0-monitor data i.e. through a **filter rule** (our scripts handle this).
+
+# Workflow
 
 Here is the basic workflow of the on-demand data analysis:
 
 1. (optional) Retrieve diagnostic data (e.g. I0M) to determine possible **filter rule**s.
-2. With (or without) **filter rule**s, *simultaneously* filter and separate the raw data into "Foreground" and "Background" parts.
-3. Average the raw data.
-4. (VMI only) Correct image distortions and center the VMI image (more difficult than you think!).
-5. (VMI only) Abel-invert the raw images into 1D photoelectron spectra.
-6. Transform the TOF/PES spectra from TOF-/radial-coordinates to mq-/KE coordinates.
+2. With (or without) **filter rule**s, *simultaneously* (i) filter the raw data (ii) separate the filtered data into "Foreground" and "Background" parts (iii) average over the data.
+3. (VMI only) Correct image distortions and center the VMI image (more difficult than you think!).
+4. (VMI only) Abel-invert the raw images into 1D photoelectron spectra.
+5. Transform the TOF/PES spectra from TOF-/radial-coordinates to mq-/KE coordinates.
 
 # Modules used:
 
-numpy-2.1.0
-matplotlib-3.9.2
-    (Dependencies:
-    contourpy-1.2.1
-    cycler-0.12.1
-    fonttools-4.53.1
-    kiwisolver-1.4.5
-    pillow-10.4.0
-    pyparsing-3.1.2
-    )
-pbasex-1.3.0
-h5py-3.11.0
-Cython-3.0.11
-quadrant-1.0
-dill-0.3.8
-scipy-1.14.1
-lmfit-1.3.2
-ipynb-py-convert-0.4.6
+numpy==2.1.0\
+matplotlib==3.9.2\
+pbasex==1.3.0\
+h5py==3.11.0\
+Cython==3.0.11\
+quadrant==1.0\
+dill==0.3.8\
+scipy==1.14.1\
+lmfit==1.3.2\
+ipynb-py-convert==0.4.6
+
+To download the modules, simply run the "requirements.txt" through pip:
+
+> pip3 install -r requirements.txt

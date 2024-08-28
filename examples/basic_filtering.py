@@ -82,10 +82,12 @@ ranges.
 """
 
 # %%
-# BEAMTIME_DIR =  '/net/online4ldm/store/20209112b/results/TestData/'
-BEAMTIME_DIR =  'TestBeamtime/'
+# BEAMTIME_DIR =  '/net/online4ldm/store/20234049/results/Beamtime/'  # expected directory at FERMI
+import pathlib
+current_script_dir = str(pathlib.Path(__file__).parent.resolve())+'/'
+BEAMTIME_DIR =  current_script_dir + 'TestBeamtime/'
 DATA_DIR = BEAMTIME_DIR+'Beamtime/'  # change from fictitious to the real raw data directory!
-SAVE_DIR = BEAMTIME_DIR+'results/evaluation/'#'/net/online4ldm/store/20209134/results/results' # ditto
+SAVE_DIR = BEAMTIME_DIR+'results/evaluation/'#'/net/online4ldm/store/20234049/results/results' # ditto
 
 SAVE_FILES = False
 
@@ -175,7 +177,12 @@ except:
         i0m_runset_data[i] = i0m_runset_data[i][0]
 
 
-plt.plot(i0m_runset_data[0,:,0])
+fig, ax = plt.subplots(figsize=(5,2))
+ax.plot(i0m_runset_data[0,:,0])
+ax.set_ylabel('I0M (uJ)')
+ax.set_xlabel('shot number')
+ax.set_title('shot-by-shot I0M values')
+plt.tight_layout()
 plt.show()
 
 # %%
@@ -206,15 +213,24 @@ print(f'shape is (rules, runs, data): {np.shape(fore_ion_tof_rawdata)}')
 subt_ion_tof_rawdata = -(fore_ion_tof_rawdata - back_ion_tof_rawdata)
 subt_ion_tof_spectra = rebinning(ion_tof, raw_ion_tof, subt_ion_tof_rawdata, axis=2)
 
-for rule, collected_data in zip(i0m_filter_rules, subt_ion_tof_spectra):
-    plt.figure(figsize=(5,2))
+show_N_runs = 2
+show_N_rules = 3
+fig, axes = plt.subplots(show_N_rules, 1, figsize=(6,6))
+for i, (rule, collected_data) in enumerate(zip(i0m_filter_rules, subt_ion_tof_spectra)):
+    ax = axes[i]
     for run_number, data in zip(run_numbers, collected_data):
-        plt.plot(ion_tof, data, label=f'Run {run_number:03d}')
-    plt.legend()
-    plt.title(f'Ion TOF spectra w/ rule: {rule}')
-    plt.xlabel('ion TOF (ns)')
-    plt.xlim(8000, 15000)
-    plt.show()
+        ax.plot(ion_tof, data, label=f'Run {run_number:03d}')
+    ax.legend()
+    ax.set_ylabel('ion TOF signal (arb.u.)')
+    ax.set_title(f'filter rule: {i0m_filter_rules[0]}')
+    ax.set_xlim(8000, 15000)
+axes[0].set_ylabel('ion TOF signal signal (arb.u.)')
+axes[0].set_title(f'Ion TOF spectra\nfilter rule: {i0m_filter_rules[0]}')
+axes[-1].set_xlabel('ion TOF (ns)')
+plt.tight_layout()
+plt.show()
+
+
 
 # %%
 """
@@ -235,15 +251,23 @@ mq_raw_coor, mq_raw_spectrum = tof_to_mq(raw_ion_tof, subt_ion_tof_rawdata, axis
 mq_coor = np.linspace(0.1, 70, num=1000)
 mq_spectra = rebinning(mq_coor, mq_raw_coor, mq_raw_spectrum, axis=2)
 
-for rule, collected_mq_data in zip(i0m_filter_rules, mq_spectra):
-    fig, ax = plt.subplots(1, 1, figsize=(6,2))
+show_N_runs = 2
+show_N_rules = 3
+fig, axes = plt.subplots(show_N_rules, 1, figsize=(6,6))
+for i, (rule, collected_mq_data) in enumerate(zip(i0m_filter_rules, mq_spectra)):
+    ax = axes[i]
     for run_number, data in zip(run_numbers, collected_mq_data):
         ax.plot(mq_coor, data, label=f'Run {run_number:03d}')
     ax.legend()
-    ax.set_title(f'Ion mass/charge spectra w/ rule: {rule}')
-    ax.set_xlabel('m/q')
+    ax.set_ylabel('ion m/q signal (arb.u.)')
+    ax.set_title(f'filter rule: {i0m_filter_rules[0]}')
+    # ax.set_ylabel(f'rule: {rule}')
     ax.set_xlim(0, 40)
-    plt.show()
+axes[0].set_ylabel('ion m/q signal (arb.u.)')
+axes[0].set_title(f'Ion mass/charge spectra\nfilter rule: {i0m_filter_rules[0]}')
+axes[-1].set_xlabel('m/q')
+plt.tight_layout()
+plt.show()
 
 # %%
 """
@@ -260,12 +284,16 @@ print(f'shape is (rules, runs, data): {np.shape(fore_ion_tof_rawdata)}')
 # %%
 subt_vmi_rawdata = (fore_vmi_rawdata - back_vmi_rawdata)
 
-for rule, collected_data in zip(i0m_filter_rules, subt_vmi_rawdata):
-    fig, axes = plt.subplots(1, len(run_numbers), figsize=(6,2))
-    axes[0].set_ylabel(f'VMI filter rule:\n{rule}')
-    for ax, run_number, data in zip(axes, run_numbers, collected_data):
-        cax = ax.imshow(data, label=f'Run {run_number:03d}')
-        fig.colorbar(cax, ax=ax)
-        ax.set_title(f'Run {run_number:03d}')
-    plt.tight_layout()
-    plt.show()
+show_N_runs = 2
+show_N_rules = 3
+fig, axes = plt.subplots(show_N_rules, show_N_runs, figsize=(6,6))
+for i, (rule, collected_data) in enumerate(zip(i0m_filter_rules, subt_vmi_rawdata)):
+    ax = axes[i]
+    for j, (run_number, data) in enumerate(zip(run_numbers, collected_data)):
+        cax = ax[j].imshow(data, label=f'Run {run_number:03d}')
+        fig.colorbar(cax, ax=ax[j])
+        if i==0: ax[j].set_title(f'Run {run_number:03d}')
+    ax[0].set_ylabel(f'VMI filter rule:\n{rule}')
+# axes[0].set_title(f'Ion TOF spectra\nfilter rule: {i0m_filter_rules[0]}')
+plt.tight_layout()
+plt.show()

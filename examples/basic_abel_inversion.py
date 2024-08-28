@@ -62,10 +62,12 @@ ranges.
 """
 
 # %%
-# BEAMTIME_DIR =  '/net/online4ldm/store/20209112b/results/TestData/'
-BEAMTIME_DIR =  'TestBeamtime/'
+# BEAMTIME_DIR =  '/net/online4ldm/store/20234049/results/Beamtime/'  # expected directory at FERMI
+import pathlib
+current_script_dir = str(pathlib.Path(__file__).parent.resolve())+'/'
+BEAMTIME_DIR =  current_script_dir + 'TestBeamtime/'
 DATA_DIR = BEAMTIME_DIR+'Beamtime/'  # change from fictitious to the real raw data directory!
-SAVE_DIR = BEAMTIME_DIR+'results/evaluation/'#'/net/online4ldm/store/20209134/results/results' # ditto
+SAVE_DIR = BEAMTIME_DIR+'results/evaluation/'#'/net/online4ldm/store/20234049/results/results' # ditto
 
 SAVE_FILES = False
 
@@ -231,7 +233,7 @@ Perform the Abel inversion
 
 # load inversion object
 MAKE_IMAGES = True
-gData = loadG('G_r256_k64_l4_half.h5', make_images=MAKE_IMAGES)
+gData = loadG(current_script_dir+'G_r256_k64_l4_half.h5', make_images=MAKE_IMAGES)
 
 # Apply the pBASEX algorithm
 out = cpbasex_inversion(resized, gData, make_images=MAKE_IMAGES, alpha=4.1e-5, shape='half')

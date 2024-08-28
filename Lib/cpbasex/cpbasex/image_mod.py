@@ -209,7 +209,7 @@ def unfoldHalf(M):
 
 def resizeFoldedHalf(M, r_max):
 	"""
-	Resize a half-folded image to a certain max radius. Final shape (r_max,
+	Resize a half-folded image. Final shape (r_max,
 	2*r_max, ...).
 	"""
 	sx, sy = M.shape[:2]
