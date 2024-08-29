@@ -1,6 +1,6 @@
 # %%
 """
-# Set-up for Intensity-binning analysis
+# Set-up for delay analysis
 """
 
 # %%
@@ -26,6 +26,13 @@ from fermi_libraries.common_functions import (
 from fermi_libraries.calibration_tools import (
     tof_to_mq_conversion, mq_to_tof_conversion, )
 from fermi_libraries.dictionary_search import search_symbols
+import pathlib
+
+# %%
+try:
+    CURRENT_SCRIPT_DIR = str(pathlib.Path(__file__).parent.resolve())+'/'
+except NameError:  # this will happen in .ipynb files
+    CURRENT_SCRIPT_DIR = os.path.abspath('')
 
 # %%
 """
@@ -136,16 +143,19 @@ ranges.
 """
 
 # %%
-# BEAMTIME_DIR =  '/net/online4ldm/store/20209112b/results/TestData/'
-BEAMTIME_DIR =  'TestBeamtime/'
+
+# BEAMTIME_DIR =  '/net/online4ldm/store/20234049/results/Beamtime/'  # expected directory at FERMI
+import pathlib
+current_script_dir = str(pathlib.Path(__file__).parent.resolve())+'/'
+BEAMTIME_DIR =  current_script_dir + 'TestBeamtime/'
 DATA_DIR = BEAMTIME_DIR+'Beamtime/'  # change from fictitious to the real raw data directory!
-SAVE_DIR = BEAMTIME_DIR+'results/evaluation/'#'/net/online4ldm/store/20209134/results/results' # ditto
+SAVE_DIR = BEAMTIME_DIR+'results/evaluation/'#'/net/online4ldm/store/20234049/results/results' # ditto
 
 SAVE_FILES = False
 
 BACKGROUND = True  # Only set to False if you want to sum up everything
 NAMEADD = 'test' # your name here
-run_numbers = np.arange(1,3)
+run_numbers = np.arange(1,5)
 
 
 # variables for data extraction ans rebinning
@@ -153,22 +163,15 @@ ION_TOF_REBIN = 10
 ion_tof_range = (4000, 30000, 1) # select ion tof range for plotting
 new_ion_mq = np.linspace(0.1,200,num=1200)
 
-EON_TOF_REBIN = 1
-eon_tof_range = (4000, 10000, 1)
-new_eKE = np.linspace(0.5, 50, num=400)
-
 ion_tof_slices = [ion_tof_range]
-eon_tof_slices = [eon_tof_range]
 
 raw_ion_tof = np.arange(*ion_tof_slices[0])
 ion_tof = raw_ion_tof[::ION_TOF_REBIN]
-raw_eon_tof = np.arange(*eon_tof_slices[0])
-eon_tof = raw_eon_tof[::EON_TOF_REBIN]
 
 MAKE_CACHE = True
 LOAD_FROM_CACHE = False
 
-calibration_run_number = 1
+CALIBRATION_RUN_NUMBER = 1
 
 print(run_numbers)
 
@@ -180,7 +183,7 @@ Create RunCollection (main data structure), and print location of our save direc
 # %%
 # This block loads all the relevent HDF5 filepaths into their respective Run.
 RunCollection = {}  # We will put all the 'Runs' in thes dictionary
-for run_id in (list(run_numbers) + [calibration_run_number,]):
+for run_id in (list(run_numbers) + [CALIBRATION_RUN_NUMBER,]):
     folderpath = os.path.join(DATA_DIR, f'Run_{run_id:03d}/rawdata')
     filepaths = [folderpath+'/'+filename for filename in os.listdir(folderpath)[::]]
     RunCollection[run_id] = Run(filepaths,
@@ -257,8 +260,8 @@ Ion TOF calibration constants obtained from "tof_to_mq_calibration.ipynb"
 """
 
 # %%
-ion_t0 = 6014.427540823292
-ion_propconst = 7.343920984670405e-07 
+ion_t0 = 6059.316278073492
+ion_propconst = 7.440783535983542e-07 
 ion_constants = ion_t0, ion_propconst
 
 print(f"Using ion constants: (t0, C) = {ion_constants}")
@@ -274,9 +277,6 @@ ax1.legend(bbox_to_anchor=(1.04, 1), borderaxespad=0, ncol = 2)
 ax1.set_xlabel('ion TOF')
 ax1.set_ylabel('ion TOF signal; rebinned (arb.u.)')
 ax1.set_title(f'{run_name}: run averages')
-ax1.set_yscale('log')
-ylim = ax1.set_ylim()
-ax1.set_ylim(ylim[1]*1e-4, ylim[1])
 
 mq_raw_coor, mq_raw_spectrum = tof_to_mq(ion_tof, ion_tof_spec, axis=1)
 mq_coor = np.linspace(0.1, 70, num=1000)
@@ -285,7 +285,7 @@ for (runnumber, mq_spec_i) in zip(run_numbers, mq_spectra):
     ax2.plot(mq_coor, mq_spec_i, label=f"Run_{runnumber:03d}")
 
 ax2.legend(bbox_to_anchor=(1.04, 1), borderaxespad=0, ncol = 2)
-ax2.set_xlabel('mq')
+ax2.set_xlabel('m/q')
 ax2.set_ylabel('ion TOF signal; rebinned (arb.u.)')
 # ax2.set_yscale('log')
 ylim = ax2.set_ylim()
@@ -322,11 +322,13 @@ for runnumber, i0m_run_data in zip(run_numbers, i0m_runset_data):
 ax1.set_ylabel('I0M intensity (uJ)')
 ax1.set_xlabel('shot number')
 ax1.set_title(f'{run_name}: I0M over time')
+ax1.legend()
 #ax1.legend(bbox_to_anchor=(1.04, 1), borderaxespad=0, ncol = 2)
 
 ax2.set_ylabel('binned counts')
 ax2.set_xlabel('I0M (uJ)')
 ax2.set_title(f'{run_name}: Histogram of I0M')
+ax2.legend()
 #ax2.legend(bbox_to_anchor=(1.04, 1), borderaxespad=0, ncol = 2)
 plt.tight_layout()
 
@@ -341,24 +343,35 @@ runset_vmi = BasicRunSet.average_run_data('vmi',back_sep=BACKGROUND,
 fore_vmi, back_vmi = simplify_data(runset_vmi, single_rule=True, single_run=False)
 
 # %%
+
+delays = BasicRunSet.average_run_data('delay',back_sep=False,
+                                    make_cache=False, use_cache=False)
+delays, *_ = simplify_data(delays, single_rule=True, single_run=False)
+delays = np.squeeze(delays)
+print(delays)
+
+# %%
 """
 Show VMI and resizing
 """
 
 # %%
-from cpbasex import loadG, cpbasex as cpbasex_inversion
+from cpbasex import loadG
+from cpbasex import cpbasex as cpbasex_inversion, cpbasex_energy as cpbasex_energy_inversion
 from cpbasex.image_mod import resizeFoldedHalf, foldHalf
 
 sub_vmi = fore_vmi - back_vmi
 sub_vmi = sub_vmi.transpose(1,2,0)
 print(np.shape(sub_vmi))
 plt.imshow(sub_vmi[:,:,0])
+plt.title(f'VMI of Run {run_numbers[0]:03d}')
 plt.show()
 
 rebinned_vmi = rebinning(np.linspace(0, 900, 512), np.arange(900), sub_vmi, axis=1)
 rebinned_vmi = rebinning(np.linspace(0, 900, 512), np.arange(900), rebinned_vmi, axis=0)
 
 plt.imshow(rebinned_vmi[:,:,0])
+plt.title(f'rebinned VMI of Run {run_numbers[0]:03d}')
 plt.grid()
 plt.show()
 
@@ -386,7 +399,7 @@ Apply the pBASEX algorithm
 """
 
 # %%
-out = cpbasex_inversion(resized, gData, make_images=True, alpha=4.1e-5, shape='half')
+out = cpbasex_energy_inversion(resized, gData, make_images=True, alpha=1, shape='half')
 
 raw = rebinned_vmi
 
@@ -396,52 +409,12 @@ Plot the results
 """
 
 # %%
-plt.figure(figsize=(12,9))
-for i, sample in enumerate(np.arange(np.shape(folded)[2])):
-	plt.subplot(4,5,5*i+1)
-	plt.imshow(raw[:,:,i])
-	plt.xticks([])
-	plt.yticks([])
-	plt.ylabel(sample)
-	clim = plt.gci().get_clim()
-	plt.clim(0,clim[1])
-	if i==0:
-		plt.title('Raw Image')
-	plt.subplot(4,5,5*i+2)
-	plt.plot(out['E'], out['IE'][:,i], 'k')
-	plt.gca().ticklabel_format(axis='y', style='sci', scilimits=(-2,2))
-	if i==3:
-		plt.xlabel('Energy (eV)')
-	plt.gca().twinx()
-	plt.plot(out['E'], out['betas'][:,:,i], '.', markersize=5, alpha=0.6)
-	if i==0:
-		# plt.text(-3, 3.5, 'counts per eV', size='small')
-		# plt.text(12, 3.5, 'beta', size='small')
-		# plt.text(3.5, 3.25, 'I(E), ', color='black', size='large')
-		# plt.text(6, 3.25, 'B2', color=u'#1f77b4', size='large')
-		# plt.text(7.5, 3.25, ', ', color='black', size='large')
-		# plt.text(8, 3.25, 'B4', color=u'#ff7f0e', size='large')
-		pass
-	plt.ylim(-1,3)
-	plt.subplot(4,5,5*i+3)
-	plt.imshow(out['fit'][:,:,i]/2)
-	plt.xticks([])
-	plt.yticks([])
-	plt.clim(0,clim[1])
-	if i==0:
-		plt.title('Fitted Image')
-	plt.subplot(4,5,5*i+4)
-	plt.imshow(out['fit'][:,:,i]/2-raw[:,:,i])
-	plt.xticks([])
-	plt.yticks([])
-	if i==0:
-		plt.title('Fit Residual')
-	plt.subplot(4,5,5*i+5)
-	plt.imshow(out['inv'][:,:,i]/2)
-	plt.xticks([])
-	plt.yticks([])
-	plt.clim(0,clim[1]/5)
-	if i==0:
-		plt.title('Inverted Image')
-plt.tight_layout()
+energy_cal_constant = 1e-4
+energies = out['E'] * energy_cal_constant
+pes = out['IE'] / energy_cal_constant
+plt.pcolormesh(delays, energies, pes)
+plt.xlabel('delay (fs)')
+plt.ylabel('eKE (eV)')
+plt.title(f'PES for Runs {run_numbers[0]:03d}-{run_numbers[-1]:03d}')
+plt.colorbar()
 plt.show()

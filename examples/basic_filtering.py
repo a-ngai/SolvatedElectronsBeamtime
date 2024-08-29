@@ -15,13 +15,19 @@ import os
 
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib import colormaps
 from fermi_libraries.run_module import Run, RunSets
 from fermi_libraries.common_functions import (
     rebinning, simplify_data, name_from_runs, set_recursion_limit)
 from fermi_libraries.calibration_tools import (
     tof_to_mq_conversion, mq_to_tof_conversion)
 from fermi_libraries.dictionary_search import search_symbols
+import pathlib
+
+# %%
+try:
+    CURRENT_SCRIPT_DIR = str(pathlib.Path(__file__).parent.resolve())+'/'
+except NameError:  # this will happen in .ipynb files
+    CURRENT_SCRIPT_DIR = os.path.abspath('')
 
 # %%
 """
@@ -109,7 +115,7 @@ ion_tof = raw_ion_tof[::ION_TOF_REBIN]
 MAKE_CACHE = True
 LOAD_FROM_CACHE = False
 
-calibration_run_number = 1
+CALIBRATION_RUN_NUMBER = 1
 
 print(run_numbers)
 
@@ -121,7 +127,7 @@ Create RunCollection (main data structure), and print location of our save direc
 # %%
 # This block loads all the relevent HDF5 filepaths into their respective Run.
 RunCollection = {}  # We will put all the 'Runs' in thes dictionary
-for run_id in (list(run_numbers) + [calibration_run_number,]):
+for run_id in (list(run_numbers) + [CALIBRATION_RUN_NUMBER,]):
     folderpath = os.path.join(DATA_DIR, f'Run_{run_id:03d}/rawdata')
     filepaths = [folderpath+'/'+filename for filename in os.listdir(folderpath)[::]]
     RunCollection[run_id] = Run(filepaths,

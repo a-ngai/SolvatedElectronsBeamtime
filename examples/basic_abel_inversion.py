@@ -15,12 +15,20 @@ from matplotlib import colormaps
 cmap = colormaps.get_cmap('plasma')
 from fermi_libraries.run_module import Run, RunSets
 from fermi_libraries.common_functions import (
-    rebinning, simplify_data, 
+    rebinning, simplify_data, weighted_linear_regression,
     name_from_runs,
     set_default_labels,
     set_recursion_limit,
+    closest,
     )
 from fermi_libraries.dictionary_search import search_symbols
+import pathlib
+
+# %%
+try:
+    CURRENT_SCRIPT_DIR = str(pathlib.Path(__file__).parent.resolve())+'/'
+except NameError:  # this will happen in .ipynb files
+    CURRENT_SCRIPT_DIR = os.path.abspath('')
 
 # %%
 """
@@ -63,11 +71,9 @@ ranges.
 
 # %%
 # BEAMTIME_DIR =  '/net/online4ldm/store/20234049/results/Beamtime/'  # expected directory at FERMI
-import pathlib
-current_script_dir = str(pathlib.Path(__file__).parent.resolve())+'/'
-BEAMTIME_DIR =  current_script_dir + 'TestBeamtime/'
-DATA_DIR = BEAMTIME_DIR+'Beamtime/'  # change from fictitious to the real raw data directory!
-SAVE_DIR = BEAMTIME_DIR+'results/evaluation/'#'/net/online4ldm/store/20234049/results/results' # ditto
+BEAMTIME_DIR =  f'{CURRENT_SCRIPT_DIR}/TestBeamtime/'
+DATA_DIR = f'{BEAMTIME_DIR}/Beamtime/'  # change from fictitious to the real raw data directory!
+SAVE_DIR = f'{BEAMTIME_DIR}/results/evaluation/'#'/net/online4ldm/store/20234049/results/results' # ditto
 
 SAVE_FILES = False
 
@@ -78,7 +84,7 @@ run_numbers = np.arange(1,3)
 MAKE_CACHE = True
 LOAD_FROM_CACHE = False
 
-calibration_run_number = 1
+CALIBRATION_RUN_NUMBER = 1
 
 print(run_numbers)
 
@@ -90,7 +96,7 @@ Create RunCollection (main data structure), and print location of our save direc
 # %%
 # This block loads all the relevent HDF5 filepaths into their respective Run.
 RunCollection = {}  # We will put all the 'Runs' in thes dictionary
-for run_id in (list(run_numbers) + [calibration_run_number,]):
+for run_id in (list(run_numbers) + [CALIBRATION_RUN_NUMBER,]):
     folderpath = os.path.join(DATA_DIR, f'Run_{run_id:03d}/rawdata')
     filepaths = [folderpath+'/'+filename for filename in os.listdir(folderpath)[::]]
     RunCollection[run_id] = Run(filepaths,
@@ -109,6 +115,8 @@ run_string = name_from_runs(run_numbers)
 prefix = os.path.join(SAVE_DIR, run_string)
 outdir = (prefix + '_' + NAMEADD).rstrip('_')
 print(f'Save directory: ...{outdir[30:]}')
+
+CalibrationRun = RunCollection[CALIBRATION_RUN_NUMBER]
 
 # %%
 """
@@ -147,7 +155,8 @@ Show the VMI images
 
 # %%
 
-from cpbasex import resizeFoldedHalf, foldHalf, loadG, cpbasex as cpbasex_inversion
+from cpbasex import resizeFoldedHalf, foldHalf, loadG
+from cpbasex import cpbasex as cpbasex_inversion, cpbasex_energy as cpbasex_energy_inversion
 from cpbasex.image_mod import resize
 
 sub_vmi = fore_vmi - back_vmi
@@ -170,7 +179,7 @@ plt.show()
 
 # %%
 """
-Correcting the VMI images
+Correct the VMI images for rotation, stretching, and centering
 """
 
 # %%
@@ -202,11 +211,6 @@ plt.show()
 
 corrected = [stretch(rotate(center_image(image, guess_cen), guess_rot), [1,1.1]) for image in vmi]
 
-if False: # to make image correction easier, these should "commute"
-    find_rotation()
-    find_ellipticity()
-    find_center()
-
 # %%
 """
 Fold the VMI images in preparation for the Abel inversion
@@ -226,52 +230,123 @@ plt.show()
 
 # %%
 """
-Perform the Abel inversion
+Load the (large) Abel inversion object
 """
 
 # %%
 
 # load inversion object
 MAKE_IMAGES = True
-gData = loadG(current_script_dir+'G_r256_k64_l4_half.h5', make_images=MAKE_IMAGES)
+gData = loadG(f'{CURRENT_SCRIPT_DIR}/G_r256_k64_l4_half.h5', make_images=MAKE_IMAGES)
 
-# Apply the pBASEX algorithm
-out = cpbasex_inversion(resized, gData, make_images=MAKE_IMAGES, alpha=4.1e-5, shape='half')
-energy, pes, betas, c = out['E'], out['IE'], out['betas'], out['c']
-if MAKE_IMAGES: fit, inv = out['fit'], out['inv']
+# %%
+"""
+Perform the Abel inversion
+"""
 
-raw = vmi
+# %%
+out = cpbasex_energy_inversion(resized, gData, make_images=MAKE_IMAGES, shape='half')
+
+# %%
+"""
+Look at the Abel inversion in radial-coordinates, to determine the energy calibration
+"""
+
+# %%
+rsquare = out['E']
+rsquare_spectrum = out['IE']
+betas = out['betas']
+
+cal_rsquare_coor = rsquare
+cal_rsquare_spec = rsquare_spectrum[:,0]  # use first image for energy calibration
+
+rsquare_energy_points = np.array([
+    [12000, 1],
+    [38000, 2],
+    [45000, 3],
+])
+
+slope, *_ = weighted_linear_regression(*rsquare_energy_points.T, zero_intercept=True)
+rsquare_points, energy_points = rsquare_energy_points.T
+
+rsquare_to_energy = lambda x: slope * x
+energies = rsquare_to_energy(rsquare)
+pes = rsquare_spectrum / slope # jacobian correction
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(6,3))
+ax1.plot(cal_rsquare_coor, cal_rsquare_spec)
+ax1.plot(rsquare_points, cal_rsquare_spec[closest(rsquare_points, cal_rsquare_coor)], marker='v', linestyle='')
+ax1.set_xlabel(f'r$^{2}$')
+ax1.set_ylabel(f'radial-squared density (arb.u.)')
+ax1.set_title(f'radial-squared distribution')
+# set_default_labels(ax1, title='calibration points', xlabel='tof (ns)', ylabel='tof (ns)')
+# set_default_labels(ax2, title='calibration fit', xlabel='tof (ns)', ylabel='m/q')
+ax1.grid()
+ax2.plot(rsquare_points, energy_points, linestyle='', marker='o')
+ax2.plot(rsquare_points, rsquare_points*slope)
+ax2.plot(rsquare, rsquare_to_energy(rsquare), color='black')
+ax2.set_xlabel(r'r$^{2}$')
+ax2.set_ylabel(r'KE (eV)')
+ax2.set_title('calibration fit')
+ax2.set_ylim(0, None)
+ax2.set_xlim(0, None)
+plt.tight_layout()
+plt.show()
+
+
+# %%
+"""
+Example of plotting all PES together in a 2D plot
+"""
+
+# %%
+
+fig, ax = plt.subplots(1,1, figsize=(6,4))
+cax = ax.pcolormesh(np.arange(len(run_numbers)), energies, pes)
+ax.set_xticks(np.arange(len(run_numbers)))
+ax.set_xticklabels([f'Run {run_number:03d}' for run_number in run_numbers], rotation=90)
+ax.set_ylabel('eKE (eV)')
+ax.set_title(f'PES for Runs {run_numbers[0]:03d}-{run_numbers[-1]:03d}')
+fig.colorbar(cax, ax=ax)
+plt.tight_layout()
+plt.show()
+
+# %%
+"""
+Some other things you could look at.
+Raw image, PES (with B2 and B4 parameters), least-squares fit, fit residual, and inverted image.
+"""
+
+# %%
+
+from fermi_libraries.common_functions import get_colour
 
 Nimages = np.shape(vmi)[2]
 fig, axes = plt.subplots(Nimages, 5, figsize=(14,5))
-axes[0][0].set_title('Raw Image')
+axes[0][0].set_title('vmi Image')
 axes[-1][1].set_xlabel('Energy (eV)')
 axes[0][2].set_title('Fitted Image')
 axes[0][3].set_title('Fit Residual')
 axes[0][4].set_title('Inverted Image')
-for i in range(Nimages):
+for i, run_number in zip(range(Nimages), run_numbers):
     ax = axes[i]
-    cax0 = ax[0].imshow(raw[:,:,i])
+    cax0 = ax[0].imshow(vmi[:,:,i])
     clim = cax0.get_clim()
     fig.colorbar(cax0, ax=ax[0])
-    ax[0].set_ylabel(i)
-    ax[1].plot(out['E'], out['IE'][:,i], 'k')
+    ax[0].set_ylabel(f'Run {run_number:03d}')
+    ax[1].plot(energies, pes[:,i], 'k')
     axbetas = ax[1].twinx()
     axbetas.set_ylim(-2,2)
-    axbetas.plot(out['E'], out['betas'][:,:,i], '.', markersize=5, alpha=0.6)
-	# plt.gca().ticklabel_format(axis='y', style='sci', scilimits=(-2,2))
+    axbetas.plot(energies, betas[:,:,i], '.', markersize=5, alpha=0.6)
     if i==0:
-		# plt.text(-3, 3.5, 'counts per eV', size='small')
-		# plt.text(12, 3.5, 'beta', size='small')
-		# plt.text(3.5, 3.25, 'I(E), ', color='black', size='large')
-		# plt.text(6, 3.25, 'B2', color=u'#1f77b4', size='large')
-		# plt.text(7.5, 3.25, ', ', color='black', size='large')
-		# plt.text(8, 3.25, 'B4', color=u'#ff7f0e', size='large')
+        plt.text(0.1, 1.1, 'I(E)', color='black', ha='center', va='center', transform=ax[1].transAxes, fontsize=14)
+        plt.text(0.3, 1.1, 'B2', color=get_colour(0), ha='center', va='center', transform=ax[1].transAxes, fontsize=14)
+        plt.text(0.5, 1.1, 'B4', color=get_colour(1), ha='center', va='center', transform=ax[1].transAxes, fontsize=14)
         pass
     cax2 = ax[2].imshow(out['fit'][:,:,i]/2)
     cax2.set_clim(0,clim[1])
     fig.colorbar(cax2, ax=ax[2])
-    cax3 = ax[3].imshow(out['fit'][:,:,i]/2-raw[:,:,i])
+    cax3 = ax[3].imshow(out['fit'][:,:,i]/2-vmi[:,:,i])
     # cax4.set_clim(0,clim[1]/5)
     fig.colorbar(cax3, ax=ax[3])
     cax4 = ax[4].imshow(out['inv'][:,:,i]/2)

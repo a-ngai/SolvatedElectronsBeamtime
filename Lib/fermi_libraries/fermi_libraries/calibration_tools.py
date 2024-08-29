@@ -62,7 +62,7 @@ def get_tof_mq_constants(peaks=None, constants=None):
         propconst = 1/slope**2
 
     calibration_constants = timezero, propconst
-    if np.isnan(calibration_constants):
+    if np.isnan(calibration_constants).any():
         raise ValueError(f'nan found in calibration constants {calibration_constants}')
 
     return timezero, propconst

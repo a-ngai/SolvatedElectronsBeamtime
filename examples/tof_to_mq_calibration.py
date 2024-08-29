@@ -24,9 +24,16 @@ from fermi_libraries.calibration_tools import (
     tof_mq_calibration, tof_to_mq_conversion, mq_to_tof_conversion, 
     tof_mq_coordinate_func, mq_tof_coordinate_func)
 from fermi_libraries.dictionary_search import search_symbols
+import pathlib
 
 def keyword_functions(keyword, aliasFunc, DictionaryObject):
     return DictionaryObject[aliasFunc(keyword)]
+
+# %%
+try:
+    CURRENT_SCRIPT_DIR = str(pathlib.Path(__file__).parent.resolve())+'/'
+except NameError:  # this will happen in .ipynb files
+    CURRENT_SCRIPT_DIR = os.path.abspath('')
 
 # %%
 """
@@ -76,15 +83,16 @@ ranges.
 """
 
 # %%
-# BEAMTIME_DIR =  '/net/online4ldm/store/20209112b/results/TestData/'
-BEAMTIME_DIR =  'TestBeamtime/'
-DATA_DIR = BEAMTIME_DIR+'Beamtime/'  # change from fictitious to the real raw data directory!
-SAVE_DIR = BEAMTIME_DIR+'results/evaluation/'#'/net/online4ldm/store/20209134/results/results' # ditto
+# BEAMTIME_DIR =  '/net/online4ldm/store/20234049/results/Beamtime/'  # expected directory at FERMI
+BEAMTIME_DIR =  f'{CURRENT_SCRIPT_DIR}/TestBeamtime/'
+DATA_DIR = f'{BEAMTIME_DIR}/Beamtime/'  # change from fictitious to the real raw data directory!
+SAVE_DIR = f'{BEAMTIME_DIR}/results/evaluation/'#'/net/online4ldm/store/20234049/results/results' # ditto
+
 
 SAVE_FILES = False
 
 NAMEADD = 'test' # your name here
-run_numbers = np.arange(1,3)  # Run numbers to be analyzed in this script
+run_numbers = np.arange(1,5)  # Run numbers to be analyzed in this script
 
 ION_TOF_REBIN = 5  # rebinning factor for data visualization
 ion_tof_range = (4000, 30000, 1) # select ion tof range for extraction
