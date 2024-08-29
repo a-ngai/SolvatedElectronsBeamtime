@@ -1,7 +1,6 @@
 '''
 Current status: the image_shape='quadrant' option works (which is what pbasex
-does). The image_shape='half' option doesn't work, code snippets are still
-testing the behaviour of this option.
+does).
 '''
 
 # %%
