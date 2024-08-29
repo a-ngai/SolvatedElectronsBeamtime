@@ -5,14 +5,20 @@
 Python3 is required, as well as Python's pip for install modules. Install the necessary modules through pip, which includes our custom libraries:
 > pip install -r requirements.txt
 
+Run either "save_gdata.py" or "save_gdata.ipynb". For the .py file, use:
+
+> python save_gdata.py
+
+\*This may take a few minutes\*. This script generates the CPBASEX data, and the output will be saved as e.g. "G_r256_k64_l4_half.h5". **If you do not run this, the abel inversion scripts will not work**
+
 ### What to look at
 
-
+In order of complexity:
 
 1. tof_to_mq_calibration.ipynb
 2. basic_filtering.ipynb
 3. basic_abel_inversion.ipynb
-4. basic_data_extraction.ipynb
+4. basic_delay_analysis.ipynb
 
 
 # Introduction

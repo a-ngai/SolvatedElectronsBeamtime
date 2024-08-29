@@ -24,12 +24,10 @@ image_shape = 'half'
 gData['x'] = np.arange(nx, dtype='double')-0.5 # we should have 0 = x[0] - 0.5*xstep 
 
 if k_spacing=='linear':
-
 	gData['k'] = np.arange(0, nx, xkratio) + 0.5 * (xkratio - 1)
 	gData['params'] = 0.7 * xkratio # Gaussian width
 
 elif k_spacing=='quadratic':
-
 	gData['k'] = np.sqrt(np.linspace(0, (nx-1)**2, nx))
 	gData['params'] = xkratio
 
@@ -38,26 +36,28 @@ gData['l'] = l_values
 if gData['rBF'] == 'custom':
 
 	def rBF(r, k, params):
-
 		return 1/((r-k)**2+(params/2)**2) # Lorentzian basis function
 
 	def zIP(r, k, params):
-
 		return np.sqrt((np.sqrt(max(0, 10-(params/2)**2)) + k)**2 - r**2)
 
 	trapz_step = 0.1
-
 	custom_rBF = (rBF, zIP, trapz_step)
 
 else:
-
 	custom_rBF = None
 
 np.seterr("ignore")
 
 t0 = time.time()
 
+print('Setting up CPBASEX for half-images')
 get_gData(gData, save_path=save_path, save_dir=save_dir, custom_rBF=custom_rBF, nProc=1, shape='half')
+print('CPBASEX for half-images completed!')
+print()
+print('Setting up CPBASEX for quarter-images')
 get_gData(gData, save_path=save_path, save_dir=save_dir, custom_rBF=custom_rBF, nProc=1, shape='quadrant')
+print('Setting up CPBASEX for quarter-completed!')
+print()
 
 print(time.time()-t0, "seconds elapsed")
