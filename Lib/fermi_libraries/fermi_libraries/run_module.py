@@ -794,7 +794,9 @@ class Run:
         for split_data, split_count in zip(compiled_data, compiled_count):
             data_dim = np.ndim(split_data)
             match_dim_split_count = np.expand_dims(split_count, axis=[-(i+1) for i in range(data_dim-2)])
-            run_average.append(np.sum(split_data, axis=0)/np.sum(match_dim_split_count, axis=0))
+            divisor = np.sum(match_dim_split_count, axis=0)
+            divisor[divisor==0]=1
+            run_average.append(np.sum(split_data, axis=0)/divisor)
             run_weight.append(np.sum(split_count, axis=0))
 
         if make_cache and self.filepaths:

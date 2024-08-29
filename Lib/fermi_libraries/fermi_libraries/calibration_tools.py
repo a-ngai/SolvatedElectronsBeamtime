@@ -46,23 +46,20 @@ def get_tof_mq_constants(peaks=None, constants=None):
         try:
             length = len(constants)
         except TypeError:
-            raise AssertionError(f"keyword 'constants' ({constants}) must be of form (T0, C)")
+            raise ValueError(f"keyword 'constants' ({constants}) must be of form (T0, C)")
         if length != 2:
-            raise AssertionError(f"keyword 'constants' length ({len(constants)}) must have length 2")
+            raise ValueError(f"keyword 'constants' length ({len(constants)}) must have length 2")
         timezero, propconst = constants
     elif peaks is not None:
         if np.ndim(peaks) != 2:
-            raise AssertionError(f"keyword 'peaks' dimension ({np.ndim(peaks)}) must have dimension 2")
+            raise ValueError(f"keyword 'peaks' dimension ({np.ndim(peaks)}) must have dimension 2")
 
         tof_peaks, mq_peaks = np.transpose(peaks)
         if len(peaks)==1:
-            (tof1), (mq1) = tof_peaks, mq_peaks
-            timezero = 0
-            propconst = mq1/tof1**2
-        else:
-            slope, const = weighted_linear_regression(np.sqrt(mq_peaks), tof_peaks)
-            timezero = const
-            propconst = 1/slope**2
+            tof_peaks, mq_peaks = np.concatenate(([0,], tof_peaks)), np.concatenate(([0,], mq_peaks))
+        slope, const = weighted_linear_regression(np.sqrt(mq_peaks), tof_peaks)
+        timezero = const
+        propconst = 1/slope**2
 
     calibration_constants = timezero, propconst
     if np.isnan(calibration_constants):

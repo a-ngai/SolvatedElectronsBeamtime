@@ -7,7 +7,6 @@ from matplotlib import ticker
 from scipy.integrate import cumulative_simpson
 from scipy.interpolate import interp1d
 import scipy.constants as spc
-from functools import wraps
 from scipy.special import erf
 
 def transpose_axis_to_zero(y, axis=None):
