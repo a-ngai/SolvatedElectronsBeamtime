@@ -155,7 +155,7 @@ SAVE_FILES = False
 
 BACKGROUND = True  # Only set to False if you want to sum up everything
 NAMEADD = 'test' # your name here
-run_numbers = np.arange(1,5)
+run_numbers = np.arange(1,3)
 
 
 # variables for data extraction ans rebinning

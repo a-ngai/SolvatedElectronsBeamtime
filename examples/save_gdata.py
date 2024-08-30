@@ -1,7 +1,13 @@
-'''
-Current status: the image_shape='quadrant' option works (which is what pbasex
-does).
-'''
+# %%
+"""
+Run this to get the Abel inversion data. 
+
+**Multi-threading**: Note that when running the get_gData() function, the nProc
+keyword determines how many CPU cores will be used in parallel. If more than
+one is used, there is a chance that Windows Defender will randomly cause them
+to freeze! So if you see a large CPU usage from Windows Defenter or some other
+antivirus program, it's better to restart this program and use only one core.
+"""
 
 # %%
 import numpy as np
@@ -18,55 +24,51 @@ except NameError:  # this will happen in .ipynb files
 
 # %%
 # Settings
+
+INVERSION_FOR_HALF_IMAGES = True
+INVERSION_FOR_QUADRANT_IMAGES = False
+
 save_path = None # Automatic file naming if none
 save_dir = CURRENT_SCRIPT_DIR # Directory to save the data
 nx = 256  # 512x256 half-image, or 256x256 quadrant
 xkratio = 4 # Ratio of radial basis functions to pixel radii
 l_values = np.arange(5) # Up to l=4
 l_values = np.arange(0, 5, 2) # Up to l=4, even l only
-k_spacing = 'linear' # Even pixel or energy bins
 gData = {}
 gData['rBF'] = 'gauss' # Gaussian basis function
-image_shape = 'half'
 
+# %%
 # Set up the parameters
 gData['x'] = np.arange(nx, dtype='double')-0.5 # we should have 0 = x[0] - 0.5*xstep 
 
-if k_spacing=='linear':
-	gData['k'] = np.arange(0, nx, xkratio) + 0.5 * (xkratio - 1)
-	gData['params'] = 0.7 * xkratio # Gaussian width
-
-elif k_spacing=='quadratic':
-	gData['k'] = np.sqrt(np.linspace(0, (nx-1)**2, nx))
-	gData['params'] = xkratio
-
+# linear k-spacing
+gData['k'] = np.arange(0, nx, xkratio) + 0.5 * (xkratio - 1)
+gData['params'] = 0.7 * xkratio # Gaussian width
 gData['l'] = l_values
 
 if gData['rBF'] == 'custom':
-
 	def rBF(r, k, params):
 		return 1/((r-k)**2+(params/2)**2) # Lorentzian basis function
-
 	def zIP(r, k, params):
 		return np.sqrt((np.sqrt(max(0, 10-(params/2)**2)) + k)**2 - r**2)
-
 	trapz_step = 0.1
 	custom_rBF = (rBF, zIP, trapz_step)
-
 else:
 	custom_rBF = None
-
 np.seterr("ignore")
 
 t0 = time.time()
 
-print('Setting up CPBASEX for half-images')
-get_gData(gData, save_path=save_path, save_dir=save_dir, custom_rBF=custom_rBF, nProc=1, shape='half')
-print('CPBASEX for half-images completed!')
-print()
-print('Setting up CPBASEX for quarter-images')
-get_gData(gData, save_path=save_path, save_dir=save_dir, custom_rBF=custom_rBF, nProc=1, shape='quadrant')
-print('Setting up CPBASEX for quarter-completed!')
-print()
+if INVERSION_FOR_HALF_IMAGES:
+	print('Setting up CPBASEX for half-images')
+	get_gData(gData, save_path=save_path, save_dir=save_dir, custom_rBF=custom_rBF, nProc=1, shape='half')
+	print('CPBASEX for half-images completed!')
+	print()
+
+if INVERSION_FOR_QUADRANT_IMAGES:
+	print('Setting up CPBASEX for quarter-images')
+	get_gData(gData, save_path=save_path, save_dir=save_dir, custom_rBF=custom_rBF, nProc=1, shape='quadrant')
+	print('Setting up CPBASEX for quarter-completed!')
+	print()
 
 print(time.time()-t0, "seconds elapsed")

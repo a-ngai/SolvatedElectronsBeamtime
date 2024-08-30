@@ -30,10 +30,11 @@ Run either "save_gdata.py" or "save_gdata.ipynb". For the .py file, you can run 
 
 In order of complexity:
 
-1. tof_to_mq_calibration.ipynb
-2. basic_filtering.ipynb
-3. basic_abel_inversion.ipynb
-4. basic_delay_analysis.ipynb
+1. basic_tutorial.ipynb
+2. tof_to_mq_calibration.ipynb
+3. basic_filtering.ipynb
+4. basic_abel_inversion.ipynb
+5. basic_delay_analysis.ipynb
 
 
 # Introduction
@@ -49,10 +50,11 @@ transform raw velocity-map-imaging (VMI) images into photoelectron spectra
 
 To understand the scripts, I recommend looking at the scripts in increasing order of complexity:
 
-1. tof_to_mq_calibration.ipynb
-2. basic_filtering.ipynb
-3. basic_abel_inversion.ipynb
-4. basic_data_extraction.ipynb
+1. basic_tutorial.ipynb
+2. tof_to_mq_calibration.ipynb
+3. basic_filtering.ipynb
+4. basic_abel_inversion.ipynb
+5. basic_delay_analysis.ipynb
 
 If the .ipynb are too annoying to use, you can also look at the .py versions of these scripts in the IDE of your choice (I recommend either Spyder for a simple standalone installation, or VScode for more feature-richness). These .py files were used to generate the .ipynb files through ipynb-py-convert library. **HOWEVER**, conventional online data analysis is done using Jupyter Labs hosted on the FERMI server, where we do use only .ipynb files. So I recommend you to at least get used to this format.
 

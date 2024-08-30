@@ -58,15 +58,8 @@ alias_dict = {
     'ion_tof' : 'digitizer/channel1',
     'delay' : 'user_laser/delay_line/position',
     'slu' : 'user_laser/energy_meter/Energy2',
-    'fel_spectrometer' : 'photon_diagnostics/Spectrometer/hor_spectrum',
-    'fel_wavelength' : 'photon_source/FEL01/wavelength',
-    'seed_spectrometer' : 'photon_source/SeedLaserSpectrum_FEL01/WaveMeta',
-    'seed_wavelength' : 'photon_source/SeedLaser/Wavelength',
-    'seed_wavelengths' : 'photon_source/SeedLaserSpectrum_FEL01/LambdaMeta',
     'harmonic_number' : 'photon_source/FEL01/harmonic_number',
     'bunch_number' : 'bunches',
-    'pressure' : 'photon_diagnostics/FEL01/Gas_Attenuator/Pressure',
-    'poletto' : 'cosp/HorSpectrum',
     }
 
 # %%
