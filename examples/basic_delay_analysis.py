@@ -391,7 +391,8 @@ Load Abel inversion data
 """
 
 # %%
-gData = loadG('G_r256_k64_l4_half.h5', make_images=True)
+MAKE_IMAGES = True
+gData = loadG(f'{CURRENT_SCRIPT_DIR}/G_r256_k64_l4_half.h5', make_images=MAKE_IMAGES)
 
 # %%
 """

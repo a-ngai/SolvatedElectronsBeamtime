@@ -7,10 +7,19 @@ does).
 import numpy as np
 import time
 from cpbasex.gData import get_gData
+import os
+import pathlib
 
+# %%
+try:
+    CURRENT_SCRIPT_DIR = str(pathlib.Path(__file__).parent.resolve())+'/'
+except NameError:  # this will happen in .ipynb files
+    CURRENT_SCRIPT_DIR = os.path.abspath('')
+
+# %%
 # Settings
 save_path = None # Automatic file naming if none
-save_dir = None # Directory to save the data
+save_dir = CURRENT_SCRIPT_DIR # Directory to save the data
 nx = 256  # 512x256 half-image, or 256x256 quadrant
 xkratio = 4 # Ratio of radial basis functions to pixel radii
 l_values = np.arange(5) # Up to l=4
