@@ -89,11 +89,9 @@ ranges.
 
 # %%
 # BEAMTIME_DIR =  '/net/online4ldm/store/20234049/results/Beamtime/'  # expected directory at FERMI
-import pathlib
-current_script_dir = str(pathlib.Path(__file__).parent.resolve())+'/'
-BEAMTIME_DIR =  current_script_dir + 'TestBeamtime/'
-DATA_DIR = BEAMTIME_DIR+'Beamtime/'  # change from fictitious to the real raw data directory!
-SAVE_DIR = BEAMTIME_DIR+'results/evaluation/'#'/net/online4ldm/store/20234049/results/results' # ditto
+BEAMTIME_DIR =  f'{CURRENT_SCRIPT_DIR}/TestBeamtime/'
+DATA_DIR = f'{BEAMTIME_DIR}/Beamtime/'  # change from fictitious to the real raw data directory!
+SAVE_DIR = f'{BEAMTIME_DIR}/results/evaluation/'#'/net/online4ldm/store/20234049/results/results' # ditto
 
 SAVE_FILES = False
 
