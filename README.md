@@ -1,11 +1,26 @@
 # Quick start guide
 
-### How to install
+### How to set up Python and modules through Terminal
 
-Python3 is required, as well as Python's pip for install modules. Install the necessary modules through pip, which includes our custom libraries:
+Python3 is required, as well as Python's pip for install modules. To install python, you can use the installer provided at "https://www.python.org/downloads/". Make sure Python is properly installed, by running the following command on the terminal of your choosing (e.g. cmd or PowerShell for Windows):
+
+> python
+
+If python is not found, make sure you add the location of the "python.exe" file into the __PATH__ of your system (search online for "How to add a folder to PATH"; for Windows it's called "ENVIRONMENT VARIABLES").
+
+Once Python is properly installed, use your terminal to go into our data analysis folder which you downloaded (e.g. the "cd" change directory command for CMD). You should see 4 items there:
+
+- examples/
+- Lib/
+- requirements.txt
+- README.md (you're here!)
+
+Now install the necessary modules through pip, which includes our custom libraries:
 > pip install -r requirements.txt
 
-Run either "save_gdata.py" or "save_gdata.ipynb". For the .py file, use:
+### Run a preliminary script
+
+Run either "save_gdata.py" or "save_gdata.ipynb". For the .py file, you can run it through the terminal as:
 
 > python save_gdata.py
 

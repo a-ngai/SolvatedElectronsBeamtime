@@ -6,7 +6,7 @@ does).
 # %%
 import numpy as np
 import time
-from cpbasex import get_gData
+from cpbasex.gData import get_gData
 
 # Settings
 save_path = None # Automatic file naming if none
