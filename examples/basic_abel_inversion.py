@@ -155,9 +155,9 @@ Show the VMI images
 
 # %%
 
-from cpbasex import resizeFoldedHalf, foldHalf, loadG
-from cpbasex import cpbasex as cpbasex_inversion, cpbasex_energy as cpbasex_energy_inversion
-from cpbasex.image_mod import resize
+from cpbasex.cpbasex import cpbasex as cpbasex_inversion, cpbasex_energy as cpbasex_energy_inversion
+from cpbasex.gData import loadG
+from cpbasex.image_mod import resize, resizeFoldedHalf, foldHalf
 
 sub_vmi = fore_vmi - back_vmi
 sub_vmi = sub_vmi.transpose(1,2,0)

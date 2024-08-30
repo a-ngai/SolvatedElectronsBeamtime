@@ -356,8 +356,8 @@ Show VMI and resizing
 """
 
 # %%
-from cpbasex import loadG
-from cpbasex import cpbasex as cpbasex_inversion, cpbasex_energy as cpbasex_energy_inversion
+from cpbasex.gData import loadG
+from cpbasex.cpbasex import cpbasex as cpbasex_inversion, cpbasex_energy as cpbasex_energy_inversion
 from cpbasex.image_mod import resizeFoldedHalf, foldHalf
 
 sub_vmi = fore_vmi - back_vmi
