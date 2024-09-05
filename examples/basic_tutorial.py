@@ -181,7 +181,10 @@ for run_id in (list(run_numbers) + [CALIBRATION_RUN_NUMBER,]):
                                 keyword_functions=keyword_functions,
                                 )  # create a Run object with its respective filepaths
 
-# This creates a set out of the run_numbers selected above
+# This is a single Run object
+CalibrationRun = RunCollection[CALIBRATION_RUN_NUMBER]
+
+# This creates a RunSet object
 BasicRunSet = RunSets([])
 for run in run_numbers:
     BasicRunSet.add([RunCollection[run]])
@@ -192,8 +195,6 @@ run_string = name_from_runs(run_numbers)
 prefix = os.path.join(SAVE_DIR, run_string)
 outdir = (prefix + '_' + NAMEADD).rstrip('_')
 print(f'Save directory: ...{outdir[30:]}')
-
-CalibrationRun = RunCollection[CALIBRATION_RUN_NUMBER]
 
 # %%
 """
@@ -232,11 +233,29 @@ axis stands for what by looking at the shape of the output_data:
 """
 
 # %%
+"""
+This is an example of using a "Run" object. This represents a single measurement and its replicates.
+"""
+
+# %%
+##%%time
+single_run_vmi = CalibrationRun.average_run_data('vmi',back_sep=BACKGROUND,
+                                    make_cache=MAKE_CACHE, use_cache=LOAD_FROM_CACHE)
+print(f'shape of output data is: {np.shape(single_run_vmi)}')
+print('data has axes (condition, rules, ...data...)')
+
+
+# %%
+"""
+This is an example of using a "RunSet" object. This represents multiple measurements, and is what we will typically use all the time out of convenience.
+"""
+
+# %%
 ##%%time
 runset_vmi = BasicRunSet.average_run_data('vmi',back_sep=BACKGROUND,
                                     make_cache=MAKE_CACHE, use_cache=LOAD_FROM_CACHE)
 print(f'shape of output data is: {np.shape(runset_vmi)}')
-print('data has axes (rule, condition, run, ...data...)')
+print('data has axes (condition, run, rules, ...data...)')
 
 # %%
 """

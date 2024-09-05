@@ -119,6 +119,8 @@ for run_id in (list(run_numbers) + [CALIBRATION_RUN_NUMBER,]):
                                 keyword_functions=keyword_functions,
                                 )  # create a Run object with its respective filepaths
 
+CalibrationRun = RunCollection[CALIBRATION_RUN_NUMBER]
+
 # This creates a set out of the run_numbers selected above
 BasicRunSet = RunSets([])
 for run in run_numbers:
@@ -188,7 +190,7 @@ ion_tof_mq_peaks = np.array([
 ])
 tof_points, mq_points = ion_tof_mq_peaks.T
 
-ion_cal_rawdata = RunCollection[CALIBRATION_RUN_NUMBER].average_run_data('ion_tof', 
+ion_cal_rawdata = CalibrationRun.average_run_data('ion_tof', 
     back_sep=BACKGROUND, slice_range=ion_tof_slices,
     make_cache=MAKE_CACHE, use_cache=LOAD_FROM_CACHE)
 fore_ion_rundata, back_ion_rundata = simplify_data(ion_cal_rawdata)
