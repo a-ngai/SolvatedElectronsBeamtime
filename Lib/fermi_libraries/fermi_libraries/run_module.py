@@ -264,7 +264,7 @@ class Run:
         background_period[background_period<0]=np.inf
         background_period = background_period[0]  # assume it is the same for all files within a run
         if self.slu_offset is None and background_period != np.inf:
-            background_period = int(background_period)
+            background_period = int(np.squeeze(background_period))
             test_slu = self.simple_load_data('slu', filepaths=filepaths)
             offset_intensity = np.array([
                 [
@@ -405,7 +405,7 @@ class Run:
                 else:
                     reshape_data = lambda data: data
 
-                bunches = np.array(file['bunches'])
+                bunches = np.array(file['bunches'][()])
 
                 is_background=self.background_from_bunches(bunches, filepaths=[filepath,])[0]
                 is_slu_off=self.slu_from_bunches(bunches, filepaths=[filepath,])[0]

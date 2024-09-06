@@ -2,11 +2,11 @@ from warnings import warn
 from fermi_libraries.common_functions import rebinning
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.ndimage.interpolation import rotate as scipy_rot
-from scipy.ndimage import zoom
-from matplotlib import cm
+from scipy.ndimage import rotate as scipy_rot
+from scipy.ndimage import zoom, shift
+from matplotlib import colormaps as cm
 from matplotlib.colors import ListedColormap, LinearSegmentedColormap
-gist_heat = cm.get_cmap('gist_heat', 100)
+gist_heat = cm.get_cmap('gist_heat')
 hot_cmap = ListedColormap(np.flipud(gist_heat(range(100)))**0.3)
 
 def find_center(image, center_guess, r_max, show_image = False): 
@@ -87,7 +87,6 @@ def find_center(image, center_guess, r_max, show_image = False):
         plt.plot(np.flip(np.sum(image[:output[0], :],1)), label = 'up')
         plt.title('up vs down')
         plt.tight_layout()
-    print('center found at: ' + str(output))
     return output
 
 def center_image(image, center, show_image=False):
@@ -107,7 +106,6 @@ def center_image(image, center, show_image=False):
         print('center now at: ' + str([450, 450]))
     return image_centered
 
-from scipy.ndimage.interpolation import shift
 def center_image_interp(image, center, show_image=False):
     dim = np.shape(image)
     image = shift(image, (-center[0]+dim[0]/2,-center[1] + dim[1]/2))
