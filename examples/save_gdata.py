@@ -28,7 +28,8 @@ except NameError:  # this will happen in .ipynb files
 INVERSION_FOR_HALF_IMAGES = True
 INVERSION_FOR_QUADRANT_IMAGES = False
 
-save_path = None # Automatic file naming if none
+save_half_path = None # Automatic file naming if none
+save_quar_path = None # Automatic file naming if none
 save_dir = CURRENT_SCRIPT_DIR # Directory to save the data
 nx = 256  # 512x256 half-image, or 256x256 quadrant
 xkratio = 4 # Ratio of radial basis functions to pixel radii
@@ -61,13 +62,13 @@ t0 = time.time()
 
 if INVERSION_FOR_HALF_IMAGES:
 	print('Setting up CPBASEX for half-images')
-	get_gData(gData, save_path=save_path, save_dir=save_dir, custom_rBF=custom_rBF, nProc=1, shape='half')
+	get_gData(gData, save_path=save_half_path, save_dir=save_dir, custom_rBF=custom_rBF, nProc=1, shape='half')
 	print('CPBASEX for half-images completed!')
 	print()
 
 if INVERSION_FOR_QUADRANT_IMAGES:
 	print('Setting up CPBASEX for quarter-images')
-	get_gData(gData, save_path=save_path, save_dir=save_dir, custom_rBF=custom_rBF, nProc=1, shape='quadrant')
+	get_gData(gData, save_path=save_quar_path, save_dir=save_dir, custom_rBF=custom_rBF, nProc=1, shape='quadrant')
 	print('Setting up CPBASEX for quarter-completed!')
 	print()
 

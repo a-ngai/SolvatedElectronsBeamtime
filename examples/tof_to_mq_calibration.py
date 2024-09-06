@@ -12,6 +12,7 @@
 # uncomment the following line when you want to interact with the matplotlib plots
 #%matplotlib widget
 
+
 import os
 
 import numpy as np
@@ -98,7 +99,6 @@ CALIBRATION_RUN_NUMBER = 1
 
 # %%
 
-print(run_numbers)
 ion_tof_slices = [ion_tof_range]
 raw_ion_tof = np.arange(*ion_tof_slices[0])
 ion_tof = raw_ion_tof[::ION_TOF_REBIN]
@@ -207,11 +207,11 @@ mq_to_tof = lambda mq, spec, axis=None: mq_to_tof_conversion(mq, spec, *ion_cons
 
 model_tof = np.linspace(np.min(tof_points), np.max(tof_points), num=1000)
 fig, (ax1, ax2) = plt.subplots(1,2,figsize=(12,4))
-ax1.plot(tof_points, cal_sub_spectrum[closest(tof_points, raw_ion_tof)], marker='v', linestyle='')
+ax1.plot(tof_points, cal_sub_spectrum[closest(tof_points, raw_ion_tof)], marker='v', linestyle='', label='points')
 ax1.plot(raw_ion_tof, cal_sub_spectrum)
 ax1.set_xlim(5000, 16000)
 set_default_labels(ax1, title='calibration points', xlabel='tof (ns)', ylabel='tof (ns)')
-ax2.plot(tof_points, mq_points, marker='o', linestyle='')
+ax2.plot(tof_points, mq_points, marker='o', linestyle='', label='points')
 ax2.plot(model_tof, tof_mq_coor_func(model_tof), color='black')
 set_default_labels(ax2, title='calibration fit', xlabel='tof (ns)', ylabel='m/q')
 plt.show()

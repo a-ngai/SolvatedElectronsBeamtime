@@ -162,7 +162,7 @@ LOAD_FROM_CACHE = False
 
 CALIBRATION_RUN_NUMBER = 1
 
-print(run_numbers)
+print(f'Run numbers: {run_numbers}')
 
 # %%
 """

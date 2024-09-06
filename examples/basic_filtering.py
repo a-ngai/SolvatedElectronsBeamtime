@@ -11,6 +11,7 @@
 # %%
 # uncomment the following line when you want to interact with the matplotlib plots
 #%matplotlib widget
+
 import os
 
 import numpy as np
@@ -37,7 +38,7 @@ except NameError:  # this will happen in .ipynb files
 # %%
 @set_recursion_limit(1)
 def keyword_functions(keyword, aliasFunc, DictionaryObject):
-    return DictionaryObject[aliasFunc(keyword)]
+    return DictionaryObject[aliasFunc(keyword)][()]
 
 # %%
 """
@@ -232,6 +233,7 @@ axes[0].set_ylabel('ion TOF signal signal (arb.u.)')
 axes[0].set_title(f'Ion TOF spectra\nfilter rule: {i0m_filter_rules[0]}')
 axes[-1].set_xlabel('ion TOF (ns)')
 plt.tight_layout()
+
 plt.show()
 
 
@@ -271,6 +273,7 @@ axes[0].set_ylabel('ion m/q signal (arb.u.)')
 axes[0].set_title(f'Ion mass/charge spectra\nfilter rule: {i0m_filter_rules[0]}')
 axes[-1].set_xlabel('m/q')
 plt.tight_layout()
+
 plt.show()
 
 # %%

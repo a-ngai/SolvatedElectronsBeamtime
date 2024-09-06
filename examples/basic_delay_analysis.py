@@ -11,6 +11,7 @@
 # %%
 # uncomment the following line when you want to interact with the matplotlib plots
 #%matplotlib widget
+
 import os
 
 import numpy as np
