@@ -273,7 +273,6 @@ axes[0].set_ylabel('ion m/q signal (arb.u.)')
 axes[0].set_title(f'Ion mass/charge spectra\nfilter rule: {i0m_filter_rules[0]}')
 axes[-1].set_xlabel('m/q')
 plt.tight_layout()
-
 plt.show()
 
 # %%
