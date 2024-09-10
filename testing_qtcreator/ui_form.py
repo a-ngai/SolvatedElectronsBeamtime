@@ -124,7 +124,7 @@ class Ui_MainWindow(object):
         self.label_current_folder.setGeometry(QRect(20, 10, 81, 16))
         self.text_edit_current_folder = QTextEdit(self.tab_vmi_main)
         self.text_edit_current_folder.setObjectName(u"text_edit_current_folder")
-        self.text_edit_current_folder.setGeometry(QRect(20, 30, 111, 31))
+        self.text_edit_current_folder.setGeometry(QRect(20, 30, 151, 31))
         self.label_update_status = QLabel(self.tab_vmi_main)
         self.label_update_status.setObjectName(u"label_update_status")
         self.label_update_status.setGeometry(QRect(20, 180, 91, 16))
@@ -382,7 +382,7 @@ class Ui_MainWindow(object):
         self.label_search_dir_for_newest_folder.setGeometry(QRect(320, 10, 211, 16))
         self.text_edit_search_dir_for_newest_folder = QTextEdit(self.tab_settings)
         self.text_edit_search_dir_for_newest_folder.setObjectName(u"text_edit_search_dir_for_newest_folder")
-        self.text_edit_search_dir_for_newest_folder.setGeometry(QRect(320, 30, 171, 31))
+        self.text_edit_search_dir_for_newest_folder.setGeometry(QRect(320, 30, 271, 31))
         self.label_tof_start = QLabel(self.tab_settings)
         self.label_tof_start.setObjectName(u"label_tof_start")
         self.label_tof_start.setGeometry(QRect(20, 180, 51, 16))
@@ -397,10 +397,10 @@ class Ui_MainWindow(object):
         self.text_edit_tof_stop.setGeometry(QRect(100, 200, 61, 31))
         self.box_slu_parity = QCheckBox(self.tab_settings)
         self.box_slu_parity.setObjectName(u"box_slu_parity")
-        self.box_slu_parity.setGeometry(QRect(320, 280, 21, 22))
+        self.box_slu_parity.setGeometry(QRect(320, 330, 21, 22))
         self.label_slu_parity = QLabel(self.tab_settings)
         self.label_slu_parity.setObjectName(u"label_slu_parity")
-        self.label_slu_parity.setGeometry(QRect(350, 280, 121, 16))
+        self.label_slu_parity.setGeometry(QRect(350, 330, 121, 16))
         self.groupBox = QGroupBox(self.tab_settings)
         self.groupBox.setObjectName(u"groupBox")
         self.groupBox.setGeometry(QRect(20, 20, 181, 151))
@@ -438,7 +438,7 @@ class Ui_MainWindow(object):
 
         self.groupBox_2 = QGroupBox(self.tab_settings)
         self.groupBox_2.setObjectName(u"groupBox_2")
-        self.groupBox_2.setGeometry(QRect(320, 80, 241, 147))
+        self.groupBox_2.setGeometry(QRect(320, 160, 241, 147))
         self.label_fore = QLabel(self.groupBox_2)
         self.label_fore.setObjectName(u"label_fore")
         self.label_fore.setGeometry(QRect(12, 31, 23, 16))
@@ -498,7 +498,7 @@ class Ui_MainWindow(object):
         self.box_flip_feloffsluoff.setGeometry(QRect(90, 120, 16, 16))
         self.applyChangesSettings = QCommandLinkButton(self.tab_settings)
         self.applyChangesSettings.setObjectName(u"applyChangesSettings")
-        self.applyChangesSettings.setGeometry(QRect(440, 370, 121, 31))
+        self.applyChangesSettings.setGeometry(QRect(420, 400, 141, 31))
         self.text_edit_ke_start = QTextEdit(self.tab_settings)
         self.text_edit_ke_start.setObjectName(u"text_edit_ke_start")
         self.text_edit_ke_start.setGeometry(QRect(20, 280, 41, 31))
@@ -523,6 +523,18 @@ class Ui_MainWindow(object):
         self.text_edit_abel_inversion_data_path = QTextEdit(self.tab_settings)
         self.text_edit_abel_inversion_data_path.setObjectName(u"text_edit_abel_inversion_data_path")
         self.text_edit_abel_inversion_data_path.setGeometry(QRect(20, 360, 171, 31))
+        self.label_subfolder_extension = QLabel(self.tab_settings)
+        self.label_subfolder_extension.setObjectName(u"label_subfolder_extension")
+        self.label_subfolder_extension.setGeometry(QRect(320, 70, 211, 16))
+        self.text_edit_subfolder_extension = QTextEdit(self.tab_settings)
+        self.text_edit_subfolder_extension.setObjectName(u"text_edit_subfolder_extension")
+        self.text_edit_subfolder_extension.setGeometry(QRect(350, 90, 241, 31))
+        self.label_subfolder_extension_2 = QLabel(self.tab_settings)
+        self.label_subfolder_extension_2.setObjectName(u"label_subfolder_extension_2")
+        self.label_subfolder_extension_2.setGeometry(QRect(320, 100, 31, 20))
+        font = QFont()
+        font.setPointSize(16)
+        self.label_subfolder_extension_2.setFont(font)
         self.tabWidget.addTab(self.tab_settings, "")
         self.print_browser = QTextBrowser(self.centralwidget)
         self.print_browser.setObjectName(u"print_browser")
@@ -542,7 +554,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(5)
         self.tabWidget_2.setCurrentIndex(0)
         self.tabWidget_3.setCurrentIndex(0)
 
@@ -831,6 +843,16 @@ class Ui_MainWindow(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">None</p></body></html>", None))
         self.label_ke_bins.setText(QCoreApplication.translate("MainWindow", u"KE bins", None))
         self.label_abel_inversion_data_path.setText(QCoreApplication.translate("MainWindow", u"Abel inversion data file", None))
+        self.label_subfolder_extension.setText(QCoreApplication.translate("MainWindow", u"subfolder extension", None))
+        self.text_edit_subfolder_extension.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">work</p></body></html>", None))
+        self.label_subfolder_extension_2.setText(QCoreApplication.translate("MainWindow", u"../", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_settings), QCoreApplication.translate("MainWindow", u"Settings", None))
         self.menuFERMI_On_line_analysis_tool.setTitle(QCoreApplication.translate("MainWindow", u"FERMI LDM On-line analysis tool", None))
     # retranslateUi

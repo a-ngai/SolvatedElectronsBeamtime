@@ -124,7 +124,7 @@ class Ui_MainWindow(object):
         self.label_current_folder.setGeometry(QRect(20, 10, 81, 16))
         self.text_edit_current_folder = QTextEdit(self.tab_vmi_main)
         self.text_edit_current_folder.setObjectName(u"text_edit_current_folder")
-        self.text_edit_current_folder.setGeometry(QRect(20, 30, 111, 31))
+        self.text_edit_current_folder.setGeometry(QRect(20, 30, 151, 31))
         self.label_update_status = QLabel(self.tab_vmi_main)
         self.label_update_status.setObjectName(u"label_update_status")
         self.label_update_status.setGeometry(QRect(20, 180, 91, 16))
@@ -382,7 +382,7 @@ class Ui_MainWindow(object):
         self.label_search_dir_for_newest_folder.setGeometry(QRect(320, 10, 211, 16))
         self.text_edit_search_dir_for_newest_folder = QTextEdit(self.tab_settings)
         self.text_edit_search_dir_for_newest_folder.setObjectName(u"text_edit_search_dir_for_newest_folder")
-        self.text_edit_search_dir_for_newest_folder.setGeometry(QRect(320, 30, 171, 31))
+        self.text_edit_search_dir_for_newest_folder.setGeometry(QRect(320, 30, 271, 31))
         self.label_tof_start = QLabel(self.tab_settings)
         self.label_tof_start.setObjectName(u"label_tof_start")
         self.label_tof_start.setGeometry(QRect(20, 180, 51, 16))
@@ -397,10 +397,10 @@ class Ui_MainWindow(object):
         self.text_edit_tof_stop.setGeometry(QRect(100, 200, 61, 31))
         self.box_slu_parity = QCheckBox(self.tab_settings)
         self.box_slu_parity.setObjectName(u"box_slu_parity")
-        self.box_slu_parity.setGeometry(QRect(320, 280, 21, 22))
+        self.box_slu_parity.setGeometry(QRect(320, 330, 21, 22))
         self.label_slu_parity = QLabel(self.tab_settings)
         self.label_slu_parity.setObjectName(u"label_slu_parity")
-        self.label_slu_parity.setGeometry(QRect(350, 280, 121, 16))
+        self.label_slu_parity.setGeometry(QRect(350, 330, 121, 16))
         self.groupBox = QGroupBox(self.tab_settings)
         self.groupBox.setObjectName(u"groupBox")
         self.groupBox.setGeometry(QRect(20, 20, 181, 151))
@@ -438,7 +438,7 @@ class Ui_MainWindow(object):
 
         self.groupBox_2 = QGroupBox(self.tab_settings)
         self.groupBox_2.setObjectName(u"groupBox_2")
-        self.groupBox_2.setGeometry(QRect(320, 80, 241, 147))
+        self.groupBox_2.setGeometry(QRect(320, 160, 241, 147))
         self.label_fore = QLabel(self.groupBox_2)
         self.label_fore.setObjectName(u"label_fore")
         self.label_fore.setGeometry(QRect(12, 31, 23, 16))
@@ -498,7 +498,7 @@ class Ui_MainWindow(object):
         self.box_flip_feloffsluoff.setGeometry(QRect(90, 120, 16, 16))
         self.applyChangesSettings = QCommandLinkButton(self.tab_settings)
         self.applyChangesSettings.setObjectName(u"applyChangesSettings")
-        self.applyChangesSettings.setGeometry(QRect(440, 370, 121, 31))
+        self.applyChangesSettings.setGeometry(QRect(420, 400, 141, 31))
         self.text_edit_ke_start = QTextEdit(self.tab_settings)
         self.text_edit_ke_start.setObjectName(u"text_edit_ke_start")
         self.text_edit_ke_start.setGeometry(QRect(20, 280, 41, 31))
@@ -523,6 +523,18 @@ class Ui_MainWindow(object):
         self.text_edit_abel_inversion_data_path = QTextEdit(self.tab_settings)
         self.text_edit_abel_inversion_data_path.setObjectName(u"text_edit_abel_inversion_data_path")
         self.text_edit_abel_inversion_data_path.setGeometry(QRect(20, 360, 171, 31))
+        self.label_subfolder_extension = QLabel(self.tab_settings)
+        self.label_subfolder_extension.setObjectName(u"label_subfolder_extension")
+        self.label_subfolder_extension.setGeometry(QRect(320, 70, 211, 16))
+        self.text_edit_subfolder_extension = QTextEdit(self.tab_settings)
+        self.text_edit_subfolder_extension.setObjectName(u"text_edit_subfolder_extension")
+        self.text_edit_subfolder_extension.setGeometry(QRect(350, 90, 241, 31))
+        self.label_subfolder_extension_2 = QLabel(self.tab_settings)
+        self.label_subfolder_extension_2.setObjectName(u"label_subfolder_extension_2")
+        self.label_subfolder_extension_2.setGeometry(QRect(320, 100, 31, 20))
+        font = QFont()
+        font.setPointSize(16)
+        self.label_subfolder_extension_2.setFont(font)
         self.tabWidget.addTab(self.tab_settings, "")
         self.print_browser = QTextBrowser(self.centralwidget)
         self.print_browser.setObjectName(u"print_browser")
@@ -542,7 +554,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(5)
         self.tabWidget_2.setCurrentIndex(0)
         self.tabWidget_3.setCurrentIndex(0)
 
@@ -831,9 +843,20 @@ class Ui_MainWindow(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">None</p></body></html>", None))
         self.label_ke_bins.setText(QCoreApplication.translate("MainWindow", u"KE bins", None))
         self.label_abel_inversion_data_path.setText(QCoreApplication.translate("MainWindow", u"Abel inversion data file", None))
+        self.label_subfolder_extension.setText(QCoreApplication.translate("MainWindow", u"subfolder extension", None))
+        self.text_edit_subfolder_extension.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">rawdata</p></body></html>", None))
+        self.label_subfolder_extension_2.setText(QCoreApplication.translate("MainWindow", u"../", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_settings), QCoreApplication.translate("MainWindow", u"Settings", None))
         self.menuFERMI_On_line_analysis_tool.setTitle(QCoreApplication.translate("MainWindow", u"FERMI LDM On-line analysis tool", None))
     # retranslateUi
+
 
 
     
@@ -848,8 +871,20 @@ class Ui_MainWindow(object):
             'current_files' : [],
             'current_folder' : '',
             'print_list' : [],
+            'subfolder_extension' : '',
         }
-    
+        self.graph_data = {
+            'vmi_fore' : np.array([[],]),
+            'vmi_back' : np.array([[],]),
+            'vmi_subt' : np.array([[],]),
+            'pes' : np.array([[],]),
+            'tof_fore' : np.array([]),
+            'tof_back' : np.array([[],]),
+            'tof_subt' : np.array([[],]),
+        }
+
+        self.run = Run([])
+
     def setup_signals(self):
         self.button_auto_newest_folder.clicked.connect(self.click_auto_newest_folder)
         self.button_stay_current_folder.clicked.connect(self.click_stay_folder)
@@ -863,29 +898,26 @@ class Ui_MainWindow(object):
         self.applyChangesSettings.clicked.connect(self.apply_settings)
 
         self.timer = QTimer()
-        self.timer.timeout.connect(self.update_data)
+        self.timer.timeout.connect(self.update_data_if_change)
         
     def resume_timer(self):
         self.timer.start(2000)
     def stop_timer(self):
         self.timer.stop()
         
-
-    def update_canvases(self): 
-        self.update_pes_window()
-        print('update all canvases here!')
-
-    
     def apply_settings(self):
         """ get all the settings from the settings tab"""
         self.status['files_per_cache'] = int(self.text_edit_files_per_cache.toPlainText())
         self.status['search_in_directory'] = self.text_edit_search_dir_for_newest_folder.toPlainText()
+        self.status['subfolder_extension'] = self.text_edit_subfolder_extension.toPlainText()
         print('testing', self.text_edit_search_dir_for_newest_folder.toPlainText())
         
         print('stopped working here!')
 
         time_string = strftime("%Y-%m-%d %H:%M:%S", localtime())
         self.update_print_box(f'{time_string}: settings applied')
+
+        self.update_canvases()
         
     def get_newest_folder(self):
         main_directory = self.status['search_in_directory']
@@ -923,37 +955,101 @@ class Ui_MainWindow(object):
                 print(f'{time_string}: new folder found ({newest_folder})')
                 self.update_print_box(f'{time_string}: new folder found ({newest_folder})')
                 self.status['current_folder'] = newest_folder
+                self.text_edit_current_folder.setText(newest_folder)
 
         current_folder = self.status['current_folder']
+        subfolder_ext = self.status['subfolder_extension']
+        look_in_folder = f'{current_folder}/{subfolder_ext}'
         try:
-            found_files = os.listdir(current_folder)
+            found_files = os.listdir(look_in_folder)
         except FileNotFoundError:
             time_string = strftime("%Y-%m-%d %H:%M:%S", localtime())
-            print_message = f'{time_string}: file location ({current_folder}) does not exist, no update.'
+            print_message = f'{time_string}: file location ({look_in_folder}) does not exist, no update.'
             self.update_print_box(print_message)
             print(print_message)
             return False
-        if found_files.sort() == self.status['current_files'].sort():
+        if sorted(found_files) == sorted(self.status['current_files']):
             return False
         return True
 
     def update_files(self):
-        found_files = os.listdir(self.status['current_folder'])
-        self.status['current_files'] = found_files.sort()
-
-    def update_data(self):
+        current_folder = self.status['current_folder']
+        subfolder_ext = self.status['subfolder_extension']
+        look_in_folder = f'{current_folder}/{subfolder_ext}'
+        found_files = os.listdir(look_in_folder)
+        self.status['current_files'] = sorted(found_files)
+    
+    def update_data_if_change(self):
         if self.check_filechange():
-            print('update data here')
-            print('update all canvases too')
-            self.update_canvases()
+            self.update_data()
+    
+    def update_data(self):
+        # VMI section
+
+        @set_recursion_limit(1)
+        def keyword_functions(keyword, aliasFunc, DictionaryObject):
+            return DictionaryObject[aliasFunc(keyword)]
+        alias_dict = {
+            'vmi' : 'vmi/andor',
+            'ion_tof' : 'digitizer/channel1',
+            'slu' : 'user_laser/energy_meter/Energy2',
+            }
+        folderpath = self.status['current_folder'] + '/rawdata'
+        filepaths = [folderpath+'/'+filename for filename in os.listdir(folderpath)[::]]
+        self.Run = Run(filepaths,
+            alias_dict=alias_dict, search_symbols=search_symbols,
+            keyword_functions=keyword_functions)
+        try:
+
+            vmi_data = self.Run.average_run_data('vmi', 
+                back_sep=True, slu_sep=True, make_cache=True, num_files_per_cache=5)
+
+        except (FileNotFoundError, OSError):
+            # this is a race condition, where h5py is trying to open a file that is currently being written into
+            # easiest solution is to wait for the next update
+            return None 
+        # vmi_data = simplify_data(vmi_data, single_run=True, single_rule=True)
+        vmi_felon_sluon, vmi_felon_sluoff, vmi_feloff_sluon, vmi_feloff_sluoff = (data[0] for data in vmi_data)
+
+        vmi_fore = (
+            (-1)**self.box_flip_felonsluon.isChecked() * self.box_fore_felonsluon.isChecked() * vmi_felon_sluon
+            + (-1)**self.box_flip_felonsluoff.isChecked() * self.box_fore_felonsluoff.isChecked() * vmi_felon_sluoff
+            + (-1)**self.box_flip_feloffsluon.isChecked() * self.box_fore_feloffsluon.isChecked() * vmi_feloff_sluon
+            + (-1)**self.box_flip_feloffsluoff.isChecked() * self.box_fore_feloffsluoff.isChecked() * vmi_feloff_sluoff
+        )
+        vmi_back = (
+            (-1)**self.box_flip_felonsluon.isChecked() * self.box_back_felonsluon.isChecked() * vmi_felon_sluon
+            + (-1)**self.box_flip_felonsluoff.isChecked() * self.box_back_felonsluoff.isChecked() * vmi_felon_sluoff
+            + (-1)**self.box_flip_feloffsluon.isChecked() * self.box_back_feloffsluon.isChecked() * vmi_feloff_sluon
+            + (-1)**self.box_flip_feloffsluoff.isChecked() * self.box_back_feloffsluoff.isChecked() * vmi_feloff_sluoff
+        )
+        vmi_subt = vmi_fore - vmi_back
+        self.graph_data['vmi_fore'] = vmi_fore
+        self.graph_data['vmi_back'] = vmi_back
+        self.graph_data['vmi_subt'] = vmi_subt
+        self.update_canvases()
+        self.update_files()
     
     def update_pes_window(self):
         print('update the PES window here!')
         print('depending on the beta checkboxes')
+
+    def update_main_vmi_window(self):
         
-    # def update_canvases(self):
-    #     self.update_pes_window()
-    #     print('update all canvases here!')
+        self._fore_ax_data.set_data(self.graph_data['vmi_fore'])
+        self._fore_ax_data.autoscale()
+        self._back_ax_data.set_data(self.graph_data['vmi_back'])
+        self._back_ax_data.autoscale()
+        self._subt_ax_data.set_data(self.graph_data['vmi_subt'])
+        self._subt_ax_data.autoscale()
+        self._fore_ax_data.figure.canvas.draw()
+        self._back_ax_data.figure.canvas.draw()
+        self._subt_ax_data.figure.canvas.draw()
+
+    def update_canvases(self):
+        self.update_pes_window()
+        self.update_main_vmi_window()
+        # print('update all canvases here!')
 
     def click_fetch_new_files(self):
         self.status['fetch_new_files'] = True
@@ -963,7 +1059,7 @@ class Ui_MainWindow(object):
     def click_auto_newest_folder(self):
         self.status['auto_newest_folder'] = True
         self.test_display_folder_status.setText('Search')
-        self.resume_timer()
+        # self.resume_timer()
 
 
     def click_stop_fetch(self):
@@ -998,6 +1094,12 @@ import numpy as np
 import re
 from PyQt6.QtCore import QTimer
 import matplotlib.pyplot as plt
+
+
+# from fermi_libraries import run_module
+from fermi_libraries.run_module import Run
+from fermi_libraries.common_functions import set_recursion_limit, simplify_data
+from fermi_libraries.dictionary_search import search_symbols
 
 from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QApplication
 class MainWindow(QMainWindow):
@@ -1048,27 +1150,27 @@ class MainWindow(QMainWindow):
         fore_canvas = FigureCanvas(fore_fig)
         app.vmi_fore.addWidget(fore_canvas)
         app.vmi_fore.addWidget(NavigationToolbar(fore_canvas, self))
-        self._fore_ax = fore_canvas.figure.subplots()
-        self._fore_ax.imshow(fore_placeholder)
-        self._fore_ax.text(0, 200, 'Placeholder!', fontsize=20)
+        app._fore_ax = fore_canvas.figure.subplots()
+        app._fore_ax_data = app._fore_ax.imshow(fore_placeholder)
+        fore_fig.colorbar(app._fore_ax_data, ax=app._fore_ax)
         plt.tight_layout()
         
         back_fig = Figure(figsize=(7, 7))
         back_canvas = FigureCanvas(back_fig)
         app.vmi_back.addWidget(back_canvas)
         app.vmi_back.addWidget(NavigationToolbar(back_canvas, self))
-        self._back_ax = back_canvas.figure.subplots()
-        self._back_ax.imshow(back_placeholder)
-        self._back_ax.text(0, 200, 'Placeholder!', fontsize=20)
+        app._back_ax = back_canvas.figure.subplots()
+        app._back_ax_data = app._back_ax.imshow(back_placeholder)
+        back_fig.colorbar(app._back_ax_data, ax=app._back_ax)
         plt.tight_layout()
         
         subt_fig = Figure(figsize=(7, 7))
         subt_canvas = FigureCanvas(subt_fig)
         app.vmi_subt.addWidget(subt_canvas)
         app.vmi_subt.addWidget(NavigationToolbar(subt_canvas, self))
-        self._subt_ax = subt_canvas.figure.subplots()
-        self._subt_ax.imshow(subt_placeholder)
-        self._subt_ax.text(0, 200, 'Placeholder!', fontsize=20)
+        app._subt_ax = subt_canvas.figure.subplots()
+        app._subt_ax_data = app._subt_ax.imshow(subt_placeholder)
+        subt_fig.colorbar(app._subt_ax_data, ax=app._subt_ax)
         plt.tight_layout()
 
         # fig.subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=None, hspace=None)
@@ -1128,5 +1230,6 @@ if __name__ == '__main__':
     # p = w.palette()
     # p.setColor(w.backgroundRole(), Qt.gray)
     # w.setPalette(p)
+    tabWidgetApp.apply_settings()
 
     sys.exit(app.exec())

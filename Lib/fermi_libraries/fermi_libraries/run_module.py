@@ -52,6 +52,11 @@ def get_cache_filepath(outdir, filepaths, args, datanames, use_cache=True):
     filepath = f'{outdir}/{idf}.npz' # cache file unique to all arguments
     return filepath
 
+def get_cache_filepath_h5(outdir, filepaths, args, datanames, use_cache=True):
+    idf = hashlib.md5(str(args).encode()).hexdigest()
+    filepath = f'{outdir}/{idf}.h5' # cache file unique to all arguments
+    return filepath
+
 def cache_function(outdir, filepaths, args, datanames, use_cache=True):
     """
     Intended to be used for functions which processes large amounts of data e.g.
@@ -857,11 +862,20 @@ class Run:
         
 
         if make_cache and filepaths:
+            rundata = np.array(run_average, dtype=float)
+            runweights = np.array(run_weight, dtype=int)
 
             np.savez(cache_return,
-                     rundata=np.array(run_average, dtype=float),
-                     runweights=np.array(run_weight, dtype=int),
+                     rundata=rundata,
+                     runweights=runweights,
                      )
+            
+            # h5_filepath = get_cache_filepath_h5(outdir, filepaths, args, ['rundata','runweights'])
+            # with h5py.File(h5_filepath, 'w') as f:
+            #     f.create_dataset('rundata', data=rundata, chunks=rundata.shape,
+            #             compression='gzip', compression_opts=5)
+            #     f.create_dataset('runweights', data=runweights, chunks=runweights.shape,
+            #             compression='gzip', compression_opts=5)
 
         return run_average, run_weight
 
