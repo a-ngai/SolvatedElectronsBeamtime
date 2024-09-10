@@ -47,6 +47,11 @@ def default_keyword_functions(keyword, alias_func, DictionaryObject):
     '''
     return DictionaryObject[alias_func(keyword)]
 
+def get_cache_filepath(outdir, filepaths, args, datanames, use_cache=True):
+    idf = hashlib.md5(str(args).encode()).hexdigest()
+    filepath = f'{outdir}/{idf}.npz' # cache file unique to all arguments
+    return filepath
+
 def cache_function(outdir, filepaths, args, datanames, use_cache=True):
     """
     Intended to be used for functions which processes large amounts of data e.g.
@@ -60,7 +65,7 @@ def cache_function(outdir, filepaths, args, datanames, use_cache=True):
     if not os.path.exists(outdir):
         os.mkdir(outdir)
     idf = hashlib.md5(str(args).encode()).hexdigest()
-    cachefile = f'{outdir}/{idf}.npz' # cache file unique to all arguments
+    cachefile = get_cache_filepath(outdir, filepaths, args, datanames, use_cache=use_cache)
     if os.path.exists(cachefile):
         latest = sorted(filepaths)[0]
         rawtime = os.path.getmtime(latest)
@@ -720,7 +725,7 @@ class Run:
 
         if self.filepaths:
             outdir = self.filepaths[0].split('/rawdata/')[0] + '/work/get_rundata_cache'
-            args = (dataname, back_sep, slu_sep, slice_range, rules, filter1)
+            args = (filepaths, dataname, back_sep, slu_sep, slice_range, rules, filter1)
             cache_return = cache_function(outdir, self.filepaths, args, ['rundata',], use_cache=use_cache)
             if not isinstance(cache_return, str):
                 return cache_return[0]
@@ -764,25 +769,76 @@ class Run:
 
     @_alias
     def average_run_data_weights(self, dataname, back_sep=False, slu_sep=False, slice_range=None,
-                                 rules=[None,], use_cache=True, make_cache=True):
+                                 rules=[None,], use_cache=True, make_cache=True, _filepaths=None,
+                                 num_files_per_cache=None, 
+                                 _save_incomplete_cache=False):
         '''
         Output axes: (sum/counts, conditions, rules, data)
         '''
+        if _filepaths is None:
+            filepaths = self.filepaths
+        else:
+            filepaths = _filepaths
+        
+        # checking possible caches
+        _files_per_cache = len(filepaths)
+        look_for_filepaths = filepaths[:num_files_per_cache]
+        outdir = filepaths[0].split('/rawdata/')[0] + '/work/average_run_data_weights_cache'
+        args = (filepaths, dataname, back_sep, slu_sep, slice_range, rules)
+        cache_found = os.path.exists(get_cache_filepath(
+            outdir, look_for_filepaths, args, ['rundata','runweights'], use_cache=use_cache))
+        if num_files_per_cache is not None: _files_per_cache = num_files_per_cache
+        
+        # call recursively, but only on subsets of all files
+        if (_filepaths is None) and (num_files_per_cache is not None):
+            num_files = len(filepaths)
+            num_blocks = int(np.ceil(num_files / _files_per_cache))
+            subsets_of_filepaths = [filepaths[i*_files_per_cache:(i+1)*_files_per_cache] for i in range(num_blocks)]
+            partial_run_avg = []
+            partial_run_weights = []
+            for subset in subsets_of_filepaths:
+                cache_is_incomplete = (len(subset)!=_files_per_cache)
+                save_if_incomplete = _save_incomplete_cache and cache_is_incomplete
+                save_part_cache = make_cache and (not cache_is_incomplete or save_if_incomplete)
+                save_incomplete_cache = make_cache * _save_incomplete_cache * cache_is_incomplete
+                block_avg, block_weights = self.average_run_data_weights(
+                    dataname, back_sep=back_sep, slu_sep=slu_sep, slice_range=slice_range,
+                    rules=rules, use_cache=use_cache, make_cache=save_part_cache, _filepaths=subset,
+                    num_files_per_cache=None,
+                    _save_incomplete_cache=True
+                )
+                partial_run_avg.append(block_avg)
+                partial_run_weights.append(block_weights)
 
-        if self.filepaths:
-            outdir = self.filepaths[0].split('/rawdata/')[0] + '/work/average_run_data_weights_cache'
-            args = (dataname, back_sep, slu_sep, slice_range, rules)
-            cache_return = cache_function(outdir, self.filepaths, args, ['rundata','runweights'], use_cache=use_cache)
-            if not isinstance(cache_return, str):
-                return cache_return
+            run_file_weights = np.array(partial_run_weights) 
+            run_file_avg = np.array(partial_run_avg)
+
+            data_dim = np.ndim(run_file_avg)
+            weights_dim = np.ndim(run_file_weights)
+            match_dim_weights = np.expand_dims(run_file_weights, axis=[-(i+1) for i in range(data_dim-weights_dim)])
+
+            run_file_sum = run_file_avg * match_dim_weights
+            run_file_data = run_file_sum
+            
+            cache_return = cache_function(outdir, self.filepaths, args, ['rundata','runweights'], use_cache=False)
+
+        # this is the original path without recursion
+        else:
+            if filepaths:
+                outdir = filepaths[0].split('/rawdata/')[0] + '/work/average_run_data_weights_cache'
+                args = (filepaths, dataname, back_sep, slu_sep, slice_range, rules)
+                cache_return = cache_function(outdir, filepaths, args, ['rundata','runweights'], use_cache=use_cache)
+                if not isinstance(cache_return, str):
+                    return cache_return
 
         compiled_data = []
         compiled_count = []
         run_average = []
         run_weight = []
-        run_file_data, run_file_weights = self.give_sums_counts_filedata(
-                                dataname, back_sep=back_sep, slu_sep=slu_sep,
-                                slice_range=slice_range, rules=rules)
+        if num_files_per_cache is None:
+            run_file_data, run_file_weights = self.give_sums_counts_filedata(
+                                    dataname, back_sep=back_sep, slu_sep=slu_sep,
+                                    slice_range=slice_range, rules=rules)
 
         for filedata_sum, filedata_count in zip(run_file_data, run_file_weights):
             for i, (split_sum, split_count) in enumerate(zip(filedata_sum, filedata_count)):
@@ -798,8 +854,9 @@ class Run:
             divisor[divisor==0]=1
             run_average.append(np.sum(split_data, axis=0)/divisor)
             run_weight.append(np.sum(split_count, axis=0))
+        
 
-        if make_cache and self.filepaths:
+        if make_cache and filepaths:
 
             np.savez(cache_return,
                      rundata=np.array(run_average, dtype=float),
@@ -811,14 +868,18 @@ class Run:
     @_alias
     def give_moment_sums_rundata(self, dataname, back_sep=False, slu_sep=False, slice_range=None,
                                  rules=[None,], use_cache=True, make_cache=True,
-                                filter1=None, filter2=None):
+                                filter1=None, filter2=None, _filepaths=None):
         '''
         Output axes: (sum/counts, conditions, rules, data)
         '''
+        if _filepaths is None:
+            filepaths = self.filepaths
+        else:
+            filepaths = _filepaths
 
         if self.filepaths:
             outdir = self.filepaths[0].split('/rawdata/')[0] + '/work/give_moment_sums_rundata_cache'
-            args = (dataname, back_sep, slu_sep, slice_range, rules)
+            args = (filepaths, dataname, back_sep, slu_sep, slice_range, rules)
             cache_return = cache_function(outdir, self.filepaths, args, ['runcovar','runsum1', 'runsum2','runweights'], use_cache=use_cache)
             if not isinstance(cache_return, str):
                 warnings.warn("Cache used! If this should not be the case, set the 'use_cache' keyword argument to False!")
@@ -894,7 +955,8 @@ class Run:
 
     @_alias
     def average_run_data(self, dataname, back_sep=False, slu_sep=False, slice_range=None,
-                         rules=[None,], use_cache=True, make_cache=True):
+                         rules=[None,], use_cache=True, make_cache=True, num_files_per_cache=None,
+                         ):
         '''
         Same as Run.saverage_run_data_weights(), but just returning the "data" part of the tuple)
 
@@ -904,7 +966,8 @@ class Run:
         return self.average_run_data_weights(
                 dataname, back_sep=back_sep, slu_sep=slu_sep,
                 slice_range=slice_range, rules=rules,
-                use_cache=use_cache, make_cache=make_cache)[0]
+                use_cache=use_cache, make_cache=make_cache,
+                num_files_per_cache=num_files_per_cache)[0]
 
 
     @_alias

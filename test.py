@@ -27,5 +27,9 @@ class TestTemplates(unittest.TestCase):
         from tests.run_save_gdata import test_save_gdata
         self.assertIsNone(test_save_gdata())
 
+    def test_cache_function(self):
+        from tests.run_cache_test import test_cache
+        self.assertIsNone(test_cache())
+
 if __name__ == '__main__':
     unittest.main()
