@@ -142,7 +142,7 @@ if SAVE_FILES:
 ##%%time
 runset_vmi = BasicRunSet.average_run_data('vmi',back_sep=BACKGROUND,
                                     make_cache=MAKE_CACHE, use_cache=LOAD_FROM_CACHE)
-fore_vmi, back_vmi = simplify_data(runset_vmi, single_rule=True, single_run=False)
+fore_vmi, back_vmi, *_ = simplify_data(runset_vmi, single_rule=True, single_run=False)
 
 # %%
 """

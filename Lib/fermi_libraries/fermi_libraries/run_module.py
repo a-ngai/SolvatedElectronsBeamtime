@@ -52,6 +52,11 @@ def get_cache_filepath(outdir, filepaths, args, datanames, use_cache=True):
     filepath = f'{outdir}/{idf}.npz' # cache file unique to all arguments
     return filepath
 
+def get_cache_filepath_h5(outdir, filepaths, args, datanames, use_cache=True):
+    idf = hashlib.md5(str(args).encode()).hexdigest()
+    filepath = f'{outdir}/{idf}.h5' # cache file unique to all arguments
+    return filepath
+
 def cache_function(outdir, filepaths, args, datanames, use_cache=True):
     """
     Intended to be used for functions which processes large amounts of data e.g.
@@ -771,7 +776,7 @@ class Run:
     def average_run_data_weights(self, dataname, back_sep=False, slu_sep=False, slice_range=None,
                                  rules=[None,], use_cache=True, make_cache=True, _filepaths=None,
                                  num_files_per_cache=None, 
-                                 _save_incomplete_cache=False):
+                                 _save_incomplete_cache=False, _save_total_cache=False):
         '''
         Output axes: (sum/counts, conditions, rules, data)
         '''
@@ -829,6 +834,7 @@ class Run:
                 args = (filepaths, dataname, back_sep, slu_sep, slice_range, rules)
                 cache_return = cache_function(outdir, filepaths, args, ['rundata','runweights'], use_cache=use_cache)
                 if not isinstance(cache_return, str):
+                    print(f'found a cache with {len(filepaths)} files')
                     return cache_return
 
         compiled_data = []
@@ -856,12 +862,32 @@ class Run:
             run_weight.append(np.sum(split_count, axis=0))
         
 
-        if make_cache and filepaths:
+        if make_cache and (_filepaths is not None) and filepaths:
+            rundata = np.array(run_average, dtype=float)
+            runweights = np.array(run_weight, dtype=int)
+            print(f'_filepath is list: saving cache with {len(filepaths)} files')
 
             np.savez(cache_return,
-                     rundata=np.array(run_average, dtype=float),
-                     runweights=np.array(run_weight, dtype=int),
+                     rundata=rundata,
+                     runweights=runweights,
                      )
+
+        elif make_cache and (_filepaths is None) and filepaths and _save_total_cache:
+            rundata = np.array(run_average, dtype=float)
+            runweights = np.array(run_weight, dtype=int)
+            print(f'_filepath is None: saving cache with {len(filepaths)} files')
+
+            np.savez(cache_return,
+                     rundata=rundata,
+                     runweights=runweights,
+                     )
+            
+            # h5_filepath = get_cache_filepath_h5(outdir, filepaths, args, ['rundata','runweights'])
+            # with h5py.File(h5_filepath, 'w') as f:
+            #     f.create_dataset('rundata', data=rundata, chunks=rundata.shape,
+            #             compression='gzip', compression_opts=5)
+            #     f.create_dataset('runweights', data=runweights, chunks=runweights.shape,
+            #             compression='gzip', compression_opts=5)
 
         return run_average, run_weight
 
