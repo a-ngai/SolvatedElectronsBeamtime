@@ -776,7 +776,7 @@ class Run:
     def average_run_data_weights(self, dataname, back_sep=False, slu_sep=False, slice_range=None,
                                  rules=[None,], use_cache=True, make_cache=True, _filepaths=None,
                                  num_files_per_cache=None, 
-                                 _save_incomplete_cache=False):
+                                 _save_incomplete_cache=False, _save_total_cache=False):
         '''
         Output axes: (sum/counts, conditions, rules, data)
         '''
@@ -834,6 +834,7 @@ class Run:
                 args = (filepaths, dataname, back_sep, slu_sep, slice_range, rules)
                 cache_return = cache_function(outdir, filepaths, args, ['rundata','runweights'], use_cache=use_cache)
                 if not isinstance(cache_return, str):
+                    print(f'found a cache with {len(filepaths)} files')
                     return cache_return
 
         compiled_data = []
@@ -861,9 +862,20 @@ class Run:
             run_weight.append(np.sum(split_count, axis=0))
         
 
-        if make_cache and filepaths:
+        if make_cache and (_filepaths is not None) and filepaths:
             rundata = np.array(run_average, dtype=float)
             runweights = np.array(run_weight, dtype=int)
+            print(f'_filepath is list: saving cache with {len(filepaths)} files')
+
+            np.savez(cache_return,
+                     rundata=rundata,
+                     runweights=runweights,
+                     )
+
+        elif make_cache and (_filepaths is None) and filepaths and _save_total_cache:
+            rundata = np.array(run_average, dtype=float)
+            runweights = np.array(run_weight, dtype=int)
+            print(f'_filepath is None: saving cache with {len(filepaths)} files')
 
             np.savez(cache_return,
                      rundata=rundata,

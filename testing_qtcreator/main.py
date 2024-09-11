@@ -571,6 +571,7 @@ class Ui_MainWindow(object):
         self.text_edit_ke_bins.setText('')
         self.text_edit_tof_start.setText('')
         self.text_edit_tof_stop.setText('')
+        self.box_pes.setChecked(True)
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
@@ -871,6 +872,7 @@ class Ui_MainWindow(object):
 
     
     def __init__(self):
+        self.background_key = True
         self.status = {
             'auto_newest_folder' : False, 
             'fetch_new_files' : False,
@@ -922,6 +924,7 @@ class Ui_MainWindow(object):
         self.box_beta2.toggled.connect(self.update_pes_window)
         self.box_beta3.toggled.connect(self.update_pes_window)
         self.box_beta4.toggled.connect(self.update_pes_window)
+        self.box_slu_parity.toggled.connect(self.update_main_vmi_window)
         self.applyChangesSettings.clicked.connect(self.apply_settings)
 
         self.timer = QTimer()
@@ -992,22 +995,6 @@ class Ui_MainWindow(object):
         self.print_browser.setText(joined_text)
         QApplication.processEvents()
     
-    def update_filechange(self):
-        current_folder = self.status['current_folder']
-        subfolder_ext = self.status['subfolder_extension']
-        look_in_folder = f'{current_folder}/{subfolder_ext}'
-        try:
-            found_files = os.listdir(look_in_folder)
-        except FileNotFoundError:
-            time_string = strftime("%Y-%m-%d %H:%M:%S", localtime())
-            print_message = f'{time_string}: file location ({look_in_folder}) does not exist, no update.'
-            self.update_print_box(print_message)
-            print(print_message)
-            return False
-        if sorted(found_files) == sorted(self.status['current_files']):
-            print('no change in files...')
-            return False
-        self.status['current_files'] = sorted(found_files)
 
     def check_filechange(self):
         if self.status['auto_newest_folder']:
@@ -1021,6 +1008,15 @@ class Ui_MainWindow(object):
                 self.text_edit_current_folder.setText(newest_folder)
                 # self.text_edit_current_folder.setReadOnly(True)
 
+        sorted_found_files = self.get_filechange()
+        if sorted_found_files is None:
+            return False
+        if sorted_found_files == sorted(self.status['current_files']):
+            print('no change in files...')
+            return False
+        return True
+
+    def get_filechange(self):
         current_folder = self.status['current_folder']
         subfolder_ext = self.status['subfolder_extension']
         look_in_folder = f'{current_folder}/{subfolder_ext}'
@@ -1031,11 +1027,11 @@ class Ui_MainWindow(object):
             print_message = f'{time_string}: file location ({look_in_folder}) does not exist, no update.'
             self.update_print_box(print_message)
             print(print_message)
-            return False
-        if sorted(found_files) == sorted(self.status['current_files']):
-            print('no change in files...')
-            return False
-        return True
+            return None
+        return sorted(found_files)
+
+    def update_filechange(self):
+        self.status['current_files'] = self.get_filechange()
 
     def update_files(self):
         current_folder = self.status['current_folder']
@@ -1045,20 +1041,21 @@ class Ui_MainWindow(object):
         self.status['current_files'] = sorted(found_files)
     
     def update_data_if_change(self):
-        if self.check_filechange():
+        time_string = strftime("%Y-%m-%d %H:%M:%S", localtime())
+        if self.check_filechange() and not self.background_key:
+            num_files = len(self.get_filechange())
+            print(f'{time_string}: new files found ({num_files}), but background process unfinishd. Nothing done.')
+            self.update_print_box(f'{time_string}: new files found ({num_files}), but background process unfinishd. Nothing done.')
+
+        elif self.check_filechange() and self.background_key:
+            num_files = len(self.get_filechange())
             self.update_filechange()
             self.update_data()
 
-            num_files = len(self.status['current_files'])
-            time_string = strftime("%Y-%m-%d %H:%M:%S", localtime())
             print(f'{time_string}: new files found ({num_files}), updating')
             self.update_print_box(f'{time_string}: new files found ({num_files}), updating')
 
-    def make_file(self, progress_callback):
-        with open('C:/Users/ngai/Downloads/test_log/log.txt', 'w') as f:
-            f.write('I got here!')
-
-    def get_new_vmi_data(self, progress_callback):
+    def get_new_vmi_data(self):
         @set_recursion_limit(1)
         def keyword_functions(keyword, aliasFunc, DictionaryObject):
             return DictionaryObject[aliasFunc(keyword)]
@@ -1077,7 +1074,7 @@ class Ui_MainWindow(object):
             back_sep = True
             slu_sep = True
             make_cache = True
-            num_files_per_cache = 5
+            num_files_per_cache = 2
 
             vmi_data = self.Run.average_run_data('vmi', 
                 back_sep=back_sep, slu_sep=slu_sep, make_cache=make_cache,
@@ -1094,29 +1091,38 @@ class Ui_MainWindow(object):
         self.vmi_data = vmi_data
         return vmi_data
     
-    def get_new_vmi_data_and_redraw_data(self, progress_callback):
-        vmi_data = self.get_new_vmi_data(None)
-        self.redraw_data(vmi_data)
+    def get_new_vmi_data_and_redraw_data(self):
+        self.get_new_vmi_data()
+        self.redraw_data()
+    
+    def return_background_key(self):
+        self.background_key = True
+    
+    def borrow_background_key(self):
+        self.background_key = False
 
     def update_data(self, multithreading=True):
         if multithreading:
+            self.borrow_background_key()
             if False:
                 worker = Worker(self.get_new_vmi_data)
                 worker.signals.result.connect(self.redraw_data)
                 # worker.signals.finished.connect(self.thread_complete)
+                worker.signals.finished.connect(self.return_background_key)
                 self.threadpool.start(worker)
             else:
                 worker = Worker(self.get_new_vmi_data_and_redraw_data)
+                worker.signals.finished.connect(self.return_background_key)
                 self.threadpool.start(worker)
         else:
-            vmi_data = self.get_new_vmi_data(None)
-            self.redraw_data(vmi_data)
+            self.get_new_vmi_data()
+            self.redraw_data()
 
 
-    def redraw_data(self, vmi_data):
+    def redraw_data(self):
         # VMI section
 
-        # vmi_data = self.vmi_data  # obtained through the self.get_new_vmi_data() method
+        vmi_data = self.vmi_data  # obtained through the self.get_new_vmi_data() method
         if self.box_slu_parity.isChecked():
             vmi_felon_sluoff, vmi_felon_sluon, vmi_feloff_sluoff, vmi_feloff_sluon = (data[0] for data in vmi_data)
         else:
@@ -1155,7 +1161,6 @@ class Ui_MainWindow(object):
 
         if self.gdata is None: 
             gData = loadG(self.status['gdata_filepath'], make_images=True)
-            print('gdata keys: ', gData.keys())
             self.gdata = gData
             self.betas = gData['l']
 
@@ -1198,7 +1203,6 @@ class Ui_MainWindow(object):
             4 : self.box_beta4,
         }
         if self.box_pes.isChecked():
-            print('pes box is checked!')
             self._line_pes.set_data(energies, pes)
         else:
             self._line_pes.set_data(energies, np.zeros(np.shape(pes))*np.nan)
@@ -1371,7 +1375,8 @@ class Worker(QRunnable):
         self.signals = WorkerSignals()
 
         # Add the callback to our kwargs
-        self.kwargs['progress_callback'] = self.signals.progress
+        if 'progress_callback' in self.kwargs.keys():
+            self.kwargs['progress_callback'] = self.signals.progress
 
     @Slot()
     def run(self):
