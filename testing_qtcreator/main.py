@@ -872,6 +872,7 @@ class Ui_MainWindow(object):
             'current_folder' : '',
             'print_list' : [],
             'subfolder_extension' : '',
+            'background_process_active' : False,
         }
         self.graph_data = {
             'vmi_fore' : np.array([[],]),
@@ -884,6 +885,11 @@ class Ui_MainWindow(object):
         }
 
         self.run = Run([])
+
+        self.threadpool = QThreadPool()
+        print("Multithreading with maximum %d threads" % self.threadpool.maxThreadCount())
+
+        self.vmi_data = np.zeros(shape=(4,1,1,1))
 
     def setup_signals(self):
         self.button_auto_newest_folder.clicked.connect(self.click_auto_newest_folder)
@@ -899,6 +905,12 @@ class Ui_MainWindow(object):
 
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_data_if_change)
+
+        self.background_process_timer = QTimer()
+        self.background_process_timer.timeout.connect(self.check_background_process_status)
+    
+    def check_background_process_status(self):
+        raise NotImplementedError
         
     def resume_timer(self):
         self.timer.start(2000)
@@ -946,6 +958,23 @@ class Ui_MainWindow(object):
         self.print_browser.setText(joined_text)
         QApplication.processEvents()
     
+    def update_filechange(self):
+        current_folder = self.status['current_folder']
+        subfolder_ext = self.status['subfolder_extension']
+        look_in_folder = f'{current_folder}/{subfolder_ext}'
+        try:
+            found_files = os.listdir(look_in_folder)
+        except FileNotFoundError:
+            time_string = strftime("%Y-%m-%d %H:%M:%S", localtime())
+            print_message = f'{time_string}: file location ({look_in_folder}) does not exist, no update.'
+            self.update_print_box(print_message)
+            print(print_message)
+            return False
+        if sorted(found_files) == sorted(self.status['current_files']):
+            print('no change in files...')
+            return False
+        self.status['current_files'] = sorted(found_files)
+
     def check_filechange(self):
         if self.status['auto_newest_folder']:
             current_folder = self.status['current_folder']
@@ -969,6 +998,7 @@ class Ui_MainWindow(object):
             print(print_message)
             return False
         if sorted(found_files) == sorted(self.status['current_files']):
+            print('no change in files...')
             return False
         return True
 
@@ -981,11 +1011,19 @@ class Ui_MainWindow(object):
     
     def update_data_if_change(self):
         if self.check_filechange():
+            self.update_filechange()
             self.update_data()
-    
-    def update_data(self):
-        # VMI section
 
+            num_files = len(self.status['current_files'])
+            time_string = strftime("%Y-%m-%d %H:%M:%S", localtime())
+            print(f'{time_string}: new files found ({num_files}), updating')
+            self.update_print_box(f'{time_string}: new files found ({num_files}), updating')
+
+    def make_file(self, progress_callback):
+        with open('C:/Users/ngai/Downloads/test_log/log.txt', 'w') as f:
+            f.write('I got here!')
+
+    def get_new_vmi_data(self, progress_callback):
         @set_recursion_limit(1)
         def keyword_functions(keyword, aliasFunc, DictionaryObject):
             return DictionaryObject[aliasFunc(keyword)]
@@ -999,16 +1037,43 @@ class Ui_MainWindow(object):
         self.Run = Run(filepaths,
             alias_dict=alias_dict, search_symbols=search_symbols,
             keyword_functions=keyword_functions)
+
         try:
+            back_sep = True
+            slu_sep = True
+            make_cache = True
+            num_files_per_cache = 5
 
             vmi_data = self.Run.average_run_data('vmi', 
-                back_sep=True, slu_sep=True, make_cache=True, num_files_per_cache=5)
+                back_sep=back_sep, slu_sep=slu_sep, make_cache=make_cache,
+                num_files_per_cache=num_files_per_cache)
 
         except (FileNotFoundError, OSError):
             # this is a race condition, where h5py is trying to open a file that is currently being written into
             # easiest solution is to wait for the next update
-            return None 
+            print("can't open here! Returning None")
+            vmi_data = self.vmi_data
+            return vmi_data
         # vmi_data = simplify_data(vmi_data, single_run=True, single_rule=True)
+
+        self.vmi_data = vmi_data
+        return vmi_data
+
+    def update_data(self, multithreading=True):
+        if multithreading:
+            worker = Worker(self.get_new_vmi_data)
+            worker.signals.result.connect(self.redraw_data)
+            # worker.signals.finished.connect(self.thread_complete)
+            self.threadpool.start(worker)
+        else:
+            vmi_data = self.get_new_vmi_data()
+            self.redraw_data(vmi_data)
+
+
+    def redraw_data(self, vmi_data):
+        # VMI section
+
+        # vmi_data = self.vmi_data  # obtained through the self.get_new_vmi_data() method
         vmi_felon_sluon, vmi_felon_sluoff, vmi_feloff_sluon, vmi_feloff_sluoff = (data[0] for data in vmi_data)
 
         vmi_fore = (
@@ -1049,7 +1114,6 @@ class Ui_MainWindow(object):
     def update_canvases(self):
         self.update_pes_window()
         self.update_main_vmi_window()
-        # print('update all canvases here!')
 
     def click_fetch_new_files(self):
         self.status['fetch_new_files'] = True
@@ -1059,22 +1123,34 @@ class Ui_MainWindow(object):
     def click_auto_newest_folder(self):
         self.status['auto_newest_folder'] = True
         self.test_display_folder_status.setText('Search')
-        # self.resume_timer()
-
 
     def click_stop_fetch(self):
         self.status['fetch_new_files'] = False
         self.text_display_update_status.setText('Stopped')
         self.stop_timer()
 
-
     def click_stay_folder(self):
         self.status['auto_newest_folder'] = False
         self.test_display_folder_status.setText('Stay')
 
+import os, sys, traceback, re
+import numpy as np
+import matplotlib.pyplot as plt
+from time import strftime, localtime, time
 
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
+from matplotlib.backends.backend_qtagg import FigureCanvas
+from matplotlib.backends.backend_qtagg import \
+    NavigationToolbar2QT as NavigationToolbar
+
+from PySide6.QtCore import QObject, Signal, QThreadPool, Signal, Slot, QRunnable, QTimer
+from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QApplication
+
+from fermi_libraries.run_module import Run
+from fermi_libraries.common_functions import set_recursion_limit
+from fermi_libraries.dictionary_search import search_symbols
+
 class MplCanvas(FigureCanvasQTAgg):
     def __init__(self, parent=None, width=5, height=4, dpi=100):
         fig = Figure(figsize=(width, height), dpi=dpi)
@@ -1082,26 +1158,76 @@ class MplCanvas(FigureCanvasQTAgg):
         super(MplCanvas, self).__init__(fig)
 
 
-from matplotlib.backends.backend_qtagg import FigureCanvas
-from matplotlib.backends.backend_qtagg import \
-    NavigationToolbar2QT as NavigationToolbar
-from matplotlib.backends.qt_compat import QtWidgets
+class WorkerSignals(QObject):
+    '''
+    Defines the signals available from a running worker thread.
 
-import time
-from time import strftime, localtime
-import os
-import numpy as np
-import re
-from PyQt6.QtCore import QTimer
-import matplotlib.pyplot as plt
+    Supported signals are:
+
+    finished
+        No data
+
+    error
+        tuple (exctype, value, traceback.format_exc() )
+
+    result
+        object data returned from processing, anything
+
+    progress
+        int indicating % progress
+
+    '''
+    finished = Signal()
+    error = Signal(tuple)
+    result = Signal(object)
+    progress = Signal(int)
 
 
-# from fermi_libraries import run_module
-from fermi_libraries.run_module import Run
-from fermi_libraries.common_functions import set_recursion_limit, simplify_data
-from fermi_libraries.dictionary_search import search_symbols
+class Worker(QRunnable):
+    '''
+    Worker thread
 
-from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QApplication
+    Inherits from QRunnable to handler worker thread setup, signals and wrap-up.
+
+    :param callback: The function callback to run on this worker thread. Supplied args and
+                     kwargs will be passed through to the runner.
+    :type callback: function
+    :param args: Arguments to pass to the callback function
+    :param kwargs: Keywords to pass to the callback function
+
+    '''
+
+    def __init__(self, fn, *args, **kwargs):
+        super(Worker, self).__init__()
+
+        # Store constructor arguments (re-used for processing)
+        self.fn = fn
+        self.args = args
+        self.kwargs = kwargs
+        self.signals = WorkerSignals()
+
+        # Add the callback to our kwargs
+        self.kwargs['progress_callback'] = self.signals.progress
+
+    @Slot()
+    def run(self):
+        '''
+        Initialise the runner function with passed args, kwargs.
+        '''
+
+        # Retrieve args/kwargs here; and fire processing using them
+        try:
+            result = self.fn(*self.args, **self.kwargs)
+        except:
+            traceback.print_exc()
+            exctype, value = sys.exc_info()[:2]
+            self.signals.error.emit((exctype, value, traceback.format_exc()))
+        else:
+            self.signals.result.emit(result)  # Return the result of the processing
+        finally:
+            self.signals.finished.emit()  # Done
+
+
 class MainWindow(QMainWindow):
 
     def __init__(self, *args, **kwargs):
@@ -1128,7 +1254,7 @@ class MainWindow(QMainWindow):
         t = np.linspace(0, 10, 501)
         self._dynamic_ax = dynamic_canvas.figure.subplots()
         t = np.linspace(0, 10, 101)
-        self._line, = self._dynamic_ax.plot(t, np.sin(t + time.time()))
+        self._line, = self._dynamic_ax.plot(t, np.sin(t + time()))
         self._timer = dynamic_canvas.new_timer(50)
         self._timer.add_callback(self._update_canvas)
         self._timer.start()
@@ -1208,7 +1334,7 @@ class MainWindow(QMainWindow):
     def _update_canvas(self):
         t = np.linspace(0, 10, 101)
         # Shift the sinusoid as a function of time.
-        self._line.set_data(t, np.sin(t + time.time()))
+        self._line.set_data(t, np.sin(t + time()))
         self._line.figure.canvas.draw()
 
 
@@ -1216,7 +1342,6 @@ class MainWindow(QMainWindow):
 
 
 
-import sys
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     tabWidgetApp = Ui_MainWindow()
