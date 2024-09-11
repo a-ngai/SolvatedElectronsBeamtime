@@ -770,12 +770,9 @@ def swap_rules_runs(data, single_rule=False, single_run=False, single_shot = Fal
 
     return output
 
-def simplify_data(data, single_rule=False, single_run=False, file_level=False, no_slu_cycling=False):
-    if no_slu_cycling:
-        less_data = remove_slu_cycling(data), 
-    else:
-        less_data = data
-    return swap_rules_runs(data, single_rule=single_rule, single_run=single_run, file_level=file_level)
+def simplify_data(data, single_rule=False, single_run=False, file_level=False):
+    return swap_rules_runs(remove_slu_cycling(data), 
+                           single_rule=single_rule, single_run=single_run, file_level=file_level)
 
 def remove_slu_cycling(data):
     '''
