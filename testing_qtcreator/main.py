@@ -562,6 +562,16 @@ class Ui_MainWindow(object):
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
 
+        self.box_fore_felonsluon.setChecked(True)
+        self.box_back_felonsluoff.setChecked(True)
+        self.text_edit_search_dir_for_newest_folder.setText('C:/Users/ngai/Downloads/update_test')
+        self.text_edit_abel_inversion_data_path.setText('C:/Users/ngai/Projects/SolvatedElectronsBeamtime/examples/G_r256_k64_l4_half.h5')
+        self.text_edit_ke_start.setText('')
+        self.text_edit_ke_end.setText('')
+        self.text_edit_ke_bins.setText('')
+        self.text_edit_tof_start.setText('')
+        self.text_edit_tof_stop.setText('')
+
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.button_fetch_new_files.setText(QCoreApplication.translate("MainWindow", u"Fetch new files", None))
@@ -873,16 +883,25 @@ class Ui_MainWindow(object):
             'print_list' : [],
             'subfolder_extension' : '',
             'background_process_active' : False,
+            'gdata_filepath' : '',
         }
         self.graph_data = {
             'vmi_fore' : np.array([[],]),
             'vmi_back' : np.array([[],]),
             'vmi_subt' : np.array([[],]),
-            'pes' : np.array([[],]),
+            'pes' : np.array([]),
+            'betas' : np.array(4*[[],]),
+            'eke' : np.array([]),
+            'eke_start' : None,
+            'eke_end' : None,
+            'eke_bins' : None,
             'tof_fore' : np.array([]),
             'tof_back' : np.array([[],]),
             'tof_subt' : np.array([[],]),
         }
+
+        self.pes_calibration_constant = 1
+        self.ion_tof_calibration_constants = (0, 1)
 
         self.run = Run([])
 
@@ -890,6 +909,8 @@ class Ui_MainWindow(object):
         print("Multithreading with maximum %d threads" % self.threadpool.maxThreadCount())
 
         self.vmi_data = np.zeros(shape=(4,1,1,1))
+        self.gdata = None
+        self.betas = [] # the existent beta values from gdata
 
     def setup_signals(self):
         self.button_auto_newest_folder.clicked.connect(self.click_auto_newest_folder)
@@ -922,7 +943,20 @@ class Ui_MainWindow(object):
         self.status['files_per_cache'] = int(self.text_edit_files_per_cache.toPlainText())
         self.status['search_in_directory'] = self.text_edit_search_dir_for_newest_folder.toPlainText()
         self.status['subfolder_extension'] = self.text_edit_subfolder_extension.toPlainText()
-        print('testing', self.text_edit_search_dir_for_newest_folder.toPlainText())
+        # print('testing', self.text_edit_search_dir_for_newest_folder.toPlainText())
+        self.status['gdata_filepath'] = self.text_edit_abel_inversion_data_path.toPlainText()
+        if eke_start := self.text_edit_ke_start.toPlainText() == '':
+            self.graph_data['eke_start'] = None
+        else:
+            self.graph_data['eke_start'] = float(eke_start)
+        if eke_end := self.text_edit_ke_end.toPlainText() == '':
+            self.graph_data['eke_end'] = None
+        else:
+            self.graph_data['eke_end'] = float(eke_end)
+        if eke_bins := self.text_edit_ke_bins.toPlainText() == '':
+            self.graph_data['eke_bins'] = None
+        else:
+            self.graph_data['eke_bins'] = float(eke_bins)
         
         print('stopped working here!')
 
@@ -985,6 +1019,7 @@ class Ui_MainWindow(object):
                 self.update_print_box(f'{time_string}: new folder found ({newest_folder})')
                 self.status['current_folder'] = newest_folder
                 self.text_edit_current_folder.setText(newest_folder)
+                # self.text_edit_current_folder.setReadOnly(True)
 
         current_folder = self.status['current_folder']
         subfolder_ext = self.status['subfolder_extension']
@@ -1058,15 +1093,23 @@ class Ui_MainWindow(object):
 
         self.vmi_data = vmi_data
         return vmi_data
+    
+    def get_new_vmi_data_and_redraw_data(self, progress_callback):
+        vmi_data = self.get_new_vmi_data(None)
+        self.redraw_data(vmi_data)
 
     def update_data(self, multithreading=True):
         if multithreading:
-            worker = Worker(self.get_new_vmi_data)
-            worker.signals.result.connect(self.redraw_data)
-            # worker.signals.finished.connect(self.thread_complete)
-            self.threadpool.start(worker)
+            if False:
+                worker = Worker(self.get_new_vmi_data)
+                worker.signals.result.connect(self.redraw_data)
+                # worker.signals.finished.connect(self.thread_complete)
+                self.threadpool.start(worker)
+            else:
+                worker = Worker(self.get_new_vmi_data_and_redraw_data)
+                self.threadpool.start(worker)
         else:
-            vmi_data = self.get_new_vmi_data()
+            vmi_data = self.get_new_vmi_data(None)
             self.redraw_data(vmi_data)
 
 
@@ -1074,7 +1117,10 @@ class Ui_MainWindow(object):
         # VMI section
 
         # vmi_data = self.vmi_data  # obtained through the self.get_new_vmi_data() method
-        vmi_felon_sluon, vmi_felon_sluoff, vmi_feloff_sluon, vmi_feloff_sluoff = (data[0] for data in vmi_data)
+        if self.box_slu_parity.isChecked():
+            vmi_felon_sluoff, vmi_felon_sluon, vmi_feloff_sluoff, vmi_feloff_sluon = (data[0] for data in vmi_data)
+        else:
+            vmi_felon_sluon, vmi_felon_sluoff, vmi_feloff_sluon, vmi_feloff_sluoff = (data[0] for data in vmi_data)
 
         vmi_fore = (
             (-1)**self.box_flip_felonsluon.isChecked() * self.box_fore_felonsluon.isChecked() * vmi_felon_sluon
@@ -1092,26 +1138,138 @@ class Ui_MainWindow(object):
         self.graph_data['vmi_fore'] = vmi_fore
         self.graph_data['vmi_back'] = vmi_back
         self.graph_data['vmi_subt'] = vmi_subt
+
+
+        ### VMI INVERSION PLACE
+
+        vmi_center = (264, 260)
+        vmi_rotation = 0
+        vmi_ellip = (1, 1.1)
+        half_filter = [True, True]
+
+        vmi = resize(vmi_subt, (512, 512), axis=(0,1))
+        corrected = stretch(rotate(center_image(vmi, vmi_center), vmi_rotation), vmi_ellip)
+        folded = foldHalf(corrected, half_filter=half_filter)
+        # resized = resizeFoldedHalf(folded, 256)
+        resized = folded
+
+        if self.gdata is None: 
+            gData = loadG(self.status['gdata_filepath'], make_images=True)
+            print('gdata keys: ', gData.keys())
+            self.gdata = gData
+            self.betas = gData['l']
+
+        out = cpbasex_energy_inversion(resized, self.gdata, make_images=True, shape='half')
+
+        rsquare = out['E']
+        rsquare_spectrum = out['IE']
+        betas = out['betas']
+
+        slope = self.pes_calibration_constant
+        rsquare_to_energy = lambda x: slope * x
+        energies = rsquare_to_energy(rsquare)
+        pes = rsquare_spectrum / slope # jacobian correction
+
+        self.graph_data['pes'] = pes
+        self.graph_data['betas'] = betas
+        self.graph_data['eke'] = energies
+
+
         self.update_canvases()
         self.update_files()
     
     def update_pes_window(self):
-        print('update the PES window here!')
-        print('depending on the beta checkboxes')
+        
+        energies = self.graph_data['eke']
+        pes = self.graph_data['pes']
+        # beta1, beta2, beta3, beta4, *_ = self.graph_data['betas']
+        betas = self.graph_data['betas']
+        l_values = self.betas
+        betas_to_axes = {
+            1 : self._line_beta1,
+            2 : self._line_beta2,
+            3 : self._line_beta3,
+            4 : self._line_beta4,
+        }
+        betas_to_boxes = {
+            1 : self.box_beta1,
+            2 : self.box_beta2,
+            3 : self.box_beta3,
+            4 : self.box_beta4,
+        }
+        if self.box_pes.isChecked():
+            print('pes box is checked!')
+            self._line_pes.set_data(energies, pes)
+        else:
+            self._line_pes.set_data(energies, np.zeros(np.shape(pes))*np.nan)
+        possible_l_values = [l_value for l_value in l_values if l_value in [1,2,3,4]]        
+        for index, l_value in enumerate(possible_l_values):
+            if betas_to_boxes[l_value].isChecked():
+                betas_to_axes[l_value].set_data(energies, betas[:,index])
+            else:
+                betas_to_axes[l_value].set_data(energies, np.zeros(np.shape(betas[:,index]))*np.nan)
+
+        # None conditions for the eKE axis
+        current_pes_xlim = self._pes_ax.get_xlim()
+        new_pes_xlim = list(current_pes_xlim)
+        non_empty_energies = len(energies) > 0
+        if self.graph_data['eke_start'] is None and non_empty_energies:
+            new_pes_xlim[0] = np.min(energies)
+        if self.graph_data['eke_end'] is None and non_empty_energies:
+            new_pes_xlim[1] = np.max(energies)
+        self._pes_ax.set_xlim(new_pes_xlim)
+
+        current_pes_ylim = self._pes_ax.get_ylim()
+        new_pes_ylim = list(current_pes_ylim)
+        if self.graph_data['eke_start'] is None and non_empty_energies:
+            new_pes_ylim[0] = np.min(pes)
+        if self.graph_data['eke_end'] is None and non_empty_energies:
+            new_pes_ylim[1] = np.max(pes)
+        self._pes_ax.set_ylim(new_pes_ylim)
+        
+        # self._pes_ax.autoscale()
+        # self._betas_ax.autoscale()
+
+        self._pes_ax.figure.canvas.draw()
+        self._betas_ax.figure.canvas.draw()
 
     def update_main_vmi_window(self):
-        
-        self._fore_ax_data.set_data(self.graph_data['vmi_fore'])
-        self._fore_ax_data.autoscale()
-        self._back_ax_data.set_data(self.graph_data['vmi_back'])
-        self._back_ax_data.autoscale()
-        self._subt_ax_data.set_data(self.graph_data['vmi_subt'])
-        self._subt_ax_data.autoscale()
-        self._fore_ax_data.figure.canvas.draw()
-        self._back_ax_data.figure.canvas.draw()
-        self._subt_ax_data.figure.canvas.draw()
+        BLITTING = False
+        if BLITTING:
+            fore_background = self.fore_fig.canvas.copy_from_bbox(self._fore_ax.bbox)
+            self.fore_fig.canvas.restore_region(fore_background)
+            self._fore_ax_data.set_data(self.graph_data['vmi_fore'])
+            self._fore_ax.draw_artist(self._fore_ax_data)
+            self._fore_ax_data.autoscale()
+            self.fore_fig.canvas.blit(self._fore_ax.bbox)
+
+            back_background = self.back_fig.canvas.copy_from_bbox(self._back_ax.bbox)
+            self.back_fig.canvas.restore_region(back_background)
+            self._back_ax_data.set_data(self.graph_data['vmi_back'])
+            self._back_ax.draw_artist(self._back_ax_data)
+            self._back_ax_data.autoscale()
+            self.back_fig.canvas.blit(self._back_ax.bbox)
+
+            subt_background = self.subt_fig.canvas.copy_from_bbox(self._subt_ax.bbox)
+            self.subt_fig.canvas.restore_region(subt_background)
+            self._subt_ax_data.set_data(self.graph_data['vmi_subt'])
+            self._subt_ax.draw_artist(self._subt_ax_data)
+            self._subt_ax_data.autoscale()
+            self.subt_fig.canvas.blit(self._subt_ax.bbox)
+            
+        else:
+            self._fore_ax_data.set_data(self.graph_data['vmi_fore'])
+            self._fore_ax_data.autoscale()
+            self._back_ax_data.set_data(self.graph_data['vmi_back'])
+            self._back_ax_data.autoscale()
+            self._subt_ax_data.set_data(self.graph_data['vmi_subt'])
+            self._subt_ax_data.autoscale()
+            self._fore_ax_data.figure.canvas.draw()
+            self._back_ax_data.figure.canvas.draw()
+            self._subt_ax_data.figure.canvas.draw()
 
     def update_canvases(self):
+        # making this multi-threaded doesn't make sense
         self.update_pes_window()
         self.update_main_vmi_window()
 
@@ -1150,6 +1308,12 @@ from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QApplication
 from fermi_libraries.run_module import Run
 from fermi_libraries.common_functions import set_recursion_limit
 from fermi_libraries.dictionary_search import search_symbols
+
+from cpbasex.cpbasex import cpbasex_energy as cpbasex_energy_inversion
+from cpbasex.gData import loadG
+from cpbasex.image_mod import resize, resizeFoldedHalf, foldHalf
+from cpbasex.image_mod import find_center, find_rotation, find_ellipticity
+from cpbasex.image_mod import center_image, rotate, stretch
 
 class MplCanvas(FigureCanvasQTAgg):
     def __init__(self, parent=None, width=5, height=4, dpi=100):
@@ -1246,21 +1410,40 @@ class MainWindow(QMainWindow):
     def add_canvas(self, app):
         layout = app.vmi_abel
 
+        # # test window for dynamic updating (sinusoidal)
+        # pes_fig = Figure(figsize=(5, 3))
+        # dynamic_canvas = FigureCanvas(pes_fig)
+        # layout.addWidget(dynamic_canvas)
+        # layout.addWidget(NavigationToolbar(dynamic_canvas, self))
+        # t = np.linspace(0, 10, 501)
+        # self._dynamic_ax = dynamic_canvas.figure.subplots()
+        # t = np.linspace(0, 10, 101)
+        # self._line, = self._dynamic_ax.plot(t, np.sin(t + time()))
+        # self._timer = dynamic_canvas.new_timer(50)
+        # self._timer.add_callback(self._update_canvas)
+        # self._timer.start()
+        # self._dynamic_ax.text(0, 0, 'Placeholder!', fontsize=20)
+        # self._dynamic_ax.set_xlabel('eKE (eV)')
+        # self._dynamic_ax.xaxis.labelpad = 0
+        # plt.tight_layout()
+        # pes_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
+
         # main window PES canvas
         pes_fig = Figure(figsize=(5, 3))
-        dynamic_canvas = FigureCanvas(pes_fig)
-        layout.addWidget(dynamic_canvas)
-        layout.addWidget(NavigationToolbar(dynamic_canvas, self))
-        t = np.linspace(0, 10, 501)
-        self._dynamic_ax = dynamic_canvas.figure.subplots()
-        t = np.linspace(0, 10, 101)
-        self._line, = self._dynamic_ax.plot(t, np.sin(t + time()))
-        self._timer = dynamic_canvas.new_timer(50)
-        self._timer.add_callback(self._update_canvas)
-        self._timer.start()
-        self._dynamic_ax.text(0, 0, 'Placeholder!', fontsize=20)
-        self._dynamic_ax.set_xlabel('eKE (eV)')
-        self._dynamic_ax.xaxis.labelpad = 0
+        pes_canvas = FigureCanvas(pes_fig)
+        layout.addWidget(pes_canvas)
+        layout.addWidget(NavigationToolbar(pes_canvas, self))
+        app._pes_ax = pes_canvas.figure.subplots()
+        app._betas_ax = app._pes_ax.twinx()
+
+        app._line_pes, = app._pes_ax.plot([], [])
+        app._line_beta1, = app._betas_ax.plot([], [])
+        app._line_beta2, = app._betas_ax.plot([], [])
+        app._line_beta3, = app._betas_ax.plot([], [])
+        app._line_beta4, = app._betas_ax.plot([], [])
+        app._betas_ax.set_ylim(-2, 2)
+        app._pes_ax.set_xlabel('eKE (eV)')
+        app._pes_ax.xaxis.labelpad = 0
         plt.tight_layout()
         pes_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
         
@@ -1272,40 +1455,37 @@ class MainWindow(QMainWindow):
         fore_placeholder = subt_placeholder + back_placeholder
 
         # fore, back, and subt plots
-        fore_fig = Figure(figsize=(7, 7))
-        fore_canvas = FigureCanvas(fore_fig)
+        app.fore_fig = Figure(figsize=(7, 7))
+        fore_canvas = FigureCanvas(app.fore_fig)
         app.vmi_fore.addWidget(fore_canvas)
         app.vmi_fore.addWidget(NavigationToolbar(fore_canvas, self))
         app._fore_ax = fore_canvas.figure.subplots()
         app._fore_ax_data = app._fore_ax.imshow(fore_placeholder)
-        fore_fig.colorbar(app._fore_ax_data, ax=app._fore_ax)
+        app.fore_fig.colorbar(app._fore_ax_data, ax=app._fore_ax)
         plt.tight_layout()
         
-        back_fig = Figure(figsize=(7, 7))
-        back_canvas = FigureCanvas(back_fig)
+        app.back_fig = Figure(figsize=(7, 7))
+        back_canvas = FigureCanvas(app.back_fig)
         app.vmi_back.addWidget(back_canvas)
         app.vmi_back.addWidget(NavigationToolbar(back_canvas, self))
         app._back_ax = back_canvas.figure.subplots()
         app._back_ax_data = app._back_ax.imshow(back_placeholder)
-        back_fig.colorbar(app._back_ax_data, ax=app._back_ax)
+        app.back_fig.colorbar(app._back_ax_data, ax=app._back_ax)
         plt.tight_layout()
         
-        subt_fig = Figure(figsize=(7, 7))
-        subt_canvas = FigureCanvas(subt_fig)
+        app.subt_fig = Figure(figsize=(7, 7))
+        subt_canvas = FigureCanvas(app.subt_fig)
         app.vmi_subt.addWidget(subt_canvas)
         app.vmi_subt.addWidget(NavigationToolbar(subt_canvas, self))
         app._subt_ax = subt_canvas.figure.subplots()
         app._subt_ax_data = app._subt_ax.imshow(subt_placeholder)
-        subt_fig.colorbar(app._subt_ax_data, ax=app._subt_ax)
+        app.subt_fig.colorbar(app._subt_ax_data, ax=app._subt_ax)
         plt.tight_layout()
 
         # fig.subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=None, hspace=None)
-        fore_fig.subplots_adjust(bottom=0.10, left=0.05, right=1.0, top=0.95)
-        back_fig.subplots_adjust(bottom=0.10, left=0.05, right=1.0, top=0.95)
-        subt_fig.subplots_adjust(bottom=0.10, left=0.05, right=1.0, top=0.95)
-
-        
-
+        app.fore_fig.subplots_adjust(bottom=0.10, left=0.05, right=1.0, top=0.95)
+        app.back_fig.subplots_adjust(bottom=0.10, left=0.05, right=1.0, top=0.95)
+        app.subt_fig.subplots_adjust(bottom=0.10, left=0.05, right=1.0, top=0.95)
 
         # vmi calibration tab
         vmi_raw_fig = Figure(figsize=(7, 7))
@@ -1330,16 +1510,6 @@ class MainWindow(QMainWindow):
         vmi_corrected_fig.subplots_adjust(bottom=0.15, left=0.05, right=1.0, top=0.95)
         
         self.show()
-
-    def _update_canvas(self):
-        t = np.linspace(0, 10, 101)
-        # Shift the sinusoid as a function of time.
-        self._line.set_data(t, np.sin(t + time()))
-        self._line.figure.canvas.draw()
-
-
-        #####
-
 
 
 if __name__ == '__main__':

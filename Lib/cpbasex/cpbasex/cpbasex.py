@@ -12,7 +12,8 @@ def cpbasex_energy(images, gData, make_images=False, weights=None, regularizatio
 		nim = images.shape[2]
 	except:
 		nim = 1
-		images = images.reshape(nx, nx, nim)
+		if shape=='quadrant': images = images.reshape(nx, nx, nim)
+		if shape=='half': images = images.reshape(ny, nx, nim)
 
 	images = images.reshape(ny*nx,nim)
 
