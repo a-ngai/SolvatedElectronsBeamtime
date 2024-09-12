@@ -1,8 +1,8 @@
 import re
 import os
 
-def test_calibration_template():
-    with (open("examples/tof_to_mq_calibration.py", 'r') as f, 
+def test_tof_calibration_template():
+    with (open("examples/basic_tof_calibration.py", 'r') as f, 
         open("examples/_temp.py", 'w') as g):
         new_lines = []
         for line in f.readlines():

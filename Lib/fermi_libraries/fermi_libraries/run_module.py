@@ -1,11 +1,13 @@
 import os
 import warnings
+import time
 import logging
-from functools import wraps
 import re
 import hashlib
 import numpy as np
 import h5py
+from functools import wraps
+from multiprocessing import cpu_count, pool
 from scipy.interpolate import interp1d
 from .dictionary_search import SearchClass, search_symbols as default_search_symbols
 from .common_functions import single_pass_moment_sums
@@ -67,11 +69,15 @@ def cache_function(outdir, filepaths, args, datanames, use_cache=True):
     idf = hashlib.md5(str(args).encode()).hexdigest()
     cachefile = get_cache_filepath(outdir, filepaths, args, datanames, use_cache=use_cache)
     if os.path.exists(cachefile):
-        latest = sorted(filepaths)[0]
-        rawtime = os.path.getmtime(latest)
-        cachetime = os.path.getmtime(cachefile)
-        # load cached data if it is up-to-date
-        if (cachetime > rawtime) and use_cache:
+
+        # latest = sorted(filepaths)[0]
+        # rawtime = os.path.getmtime(latest)
+        # cachetime = os.path.getmtime(cachefile)
+        # # load cached data if it is up-to-date
+        # if (cachetime > rawtime) and use_cache:
+
+        if use_cache:
+
             try:
                 loaded_dict = np.load(cachefile, allow_pickle=True)
                 output = [loaded_dict[name] for name in datanames]
@@ -80,6 +86,27 @@ def cache_function(outdir, filepaths, args, datanames, use_cache=True):
                 print(f'{e}, remaking the cache file')
 
     return cachefile
+
+
+
+def function_for_imap(filepath, run_object_attributes, dataname, back_sep=True, slu_sep=True, slice_range=None, rules=[None,]):
+    run_object = Run([])
+    for name, value in run_object_attributes:
+        setattr(run_object, name, value)
+    data_sum, data_count = list(run_object.yield_sums_counts_filedata(
+        dataname, back_sep=back_sep, slu_sep=slu_sep,
+        slice_range=slice_range, rules=rules, filepaths=[filepath,]))[0]
+    return data_sum, data_count
+
+from itertools import repeat
+
+def apply_args_and_kwargs(fn, args, kwargs):
+    return fn(*args, **kwargs)
+
+def starmap_with_kwargs(pool, fn, args_iter, kwargs_iter):
+    args_for_starmap = zip(repeat(fn), args_iter, kwargs_iter)
+    return pool.starmap(apply_args_and_kwargs, args_for_starmap)
+
 
 class Run:
     '''
@@ -829,6 +856,7 @@ class Run:
                 args = (filepaths, dataname, back_sep, slu_sep, slice_range, rules)
                 cache_return = cache_function(outdir, filepaths, args, ['rundata','runweights'], use_cache=use_cache)
                 if not isinstance(cache_return, str):
+                    # print(f'found a cache with {len(filepaths)} files')
                     return cache_return
 
         compiled_data = []
@@ -1191,3 +1219,281 @@ class RunSets:
                     output[i][j].append(rule_data)
 
         return output
+
+
+class MultithreadRun(Run):
+
+    def __init__(self, hdf5_filepaths,
+                 alias_dict={}, search_symbols=default_search_symbols,
+                 keyword_functions=default_keyword_functions,
+                 background_offset=0):
+        super().__init__(hdf5_filepaths,
+                 alias_dict=alias_dict, search_symbols=search_symbols,
+                 keyword_functions=keyword_functions,
+                 background_offset=background_offset)
+        self.num_cores = 1
+
+    def _alias(func):
+        @wraps(func)
+        def _name_wrapped_func(self, *args, **kwargs):
+            # assume name is the last argument (sometimes 'self' is the first argument, can't
+            # be prevented!)
+            name = args[-1]
+            alias = self.keyword_alias(name)
+            new_args = list(args)
+            new_args[-1] = alias
+            return func(self,*new_args,**kwargs)
+        return _name_wrapped_func
+
+    @_alias
+    def alias(self, name):
+        return name
+
+    @_alias
+    def average_run_data_weights(self, dataname, back_sep=False, slu_sep=False, slice_range=None,
+                                rules=[None,], use_cache=True, make_cache=True, _filepaths=None,
+                                num_files_per_cache=None, 
+                                _save_incomplete_cache=False, _save_total_cache=False):
+        '''
+        Output axes: (sum/counts, conditions, rules, data)
+
+        This follows a different logic compared to Run.average_run_data_weights(). We multi-thread every
+        file regardless of num_files_per_cache, and only after they are returned, do we sort them back into
+        blocks.
+        '''
+
+
+        if _filepaths is None:
+            filepaths = self.filepaths
+        else:
+            filepaths = _filepaths
+
+        num_files = len(filepaths)
+        num_blocks = int(np.ceil(num_files / num_files_per_cache))
+        subsets_of_filepaths = [filepaths[i*num_files_per_cache:(i+1)*num_files_per_cache] for i in range(num_blocks)]
+
+        uncached_filepath_blocks = []
+        blocks_data = []
+        # checking possible caches
+        for look_for_filepaths in subsets_of_filepaths:
+            outdir = filepaths[0].split('/rawdata/')[0] + '/work/average_run_data_weights_cache'
+            args = (look_for_filepaths, dataname, back_sep, slu_sep, slice_range, rules)
+            cache_found = os.path.exists(get_cache_filepath(
+                outdir, look_for_filepaths, args, ['rundata','runweights'], use_cache=use_cache))
+            if cache_found and use_cache:
+                cache_return = cache_function(outdir, look_for_filepaths, args, ['rundata','runweights'], use_cache=use_cache)
+                if type(cache_return)==str:
+                    raise Exception(f'cache is a string! ({cache_return})')
+                blocks_data.append(cache_return)
+            else:
+                uncached_filepath_blocks.append(look_for_filepaths)
+
+        from itertools import chain
+        uncached_filepaths = list(chain.from_iterable(uncached_filepath_blocks))
+        time_start = time.time()
+
+        N_max_processes = self.num_cores
+
+        if False:  # multithreading using threadpool
+            threadpool = pool.ThreadPool(N_max_processes)
+            pool_results = []
+            callback_results = []
+            for filepath in filepaths:
+
+                def function_for_process():
+                    data_sum, data_count = list(self.yield_sums_counts_filedata(
+                        dataname, back_sep=back_sep, slu_sep=slu_sep,
+                        slice_range=slice_range, rules=rules, filepaths=[filepath,]))[0]
+                    return data_sum, data_count
+
+                pool_results.append(threadpool.apply_async(
+                        function_for_process,
+                        args=(),
+                        callback=callback_results))
+            threadpool.close()
+            threadpool.join()
+
+            data_sums_counts = []
+            for ProcessedObject in pool_results:
+                data_sum, data_count = ProcessedObject.get()
+                data_sums_counts.append((data_sum, data_count))
+
+        elif False: # multithreading using imap; it seems to be 3x faster than threadpool
+
+            # def function_for_imap(filepath):
+            #     data_sum, data_count = list(self.yield_sums_counts_filedata(
+            #         dataname, back_sep=back_sep, slu_sep=slu_sep,
+            #         slice_range=slice_range, rules=rules, filepaths=[filepath,]))[0]
+            #     return data_sum, data_count
+
+            from multiprocessing import cpu_count, pool, Pool
+            pool_results = []
+            pool = Pool(processes=N_max_processes)
+            for result in pool.imap(function_for_imap, filepaths):
+                pool_results.append(result)
+            pool.close()
+            pool.join()
+
+        elif True:
+            from multiprocessing import cpu_count, pool, Pool
+            pool_results = []
+            pool = Pool(processes=N_max_processes)
+
+            import inspect
+            attributes = inspect.getmembers(self, lambda a:not(inspect.isroutine(a)))
+            object_attributes = [a for a in attributes if not(a[0].startswith('__') and a[0].endswith('__'))]
+
+            args_iter = zip(uncached_filepaths, repeat(object_attributes), repeat(dataname))
+            kwargs_iter = repeat(dict(back_sep=back_sep, slu_sep=slu_sep, slice_range=slice_range, rules=rules))
+            pool_results = starmap_with_kwargs(pool, function_for_imap, args_iter, kwargs_iter)
+
+            data_sums_counts = []
+            for ProcessedObject in pool_results:
+                data_sum, data_count = ProcessedObject
+                data_sums_counts.append((data_sum, data_count))
+
+        time_end = time.time()
+
+        time_start = time.time()
+        # function_for_process()
+        function_for_imap(filepaths[0], object_attributes, dataname)
+        time_end = time.time()
+
+        blocks_avg_counts = []
+        _count = 0
+        for block_files in uncached_filepath_blocks:
+            n_files = len(block_files)
+            _incomplete = n_files != num_files_per_cache
+
+            separate_sums = np.array([item[0] for item in data_sums_counts[_count:_count+n_files]])
+            separate_counts = np.array([item[1] for item in data_sums_counts[_count:_count+n_files]])
+            block_sum = np.sum(separate_sums, axis=0)
+            block_counts = np.sum(separate_counts, axis=0) 
+
+            data_dim = np.ndim(block_sum)
+            weights_dim = np.ndim(block_counts)
+            match_dim_weights = np.expand_dims(block_counts, axis=[-(i+1) for i in range(data_dim-weights_dim)])
+
+            block_avg = block_sum / match_dim_weights
+            blocks_avg_counts.append([block_avg, block_counts])
+            rundata = block_avg
+            runweights = block_counts
+
+            filepaths = block_files
+            # outdir = filepaths[0].split('/rawdata/')[0] + '/work/average_run_data_weights_cache'
+            args = (filepaths, dataname, back_sep, slu_sep, slice_range, rules)
+            cache_return = cache_function(outdir, filepaths, args, ['rundata','runweights'], use_cache=use_cache)
+            if make_cache and (not _incomplete or _save_incomplete_cache):
+                print(f'saving cache with files {block_files}')
+                np.savez(cache_return,
+                        rundata=rundata,
+                        runweights=runweights,)
+
+            _count += n_files
+
+        blocks_avg_counts.extend(blocks_data)
+        _temp = blocks_avg_counts[:]
+
+        partial_run_avg = [item[0] for item in blocks_avg_counts]
+        partial_run_weights = [item[1] for item in blocks_avg_counts]
+
+        try:
+            run_file_weights = np.array(partial_run_weights) 
+            run_file_avg = np.array(partial_run_avg)
+        except ValueError as e:
+            print('blocks_avg_counts: ')
+            partial_run_avg = [item[0] for item in _temp]
+            partial_run_weights = [item[1] for item in _temp]
+            for item in partial_run_avg:
+                print(f'    {np.shape(np.array(item))}')
+            print('blocks_weights_counts: ')
+            for item in partial_run_weights:
+                print(f'    {np.shape(np.array(item))}')
+            print('blocks_data: ')
+            for item in blocks_data:
+                print(f'    {np.shape(np.array(item))}')
+            
+            print()
+            print()
+            print()
+            print()
+            print(partial_run_weights)
+            print()
+            print()
+            print()
+            print(partial_run_avg)
+            print()
+            print()
+            print()
+            print()
+            raise e
+
+        data_dim = np.ndim(run_file_avg)
+        weights_dim = np.ndim(run_file_weights)
+        match_dim_weights = np.expand_dims(run_file_weights, axis=[-(i+1) for i in range(data_dim-weights_dim)])
+
+        try:
+            run_file_data = run_file_avg * match_dim_weights
+        except Exception as e:
+            print('exception at 1433')
+            print('run_file_avg: ', np.shape(run_file_avg))
+            print('match_dim_weights: ', np.shape(match_dim_weights))
+
+            print('blocks_avg_counts: ')
+            partial_run_avg = [item[0] for item in _temp]
+            partial_run_weights = [item[1] for item in _temp]
+            for item in partial_run_avg:
+                print(f'    {np.shape(np.array(item))}')
+            print('blocks_weights_counts: ')
+            for item in partial_run_weights:
+                print(f'    {np.shape(np.array(item))}')
+            print('blocks_data: ')
+            for item in blocks_data:
+                print(f'    {np.shape(np.array(item))}')
+            raise e
+
+        compiled_data = []
+        compiled_count = []
+        run_average = []
+        run_weight = []
+        for filedata_sum, filedata_count in zip(run_file_data, run_file_weights):
+            for i, (split_sum, split_count) in enumerate(zip(filedata_sum, filedata_count)):
+                if len(compiled_data)<=i:
+                    compiled_data.append([])
+                    compiled_count.append([])
+                compiled_data[i].append(split_sum)
+                compiled_count[i].append(split_count)
+        for split_data, split_count in zip(compiled_data, compiled_count):
+            data_dim = np.ndim(split_data)
+            match_dim_split_count = np.expand_dims(split_count, axis=[-(i+1) for i in range(data_dim-2)])
+            divisor = np.sum(match_dim_split_count, axis=0)
+            divisor[divisor==0]=1
+            run_average.append(np.sum(split_data, axis=0)/divisor)
+            run_weight.append(np.sum(split_count, axis=0))
+
+        if make_cache and filepaths and _save_total_cache:
+            rundata = np.array(run_average, dtype=float)
+            runweights = np.array(run_weight, dtype=int)
+
+            np.savez(cache_return,
+                    rundata=rundata,
+                    runweights=runweights,
+                    )
+        
+        return run_average, run_weight
+
+    @_alias
+    def average_run_data(self, dataname, back_sep=False, slu_sep=False, slice_range=None,
+                         rules=[None,], use_cache=True, make_cache=True, num_files_per_cache=None,
+                         ):
+        '''
+        Same as Run.average_run_data_weights(), but just returning the "data" part of the tuple)
+
+        Output axes: (conditions, rules, data)
+        '''
+
+        return self.average_run_data_weights(
+                dataname, back_sep=back_sep, slu_sep=slu_sep,
+                slice_range=slice_range, rules=rules,
+                use_cache=use_cache, make_cache=make_cache,
+                num_files_per_cache=num_files_per_cache)[0]

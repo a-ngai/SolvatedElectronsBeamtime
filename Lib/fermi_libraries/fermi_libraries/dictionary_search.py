@@ -758,32 +758,79 @@ class OperatorInfo:
         self.precedence = precedence
         self.rule = rule
 
+# array_operator_dict = {
+#     '&' : OperatorInfo(num_args=2,
+#                        precedence=2,
+#                        rule=(lambda bool1, bool2: bool1 * bool2)),
+#     '|' : OperatorInfo(num_args=2,
+#                        precedence=1,
+#                        rule=(lambda bool1, bool2: bool1 + bool2)),
+#     '^' : OperatorInfo(num_args=2,
+#                        precedence=1,
+#                        rule=(lambda bool1, bool2: (bool1 * ~bool2) + (~bool1 * bool2))),
+#     '%' : OperatorInfo(num_args=2,
+#                        precedence=0,
+#                        rule=(lambda bool1, bool2: bool1 * bool2)),
+#     }
+# array_function_dict = {
+#     '~' : OperatorInfo(num_args=1,
+#                        precedence=1,
+#                        rule=(lambda bool1: ~bool1)),
+#     }
+# array_context_dict = {
+#     ':' : lambda keyword, option, input_func: np.array(input_func(keyword),dtype=str) == str(option),
+#     '>' : lambda keyword, option, input_func: np.array(input_func(keyword),dtype=float) > float(option),
+#     '<' : lambda keyword, option, input_func: np.array(input_func(keyword),dtype=float) < float(option),
+#     '=' : lambda keyword, option, input_func: np.array(input_func(keyword),dtype=float) == float(option),
+#     '†' : lambda keyword, option, input_func: np.array([True,]),#slice(0,None,1)
+#     ';' : lambda keyword, option, input_func: ExtendedFunctions[keyword](input_func, option),
+#     }
+
+def operator_and(bool1, bool2):
+    return bool1 * bool2
+def operator_or(bool1, bool2):
+    return bool1 + bool2
+def operator_xor(bool1, bool2):
+    return (bool1 * ~bool2) + (~bool1 * bool2)
+def operator_not(bool1):
+    return ~bool1
+def keyword_string_equal(keyword, option, input_func):
+    return np.array(input_func(keyword),dtype=str) == str(option)
+def keyword_float_greater(keyword, option, input_func):
+    np.array(input_func(keyword),dtype=float) > float(option)
+def keyword_float_lesser(keyword, option, input_func):
+    return np.array(input_func(keyword),dtype=float) < float(option)
+def keyword_float_equal(keyword, option, input_func):
+    return np.array(input_func(keyword),dtype=float) == float(option)
+def keyword_any(keyword, option, input_func):
+    return np.array([True,])#slice(0,None,1)
+
 array_operator_dict = {
     '&' : OperatorInfo(num_args=2,
-                       precedence=2,
-                       rule=(lambda bool1, bool2: bool1 * bool2)),
+                    precedence=2,
+                    rule=operator_and),
     '|' : OperatorInfo(num_args=2,
-                       precedence=1,
-                       rule=(lambda bool1, bool2: bool1 + bool2)),
+                    precedence=1,
+                    rule=operator_or),
     '^' : OperatorInfo(num_args=2,
-                       precedence=1,
-                       rule=(lambda bool1, bool2: (bool1 * ~bool2) + (~bool1 * bool2))),
+                    precedence=1,
+                    rule=operator_xor),
     '%' : OperatorInfo(num_args=2,
-                       precedence=0,
-                       rule=(lambda bool1, bool2: bool1 * bool2)),
+                    precedence=0,
+                    rule=operator_and),
     }
 array_function_dict = {
     '~' : OperatorInfo(num_args=1,
-                       precedence=1,
-                       rule=(lambda bool1: ~bool1)),
+                    precedence=1,
+                    rule=operator_not),
     }
 array_context_dict = {
-    ':' : lambda keyword, option, input_func: np.array(input_func(keyword),dtype=str) == str(option),
-    '>' : lambda keyword, option, input_func: np.array(input_func(keyword),dtype=float) > float(option),
-    '<' : lambda keyword, option, input_func: np.array(input_func(keyword),dtype=float) < float(option),
-    '=' : lambda keyword, option, input_func: np.array(input_func(keyword),dtype=float) == float(option),
-    '†' : lambda keyword, option, input_func: np.array([True,]),#slice(0,None,1)
-    ';' : lambda keyword, option, input_func: ExtendedFunctions[keyword](input_func, option),
+    ':' : keyword_string_equal,
+    '>' : keyword_float_greater,
+    '<' : keyword_float_lesser,
+    '=' : keyword_float_equal,
+    '†' : keyword_any,
+    # ';' : lambda keyword, option, input_func: ExtendedFunctions[keyword](input_func, option),
     }
 
 search_symbols = {
