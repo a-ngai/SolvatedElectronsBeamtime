@@ -535,6 +535,12 @@ class Ui_MainWindow(object):
         font = QFont()
         font.setPointSize(16)
         self.label_subfolder_extension_2.setFont(font)
+        self.text_edit_num_cores = QTextEdit(self.tab_settings)
+        self.text_edit_num_cores.setObjectName(u"text_edit_num_cores")
+        self.text_edit_num_cores.setGeometry(QRect(20, 422, 41, 31))
+        self.label_num_cores = QLabel(self.tab_settings)
+        self.label_num_cores.setObjectName(u"label_num_cores")
+        self.label_num_cores.setGeometry(QRect(20, 400, 171, 16))
         self.tabWidget.addTab(self.tab_settings, "")
         self.print_browser = QTextBrowser(self.centralwidget)
         self.print_browser.setObjectName(u"print_browser")
@@ -561,17 +567,6 @@ class Ui_MainWindow(object):
 
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
-
-        self.box_fore_felonsluon.setChecked(True)
-        self.box_back_felonsluoff.setChecked(True)
-        self.text_edit_search_dir_for_newest_folder.setText('C:/Users/ngai/Downloads/update_test')
-        self.text_edit_abel_inversion_data_path.setText('C:/Users/ngai/Projects/SolvatedElectronsBeamtime/examples/G_r256_k64_l4_half.h5')
-        self.text_edit_ke_start.setText('')
-        self.text_edit_ke_end.setText('')
-        self.text_edit_ke_bins.setText('')
-        self.text_edit_tof_start.setText('')
-        self.text_edit_tof_stop.setText('')
-        self.box_pes.setChecked(True)
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
@@ -864,16 +859,40 @@ class Ui_MainWindow(object):
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">rawdata</p></body></html>", None))
         self.label_subfolder_extension_2.setText(QCoreApplication.translate("MainWindow", u"../", None))
+        self.text_edit_num_cores.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">1</p></body></html>", None))
+        self.label_num_cores.setText(QCoreApplication.translate("MainWindow", u"Max # cores for multiprocess", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_settings), QCoreApplication.translate("MainWindow", u"Settings", None))
         self.menuFERMI_On_line_analysis_tool.setTitle(QCoreApplication.translate("MainWindow", u"FERMI LDM On-line analysis tool", None))
     # retranslateUi
 
 
 
+
+        self.box_fore_felonsluon.setChecked(True)
+        self.box_back_felonsluoff.setChecked(True)
+        self.text_edit_search_dir_for_newest_folder.setText('C:/Users/ngai/Downloads/update_test')
+        self.text_edit_abel_inversion_data_path.setText('C:/Users/ngai/Projects/SolvatedElectronsBeamtime/examples/G_r256_k64_l4_half.h5')
+        self.text_edit_ke_start.setText('')
+        self.text_edit_ke_end.setText('')
+        self.text_edit_ke_bins.setText('')
+        self.text_edit_tof_start.setText('')
+        self.text_edit_tof_stop.setText('')
+        self.text_edit_num_cores.setText('8')
+        self.box_pes.setChecked(True)
+        self.text_edit_files_per_cache.setText('4')
+
     
     def __init__(self):
         self.background_key = True
         self.status = {
+            'num_cores' : 1,
             'auto_newest_folder' : False, 
             'fetch_new_files' : False,
             'search_in_directory' : '',
@@ -906,6 +925,7 @@ class Ui_MainWindow(object):
         self.ion_tof_calibration_constants = (0, 1)
 
         self.run = Run([])
+        self.run.num_cores = self.status['num_cores']
 
         self.threadpool = QThreadPool()
         print("Multithreading with maximum %d threads" % self.threadpool.maxThreadCount())
@@ -926,6 +946,8 @@ class Ui_MainWindow(object):
         self.box_beta4.toggled.connect(self.update_pes_window)
         self.box_slu_parity.toggled.connect(self.update_main_vmi_window)
         self.applyChangesSettings.clicked.connect(self.apply_settings)
+        self.box_make_cache.toggled.connect(self.apply_settings)
+        self.box_load_from_cache.toggled.connect(self.apply_settings)
 
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_data_if_change)
@@ -943,6 +965,7 @@ class Ui_MainWindow(object):
         
     def apply_settings(self):
         """ get all the settings from the settings tab"""
+        self.status['num_cores'] = int(self.text_edit_num_cores.toPlainText())
         self.status['files_per_cache'] = int(self.text_edit_files_per_cache.toPlainText())
         self.status['search_in_directory'] = self.text_edit_search_dir_for_newest_folder.toPlainText()
         self.status['subfolder_extension'] = self.text_edit_subfolder_extension.toPlainText()
@@ -960,6 +983,8 @@ class Ui_MainWindow(object):
             self.graph_data['eke_bins'] = None
         else:
             self.graph_data['eke_bins'] = float(eke_bins)
+        self.status['make_cache'] = self.box_make_cache.isChecked()
+        self.status['load_from_cache'] = self.box_load_from_cache.isChecked()
         
         print('stopped working here!')
 
@@ -1066,19 +1091,21 @@ class Ui_MainWindow(object):
             }
         folderpath = self.status['current_folder'] + '/rawdata'
         filepaths = [folderpath+'/'+filename for filename in os.listdir(folderpath)[::]]
-        self.Run = Run(filepaths,
+        self.run = Run(filepaths,
             alias_dict=alias_dict, search_symbols=search_symbols,
             keyword_functions=keyword_functions)
+        self.run.num_cores = self.status['num_cores']
 
         try:
             back_sep = True
             slu_sep = True
-            make_cache = True
-            num_files_per_cache = 2
+            make_cache = self.status['make_cache']
+            load_from_cache = self.status['load_from_cache']
+            num_files_per_cache = self.status['files_per_cache']
 
-            vmi_data = self.Run.average_run_data('vmi', 
+            vmi_data = self.run.average_run_data('vmi', 
                 back_sep=back_sep, slu_sep=slu_sep, make_cache=make_cache,
-                num_files_per_cache=num_files_per_cache)
+                num_files_per_cache=num_files_per_cache, use_cache=load_from_cache)
 
         except (FileNotFoundError, OSError):
             # this is a race condition, where h5py is trying to open a file that is currently being written into
@@ -1179,9 +1206,7 @@ class Ui_MainWindow(object):
         self.graph_data['betas'] = betas
         self.graph_data['eke'] = energies
 
-
         self.update_canvases()
-        self.update_files()
     
     def update_pes_window(self):
         
@@ -1309,7 +1334,7 @@ from matplotlib.backends.backend_qtagg import \
 from PySide6.QtCore import QObject, Signal, QThreadPool, Signal, Slot, QRunnable, QTimer
 from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QApplication
 
-from fermi_libraries.run_module import Run
+from fermi_libraries.run_module import MultithreadRun as Run
 from fermi_libraries.common_functions import set_recursion_limit
 from fermi_libraries.dictionary_search import search_symbols
 

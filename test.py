@@ -3,9 +3,9 @@ import subprocess
 
 class TestTemplates(unittest.TestCase):
 
-    def test_calibration_template(self):
-        from tests.run_calibration_template import test_calibration_template
-        self.assertIsNone(test_calibration_template())
+    def test_tof_calibration_template(self):
+        from tests.run_tof_calibration_template import test_tof_calibration_template
+        self.assertIsNone(test_tof_calibration_template())
 
     def test_tutorial_template(self):
         from tests.run_tutorial_template import test_tutorial_template
@@ -30,6 +30,26 @@ class TestTemplates(unittest.TestCase):
     def test_cache_function(self):
         from tests.run_cache_test import test_cache
         self.assertIsNone(test_cache())
+
+    def test_multithread_tof_calibration_template(self):
+        from tests.run_multithread_tof_calibration_template import test_multithread_tof_calibration_template
+        self.assertIsNone(test_multithread_tof_calibration_template())
+
+    def test_multithread_tutorial_template(self):
+        from tests.run_multithread_tutorial_template import test_multithread_tutorial_template
+        self.assertIsNone(test_multithread_tutorial_template())
+
+    def test_multithread_filtering_template(self):
+        from tests.run_multithread_filtering_template import test_multithread_filtering_template
+        self.assertIsNone(test_multithread_filtering_template())
+
+    def test_multithread_abel_template(self):
+        from tests.run_multithread_abel_template import test_multithread_abel_template
+        self.assertIsNone(test_multithread_abel_template())
+
+    def test_multithread_delay_template(self):
+        from tests.run_multithread_delay_template import test_multithread_delay_template
+        self.assertIsNone(test_multithread_delay_template())
 
 if __name__ == '__main__':
     unittest.main()
