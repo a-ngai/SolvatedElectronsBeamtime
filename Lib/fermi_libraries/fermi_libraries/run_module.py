@@ -788,7 +788,7 @@ class Run:
                 rundata_collect[i][j] = np.concatenate(rundata_collect[i][j],axis=0)
 
         if make_cache and self.filepaths:
-            np.savez(cache_return,
+            np.savez_compressed(cache_return,
                      rundata=np.array(rundata_collect, dtype=object),
                      )
 
@@ -798,7 +798,7 @@ class Run:
     def average_run_data_weights(self, dataname, back_sep=False, slu_sep=False, slice_range=None,
                                  rules=[None,], use_cache=True, make_cache=True, _filepaths=None,
                                  num_files_per_cache=None, 
-                                 _save_incomplete_cache=False):
+                                 _save_incomplete_cache=False, _save_total_cache=False):
         '''
         Output axes: (sum/counts, conditions, rules, data)
         '''
@@ -886,10 +886,27 @@ class Run:
 
         if make_cache and filepaths:
 
-            np.savez(cache_return,
-                     rundata=np.array(run_average, dtype=float),
-                     runweights=np.array(run_weight, dtype=int),
+            np.savez_compressed(cache_return,
+                     rundata=rundata,
+                     runweights=runweights,
                      )
+
+        elif make_cache and (_filepaths is None) and filepaths and _save_total_cache:
+            rundata = np.array(run_average, dtype=float)
+            runweights = np.array(run_weight, dtype=int)
+            print(f'_filepath is None: saving cache with {len(filepaths)} files')
+
+            np.savez_compressed(cache_return,
+                     rundata=rundata,
+                     runweights=runweights,
+                     )
+            
+            # h5_filepath = get_cache_filepath_h5(outdir, filepaths, args, ['rundata','runweights'])
+            # with h5py.File(h5_filepath, 'w') as f:
+            #     f.create_dataset('rundata', data=rundata, chunks=rundata.shape,
+            #             compression='gzip', compression_opts=5)
+            #     f.create_dataset('runweights', data=runweights, chunks=runweights.shape,
+            #             compression='gzip', compression_opts=5)
 
         return run_average, run_weight
 
@@ -972,7 +989,7 @@ class Run:
 
         if make_cache and self.filepaths:
 
-            np.savez(cache_return, 
+            np.savez_compressed(cache_return, 
                      runcovar=np.array(run_covar, dtype=float), 
                      runsum1=np.array(run_sum1, dtype=float), 
                      runsum2=np.array(run_sum2, dtype=float), 
@@ -1269,6 +1286,7 @@ class MultithreadRun(Run):
             filepaths = _filepaths
 
         num_files = len(filepaths)
+        if num_files_per_cache is None: num_files_per_cache = num_files
         num_blocks = int(np.ceil(num_files / num_files_per_cache))
         subsets_of_filepaths = [filepaths[i*num_files_per_cache:(i+1)*num_files_per_cache] for i in range(num_blocks)]
 
@@ -1385,7 +1403,7 @@ class MultithreadRun(Run):
             cache_return = cache_function(outdir, filepaths, args, ['rundata','runweights'], use_cache=use_cache)
             if make_cache and (not _incomplete or _save_incomplete_cache):
                 print(f'saving cache with files {block_files}')
-                np.savez(cache_return,
+                np.savez_compressed(cache_return,
                         rundata=rundata,
                         runweights=runweights,)
 
@@ -1475,7 +1493,7 @@ class MultithreadRun(Run):
             rundata = np.array(run_average, dtype=float)
             runweights = np.array(run_weight, dtype=int)
 
-            np.savez(cache_return,
+            np.savez_compressed(cache_return,
                     rundata=rundata,
                     runweights=runweights,
                     )

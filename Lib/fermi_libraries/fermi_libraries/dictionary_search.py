@@ -797,7 +797,7 @@ def operator_not(bool1):
 def keyword_string_equal(keyword, option, input_func):
     return np.array(input_func(keyword),dtype=str) == str(option)
 def keyword_float_greater(keyword, option, input_func):
-    np.array(input_func(keyword),dtype=float) > float(option)
+    return np.array(input_func(keyword),dtype=float) > float(option)
 def keyword_float_lesser(keyword, option, input_func):
     return np.array(input_func(keyword),dtype=float) < float(option)
 def keyword_float_equal(keyword, option, input_func):

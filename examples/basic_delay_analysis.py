@@ -233,7 +233,7 @@ axes shape (rule, condition, run, data):
 runset_ion_tof_data = BasicRunSet.average_run_data('ion_tof', back_sep=BACKGROUND,
                                     slice_range=ion_tof_slices,
                                     make_cache=MAKE_CACHE, use_cache=LOAD_FROM_CACHE)
-fore_ion_tof_rawdata, back_ion_tof_rawdata = simplify_data(runset_ion_tof_data, single_rule=True)
+fore_ion_tof_rawdata, back_ion_tof_rawdata, *_ = simplify_data(runset_ion_tof_data, single_rule=True)
 
 # %%
 overall_integral_eKE = []
@@ -304,7 +304,7 @@ ax2.set_title(f'{run_name}: run averages')
 # %%
 raw_i0m_rundata = BasicRunSet.give_rundata('i0m', make_cache=MAKE_CACHE, use_cache=LOAD_FROM_CACHE)
 try:
-    i0m_runset_data, _ = simplify_data(raw_i0m_rundata, single_rule=True)  # can use simplify_data, because no rules
+    i0m_runset_data, *_ = simplify_data(raw_i0m_rundata, single_rule=True)  # can use simplify_data, because no rules
 except:
     fore_rundata_i0m, back_rundata_iom, *_ = raw_i0m_rundata
     i0m_runset_data = fore_rundata_i0m
@@ -340,7 +340,7 @@ plt.show()
 # %%time # uncomment to show time
 runset_vmi = BasicRunSet.average_run_data('vmi',back_sep=BACKGROUND,
                                     make_cache=MAKE_CACHE, use_cache=LOAD_FROM_CACHE)
-fore_vmi, back_vmi = simplify_data(runset_vmi, single_rule=True, single_run=False)
+fore_vmi, back_vmi, *_ = simplify_data(runset_vmi, single_rule=True, single_run=False)
 
 # %%
 
