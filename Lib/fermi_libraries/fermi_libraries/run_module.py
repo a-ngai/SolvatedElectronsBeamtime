@@ -793,7 +793,7 @@ class Run:
                 rundata_collect[i][j] = np.concatenate(rundata_collect[i][j],axis=0)
 
         if make_cache and self.filepaths:
-            np.savez(cache_return,
+            np.savez_compressed(cache_return,
                      rundata=np.array(rundata_collect, dtype=object),
                      )
 
@@ -894,7 +894,7 @@ class Run:
             runweights = np.array(run_weight, dtype=int)
             print(f'_filepath is list: saving cache with {len(filepaths)} files')
 
-            np.savez(cache_return,
+            np.savez_compressed(cache_return,
                      rundata=rundata,
                      runweights=runweights,
                      )
@@ -904,7 +904,7 @@ class Run:
             runweights = np.array(run_weight, dtype=int)
             print(f'_filepath is None: saving cache with {len(filepaths)} files')
 
-            np.savez(cache_return,
+            np.savez_compressed(cache_return,
                      rundata=rundata,
                      runweights=runweights,
                      )
@@ -997,7 +997,7 @@ class Run:
 
         if make_cache and self.filepaths:
 
-            np.savez(cache_return, 
+            np.savez_compressed(cache_return, 
                      runcovar=np.array(run_covar, dtype=float), 
                      runsum1=np.array(run_sum1, dtype=float), 
                      runsum2=np.array(run_sum2, dtype=float), 
@@ -1410,7 +1410,7 @@ class MultithreadRun(Run):
             cache_return = cache_function(outdir, filepaths, args, ['rundata','runweights'], use_cache=use_cache)
             if make_cache and (not _incomplete or _save_incomplete_cache):
                 print(f'saving cache with files {block_files}')
-                np.savez(cache_return,
+                np.savez_compressed(cache_return,
                         rundata=rundata,
                         runweights=runweights,)
 
@@ -1500,7 +1500,7 @@ class MultithreadRun(Run):
             rundata = np.array(run_average, dtype=float)
             runweights = np.array(run_weight, dtype=int)
 
-            np.savez(cache_return,
+            np.savez_compressed(cache_return,
                     rundata=rundata,
                     runweights=runweights,
                     )
