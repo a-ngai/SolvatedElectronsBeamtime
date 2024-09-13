@@ -848,3 +848,30 @@ def set_recursion_limit(max_depth):
 def closest(locs, array):
     indices = [np.where(np.min((loc-array)**2) == (loc-array)**2)[0][0] for loc in locs]
     return np.array(indices)
+
+def resolve_path(basepath: str, addpath: str = '') -> str:
+    '''
+    This goes up levels of the directory when addpath has '..' in the beginning of its path.
+
+    e.g. 
+    > basepath = '/first_base/second_base/third_base'
+    > addpath = '../third_add/fourth_add'
+    > print(resolve_path(basepath, addpath))
+
+    /first_base/second_base/third_add/fourth_add
+    '''
+    compat_basepath = re.sub(r'\\', '/', basepath)
+    if compat_basepath[-1] == '/':
+        compat_basepath = compat_basepath[-1]
+    base_hierarchy_list = compat_basepath.split('/')
+    compat_addpath = re.sub(r'\\\\', '/', addpath)
+    if compat_addpath[:2] == './':
+        compat_addpath = compat_addpath[2:]
+    add_hierarchy_list = compat_addpath.split('/')
+    reverse_add_list = add_hierarchy_list[::-1]
+    while (len(reverse_add_list) > 0) and (reverse_add_list[-1] == os.pardir):
+        base_hierarchy_list.pop()
+        reverse_add_list.pop()
+    newpath = '/'.join(base_hierarchy_list + reverse_add_list[::-1])
+
+    return newpath

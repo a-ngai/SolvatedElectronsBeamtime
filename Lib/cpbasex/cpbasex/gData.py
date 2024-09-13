@@ -55,7 +55,7 @@ def get_gData(gData, save_path=None, save_dir=None, custom_rBF=None, nProc=cpu_c
 	gData['nl'] = len(gData['l'])
 
 	# Load radial basis function and zero-integrand point function.
-	if gData['rBF'] is not 'custom':
+	if gData['rBF'] != 'custom':
 		rBF = rBFs(gData['rBF'], custom_rBF)
 	if len(rBF) == 1:
 		rBF = rBF[0]

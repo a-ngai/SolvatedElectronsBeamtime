@@ -50,6 +50,10 @@ class TestTemplates(unittest.TestCase):
     def test_multithread_delay_template(self):
         from tests.run_multithread_delay_template import test_multithread_delay_template
         self.assertIsNone(test_multithread_delay_template())
+    
+    def test_multithread_run(self):
+        from tests.run_test_multithread_run import test_multithread_run
+        self.assertIsNone(test_multithread_run())
 
 if __name__ == '__main__':
     unittest.main()
