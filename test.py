@@ -1,5 +1,6 @@
 import unittest
 import subprocess
+from tests.test_gui_api import TestGUIMethods
 
 class TestTemplates(unittest.TestCase):
 

@@ -891,6 +891,7 @@ class Ui_MainWindow(object):
     
     def __init__(self):
         self.background_key = True
+        self.terminal_print = True
         self.status = {
             'num_cores' : 1,
             'auto_newest_folder' : False, 
@@ -928,7 +929,7 @@ class Ui_MainWindow(object):
         self.run.num_cores = self.status['num_cores']
 
         self.threadpool = QThreadPool()
-        print("Multithreading with maximum %d threads" % self.threadpool.maxThreadCount())
+        if self.terminal_print: print("Multithreading with maximum %d threads" % self.threadpool.maxThreadCount())
 
         self.vmi_data = np.zeros(shape=(4,1,1,1))
         self.gdata = None
@@ -969,7 +970,6 @@ class Ui_MainWindow(object):
         self.status['files_per_cache'] = int(self.text_edit_files_per_cache.toPlainText())
         self.status['search_in_directory'] = self.text_edit_search_dir_for_newest_folder.toPlainText()
         self.status['subfolder_extension'] = self.text_edit_subfolder_extension.toPlainText()
-        # print('testing', self.text_edit_search_dir_for_newest_folder.toPlainText())
         self.status['gdata_filepath'] = self.text_edit_abel_inversion_data_path.toPlainText()
         if eke_start := self.text_edit_ke_start.toPlainText() == '':
             self.graph_data['eke_start'] = None
@@ -986,7 +986,7 @@ class Ui_MainWindow(object):
         self.status['make_cache'] = self.box_make_cache.isChecked()
         self.status['load_from_cache'] = self.box_load_from_cache.isChecked()
         
-        print('stopped working here!')
+        if self.terminal_print: print('stopped working here!')
 
         time_string = strftime("%Y-%m-%d %H:%M:%S", localtime())
         self.update_print_box(f'{time_string}: settings applied')
@@ -998,7 +998,7 @@ class Ui_MainWindow(object):
         try:
             list_of_folders = os.listdir(main_directory)
         except FileNotFoundError:
-            print(f'search_in_directory ({main_directory}) cannot be found')
+            if self.terminal_print: print(f'search_in_directory ({main_directory}) cannot be found')
             list_of_folders = []
         number_rule = re.compile('\d+')
         numbered_folders = [name for name in list_of_folders if number_rule.search(name) is not None]
@@ -1027,7 +1027,7 @@ class Ui_MainWindow(object):
             newest_folder = self.get_newest_folder()
             if current_folder != newest_folder:
                 time_string = strftime("%Y-%m-%d %H:%M:%S", localtime())
-                print(f'{time_string}: new folder found ({newest_folder})')
+                if self.terminal_print: print(f'{time_string}: new folder found ({newest_folder})')
                 self.update_print_box(f'{time_string}: new folder found ({newest_folder})')
                 self.status['current_folder'] = newest_folder
                 self.text_edit_current_folder.setText(newest_folder)
@@ -1037,7 +1037,7 @@ class Ui_MainWindow(object):
         if sorted_found_files is None:
             return False
         if sorted_found_files == sorted(self.status['current_files']):
-            print('no change in files...')
+            if self.terminal_print: print('no change in files...')
             return False
         return True
 
@@ -1051,34 +1051,34 @@ class Ui_MainWindow(object):
             time_string = strftime("%Y-%m-%d %H:%M:%S", localtime())
             print_message = f'{time_string}: file location ({look_in_folder}) does not exist, no update.'
             self.update_print_box(print_message)
-            print(print_message)
+            if self.terminal_print: print(print_message)
             return None
         return sorted(found_files)
 
     def update_filechange(self):
         self.status['current_files'] = self.get_filechange()
 
-    def update_files(self):
-        current_folder = self.status['current_folder']
-        subfolder_ext = self.status['subfolder_extension']
-        look_in_folder = f'{current_folder}/{subfolder_ext}'
-        found_files = os.listdir(look_in_folder)
-        self.status['current_files'] = sorted(found_files)
+    # def update_files(self):
+    #     current_folder = self.status['current_folder']
+    #     subfolder_ext = self.status['subfolder_extension']
+    #     look_in_folder = f'{current_folder}/{subfolder_ext}'
+    #     found_files = os.listdir(look_in_folder)
+    #     self.status['current_files'] = sorted(found_files)
     
     def update_data_if_change(self):
         time_string = strftime("%Y-%m-%d %H:%M:%S", localtime())
         if self.check_filechange() and not self.background_key:
             num_files = len(self.get_filechange())
-            print(f'{time_string}: new files found ({num_files}), but background process unfinishd. Nothing done.')
+            if self.terminal_print: print(f'{time_string}: new files found ({num_files}), but background process unfinishd. Nothing done.')
             self.update_print_box(f'{time_string}: new files found ({num_files}), but background process unfinishd. Nothing done.')
 
         elif self.check_filechange() and self.background_key:
             num_files = len(self.get_filechange())
+            self.update_print_box(f'{time_string}: new files found ({num_files}), updating')
+            if self.terminal_print: print(f'{time_string}: new files found ({num_files}), updating')
+
             self.update_filechange()
             self.update_data()
-
-            print(f'{time_string}: new files found ({num_files}), updating')
-            self.update_print_box(f'{time_string}: new files found ({num_files}), updating')
 
     def get_new_vmi_data(self):
         @set_recursion_limit(1)
@@ -1110,7 +1110,7 @@ class Ui_MainWindow(object):
         except (FileNotFoundError, OSError):
             # this is a race condition, where h5py is trying to open a file that is currently being written into
             # easiest solution is to wait for the next update
-            print("can't open here! Returning None")
+            if self.terminal_print: print("can't open here! Returning None")
             vmi_data = self.vmi_data
             return vmi_data
         # vmi_data = simplify_data(vmi_data, single_run=True, single_rule=True)
@@ -1129,6 +1129,7 @@ class Ui_MainWindow(object):
         self.background_key = False
 
     def update_data(self, multithreading=True):
+
         if multithreading:
             self.borrow_background_key()
             if False:
@@ -1335,6 +1336,7 @@ from PySide6.QtCore import QObject, Signal, QThreadPool, Signal, Slot, QRunnable
 from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QApplication
 
 from fermi_libraries.run_module import MultithreadRun as Run
+# from fermi_libraries.run_module import Run
 from fermi_libraries.common_functions import set_recursion_limit
 from fermi_libraries.dictionary_search import search_symbols
 
@@ -1549,12 +1551,9 @@ if __name__ == '__main__':
 
     tabWidgetApp.setupUi(w)
     tabWidgetApp.setup_signals()
-    # tabWidgetApp.update_canvases()
     w.add_canvas(tabWidgetApp)
     
-    # p = w.palette()
-    # p.setColor(w.backgroundRole(), Qt.gray)
-    # w.setPalette(p)
     tabWidgetApp.apply_settings()
 
-    sys.exit(app.exec())
+    # sys.exit(app.exec())
+    app.exec()
