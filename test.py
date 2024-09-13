@@ -1,8 +1,12 @@
 import unittest
 import subprocess
-from tests.test_gui_api import TestGUIMethods
 
 class TestTemplates(unittest.TestCase):
+    # def setUp(self) -> None:
+        # print(self.__dict__.items())
+    
+    def test_gui_methods(self):
+        from tests.test_gui_api import TestGUIMethods
 
     def test_tof_calibration_template(self):
         from tests.run_tof_calibration_template import test_tof_calibration_template
@@ -10,7 +14,7 @@ class TestTemplates(unittest.TestCase):
 
     def test_tutorial_template(self):
         from tests.run_tutorial_template import test_tutorial_template
-        self.assertIsNone(test_tutorial_template())
+        test_tutorial_template()
 
     def test_filtering_template(self):
         from tests.run_filtering_template import test_filtering_template

@@ -253,22 +253,22 @@ class Ui_MainWindow(object):
         self.tab_calibration.setObjectName(u"tab_calibration")
         self.gridLayoutWidget_5 = QWidget(self.tab_calibration)
         self.gridLayoutWidget_5.setObjectName(u"gridLayoutWidget_5")
-        self.gridLayoutWidget_5.setGeometry(QRect(30, 100, 351, 101))
+        self.gridLayoutWidget_5.setGeometry(QRect(30, 40, 351, 181))
         self.pes_show_pixels = QGridLayout(self.gridLayoutWidget_5)
         self.pes_show_pixels.setObjectName(u"pes_show_pixels")
         self.pes_show_pixels.setContentsMargins(0, 0, 0, 0)
         self.gridLayoutWidget_6 = QWidget(self.tab_calibration)
         self.gridLayoutWidget_6.setObjectName(u"gridLayoutWidget_6")
-        self.gridLayoutWidget_6.setGeometry(QRect(30, 300, 351, 91))
+        self.gridLayoutWidget_6.setGeometry(QRect(30, 290, 351, 181))
         self.pes_show_energy = QGridLayout(self.gridLayoutWidget_6)
         self.pes_show_energy.setObjectName(u"pes_show_energy")
         self.pes_show_energy.setContentsMargins(0, 0, 0, 0)
         self.label_pixel_axis = QLabel(self.tab_calibration)
         self.label_pixel_axis.setObjectName(u"label_pixel_axis")
-        self.label_pixel_axis.setGeometry(QRect(40, 70, 49, 16))
+        self.label_pixel_axis.setGeometry(QRect(40, 10, 49, 16))
         self.label_energy_axis = QLabel(self.tab_calibration)
         self.label_energy_axis.setObjectName(u"label_energy_axis")
-        self.label_energy_axis.setGeometry(QRect(40, 270, 49, 16))
+        self.label_energy_axis.setGeometry(QRect(40, 260, 49, 16))
         self.test_edit_cal_points = QTextEdit(self.tab_calibration)
         self.test_edit_cal_points.setObjectName(u"test_edit_cal_points")
         self.test_edit_cal_points.setGeometry(QRect(490, 80, 91, 151))
@@ -292,7 +292,7 @@ class Ui_MainWindow(object):
         self.tab_tof_main.setObjectName(u"tab_tof_main")
         self.tabWidget_3 = QTabWidget(self.tab_tof_main)
         self.tabWidget_3.setObjectName(u"tabWidget_3")
-        self.tabWidget_3.setGeometry(QRect(210, 20, 381, 221))
+        self.tabWidget_3.setGeometry(QRect(120, 20, 471, 281))
         self.tab_9 = QWidget()
         self.tab_9.setObjectName(u"tab_9")
         self.tab_9.setAutoFillBackground(False)
@@ -328,28 +328,28 @@ class Ui_MainWindow(object):
         self.combobox_tof_yscale.addItem("")
         self.combobox_tof_yscale.addItem("")
         self.combobox_tof_yscale.setObjectName(u"combobox_tof_yscale")
-        self.combobox_tof_yscale.setGeometry(QRect(440, 270, 131, 21))
+        self.combobox_tof_yscale.setGeometry(QRect(440, 320, 131, 21))
         self.tabWidget.addTab(self.tab_tof_main, "")
         self.tab_tof_calibration = QWidget()
         self.tab_tof_calibration.setObjectName(u"tab_tof_calibration")
         self.gridLayoutWidget_7 = QWidget(self.tab_tof_calibration)
         self.gridLayoutWidget_7.setObjectName(u"gridLayoutWidget_7")
-        self.gridLayoutWidget_7.setGeometry(QRect(30, 100, 351, 101))
-        self.tof_show_tof = QGridLayout(self.gridLayoutWidget_7)
-        self.tof_show_tof.setObjectName(u"tof_show_tof")
-        self.tof_show_tof.setContentsMargins(0, 0, 0, 0)
+        self.gridLayoutWidget_7.setGeometry(QRect(30, 40, 351, 181))
+        self.tof_show_raw = QGridLayout(self.gridLayoutWidget_7)
+        self.tof_show_raw.setObjectName(u"tof_show_raw")
+        self.tof_show_raw.setContentsMargins(0, 0, 0, 0)
         self.label_tof_axis = QLabel(self.tab_tof_calibration)
         self.label_tof_axis.setObjectName(u"label_tof_axis")
-        self.label_tof_axis.setGeometry(QRect(40, 70, 111, 16))
+        self.label_tof_axis.setGeometry(QRect(40, 10, 111, 16))
         self.label_mq_axis = QLabel(self.tab_tof_calibration)
         self.label_mq_axis.setObjectName(u"label_mq_axis")
-        self.label_mq_axis.setGeometry(QRect(40, 270, 101, 16))
+        self.label_mq_axis.setGeometry(QRect(40, 260, 101, 16))
         self.label_tof_cal_points = QLabel(self.tab_tof_calibration)
         self.label_tof_cal_points.setObjectName(u"label_tof_cal_points")
         self.label_tof_cal_points.setGeometry(QRect(500, 50, 71, 21))
         self.gridLayoutWidget_8 = QWidget(self.tab_tof_calibration)
         self.gridLayoutWidget_8.setObjectName(u"gridLayoutWidget_8")
-        self.gridLayoutWidget_8.setGeometry(QRect(30, 300, 351, 91))
+        self.gridLayoutWidget_8.setGeometry(QRect(30, 290, 351, 181))
         self.tof_show_mq = QGridLayout(self.gridLayoutWidget_8)
         self.tof_show_mq.setObjectName(u"tof_show_mq")
         self.tof_show_mq.setContentsMargins(0, 0, 0, 0)
@@ -560,7 +560,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(5)
+        self.tabWidget.setCurrentIndex(3)
         self.tabWidget_2.setCurrentIndex(0)
         self.tabWidget_3.setCurrentIndex(0)
 
@@ -875,6 +875,7 @@ class Ui_MainWindow(object):
 
 
 
+
         self.box_fore_felonsluon.setChecked(True)
         self.box_back_felonsluoff.setChecked(True)
         self.text_edit_search_dir_for_newest_folder.setText('C:/Users/ngai/Downloads/update_test')
@@ -917,9 +918,9 @@ class Ui_MainWindow(object):
             'eke_start' : None,
             'eke_end' : None,
             'eke_bins' : None,
-            'tof_fore' : np.array([]),
-            'tof_back' : np.array([[],]),
-            'tof_subt' : np.array([[],]),
+            'tof_fore' : np.array([[],[],]),
+            'tof_back' : np.array([[],[],]),
+            'tof_subt' : np.array([[],[],]),
         }
 
         self.pes_calibration_constant = 1
@@ -932,6 +933,7 @@ class Ui_MainWindow(object):
         if self.terminal_print: print("Multithreading with maximum %d threads" % self.threadpool.maxThreadCount())
 
         self.vmi_data = np.zeros(shape=(4,1,1,1))
+        self.tof_data = np.zeros(shape=(1,)), np.zeros(shape=(4,1,1))
         self.gdata = None
         self.betas = [] # the existent beta values from gdata
 
@@ -1117,11 +1119,53 @@ class Ui_MainWindow(object):
 
         self.vmi_data = vmi_data
         return vmi_data
+
+    def get_new_tof_data(self):
+        @set_recursion_limit(1)
+        def keyword_functions(keyword, aliasFunc, DictionaryObject):
+            return DictionaryObject[aliasFunc(keyword)]
+        alias_dict = {
+            'vmi' : 'vmi/andor',
+            'ion_tof' : 'digitizer/channel1',
+            'slu' : 'user_laser/energy_meter/Energy2',
+            }
+        folderpath = self.status['current_folder'] + '/rawdata'
+        filepaths = [folderpath+'/'+filename for filename in os.listdir(folderpath)[::]]
+        self.run = Run(filepaths,
+            alias_dict=alias_dict, search_symbols=search_symbols,
+            keyword_functions=keyword_functions)
+        self.run.num_cores = self.status['num_cores']
+
+        try:
+            back_sep = True
+            slu_sep = True
+            make_cache = self.status['make_cache']
+            load_from_cache = self.status['load_from_cache']
+            num_files_per_cache = self.status['files_per_cache']
+
+            tof_signal = self.run.average_run_data('ion_tof', 
+                back_sep=back_sep, slu_sep=slu_sep, make_cache=make_cache,
+                num_files_per_cache=num_files_per_cache, use_cache=load_from_cache)
+            tof_coor = np.arange(np.shape(tof_signal)[-1])
+            tof_data = tof_coor, tof_signal
+
+        except (FileNotFoundError, OSError):
+            # this is a race condition, where h5py is trying to open a file that is currently being written into
+            # easiest solution is to wait for the next update
+            if self.terminal_print: print("can't open here! Returning None")
+            tof_data = self.tof_data
+            return tof_data
+        # vmi_data = simplify_data(vmi_data, single_run=True, single_rule=True)
+
+        self.tof_data = tof_data
+        return tof_data
     
-    def get_new_vmi_data_and_redraw_data(self):
+    def get_new_data_and_redraw_data(self):
         self.get_new_vmi_data()
         self.redraw_data()
-    
+        self.get_new_tof_data()
+        self.redraw_data()
+
     def return_background_key(self):
         self.background_key = True
     
@@ -1139,11 +1183,12 @@ class Ui_MainWindow(object):
                 worker.signals.finished.connect(self.return_background_key)
                 self.threadpool.start(worker)
             else:
-                worker = Worker(self.get_new_vmi_data_and_redraw_data)
+                worker = Worker(self.get_new_data_and_redraw_data)
                 worker.signals.finished.connect(self.return_background_key)
                 self.threadpool.start(worker)
         else:
             self.get_new_vmi_data()
+            self.get_new_tof_data()
             self.redraw_data()
 
 
@@ -1206,6 +1251,34 @@ class Ui_MainWindow(object):
         self.graph_data['pes'] = pes
         self.graph_data['betas'] = betas
         self.graph_data['eke'] = energies
+
+
+        # TOF section
+
+        tof_coor, tof_data = self.tof_data  # obtained through the self.get_new_tof_data() method
+        if self.box_slu_parity.isChecked():
+            tof_felon_sluoff, tof_felon_sluon, tof_feloff_sluoff, tof_feloff_sluon = (data[0] for data in tof_data)
+        else:
+            tof_felon_sluon, tof_felon_sluoff, tof_feloff_sluon, tof_feloff_sluoff = (data[0] for data in tof_data)
+
+        tof_fore = -(
+            (-1)**self.box_flip_felonsluon.isChecked() * self.box_fore_felonsluon.isChecked() * tof_felon_sluon
+            + (-1)**self.box_flip_felonsluoff.isChecked() * self.box_fore_felonsluoff.isChecked() * tof_felon_sluoff
+            + (-1)**self.box_flip_feloffsluon.isChecked() * self.box_fore_feloffsluon.isChecked() * tof_feloff_sluon
+            + (-1)**self.box_flip_feloffsluoff.isChecked() * self.box_fore_feloffsluoff.isChecked() * tof_feloff_sluoff
+        )
+        tof_back = -(
+            (-1)**self.box_flip_felonsluon.isChecked() * self.box_back_felonsluon.isChecked() * tof_felon_sluon
+            + (-1)**self.box_flip_felonsluoff.isChecked() * self.box_back_felonsluoff.isChecked() * tof_felon_sluoff
+            + (-1)**self.box_flip_feloffsluon.isChecked() * self.box_back_feloffsluon.isChecked() * tof_feloff_sluon
+            + (-1)**self.box_flip_feloffsluoff.isChecked() * self.box_back_feloffsluoff.isChecked() * tof_feloff_sluoff
+        )
+        tof_subt = tof_fore - tof_back
+        self.graph_data['tof_fore'] = np.array([tof_coor, tof_fore])
+        self.graph_data['tof_back'] = np.array([tof_coor, tof_back])
+        self.graph_data['tof_subt'] = np.array([tof_coor, tof_subt])
+        self.graph_data['tof_coor'] = np.array([tof_coor, tof_subt])
+
 
         self.update_canvases()
     
@@ -1298,10 +1371,83 @@ class Ui_MainWindow(object):
             self._back_ax_data.figure.canvas.draw()
             self._subt_ax_data.figure.canvas.draw()
 
+    def update_main_tof_window(self):
+        self._line_fore_tof.set_data(self.graph_data['tof_fore'])
+        self._line_back_tof.set_data(self.graph_data['tof_back'])
+        self._line_subt_tof.set_data(self.graph_data['tof_subt'])
+
+
+
+        # None conditions for the eKE axis
+        tof_coor, fore_tof = self.graph_data['tof_fore']
+        current_fore_tof_xlim = self._fore_tof_ax.get_xlim()
+        new_fore_tof_xlim = list(current_fore_tof_xlim)
+        non_empty_coor = len(tof_coor) > 0
+        if self.graph_data['eke_start'] is None and non_empty_coor:
+            new_fore_tof_xlim[0] = np.min(tof_coor)
+        if self.graph_data['eke_end'] is None and non_empty_coor:
+            new_fore_tof_xlim[1] = np.max(tof_coor)
+        self._fore_tof_ax.set_xlim(new_fore_tof_xlim)
+
+        current_fore_tof_ylim = self._fore_tof_ax.get_ylim()
+        new_fore_tof_ylim = list(current_fore_tof_ylim)
+        if self.graph_data['eke_start'] is None and non_empty_coor:
+            new_fore_tof_ylim[0] = np.min(fore_tof)
+        if self.graph_data['eke_end'] is None and non_empty_coor:
+            new_fore_tof_ylim[1] = np.max(fore_tof)
+        self._fore_tof_ax.set_ylim(new_fore_tof_ylim)
+
+        # None conditions for the eKE axis
+        tof_coor, back_tof = self.graph_data['tof_back']
+        current_back_tof_xlim = self._back_tof_ax.get_xlim()
+        new_back_tof_xlim = list(current_back_tof_xlim)
+        non_empty_coor = len(tof_coor) > 0
+        if self.graph_data['eke_start'] is None and non_empty_coor:
+            new_back_tof_xlim[0] = np.min(tof_coor)
+        if self.graph_data['eke_end'] is None and non_empty_coor:
+            new_back_tof_xlim[1] = np.max(tof_coor)
+        self._back_tof_ax.set_xlim(new_back_tof_xlim)
+
+        current_back_tof_ylim = self._back_tof_ax.get_ylim()
+        new_back_tof_ylim = list(current_back_tof_ylim)
+        if self.graph_data['eke_start'] is None and non_empty_coor:
+            new_back_tof_ylim[0] = np.min(back_tof)
+        if self.graph_data['eke_end'] is None and non_empty_coor:
+            new_back_tof_ylim[1] = np.max(back_tof)
+        self._back_tof_ax.set_ylim(new_back_tof_ylim)
+
+        # None conditions for the eKE axis
+        tof_coor, subt_tof = self.graph_data['tof_subt']
+        current_subt_tof_xlim = self._subt_tof_ax.get_xlim()
+        new_subt_tof_xlim = list(current_subt_tof_xlim)
+        non_empty_coor = len(tof_coor) > 0
+        if self.graph_data['eke_start'] is None and non_empty_coor:
+            new_subt_tof_xlim[0] = np.min(tof_coor)
+        if self.graph_data['eke_end'] is None and non_empty_coor:
+            new_subt_tof_xlim[1] = np.max(tof_coor)
+        self._subt_tof_ax.set_xlim(new_subt_tof_xlim)
+
+        current_subt_tof_ylim = self._subt_tof_ax.get_ylim()
+        new_subt_tof_ylim = list(current_subt_tof_ylim)
+        if self.graph_data['eke_start'] is None and non_empty_coor:
+            new_subt_tof_ylim[0] = np.min(subt_tof)
+        if self.graph_data['eke_end'] is None and non_empty_coor:
+            new_subt_tof_ylim[1] = np.max(subt_tof)
+        self._subt_tof_ax.set_ylim(new_subt_tof_ylim)
+
+
+
+
+        self._line_fore_tof.figure.canvas.draw()
+        self._line_back_tof.figure.canvas.draw()
+        self._line_subt_tof.figure.canvas.draw()
+
+
     def update_canvases(self):
         # making this multi-threaded doesn't make sense
         self.update_pes_window()
         self.update_main_vmi_window()
+        self.update_main_tof_window()
 
     def click_fetch_new_files(self):
         self.status['fetch_new_files'] = True
@@ -1540,6 +1686,89 @@ class MainWindow(QMainWindow):
         
         vmi_raw_fig.subplots_adjust(bottom=0.15, left=0.05, right=1.0, top=0.95)
         vmi_corrected_fig.subplots_adjust(bottom=0.15, left=0.05, right=1.0, top=0.95)
+
+
+        # tof
+
+        # app._line_pes, = app._pes_ax.plot([], [])
+        # app._line_beta1, = app._betas_ax.plot([], [])
+        # app._line_beta2, = app._betas_ax.plot([], [])
+        # app._line_beta3, = app._betas_ax.plot([], [])
+        # app._line_beta4, = app._betas_ax.plot([], [])
+        # app._betas_ax.set_ylim(-2, 2)
+        # app._pes_ax.set_xlabel('eKE (eV)')
+        # app._pes_ax.xaxis.labelpad = 0
+        # plt.tight_layout()
+        # pes_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
+        
+
+
+
+
+
+        # fore, back, and subt plots
+        app.fore_tof_fig = Figure(figsize=(5, 3))
+        fore_tof_canvas = FigureCanvas(app.fore_tof_fig)
+        app.tof_fore_2.addWidget(fore_tof_canvas)
+        app.tof_fore_2.addWidget(NavigationToolbar(fore_tof_canvas, self))
+        app._fore_tof_ax = fore_tof_canvas.figure.subplots()
+        app._line_fore_tof, = app._fore_tof_ax.plot([], [])
+        app._fore_tof_ax.set_xlabel('m/q')
+        app._pes_ax.xaxis.labelpad = 0
+        plt.tight_layout()
+        app.fore_tof_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
+
+
+
+        # back, back, and subt plots
+        app.back_tof_fig = Figure(figsize=(5, 3))
+        back_tof_canvas = FigureCanvas(app.back_tof_fig)
+        app.tof_back_2.addWidget(back_tof_canvas)
+        app.tof_back_2.addWidget(NavigationToolbar(back_tof_canvas, self))
+        app._back_tof_ax = back_tof_canvas.figure.subplots()
+        app._line_back_tof, = app._back_tof_ax.plot([], [])
+        app._back_tof_ax.set_xlabel('m/q')
+        app._pes_ax.xaxis.labelpad = 0
+        plt.tight_layout()
+        app.back_tof_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
+
+        # subt, subt, and subt plots
+        app.subt_tof_fig = Figure(figsize=(5, 3))
+        subt_tof_canvas = FigureCanvas(app.subt_tof_fig)
+        app.tof_subt_2.addWidget(subt_tof_canvas)
+        app.tof_subt_2.addWidget(NavigationToolbar(subt_tof_canvas, self))
+        app._subt_tof_ax = subt_tof_canvas.figure.subplots()
+        app._line_subt_tof, = app._subt_tof_ax.plot([], [])
+        app._subt_tof_ax.set_xlabel('m/q')
+        app._pes_ax.xaxis.labelpad = 0
+        plt.tight_layout()
+        app.subt_tof_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
+
+        
+        # fig.subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=None, hspace=None)
+        app.fore_fig.subplots_adjust(bottom=0.10, left=0.05, right=1.0, top=0.95)
+        app.back_fig.subplots_adjust(bottom=0.10, left=0.05, right=1.0, top=0.95)
+        app.subt_fig.subplots_adjust(bottom=0.10, left=0.05, right=1.0, top=0.95)
+
+        # # tof calibration tab
+        tof_raw_fig = Figure(figsize=(5,3))
+        tof_raw_canvas = FigureCanvas(tof_raw_fig)
+        app.tof_show_raw.addWidget(tof_raw_canvas)
+        app.tof_show_raw.addWidget(NavigationToolbar(tof_raw_canvas, self))
+        app._tof_raw_ax = tof_raw_canvas.figure.subplots()
+        app.__line_tof_raw, = app._tof_raw_ax.plot([], [])
+        plt.tight_layout()
+        
+        tof_mq_fig = Figure(figsize=(5,3))
+        tof_mq_canvas = FigureCanvas(tof_mq_fig)
+        app.tof_show_mq.addWidget(tof_mq_canvas)
+        app.tof_show_mq.addWidget(NavigationToolbar(tof_mq_canvas, self))
+        app._tof_mq_ax = tof_mq_canvas.figure.subplots()
+        app.__line_tof_mq, = app._tof_mq_ax.plot([], [])
+        plt.tight_layout()
+        
+        # tof_raw_fig.subplots_adjust(bottom=0.15, left=0.05, right=1.0, top=0.95)
+        # tof_corrected_fig.subplots_adjust(bottom=0.15, left=0.05, right=1.0, top=0.95)
         
         self.show()
 

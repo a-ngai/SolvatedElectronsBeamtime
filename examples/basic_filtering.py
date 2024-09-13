@@ -174,7 +174,7 @@ axes shape (rule, condition, run, data):
 # %%
 raw_i0m_rundata = BasicRunSet.give_rundata('i0m', make_cache=False, use_cache=False)
 try:
-    i0m_runset_data, _ = simplify_data(raw_i0m_rundata, single_rule=True)  # can use simplify_data, because no rules
+    i0m_runset_data, *_ = simplify_data(raw_i0m_rundata, single_rule=True)  # can use simplify_data, because no rules
 except:
     fore_rundata_i0m, back_rundata_iom, *_ = raw_i0m_rundata
     i0m_runset_data = fore_rundata_i0m
@@ -211,7 +211,7 @@ runset_ion_tof_data = BasicRunSet.average_run_data('ion_tof', back_sep=BACKGROUN
                                     slice_range=ion_tof_slices,
                                     rules=i0m_filter_rules,
                                     make_cache=MAKE_CACHE, use_cache=LOAD_FROM_CACHE)
-fore_ion_tof_rawdata, back_ion_tof_rawdata = simplify_data(runset_ion_tof_data, single_rule=False)
+fore_ion_tof_rawdata, back_ion_tof_rawdata, *_ = simplify_data(runset_ion_tof_data, single_rule=False)
 print(f'shape is (rules, runs, data): {np.shape(fore_ion_tof_rawdata)}')
 
 # %%
@@ -284,7 +284,7 @@ Perform filtering rules on VMI data here
 runset_vmi_data = BasicRunSet.average_run_data('vmi', back_sep=BACKGROUND,
                                     rules=i0m_filter_rules,
                                     make_cache=MAKE_CACHE, use_cache=LOAD_FROM_CACHE)
-fore_vmi_rawdata, back_vmi_rawdata = simplify_data(runset_vmi_data, single_rule=False)
+fore_vmi_rawdata, back_vmi_rawdata, *_ = simplify_data(runset_vmi_data, single_rule=False)
 print(f'shape is (rules, runs, data): {np.shape(fore_ion_tof_rawdata)}')
 
 # %%

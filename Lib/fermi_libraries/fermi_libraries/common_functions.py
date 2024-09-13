@@ -9,6 +9,16 @@ from scipy.interpolate import interp1d
 import scipy.constants as spc
 from scipy.special import erf
 
+def first_arg_scalar_into_array(func):
+    def wrap_and_call(*args, **kwargs):
+        try:
+            len(args[0])
+            new_args = args
+        except TypeError:
+            new_args = tuple([np.array([args[0],])] + list(args)[1:])
+        return func(*new_args, **kwargs)
+    return wrap_and_call
+
 def transpose_axis_to_zero(y, axis=None):
     if (axis is None) or (np.ndim(y)==1):
         transpose = y

@@ -265,7 +265,7 @@ as shown below.
 """
 
 # %%
-fore_vmi, back_vmi = simplify_data(runset_vmi, single_rule=True, single_run=True)
+fore_vmi, back_vmi, *_ = simplify_data(runset_vmi, single_rule=True, single_run=True)
 print(f'shape of fore data is: {np.shape(fore_vmi)}')
 print('data has axes (...data...)')
 

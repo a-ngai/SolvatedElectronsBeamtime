@@ -162,7 +162,7 @@ axes shape (rule, condition, run, data):
 runset_ion_tof_data = BasicRunSet.average_run_data('ion_tof', 
     back_sep=BACKGROUND, slice_range=ion_tof_slices,
     make_cache=MAKE_CACHE, use_cache=LOAD_FROM_CACHE)
-fore_ion_tof_rawdata, back_ion_tof_rawdata = simplify_data(runset_ion_tof_data, single_rule=True)
+fore_ion_tof_rawdata, back_ion_tof_rawdata, *_ = simplify_data(runset_ion_tof_data, single_rule=True)
 
 # %%
 subt_ion_tof_rawdata = -(fore_ion_tof_rawdata - back_ion_tof_rawdata)
@@ -193,7 +193,7 @@ tof_points, mq_points = ion_tof_mq_peaks.T
 ion_cal_rawdata = CalibrationRun.average_run_data('ion_tof', 
     back_sep=BACKGROUND, slice_range=ion_tof_slices,
     make_cache=MAKE_CACHE, use_cache=LOAD_FROM_CACHE)
-fore_ion_rundata, back_ion_rundata = simplify_data(ion_cal_rawdata)
+fore_ion_rundata, back_ion_rundata, *_ = simplify_data(ion_cal_rawdata)
 cal_sub_spectrum = back_ion_rundata[:,0] - fore_ion_rundata[:,0]
 
 ion_calibration_dict = tof_mq_calibration(peaks=ion_tof_mq_peaks)

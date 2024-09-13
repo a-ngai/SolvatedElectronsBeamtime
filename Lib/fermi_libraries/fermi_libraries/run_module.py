@@ -1294,6 +1294,7 @@ class MultithreadRun(Run):
             filepaths = _filepaths
 
         num_files = len(filepaths)
+        if num_files_per_cache is None: num_files_per_cache = num_files
         num_blocks = int(np.ceil(num_files / num_files_per_cache))
         subsets_of_filepaths = [filepaths[i*num_files_per_cache:(i+1)*num_files_per_cache] for i in range(num_blocks)]
 

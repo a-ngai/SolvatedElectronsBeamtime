@@ -1,6 +1,8 @@
 import numpy as np
 import lmfit
-from .common_functions import residuals, transpose_axis_to_zero, weighted_linear_regression
+from .common_functions import (
+    residuals, transpose_axis_to_zero, weighted_linear_regression, 
+    first_arg_scalar_into_array)
 
 def get_tof_mq_constants(peaks=None, constants=None):
     """
@@ -103,12 +105,14 @@ def tof_mq_calibration(peaks=None, constants=None):
 
     return calibration_dict
 
+@first_arg_scalar_into_array
 def tof_mq_coordinate_func(tof_in, timezero, propconst):
     """ See tof_mq_calibration() """
     mq_coordinate = tof_in*np.nan
     mq_coordinate[tof_in>=timezero] = propconst * (tof_in[tof_in>=timezero]-timezero)**2
     return mq_coordinate
 
+@first_arg_scalar_into_array
 def tof_mq_jacobian_func(tof_in, timezero, propconst):
     """ See tof_mq_calibration() """
     # |dT/dmq_in|
@@ -116,12 +120,14 @@ def tof_mq_jacobian_func(tof_in, timezero, propconst):
     jacobian[tof_in>timezero] = 1/(propconst*2*(tof_in[tof_in>timezero]-timezero))
     return jacobian
 
+@first_arg_scalar_into_array
 def mq_tof_coordinate_func(mq_in, timezero, propconst):
     """ See tof_mq_calibration() """
     tof_in = np.sqrt(mq_in/propconst) + timezero
     tof_in[mq_in<0] = np.nan
     return tof_in
 
+@first_arg_scalar_into_array
 def mq_tof_jacobian_func(mq_in, timezero, propconst):
     """ See tof_mq_calibration() """
     # |dmq_in/dT|
@@ -335,12 +341,14 @@ def tof_ke_calibration(peaks=None, constants=None):
 
     return calibration_dict
 
+@first_arg_scalar_into_array
 def tof_ke_coordinate_func(tof_in, t0, propconst, ke0):
     """ See tof_ke_calibration() """
     ke_coordinate = tof_in*np.nan
     ke_coordinate[tof_in>t0] = 1/propconst / (tof_in[tof_in>t0] - t0+0.)**2 + ke0
     return ke_coordinate
 
+@first_arg_scalar_into_array
 def tof_ke_jacobian_func(tof_in, t0, propconst, ke0):
     """ See tof_ke_calibration() """
     # |dT/dke_in|
@@ -349,12 +357,14 @@ def tof_ke_jacobian_func(tof_in, t0, propconst, ke0):
 
     return jacobian
 
+@first_arg_scalar_into_array
 def ke_tof_coordinate_func(ke_in, t0, propconst, ke0):
     """ See tof_ke_calibration() """
     tof_in = ke_in*np.nan
     tof_in[ke_in>ke0] = np.sqrt(1/propconst / (ke_in[ke_in>ke0] - ke0+0.)) + t0
     return tof_in
 
+@first_arg_scalar_into_array
 def ke_tof_jacobian_func(ke_in, t0, propconst, ke0):
     """ See tof_ke_calibration() """
     # |dke_in/dT|
