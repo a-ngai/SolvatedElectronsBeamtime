@@ -874,12 +874,20 @@ class Ui_MainWindow(object):
 
 
 
-
+        try:
+            CURRENT_SCRIPT_DIR = str(pathlib.Path(__file__).parent.resolve())+'/'
+        except NameError:  # this will happen in .ipynb files
+            print('not found...?')
+            CURRENT_SCRIPT_DIR = os.path.abspath('')
+        
+        print('top level dir is: ', CURRENT_SCRIPT_DIR)
+        top_level_dir = resolve_path(CURRENT_SCRIPT_DIR, '../')
+        print('top level dir is: ', top_level_dir)
 
         self.box_fore_felonsluon.setChecked(True)
         self.box_back_felonsluoff.setChecked(True)
-        self.text_edit_search_dir_for_newest_folder.setText('C:/Users/ngai/Downloads/update_test')
-        self.text_edit_abel_inversion_data_path.setText('C:/Users/ngai/Projects/SolvatedElectronsBeamtime/examples/G_r256_k64_l4_half.h5')
+        self.text_edit_search_dir_for_newest_folder.setText('{top_level_dir}/tests/_temp/TestBeamtime/Beamtime')
+        self.text_edit_abel_inversion_data_path.setText(f'{top_level_dir}/examples/G_r256_k64_l4_half.h5')
         self.text_edit_ke_start.setText('')
         self.text_edit_ke_end.setText('')
         self.text_edit_ke_bins.setText('')
@@ -918,6 +926,8 @@ class Ui_MainWindow(object):
             'eke_start' : None,
             'eke_end' : None,
             'eke_bins' : None,
+            'tof_start' : None,
+            'tof_end' : None,
             'tof_fore' : np.array([[],[],]),
             'tof_back' : np.array([[],[],]),
             'tof_subt' : np.array([[],[],]),
@@ -1378,61 +1388,73 @@ class Ui_MainWindow(object):
 
 
 
-        # None conditions for the eKE axis
+        # None conditions for the tof axis
         tof_coor, fore_tof = self.graph_data['tof_fore']
         current_fore_tof_xlim = self._fore_tof_ax.get_xlim()
         new_fore_tof_xlim = list(current_fore_tof_xlim)
         non_empty_coor = len(tof_coor) > 0
-        if self.graph_data['eke_start'] is None and non_empty_coor:
+        if self.graph_data['tof_start'] is None and non_empty_coor:
             new_fore_tof_xlim[0] = np.min(tof_coor)
-        if self.graph_data['eke_end'] is None and non_empty_coor:
+        if self.graph_data['tof_end'] is None and non_empty_coor:
             new_fore_tof_xlim[1] = np.max(tof_coor)
+        if new_fore_tof_xlim[0] == new_fore_tof_xlim[1]:
+            new_fore_tof_xlim = (None, None)
         self._fore_tof_ax.set_xlim(new_fore_tof_xlim)
 
         current_fore_tof_ylim = self._fore_tof_ax.get_ylim()
         new_fore_tof_ylim = list(current_fore_tof_ylim)
-        if self.graph_data['eke_start'] is None and non_empty_coor:
+        if self.graph_data['tof_start'] is None and non_empty_coor:
             new_fore_tof_ylim[0] = np.min(fore_tof)
-        if self.graph_data['eke_end'] is None and non_empty_coor:
+        if self.graph_data['tof_end'] is None and non_empty_coor:
             new_fore_tof_ylim[1] = np.max(fore_tof)
+        if new_fore_tof_ylim[0] == new_fore_tof_ylim[1]:
+            new_fore_tof_ylim = (None, None)
         self._fore_tof_ax.set_ylim(new_fore_tof_ylim)
 
-        # None conditions for the eKE axis
+        # None conditions for the tof axis
         tof_coor, back_tof = self.graph_data['tof_back']
         current_back_tof_xlim = self._back_tof_ax.get_xlim()
         new_back_tof_xlim = list(current_back_tof_xlim)
         non_empty_coor = len(tof_coor) > 0
-        if self.graph_data['eke_start'] is None and non_empty_coor:
+        if self.graph_data['tof_start'] is None and non_empty_coor:
             new_back_tof_xlim[0] = np.min(tof_coor)
-        if self.graph_data['eke_end'] is None and non_empty_coor:
+        if self.graph_data['tof_end'] is None and non_empty_coor:
             new_back_tof_xlim[1] = np.max(tof_coor)
+        if new_back_tof_xlim[0] == new_back_tof_xlim[1]:
+            new_back_tof_xlim = (None, None)
         self._back_tof_ax.set_xlim(new_back_tof_xlim)
 
         current_back_tof_ylim = self._back_tof_ax.get_ylim()
         new_back_tof_ylim = list(current_back_tof_ylim)
-        if self.graph_data['eke_start'] is None and non_empty_coor:
+        if self.graph_data['tof_start'] is None and non_empty_coor:
             new_back_tof_ylim[0] = np.min(back_tof)
-        if self.graph_data['eke_end'] is None and non_empty_coor:
+        if self.graph_data['tof_end'] is None and non_empty_coor:
             new_back_tof_ylim[1] = np.max(back_tof)
+        if new_back_tof_ylim[0] == new_back_tof_ylim[1]:
+            new_back_tof_ylim = (None, None)
         self._back_tof_ax.set_ylim(new_back_tof_ylim)
 
-        # None conditions for the eKE axis
+        # None conditions for the tof axis
         tof_coor, subt_tof = self.graph_data['tof_subt']
         current_subt_tof_xlim = self._subt_tof_ax.get_xlim()
         new_subt_tof_xlim = list(current_subt_tof_xlim)
         non_empty_coor = len(tof_coor) > 0
-        if self.graph_data['eke_start'] is None and non_empty_coor:
+        if self.graph_data['tof_start'] is None and non_empty_coor:
             new_subt_tof_xlim[0] = np.min(tof_coor)
-        if self.graph_data['eke_end'] is None and non_empty_coor:
+        if self.graph_data['tof_end'] is None and non_empty_coor:
             new_subt_tof_xlim[1] = np.max(tof_coor)
+        if new_subt_tof_xlim[0] == new_subt_tof_xlim[1]:
+            new_subt_tof_xlim = (None, None)
         self._subt_tof_ax.set_xlim(new_subt_tof_xlim)
 
         current_subt_tof_ylim = self._subt_tof_ax.get_ylim()
         new_subt_tof_ylim = list(current_subt_tof_ylim)
-        if self.graph_data['eke_start'] is None and non_empty_coor:
+        if self.graph_data['tof_start'] is None and non_empty_coor:
             new_subt_tof_ylim[0] = np.min(subt_tof)
-        if self.graph_data['eke_end'] is None and non_empty_coor:
+        if self.graph_data['tof_end'] is None and non_empty_coor:
             new_subt_tof_ylim[1] = np.max(subt_tof)
+        if new_subt_tof_ylim[0] == new_subt_tof_ylim[1]:
+            new_subt_tof_ylim = (None, None)
         self._subt_tof_ax.set_ylim(new_subt_tof_ylim)
 
 
@@ -1467,7 +1489,7 @@ class Ui_MainWindow(object):
         self.status['auto_newest_folder'] = False
         self.test_display_folder_status.setText('Stay')
 
-import os, sys, traceback, re
+import os, sys, traceback, re, pathlib
 import numpy as np
 import matplotlib.pyplot as plt
 from time import strftime, localtime, time
@@ -1483,7 +1505,7 @@ from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QApplication
 
 from fermi_libraries.run_module import MultithreadRun as Run
 # from fermi_libraries.run_module import Run
-from fermi_libraries.common_functions import set_recursion_limit
+from fermi_libraries.common_functions import set_recursion_limit, resolve_path
 from fermi_libraries.dictionary_search import search_symbols
 
 from cpbasex.cpbasex import cpbasex_energy as cpbasex_energy_inversion

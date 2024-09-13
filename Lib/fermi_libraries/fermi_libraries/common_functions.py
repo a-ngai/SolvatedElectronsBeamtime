@@ -872,7 +872,7 @@ def resolve_path(basepath: str, addpath: str = '') -> str:
     '''
     compat_basepath = re.sub(r'\\', '/', basepath)
     if compat_basepath[-1] == '/':
-        compat_basepath = compat_basepath[-1]
+        compat_basepath = compat_basepath[:-1]
     base_hierarchy_list = compat_basepath.split('/')
     compat_addpath = re.sub(r'\\\\', '/', addpath)
     if compat_addpath[:2] == './':
