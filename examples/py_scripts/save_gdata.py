@@ -10,11 +10,12 @@ antivirus program, it's better to restart this program and use only one core.
 """
 
 # %%
-import numpy as np
-import time
-from cpbasex.gData import get_gData
 import os
+import time
 import pathlib
+import numpy as np
+from cpbasex.gData import get_gData
+from fermi_libraries.common_functions import resolve_path
 
 # %%
 try:
@@ -30,7 +31,7 @@ INVERSION_FOR_QUADRANT_IMAGES = False
 
 save_half_path = None # Automatic file naming if none
 save_quar_path = None # Automatic file naming if none
-save_dir = CURRENT_SCRIPT_DIR # Directory to save the data
+save_dir = resolve_path(CURRENT_SCRIPT_DIR, '../..') # Directory to save the data
 nx = 256  # 512x256 half-image, or 256x256 quadrant
 xkratio = 4 # Ratio of radial basis functions to pixel radii
 l_values = np.arange(5) # Up to l=4

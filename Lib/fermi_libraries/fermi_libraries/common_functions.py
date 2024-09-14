@@ -873,11 +873,13 @@ def resolve_path(basepath: str, addpath: str = '') -> str:
 
     /first_base/second_base/third_add/fourth_add
     '''
-    compat_basepath = re.sub(r'\\', '/', basepath)
+    compat_basepath = re.sub(r'\\\\', '/', basepath)
+    compat_basepath = re.sub(r'\\', '/', compat_basepath)
     if compat_basepath[-1] == '/':
         compat_basepath = compat_basepath[:-1]
     base_hierarchy_list = compat_basepath.split('/')
     compat_addpath = re.sub(r'\\\\', '/', addpath)
+    compat_addpath = re.sub(r'\\', '/', compat_addpath)
     if compat_addpath[:2] == './':
         compat_addpath = compat_addpath[2:]
     add_hierarchy_list = compat_addpath.split('/')
@@ -888,3 +890,47 @@ def resolve_path(basepath: str, addpath: str = '') -> str:
     newpath = '/'.join(base_hierarchy_list + reverse_add_list[::-1])
 
     return newpath
+
+def find_subdir(name: str, root: str, skip: int=0, give_single: bool=True) -> str:
+    '''
+    Look through the sub-directories of root to find a sub-directory with a 
+    particular name. Level determines which depth to return any found 
+    sub-directories.
+
+    e.g. 
+    skip=0: give the found subdirectory with the shortest path
+    skip=1: give the found subdirectory with the next-to-shortest path
+    skip=-1: give the found subdirectory with the longest path
+    
+    '''
+
+    standard_root = resolve_path(root)
+    standard_name = resolve_path(name)
+    Nchar = len(standard_root)
+    all_paths = []
+    for path, subdirs, files in list(os.walk(root))[:]:
+        rel_path = resolve_path(path)[Nchar:]
+        if (len(rel_path)>0) and (rel_path[-1] == '/'): rel_path = rel_path[:-1]
+        all_paths.append(rel_path)
+        for subdir in subdirs:
+            full_filepath = os.path.join(path, subdir)
+            rel_path = resolve_path(full_filepath)[Nchar:]
+            all_paths.append(rel_path)
+
+    found_paths = []
+    levels = []
+    for filepath in all_paths:
+        if standard_name not in filepath:
+            continue
+        found_paths.append(f'{standard_root}{filepath}')
+        levels.append(len(filepath.split('/')))
+    if found_paths == []: # none found
+        return None
+    found_paths = np.array(found_paths)
+    levels = np.array(levels)
+    unique_levels = np.sort(list(set(levels)))
+    target_depth = unique_levels[skip]
+        
+    found_paths[levels==target_depth]
+    if give_single: found_paths = found_paths[0]
+    return found_paths

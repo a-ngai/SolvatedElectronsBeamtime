@@ -21,9 +21,8 @@ cmap = colormaps.get_cmap('plasma')
 from scipy.special import erf
 from fermi_libraries.run_module import Run, RunSets
 from fermi_libraries.common_functions import (
-    rebinning, simplify_data, name_from_runs,
-    avg_from_moments, stdev_from_moments,
-    set_default_labels, set_recursion_limit, closest)
+    rebinning, simplify_data, name_from_runs, avg_from_moments, stdev_from_moments,
+    set_recursion_limit, resolve_path, find_subdir)
 from fermi_libraries.calibration_tools import (
     tof_to_mq_conversion, mq_to_tof_conversion, )
 from fermi_libraries.dictionary_search import search_symbols
@@ -147,6 +146,7 @@ ranges.
 
 # BEAMTIME_DIR =  '/net/online4ldm/store/20234049/results/Beamtime/'  # expected directory at FERMI
 BEAMTIME_DIR =  f'{CURRENT_SCRIPT_DIR}/TestBeamtime/'
+BEAMTIME_DIR = find_subdir('TestBeamtime', resolve_path(CURRENT_SCRIPT_DIR, '../..'))
 DATA_DIR = f'{BEAMTIME_DIR}/Beamtime/'  # change from fictitious to the real raw data directory!
 SAVE_DIR = f'{BEAMTIME_DIR}/results/evaluation/'#'/net/online4ldm/store/20234049/results/results' # ditto
 
@@ -392,7 +392,8 @@ Load Abel inversion data
 
 # %%
 MAKE_IMAGES = True
-gData = loadG(f'{CURRENT_SCRIPT_DIR}/G_r256_k64_l4_half.h5', make_images=MAKE_IMAGES)
+PROJECT_DIRECTORY = resolve_path(CURRENT_SCRIPT_DIR, '../..')
+gData = loadG(f'{PROJECT_DIRECTORY}/G_r256_k64_l4_half.h5', make_images=MAKE_IMAGES)
 
 # %%
 """

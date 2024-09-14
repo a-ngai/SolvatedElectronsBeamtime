@@ -18,7 +18,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from fermi_libraries.run_module import Run, RunSets
 from fermi_libraries.common_functions import (
-    rebinning, simplify_data, name_from_runs, set_recursion_limit)
+    rebinning, simplify_data, name_from_runs, set_recursion_limit,
+    resolve_path, find_subdir)
 from fermi_libraries.calibration_tools import (
     tof_to_mq_conversion, mq_to_tof_conversion)
 from fermi_libraries.dictionary_search import search_symbols
@@ -91,6 +92,7 @@ ranges.
 # %%
 # BEAMTIME_DIR =  '/net/online4ldm/store/20234049/results/Beamtime/'  # expected directory at FERMI
 BEAMTIME_DIR =  f'{CURRENT_SCRIPT_DIR}/TestBeamtime/'
+BEAMTIME_DIR = find_subdir('TestBeamtime', resolve_path(CURRENT_SCRIPT_DIR, '../..'))
 DATA_DIR = f'{BEAMTIME_DIR}/Beamtime/'  # change from fictitious to the real raw data directory!
 SAVE_DIR = f'{BEAMTIME_DIR}/results/evaluation/'#'/net/online4ldm/store/20234049/results/results' # ditto
 

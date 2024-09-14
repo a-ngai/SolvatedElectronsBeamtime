@@ -1,5 +1,4 @@
 import unittest
-import subprocess
 
 class TestTemplates(unittest.TestCase):
     # def setUp(self) -> None:
@@ -66,7 +65,7 @@ class TestTemplates(unittest.TestCase):
 
     def test_notebook_processing_error(self):
         from tests.run_error_convert_to_ipynb import main
-        with self.assertRaises(Exception): main()
+        with self.assertRaises(RuntimeError): main()
 
     def test_notebook_processing(self):
         from convert_to_ipynb import main
