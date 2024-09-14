@@ -27,6 +27,7 @@ class Ui_MainWindow(object):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(773, 728)
+        MainWindow.setStyleSheet(u"")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.tabWidget = QTabWidget(self.centralwidget)
@@ -34,6 +35,7 @@ class Ui_MainWindow(object):
         self.tabWidget.setEnabled(True)
         self.tabWidget.setGeometry(QRect(10, 10, 751, 571))
         self.tabWidget.setContextMenuPolicy(Qt.ContextMenuPolicy.PreventContextMenu)
+        self.tabWidget.setStyleSheet(u"")
         self.tab_vmi_main = QWidget()
         self.tab_vmi_main.setObjectName(u"tab_vmi_main")
         self.scrollArea = QScrollArea(self.tab_vmi_main)
@@ -51,6 +53,7 @@ class Ui_MainWindow(object):
         self.gridLayout_5.setContentsMargins(0, 0, 0, 0)
         self.text_browser_files = QTextBrowser(self.gridLayoutWidget_12)
         self.text_browser_files.setObjectName(u"text_browser_files")
+        self.text_browser_files.setStyleSheet(u"background-color: rgb(158, 158, 158);")
 
         self.gridLayout_5.addWidget(self.text_browser_files, 0, 0, 1, 1)
 
@@ -169,15 +172,9 @@ class Ui_MainWindow(object):
         self.tabWidget.addTab(self.tab_vmi_main, "")
         self.tab_image_correction = QWidget()
         self.tab_image_correction.setObjectName(u"tab_image_correction")
-        self.gridLayoutWidget_3 = QWidget(self.tab_image_correction)
-        self.gridLayoutWidget_3.setObjectName(u"gridLayoutWidget_3")
-        self.gridLayoutWidget_3.setGeometry(QRect(0, 0, 491, 261))
-        self.vmi_show_raw = QGridLayout(self.gridLayoutWidget_3)
-        self.vmi_show_raw.setObjectName(u"vmi_show_raw")
-        self.vmi_show_raw.setContentsMargins(0, 0, 0, 0)
         self.gridLayoutWidget_4 = QWidget(self.tab_image_correction)
         self.gridLayoutWidget_4.setObjectName(u"gridLayoutWidget_4")
-        self.gridLayoutWidget_4.setGeometry(QRect(0, 270, 491, 261))
+        self.gridLayoutWidget_4.setGeometry(QRect(20, 300, 471, 231))
         self.vmi_show_corrected = QGridLayout(self.gridLayoutWidget_4)
         self.vmi_show_corrected.setObjectName(u"vmi_show_corrected")
         self.vmi_show_corrected.setContentsMargins(0, 0, 0, 0)
@@ -186,13 +183,13 @@ class Ui_MainWindow(object):
         self.label_raw_image.setGeometry(QRect(40, 20, 71, 16))
         self.label_corrected_image = QLabel(self.tab_image_correction)
         self.label_corrected_image.setObjectName(u"label_corrected_image")
-        self.label_corrected_image.setGeometry(QRect(40, 290, 61, 16))
+        self.label_corrected_image.setGeometry(QRect(40, 310, 61, 16))
         self.button_apply_vmi_corrections = QCommandLinkButton(self.tab_image_correction)
         self.button_apply_vmi_corrections.setObjectName(u"button_apply_vmi_corrections")
-        self.button_apply_vmi_corrections.setGeometry(QRect(510, 400, 161, 41))
+        self.button_apply_vmi_corrections.setGeometry(QRect(520, 400, 161, 41))
         self.groupBox_4 = QGroupBox(self.tab_image_correction)
         self.groupBox_4.setObjectName(u"groupBox_4")
-        self.groupBox_4.setGeometry(QRect(510, 10, 221, 151))
+        self.groupBox_4.setGeometry(QRect(520, 10, 221, 151))
         self.label_guess_ycenter = QLabel(self.groupBox_4)
         self.label_guess_ycenter.setObjectName(u"label_guess_ycenter")
         self.label_guess_ycenter.setGeometry(QRect(80, 20, 49, 16))
@@ -225,10 +222,10 @@ class Ui_MainWindow(object):
         self.text_diesplay_guess_yzoom.setGeometry(QRect(80, 110, 51, 31))
         self.button_get_guess_vmi_corrections = QCommandLinkButton(self.tab_image_correction)
         self.button_get_guess_vmi_corrections.setObjectName(u"button_get_guess_vmi_corrections")
-        self.button_get_guess_vmi_corrections.setGeometry(QRect(510, 160, 131, 41))
+        self.button_get_guess_vmi_corrections.setGeometry(QRect(520, 160, 131, 41))
         self.groupBox_5 = QGroupBox(self.tab_image_correction)
         self.groupBox_5.setObjectName(u"groupBox_5")
-        self.groupBox_5.setGeometry(QRect(510, 250, 221, 151))
+        self.groupBox_5.setGeometry(QRect(520, 250, 221, 151))
         self.text_edit_correct_yzoom = QTextEdit(self.groupBox_5)
         self.text_edit_correct_yzoom.setObjectName(u"text_edit_correct_yzoom")
         self.text_edit_correct_yzoom.setGeometry(QRect(80, 100, 51, 31))
@@ -259,8 +256,40 @@ class Ui_MainWindow(object):
         self.label_correct_yzoom = QLabel(self.groupBox_5)
         self.label_correct_yzoom.setObjectName(u"label_correct_yzoom")
         self.label_correct_yzoom.setGeometry(QRect(80, 80, 49, 16))
+        self.tabWidget_4 = QTabWidget(self.tab_image_correction)
+        self.tabWidget_4.setObjectName(u"tabWidget_4")
+        self.tabWidget_4.setGeometry(QRect(10, 10, 491, 281))
+        self.tab_4 = QWidget()
+        self.tab_4.setObjectName(u"tab_4")
+        self.gridLayout_6 = QGridLayout(self.tab_4)
+        self.gridLayout_6.setObjectName(u"gridLayout_6")
+        self.vmi_show_raw = QGridLayout()
+        self.vmi_show_raw.setObjectName(u"vmi_show_raw")
+
+        self.gridLayout_6.addLayout(self.vmi_show_raw, 0, 0, 1, 1)
+
+        self.tabWidget_4.addTab(self.tab_4, "")
+        self.tab_5 = QWidget()
+        self.tab_5.setObjectName(u"tab_5")
+        self.gridLayout_7 = QGridLayout(self.tab_5)
+        self.gridLayout_7.setObjectName(u"gridLayout_7")
+        self.vmi_show_inverse = QGridLayout()
+        self.vmi_show_inverse.setObjectName(u"vmi_show_inverse")
+
+        self.gridLayout_7.addLayout(self.vmi_show_inverse, 0, 0, 1, 1)
+
+        self.tabWidget_4.addTab(self.tab_5, "")
+        self.tab_6 = QWidget()
+        self.tab_6.setObjectName(u"tab_6")
+        self.gridLayout_8 = QGridLayout(self.tab_6)
+        self.gridLayout_8.setObjectName(u"gridLayout_8")
+        self.vmi_show_pes = QGridLayout()
+        self.vmi_show_pes.setObjectName(u"vmi_show_pes")
+
+        self.gridLayout_8.addLayout(self.vmi_show_pes, 0, 0, 1, 1)
+
+        self.tabWidget_4.addTab(self.tab_6, "")
         self.tabWidget.addTab(self.tab_image_correction, "")
-        self.gridLayoutWidget_3.raise_()
         self.gridLayoutWidget_4.raise_()
         self.button_apply_vmi_corrections.raise_()
         self.groupBox_4.raise_()
@@ -268,6 +297,7 @@ class Ui_MainWindow(object):
         self.groupBox_5.raise_()
         self.label_corrected_image.raise_()
         self.label_raw_image.raise_()
+        self.tabWidget_4.raise_()
         self.tab_calibration = QWidget()
         self.tab_calibration.setObjectName(u"tab_calibration")
         self.gridLayoutWidget_5 = QWidget(self.tab_calibration)
@@ -566,16 +596,16 @@ class Ui_MainWindow(object):
         self.text_edit_search_dir_for_newest_folder.setGeometry(QRect(320, 30, 271, 31))
         self.label_extract_tof_start = QLabel(self.tab_settings)
         self.label_extract_tof_start.setObjectName(u"label_extract_tof_start")
-        self.label_extract_tof_start.setGeometry(QRect(20, 170, 51, 16))
+        self.label_extract_tof_start.setGeometry(QRect(20, 170, 81, 16))
         self.text_edit_extract_tof_start = QTextEdit(self.tab_settings)
         self.text_edit_extract_tof_start.setObjectName(u"text_edit_extract_tof_start")
-        self.text_edit_extract_tof_start.setGeometry(QRect(20, 190, 61, 31))
+        self.text_edit_extract_tof_start.setGeometry(QRect(20, 190, 71, 31))
         self.label_extract_tof_stop = QLabel(self.tab_settings)
         self.label_extract_tof_stop.setObjectName(u"label_extract_tof_stop")
-        self.label_extract_tof_stop.setGeometry(QRect(100, 170, 51, 16))
+        self.label_extract_tof_stop.setGeometry(QRect(110, 170, 81, 16))
         self.text_edit_extract_tof_stop = QTextEdit(self.tab_settings)
         self.text_edit_extract_tof_stop.setObjectName(u"text_edit_extract_tof_stop")
-        self.text_edit_extract_tof_stop.setGeometry(QRect(100, 190, 61, 31))
+        self.text_edit_extract_tof_stop.setGeometry(QRect(110, 190, 71, 31))
         self.box_slu_parity = QCheckBox(self.tab_settings)
         self.box_slu_parity.setObjectName(u"box_slu_parity")
         self.box_slu_parity.setGeometry(QRect(320, 330, 21, 22))
@@ -694,7 +724,7 @@ class Ui_MainWindow(object):
         self.text_edit_subfolder_extension.setGeometry(QRect(350, 90, 241, 31))
         self.label_subfolder_extension_2 = QLabel(self.tab_settings)
         self.label_subfolder_extension_2.setObjectName(u"label_subfolder_extension_2")
-        self.label_subfolder_extension_2.setGeometry(QRect(320, 100, 31, 20))
+        self.label_subfolder_extension_2.setGeometry(QRect(330, 89, 21, 31))
         font = QFont()
         font.setPointSize(16)
         self.label_subfolder_extension_2.setFont(font)
@@ -706,7 +736,20 @@ class Ui_MainWindow(object):
         self.label_num_cores.setGeometry(QRect(20, 390, 171, 16))
         self.label_max_cores = QLabel(self.tab_settings)
         self.label_max_cores.setObjectName(u"label_max_cores")
-        self.label_max_cores.setGeometry(QRect(70, 420, 41, 16))
+        self.label_max_cores.setGeometry(QRect(70, 410, 41, 31))
+        font1 = QFont()
+        font1.setPointSize(14)
+        self.label_max_cores.setFont(font1)
+        self.text_edit_search_dir_for_newest_folder_2 = QTextEdit(self.tab_settings)
+        self.text_edit_search_dir_for_newest_folder_2.setObjectName(u"text_edit_search_dir_for_newest_folder_2")
+        self.text_edit_search_dir_for_newest_folder_2.setGeometry(QRect(600, 30, 141, 31))
+        self.label_search_dir_for_newest_folder_2 = QLabel(self.tab_settings)
+        self.label_search_dir_for_newest_folder_2.setObjectName(u"label_search_dir_for_newest_folder_2")
+        self.label_search_dir_for_newest_folder_2.setGeometry(QRect(610, 10, 111, 16))
+        self.text_browser_max_cores = QTextBrowser(self.tab_settings)
+        self.text_browser_max_cores.setObjectName(u"text_browser_max_cores")
+        self.text_browser_max_cores.setGeometry(QRect(90, 410, 41, 31))
+        self.text_browser_max_cores.setStyleSheet(u"background-color: rgb(144, 144, 144);")
         self.tabWidget.addTab(self.tab_settings, "")
         self.print_browser = QTextBrowser(self.centralwidget)
         self.print_browser.setObjectName(u"print_browser")
@@ -728,7 +771,8 @@ class Ui_MainWindow(object):
 
         self.tabWidget.setCurrentIndex(0)
         self.tabWidget_2.setCurrentIndex(0)
-        self.tabWidget_3.setCurrentIndex(3)
+        self.tabWidget_4.setCurrentIndex(2)
+        self.tabWidget_3.setCurrentIndex(5)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -866,6 +910,9 @@ class Ui_MainWindow(object):
         self.label_correct_xzoom.setText(QCoreApplication.translate("MainWindow", u"x-zoom", None))
         self.label_correct_xcenter.setText(QCoreApplication.translate("MainWindow", u"x-center", None))
         self.label_correct_yzoom.setText(QCoreApplication.translate("MainWindow", u"y-zoom", None))
+        self.tabWidget_4.setTabText(self.tabWidget_4.indexOf(self.tab_4), QCoreApplication.translate("MainWindow", u"Raw", None))
+        self.tabWidget_4.setTabText(self.tabWidget_4.indexOf(self.tab_5), QCoreApplication.translate("MainWindow", u"Inverse", None))
+        self.tabWidget_4.setTabText(self.tabWidget_4.indexOf(self.tab_6), QCoreApplication.translate("MainWindow", u"PES", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_image_correction), QCoreApplication.translate("MainWindow", u"Image", None))
         self.label_pixel_axis.setText(QCoreApplication.translate("MainWindow", u"Pixels", None))
         self.label_energy_axis.setText(QCoreApplication.translate("MainWindow", u"Energies", None))
@@ -1042,7 +1089,7 @@ class Ui_MainWindow(object):
         self.button_apply_tof_use_constants.setText(QCoreApplication.translate("MainWindow", u"Use constants", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_tof_calibration), QCoreApplication.translate("MainWindow", u"Cal. (TOF)", None))
         self.label_search_dir_for_newest_folder.setText(QCoreApplication.translate("MainWindow", u"Auto-search newest folder in directory", None))
-        self.label_extract_tof_start.setText(QCoreApplication.translate("MainWindow", u"TOF start", None))
+        self.label_extract_tof_start.setText(QCoreApplication.translate("MainWindow", u"TOF read start", None))
         self.text_edit_extract_tof_start.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -1051,7 +1098,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.label_extract_tof_stop.setText(QCoreApplication.translate("MainWindow", u"TOF stop", None))
+        self.label_extract_tof_stop.setText(QCoreApplication.translate("MainWindow", u"TOF read stop", None))
         self.text_edit_extract_tof_stop.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -1107,7 +1154,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">rawdata</p></body></html>", None))
-        self.label_subfolder_extension_2.setText(QCoreApplication.translate("MainWindow", u"../", None))
+        self.label_subfolder_extension_2.setText(QCoreApplication.translate("MainWindow", u"./", None))
         self.text_edit_num_cores.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -1118,9 +1165,11 @@ class Ui_MainWindow(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">1</p></body></html>", None))
         self.label_num_cores.setText(QCoreApplication.translate("MainWindow", u"Max # cores for multiprocess", None))
         self.label_max_cores.setText(QCoreApplication.translate("MainWindow", u"/", None))
+        self.label_search_dir_for_newest_folder_2.setText(QCoreApplication.translate("MainWindow", u"Auto-search regex", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_settings), QCoreApplication.translate("MainWindow", u"Settings", None))
         self.menuFERMI_On_line_analysis_tool.setTitle(QCoreApplication.translate("MainWindow", u"FERMI LDM On-line analysis tool", None))
     # retranslateUi
+
 
 
 
@@ -1150,6 +1199,7 @@ class Ui_MainWindow(object):
         self.text_edit_files_per_cache.setText('4')
         # self.text_edit_tof_cal_points.setText('0, 0\n1, 1')
         self.text_edit_tof_cal_points.setText('5000, 0\n10600, 14\n13000, 28')
+        self.text_browser_max_cores.setText(str(os.cpu_count()))
 
     
     def __init__(self):
