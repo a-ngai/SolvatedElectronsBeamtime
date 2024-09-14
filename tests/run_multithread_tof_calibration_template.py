@@ -19,4 +19,4 @@ def test_multithread_tof_calibration_template():
     except Exception as e:
         # if os.path.exists("examples/_temp_multithread_calibration.py"): os.remove("examples/_temp_multithread_calibration.py")
         raise e
-    # if os.path.exists("examples/_temp_multithread_calibration.py"): os.remove("examples/_temp_multithread_calibration.py")
+    if os.path.exists("examples/_temp_multithread_calibration.py"): os.remove("examples/_temp_multithread_calibration.py")

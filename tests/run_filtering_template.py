@@ -11,6 +11,6 @@ def test_filtering_template():
     try:
         from examples import _temp_filtering
     except Exception as e:
-        # if os.path.exists("examples/_temp_filtering"): os.remove("examples/_temp_filtering")
+        # if os.path.exists("examples/_temp_filtering.py"): os.remove("examples/_temp_filtering.py")
         raise e
-    # if os.path.exists("examples/_temp_filtering"): os.remove("examples/_temp_filtering")
+    if os.path.exists("examples/_temp_filtering.py"): os.remove("examples/_temp_filtering.py")

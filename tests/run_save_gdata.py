@@ -21,3 +21,4 @@ def test_save_gdata():
     # if os.path.exists("examples/_temp_save_gdata.py"): os.remove("examples/_temp_save_gdata.py")
     if os.path.exists("examples/_temp_save_gdata_half.h5"): os.remove("examples/_temp_save_gdata_half.h5")
     if os.path.exists("examples/_temp_save_gdata_quar.h5"): os.remove("examples/_temp_save_gdata_quar.h5")
+    if os.path.exists("examples/_temp_save_gdata.py"): os.remove("examples/_temp_save_gdata.py")

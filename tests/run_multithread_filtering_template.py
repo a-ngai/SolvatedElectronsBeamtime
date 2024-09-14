@@ -19,4 +19,4 @@ def test_multithread_filtering_template():
     except Exception as e:
         # if os.path.exists("examples/_temp_multithread_filtering.py"): os.remove("examples/_temp_multithread_filtering.py")
         raise e
-    # if os.path.exists("examples/_temp_multithread_filtering.py"): os.remove("examples/_temp_multithread_filtering.py")
+    if os.path.exists("examples/_temp_multithread_filtering.py"): os.remove("examples/_temp_multithread_filtering.py")

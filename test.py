@@ -59,6 +59,19 @@ class TestTemplates(unittest.TestCase):
     def test_multithread_run(self):
         from tests.run_test_multithread_run import test_multithread_run
         self.assertIsNone(test_multithread_run())
+    
+    def test_notebook_processing_preprocess_html(self):
+        from tests.run_convert_to_ipynb_basic_tutorial import main
+        self.assertIsNone(main())
+
+    def test_notebook_processing_error(self):
+        from tests.run_error_convert_to_ipynb import main
+        with self.assertRaises(Exception): main()
+
+    def test_notebook_processing(self):
+        from convert_to_ipynb import main
+        self.assertIsNone(main())
+
 
 if __name__ == '__main__':
     unittest.main()

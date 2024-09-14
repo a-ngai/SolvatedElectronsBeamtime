@@ -13,4 +13,4 @@ def test_tutorial_template():
     except Exception as e:
         # if os.path.exists("examples/_temp_tutorial.py"): os.remove("examples/_temp_tutorial.py")
         raise e
-    # if os.path.exists("examples/_temp_tutorial.py"): os.remove("examples/_temp_tutorial.py")
+    if os.path.exists("examples/_temp_tutorial.py"): os.remove("examples/_temp_tutorial.py")

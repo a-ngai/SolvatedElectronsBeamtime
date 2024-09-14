@@ -13,4 +13,4 @@ def test_multithread_run():
     except Exception as e:
         # if os.path.exists("test/_temp_multithread_run.py"): os.remove("test/_temp_multithread_run.py")
         raise e
-    # if os.path.exists("test/_temp_multithread_run.py"): os.remove("test/_temp_multithread_run.py")
+    if os.path.exists("test/_temp_multithread_run.py"): os.remove("test/_temp_multithread_run.py")

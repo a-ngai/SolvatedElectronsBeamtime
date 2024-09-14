@@ -19,4 +19,4 @@ def test_multithread_delay_template():
     except Exception as e:
         # if os.path.exists("examples/_temp_multithread_delay.py"): os.remove("examples/_temp_multithread_delay.py")
         raise e
-    # if os.path.exists("examples/_temp_multithread_delay.py"): os.remove("examples/_temp_multithread_delay.py")
+    if os.path.exists("examples/_temp_multithread_delay.py"): os.remove("examples/_temp_multithread_delay.py")

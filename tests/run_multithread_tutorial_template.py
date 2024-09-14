@@ -19,4 +19,4 @@ def test_multithread_tutorial_template():
     except Exception as e:
         # if os.path.exists("examples/_temp_multithread_tutorial.py"): os.remove("examples/_temp_multithread_tutorial.py")
         raise e
-    # if os.path.exists("examples/_temp_multithread_tutorial.py"): os.remove("examples/_temp_multithread_tutorial.py")
+    if os.path.exists("examples/_temp_multithread_tutorial.py"): os.remove("examples/_temp_multithread_tutorial.py")

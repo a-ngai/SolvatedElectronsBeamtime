@@ -13,4 +13,4 @@ def test_tof_calibration_template():
     except Exception as e:
         # if os.path.exists("examples/_temp_calibration.py"): os.remove("examples/_temp_calibration.py")
         raise e
-    # if os.path.exists("examples/_temp_calibration.py"): os.remove("examples/_temp_calibration.py")
+    if os.path.exists("examples/_temp_calibration.py"): os.remove("examples/_temp_calibration.py")

@@ -19,4 +19,4 @@ def test_multithread_abel_template():
     except Exception as e:
         # if os.path.exists("examples/_temp_multithread_abel.py"): os.remove("examples/_temp_multithread_abel.py")
         raise e
-    # if os.path.exists("examples/_temp_multithread_abel.py"): os.remove("examples/_temp_multithread_abel.py")
+    if os.path.exists("examples/_temp_multithread_abel.py"): os.remove("examples/_temp_multithread_abel.py")
