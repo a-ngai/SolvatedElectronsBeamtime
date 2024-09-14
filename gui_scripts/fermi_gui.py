@@ -1188,7 +1188,6 @@ class Ui_MainWindow(object):
         self.box_fore_felonsluon.setChecked(True)
         self.box_back_felonsluoff.setChecked(True)
         self.text_edit_search_dir_for_newest_folder.setText(f'{top_level_dir}/tests/_temp/TestBeamtime/Beamtime')
-        self.text_edit_abel_inversion_data_path.setText(f'{top_level_dir}/examples/G_r256_k64_l4_half.h5')
         self.text_edit_ke_start.setText('')
         self.text_edit_ke_end.setText('')
         self.text_edit_ke_bins.setText('')
@@ -1200,6 +1199,17 @@ class Ui_MainWindow(object):
         # self.text_edit_tof_cal_points.setText('0, 0\n1, 1')
         self.text_edit_tof_cal_points.setText('5000, 0\n10600, 14\n13000, 28')
         self.text_browser_max_cores.setText(str(os.cpu_count()))
+
+        look_in_dir = resolve_path(CURRENT_SCRIPT_DIR, '..')
+        list_of_files = os.listdir(look_in_dir)
+
+        matches = np.argwhere(np.array([True if re.match('G_r.*\.h5', file) else False for file in list_of_files]))
+        if len(matches) > 0:
+            match_filename = f'{look_in_dir}/{list_of_files[matches[0][0]]}'
+        else:
+            match_filename = ''
+        # self.text_edit_abel_inversion_data_path.setText(f'{top_level_dir}/examples/G_r256_k64_l4_half.h5')
+        self.text_edit_abel_inversion_data_path.setText(match_filename)
 
     
     def __init__(self):
@@ -1901,9 +1911,10 @@ class Ui_MainWindow(object):
 
     def update_canvases(self):
         # making this multi-threaded doesn't make sense
-        self.update_pes_window()
-        self.update_main_vmi_window()
-        self.update_main_tof_window()
+        self.redraw_data()
+        # self.update_pes_window()
+        # self.update_main_vmi_window()
+        # self.update_main_tof_window()
 
     def click_fetch_new_files(self):
         self.status['fetch_new_files'] = True
