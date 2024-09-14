@@ -1399,6 +1399,7 @@ class MultithreadRun(Run):
             data_dim = np.ndim(block_sum)
             weights_dim = np.ndim(block_counts)
             match_dim_weights = np.expand_dims(block_counts, axis=[-(i+1) for i in range(data_dim-weights_dim)])
+            match_dim_weights[match_dim_weights==0] = 1
 
             block_avg = block_sum / match_dim_weights
             blocks_avg_counts.append([block_avg, block_counts])

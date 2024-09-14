@@ -82,7 +82,14 @@ def rebinning(xnew, x, y, axis=None):
     '''changed on 20230525, so that nans are accepted. Another change on 20230625
     for smooth boundaries when the new range is wider than the original range'''
 
-    if axis is None or np.ndim(y)==1:
+    if (axis is None) or (np.ndim(y)==1):
+        if (len(xnew)==1) or (len(x) == 1):
+            if np.ndim(y)==1:
+                ynew = xnew*0
+            else: 
+                ynew = np.zeros(shape=[len(xnew)] + list(np.shape(y)[1:]))
+            return ynew
+
         nan_bool_array = np.isnan(x)
         y_remove_nans = np.copy(y)
         nans_indices = np.where(np.isnan(y))[0]
@@ -687,8 +694,8 @@ def lrange(start, end, step=1, remove=None):
     return changed_list
 
 def closest(locs, array):
-    indices = [np.where(np.min((loc-array)**2) == (loc-array)**2)[0][0] for loc in locs]
-    return np.array(indices)
+    indices = np.array([np.argmin((array - loc)**2) for loc in locs])
+    return indices
 
 def non_normalized_gaussians(params, x):
     '''
@@ -854,10 +861,6 @@ def set_recursion_limit(max_depth):
             return result
         return wrapper
     return callcounter
-
-def closest(locs, array):
-    indices = [np.where(np.min((loc-array)**2) == (loc-array)**2)[0][0] for loc in locs]
-    return np.array(indices)
 
 def resolve_path(basepath: str, addpath: str = '') -> str:
     '''

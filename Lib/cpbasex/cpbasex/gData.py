@@ -3,6 +3,7 @@ from h5py import File
 from os.path import join
 from .rBFs import rBFs
 from scipy.special import eval_legendre as leg
+from scipy.integrate import simpson
 
 try:
 	import dill
@@ -135,7 +136,7 @@ def findG(X, K, L, rBF, zIP, trapz_step, nProc=cpu_count()-1, shape='half'):
 			u_sub = u[u<=zIP(r, k)]
 			if u_sub.size:
 				rad_term = rBF(np.sqrt(u_sub**2+r**2), k)
-				G_sub[i::len(K)] = np.trapz(rad_term*leg_terms[:,:len(u_sub)], x=u_sub, dx=trapz_step)
+				G_sub[i::len(K)] = simpson(rad_term*leg_terms[:,:len(u_sub)], x=u_sub, dx=trapz_step)
 
 		return G_sub
 

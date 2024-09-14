@@ -26,30 +26,41 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(662, 669)
+        MainWindow.resize(773, 728)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.tabWidget = QTabWidget(self.centralwidget)
         self.tabWidget.setObjectName(u"tabWidget")
         self.tabWidget.setEnabled(True)
-        self.tabWidget.setGeometry(QRect(20, 10, 621, 511))
+        self.tabWidget.setGeometry(QRect(10, 10, 751, 571))
         self.tabWidget.setContextMenuPolicy(Qt.ContextMenuPolicy.PreventContextMenu)
         self.tab_vmi_main = QWidget()
         self.tab_vmi_main.setObjectName(u"tab_vmi_main")
         self.scrollArea = QScrollArea(self.tab_vmi_main)
         self.scrollArea.setObjectName(u"scrollArea")
-        self.scrollArea.setGeometry(QRect(210, 40, 61, 131))
+        self.scrollArea.setGeometry(QRect(210, 90, 161, 161))
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 59, 129))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 159, 159))
+        self.gridLayoutWidget_12 = QWidget(self.scrollAreaWidgetContents)
+        self.gridLayoutWidget_12.setObjectName(u"gridLayoutWidget_12")
+        self.gridLayoutWidget_12.setGeometry(QRect(0, 0, 160, 161))
+        self.gridLayout_5 = QGridLayout(self.gridLayoutWidget_12)
+        self.gridLayout_5.setObjectName(u"gridLayout_5")
+        self.gridLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.text_browser_files = QTextBrowser(self.gridLayoutWidget_12)
+        self.text_browser_files.setObjectName(u"text_browser_files")
+
+        self.gridLayout_5.addWidget(self.text_browser_files, 0, 0, 1, 1)
+
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.button_fetch_new_files = QCommandLinkButton(self.tab_vmi_main)
         self.button_fetch_new_files.setObjectName(u"button_fetch_new_files")
         self.button_fetch_new_files.setGeometry(QRect(10, 210, 181, 31))
         self.tabWidget_2 = QTabWidget(self.tab_vmi_main)
         self.tabWidget_2.setObjectName(u"tabWidget_2")
-        self.tabWidget_2.setGeometry(QRect(310, 10, 281, 291))
+        self.tabWidget_2.setGeometry(QRect(430, 10, 311, 321))
         self.tab_7 = QWidget()
         self.tab_7.setObjectName(u"tab_7")
         self.tab_7.setAutoFillBackground(False)
@@ -118,13 +129,13 @@ class Ui_MainWindow(object):
         self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_2)
         self.label_files_used = QLabel(self.tab_vmi_main)
         self.label_files_used.setObjectName(u"label_files_used")
-        self.label_files_used.setGeometry(QRect(210, 20, 61, 16))
+        self.label_files_used.setGeometry(QRect(210, 70, 61, 16))
         self.label_current_folder = QLabel(self.tab_vmi_main)
         self.label_current_folder.setObjectName(u"label_current_folder")
         self.label_current_folder.setGeometry(QRect(20, 10, 81, 16))
         self.text_edit_current_folder = QTextEdit(self.tab_vmi_main)
         self.text_edit_current_folder.setObjectName(u"text_edit_current_folder")
-        self.text_edit_current_folder.setGeometry(QRect(20, 30, 151, 31))
+        self.text_edit_current_folder.setGeometry(QRect(20, 30, 251, 31))
         self.label_update_status = QLabel(self.tab_vmi_main)
         self.label_update_status.setObjectName(u"label_update_status")
         self.label_update_status.setGeometry(QRect(20, 180, 91, 16))
@@ -151,7 +162,7 @@ class Ui_MainWindow(object):
         self.label_folder_status.setGeometry(QRect(20, 70, 91, 16))
         self.verticalLayoutWidget = QWidget(self.tab_vmi_main)
         self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(180, 300, 411, 181))
+        self.verticalLayoutWidget.setGeometry(QRect(140, 340, 601, 201))
         self.vmi_abel = QVBoxLayout(self.verticalLayoutWidget)
         self.vmi_abel.setObjectName(u"vmi_abel")
         self.vmi_abel.setContentsMargins(0, 0, 0, 0)
@@ -160,28 +171,28 @@ class Ui_MainWindow(object):
         self.tab_image_correction.setObjectName(u"tab_image_correction")
         self.gridLayoutWidget_3 = QWidget(self.tab_image_correction)
         self.gridLayoutWidget_3.setObjectName(u"gridLayoutWidget_3")
-        self.gridLayoutWidget_3.setGeometry(QRect(10, 10, 371, 231))
+        self.gridLayoutWidget_3.setGeometry(QRect(0, 0, 491, 261))
         self.vmi_show_raw = QGridLayout(self.gridLayoutWidget_3)
         self.vmi_show_raw.setObjectName(u"vmi_show_raw")
         self.vmi_show_raw.setContentsMargins(0, 0, 0, 0)
         self.gridLayoutWidget_4 = QWidget(self.tab_image_correction)
         self.gridLayoutWidget_4.setObjectName(u"gridLayoutWidget_4")
-        self.gridLayoutWidget_4.setGeometry(QRect(10, 250, 371, 231))
+        self.gridLayoutWidget_4.setGeometry(QRect(0, 270, 491, 261))
         self.vmi_show_corrected = QGridLayout(self.gridLayoutWidget_4)
         self.vmi_show_corrected.setObjectName(u"vmi_show_corrected")
         self.vmi_show_corrected.setContentsMargins(0, 0, 0, 0)
         self.label_raw_image = QLabel(self.tab_image_correction)
         self.label_raw_image.setObjectName(u"label_raw_image")
-        self.label_raw_image.setGeometry(QRect(30, 10, 71, 16))
+        self.label_raw_image.setGeometry(QRect(40, 20, 71, 16))
         self.label_corrected_image = QLabel(self.tab_image_correction)
         self.label_corrected_image.setObjectName(u"label_corrected_image")
-        self.label_corrected_image.setGeometry(QRect(30, 250, 61, 16))
+        self.label_corrected_image.setGeometry(QRect(40, 290, 61, 16))
         self.button_apply_vmi_corrections = QCommandLinkButton(self.tab_image_correction)
         self.button_apply_vmi_corrections.setObjectName(u"button_apply_vmi_corrections")
-        self.button_apply_vmi_corrections.setGeometry(QRect(390, 400, 161, 41))
+        self.button_apply_vmi_corrections.setGeometry(QRect(510, 400, 161, 41))
         self.groupBox_4 = QGroupBox(self.tab_image_correction)
         self.groupBox_4.setObjectName(u"groupBox_4")
-        self.groupBox_4.setGeometry(QRect(390, 10, 221, 151))
+        self.groupBox_4.setGeometry(QRect(510, 10, 221, 151))
         self.label_guess_ycenter = QLabel(self.groupBox_4)
         self.label_guess_ycenter.setObjectName(u"label_guess_ycenter")
         self.label_guess_ycenter.setGeometry(QRect(80, 20, 49, 16))
@@ -214,10 +225,10 @@ class Ui_MainWindow(object):
         self.text_diesplay_guess_yzoom.setGeometry(QRect(80, 110, 51, 31))
         self.button_get_guess_vmi_corrections = QCommandLinkButton(self.tab_image_correction)
         self.button_get_guess_vmi_corrections.setObjectName(u"button_get_guess_vmi_corrections")
-        self.button_get_guess_vmi_corrections.setGeometry(QRect(390, 160, 131, 41))
+        self.button_get_guess_vmi_corrections.setGeometry(QRect(510, 160, 131, 41))
         self.groupBox_5 = QGroupBox(self.tab_image_correction)
         self.groupBox_5.setObjectName(u"groupBox_5")
-        self.groupBox_5.setGeometry(QRect(390, 250, 221, 151))
+        self.groupBox_5.setGeometry(QRect(510, 250, 221, 151))
         self.text_edit_correct_yzoom = QTextEdit(self.groupBox_5)
         self.text_edit_correct_yzoom.setObjectName(u"text_edit_correct_yzoom")
         self.text_edit_correct_yzoom.setGeometry(QRect(80, 100, 51, 31))
@@ -249,132 +260,302 @@ class Ui_MainWindow(object):
         self.label_correct_yzoom.setObjectName(u"label_correct_yzoom")
         self.label_correct_yzoom.setGeometry(QRect(80, 80, 49, 16))
         self.tabWidget.addTab(self.tab_image_correction, "")
+        self.gridLayoutWidget_3.raise_()
+        self.gridLayoutWidget_4.raise_()
+        self.button_apply_vmi_corrections.raise_()
+        self.groupBox_4.raise_()
+        self.button_get_guess_vmi_corrections.raise_()
+        self.groupBox_5.raise_()
+        self.label_corrected_image.raise_()
+        self.label_raw_image.raise_()
         self.tab_calibration = QWidget()
         self.tab_calibration.setObjectName(u"tab_calibration")
         self.gridLayoutWidget_5 = QWidget(self.tab_calibration)
         self.gridLayoutWidget_5.setObjectName(u"gridLayoutWidget_5")
-        self.gridLayoutWidget_5.setGeometry(QRect(30, 40, 351, 181))
+        self.gridLayoutWidget_5.setGeometry(QRect(0, 0, 451, 261))
         self.pes_show_pixels = QGridLayout(self.gridLayoutWidget_5)
         self.pes_show_pixels.setObjectName(u"pes_show_pixels")
         self.pes_show_pixels.setContentsMargins(0, 0, 0, 0)
         self.gridLayoutWidget_6 = QWidget(self.tab_calibration)
         self.gridLayoutWidget_6.setObjectName(u"gridLayoutWidget_6")
-        self.gridLayoutWidget_6.setGeometry(QRect(30, 290, 351, 181))
+        self.gridLayoutWidget_6.setGeometry(QRect(0, 270, 451, 261))
         self.pes_show_energy = QGridLayout(self.gridLayoutWidget_6)
         self.pes_show_energy.setObjectName(u"pes_show_energy")
         self.pes_show_energy.setContentsMargins(0, 0, 0, 0)
         self.label_pixel_axis = QLabel(self.tab_calibration)
         self.label_pixel_axis.setObjectName(u"label_pixel_axis")
-        self.label_pixel_axis.setGeometry(QRect(40, 10, 49, 16))
+        self.label_pixel_axis.setGeometry(QRect(40, 20, 49, 16))
         self.label_energy_axis = QLabel(self.tab_calibration)
         self.label_energy_axis.setObjectName(u"label_energy_axis")
-        self.label_energy_axis.setGeometry(QRect(40, 260, 49, 16))
+        self.label_energy_axis.setGeometry(QRect(40, 290, 49, 16))
         self.test_edit_cal_points = QTextEdit(self.tab_calibration)
         self.test_edit_cal_points.setObjectName(u"test_edit_cal_points")
-        self.test_edit_cal_points.setGeometry(QRect(490, 80, 91, 151))
+        self.test_edit_cal_points.setGeometry(QRect(470, 240, 91, 131))
         self.label_cal_points = QLabel(self.tab_calibration)
         self.label_cal_points.setObjectName(u"label_cal_points")
-        self.label_cal_points.setGeometry(QRect(500, 50, 71, 21))
+        self.label_cal_points.setGeometry(QRect(480, 210, 71, 21))
         self.button_apply_calibration = QCommandLinkButton(self.tab_calibration)
         self.button_apply_calibration.setObjectName(u"button_apply_calibration")
-        self.button_apply_calibration.setGeometry(QRect(420, 250, 172, 41))
+        self.button_apply_calibration.setGeometry(QRect(570, 390, 172, 41))
         self.label_pes_cal_constants = QLabel(self.tab_calibration)
         self.label_pes_cal_constants.setObjectName(u"label_pes_cal_constants")
-        self.label_pes_cal_constants.setGeometry(QRect(440, 300, 91, 16))
+        self.label_pes_cal_constants.setGeometry(QRect(640, 210, 91, 21))
         self.text_display_cal_constant = QTextBrowser(self.tab_calibration)
         self.text_display_cal_constant.setObjectName(u"text_display_cal_constant")
-        self.text_display_cal_constant.setGeometry(QRect(520, 330, 71, 31))
+        self.text_display_cal_constant.setGeometry(QRect(620, 240, 121, 31))
         self.label_pes_constant_alpha = QLabel(self.tab_calibration)
         self.label_pes_constant_alpha.setObjectName(u"label_pes_constant_alpha")
-        self.label_pes_constant_alpha.setGeometry(QRect(450, 340, 61, 16))
+        self.label_pes_constant_alpha.setGeometry(QRect(580, 240, 61, 16))
+        self.text_edit_ke_start = QTextEdit(self.tab_calibration)
+        self.text_edit_ke_start.setObjectName(u"text_edit_ke_start")
+        self.text_edit_ke_start.setGeometry(QRect(550, 500, 41, 31))
+        self.text_edit_ke_end = QTextEdit(self.tab_calibration)
+        self.text_edit_ke_end.setObjectName(u"text_edit_ke_end")
+        self.text_edit_ke_end.setGeometry(QRect(620, 500, 41, 31))
+        self.label_ke_start = QLabel(self.tab_calibration)
+        self.label_ke_start.setObjectName(u"label_ke_start")
+        self.label_ke_start.setGeometry(QRect(550, 480, 51, 16))
+        self.label_ke_bins = QLabel(self.tab_calibration)
+        self.label_ke_bins.setObjectName(u"label_ke_bins")
+        self.label_ke_bins.setGeometry(QRect(690, 480, 51, 16))
+        self.text_edit_ke_bins = QTextEdit(self.tab_calibration)
+        self.text_edit_ke_bins.setObjectName(u"text_edit_ke_bins")
+        self.text_edit_ke_bins.setGeometry(QRect(690, 500, 41, 31))
+        self.label_ke_end = QLabel(self.tab_calibration)
+        self.label_ke_end.setObjectName(u"label_ke_end")
+        self.label_ke_end.setGeometry(QRect(620, 480, 51, 16))
+        self.gridLayoutWidget_10 = QWidget(self.tab_calibration)
+        self.gridLayoutWidget_10.setObjectName(u"gridLayoutWidget_10")
+        self.gridLayoutWidget_10.setGeometry(QRect(450, 0, 301, 211))
+        self.eke_show_calibration = QGridLayout(self.gridLayoutWidget_10)
+        self.eke_show_calibration.setObjectName(u"eke_show_calibration")
+        self.eke_show_calibration.setContentsMargins(0, 0, 0, 0)
+        self.label_eke_calibration = QLabel(self.tab_calibration)
+        self.label_eke_calibration.setObjectName(u"label_eke_calibration")
+        self.label_eke_calibration.setGeometry(QRect(490, 20, 161, 16))
         self.tabWidget.addTab(self.tab_calibration, "")
         self.tab_tof_main = QWidget()
         self.tab_tof_main.setObjectName(u"tab_tof_main")
         self.tabWidget_3 = QTabWidget(self.tab_tof_main)
         self.tabWidget_3.setObjectName(u"tabWidget_3")
-        self.tabWidget_3.setGeometry(QRect(120, 20, 471, 281))
+        self.tabWidget_3.setGeometry(QRect(10, 10, 731, 361))
         self.tab_9 = QWidget()
         self.tab_9.setObjectName(u"tab_9")
         self.tab_9.setAutoFillBackground(False)
         self.gridLayout_20 = QGridLayout(self.tab_9)
         self.gridLayout_20.setObjectName(u"gridLayout_20")
-        self.tof_fore_2 = QGridLayout()
-        self.tof_fore_2.setObjectName(u"tof_fore_2")
+        self.tof_fore = QGridLayout()
+        self.tof_fore.setObjectName(u"tof_fore")
 
-        self.gridLayout_20.addLayout(self.tof_fore_2, 0, 0, 1, 1)
+        self.gridLayout_20.addLayout(self.tof_fore, 0, 0, 1, 1)
 
         self.tabWidget_3.addTab(self.tab_9, "")
         self.tab_11 = QWidget()
         self.tab_11.setObjectName(u"tab_11")
         self.gridLayout_21 = QGridLayout(self.tab_11)
         self.gridLayout_21.setObjectName(u"gridLayout_21")
-        self.tof_back_2 = QGridLayout()
-        self.tof_back_2.setObjectName(u"tof_back_2")
+        self.tof_back = QGridLayout()
+        self.tof_back.setObjectName(u"tof_back")
 
-        self.gridLayout_21.addLayout(self.tof_back_2, 0, 0, 1, 1)
+        self.gridLayout_21.addLayout(self.tof_back, 0, 0, 1, 1)
 
         self.tabWidget_3.addTab(self.tab_11, "")
         self.tab_12 = QWidget()
         self.tab_12.setObjectName(u"tab_12")
         self.gridLayout_22 = QGridLayout(self.tab_12)
         self.gridLayout_22.setObjectName(u"gridLayout_22")
-        self.tof_subt_2 = QGridLayout()
-        self.tof_subt_2.setObjectName(u"tof_subt_2")
+        self.tof_subt = QGridLayout()
+        self.tof_subt.setObjectName(u"tof_subt")
 
-        self.gridLayout_22.addLayout(self.tof_subt_2, 0, 0, 1, 1)
+        self.gridLayout_22.addLayout(self.tof_subt, 0, 0, 1, 1)
 
         self.tabWidget_3.addTab(self.tab_12, "")
+        self.tab_2 = QWidget()
+        self.tab_2.setObjectName(u"tab_2")
+        self.gridLayout = QGridLayout(self.tab_2)
+        self.gridLayout.setObjectName(u"gridLayout")
+        self.mq_fore = QGridLayout()
+        self.mq_fore.setObjectName(u"mq_fore")
+
+        self.gridLayout.addLayout(self.mq_fore, 0, 0, 1, 1)
+
+        self.tabWidget_3.addTab(self.tab_2, "")
+        self.tab_3 = QWidget()
+        self.tab_3.setObjectName(u"tab_3")
+        self.gridLayout_2 = QGridLayout(self.tab_3)
+        self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.mq_back = QGridLayout()
+        self.mq_back.setObjectName(u"mq_back")
+
+        self.gridLayout_2.addLayout(self.mq_back, 0, 0, 1, 1)
+
+        self.tabWidget_3.addTab(self.tab_3, "")
+        self.tab = QWidget()
+        self.tab.setObjectName(u"tab")
+        self.gridLayout_3 = QGridLayout(self.tab)
+        self.gridLayout_3.setObjectName(u"gridLayout_3")
+        self.mq_subt = QGridLayout()
+        self.mq_subt.setObjectName(u"mq_subt")
+
+        self.gridLayout_3.addLayout(self.mq_subt, 0, 0, 1, 1)
+
+        self.tabWidget_3.addTab(self.tab, "")
         self.combobox_tof_yscale = QComboBox(self.tab_tof_main)
         self.combobox_tof_yscale.addItem("")
         self.combobox_tof_yscale.addItem("")
         self.combobox_tof_yscale.setObjectName(u"combobox_tof_yscale")
-        self.combobox_tof_yscale.setGeometry(QRect(440, 320, 131, 21))
+        self.combobox_tof_yscale.setGeometry(QRect(580, 390, 131, 21))
+        self.text_edit_current_folder_2 = QTextEdit(self.tab_tof_main)
+        self.text_edit_current_folder_2.setObjectName(u"text_edit_current_folder_2")
+        self.text_edit_current_folder_2.setGeometry(QRect(20, 400, 341, 31))
+        self.button_fetch_new_files_2 = QCommandLinkButton(self.tab_tof_main)
+        self.button_fetch_new_files_2.setObjectName(u"button_fetch_new_files_2")
+        self.button_fetch_new_files_2.setGeometry(QRect(200, 470, 181, 31))
+        self.label_update_status_2 = QLabel(self.tab_tof_main)
+        self.label_update_status_2.setObjectName(u"label_update_status_2")
+        self.label_update_status_2.setGeometry(QRect(210, 440, 91, 16))
+        self.label_current_folder_2 = QLabel(self.tab_tof_main)
+        self.label_current_folder_2.setObjectName(u"label_current_folder_2")
+        self.label_current_folder_2.setGeometry(QRect(20, 380, 81, 16))
+        self.label_folder_status_2 = QLabel(self.tab_tof_main)
+        self.label_folder_status_2.setObjectName(u"label_folder_status_2")
+        self.label_folder_status_2.setGeometry(QRect(20, 440, 91, 16))
+        self.button_stay_current_folder_2 = QCommandLinkButton(self.tab_tof_main)
+        self.button_stay_current_folder_2.setObjectName(u"button_stay_current_folder_2")
+        self.button_stay_current_folder_2.setGeometry(QRect(10, 500, 181, 31))
+        self.text_display_update_status_2 = QTextBrowser(self.tab_tof_main)
+        self.text_display_update_status_2.setObjectName(u"text_display_update_status_2")
+        self.text_display_update_status_2.setGeometry(QRect(290, 440, 71, 31))
+        self.test_display_folder_status_2 = QTextBrowser(self.tab_tof_main)
+        self.test_display_folder_status_2.setObjectName(u"test_display_folder_status_2")
+        self.test_display_folder_status_2.setGeometry(QRect(100, 440, 71, 31))
+        self.button_stop_fetch_2 = QCommandLinkButton(self.tab_tof_main)
+        self.button_stop_fetch_2.setObjectName(u"button_stop_fetch_2")
+        self.button_stop_fetch_2.setGeometry(QRect(200, 500, 181, 31))
+        self.button_auto_newest_folder_2 = QCommandLinkButton(self.tab_tof_main)
+        self.button_auto_newest_folder_2.setObjectName(u"button_auto_newest_folder_2")
+        self.button_auto_newest_folder_2.setGeometry(QRect(10, 470, 181, 31))
         self.tabWidget.addTab(self.tab_tof_main, "")
         self.tab_tof_calibration = QWidget()
         self.tab_tof_calibration.setObjectName(u"tab_tof_calibration")
         self.gridLayoutWidget_7 = QWidget(self.tab_tof_calibration)
         self.gridLayoutWidget_7.setObjectName(u"gridLayoutWidget_7")
-        self.gridLayoutWidget_7.setGeometry(QRect(30, 40, 351, 181))
+        self.gridLayoutWidget_7.setGeometry(QRect(0, 0, 451, 261))
         self.tof_show_raw = QGridLayout(self.gridLayoutWidget_7)
         self.tof_show_raw.setObjectName(u"tof_show_raw")
         self.tof_show_raw.setContentsMargins(0, 0, 0, 0)
         self.label_tof_axis = QLabel(self.tab_tof_calibration)
         self.label_tof_axis.setObjectName(u"label_tof_axis")
-        self.label_tof_axis.setGeometry(QRect(40, 10, 111, 16))
+        self.label_tof_axis.setGeometry(QRect(140, 20, 111, 16))
         self.label_mq_axis = QLabel(self.tab_tof_calibration)
         self.label_mq_axis.setObjectName(u"label_mq_axis")
-        self.label_mq_axis.setGeometry(QRect(40, 260, 101, 16))
+        self.label_mq_axis.setGeometry(QRect(140, 290, 101, 16))
         self.label_tof_cal_points = QLabel(self.tab_tof_calibration)
         self.label_tof_cal_points.setObjectName(u"label_tof_cal_points")
-        self.label_tof_cal_points.setGeometry(QRect(500, 50, 71, 21))
+        self.label_tof_cal_points.setGeometry(QRect(480, 210, 71, 21))
         self.gridLayoutWidget_8 = QWidget(self.tab_tof_calibration)
         self.gridLayoutWidget_8.setObjectName(u"gridLayoutWidget_8")
-        self.gridLayoutWidget_8.setGeometry(QRect(30, 290, 351, 181))
+        self.gridLayoutWidget_8.setGeometry(QRect(0, 270, 451, 261))
         self.tof_show_mq = QGridLayout(self.gridLayoutWidget_8)
         self.tof_show_mq.setObjectName(u"tof_show_mq")
         self.tof_show_mq.setContentsMargins(0, 0, 0, 0)
-        self.test_edit_tof_cal_points = QTextEdit(self.tab_tof_calibration)
-        self.test_edit_tof_cal_points.setObjectName(u"test_edit_tof_cal_points")
-        self.test_edit_tof_cal_points.setGeometry(QRect(490, 80, 91, 151))
-        self.text_display_tof_constant_t0 = QTextBrowser(self.tab_tof_calibration)
-        self.text_display_tof_constant_t0.setObjectName(u"text_display_tof_constant_t0")
-        self.text_display_tof_constant_t0.setGeometry(QRect(520, 370, 71, 31))
+        self.text_edit_tof_cal_points = QTextEdit(self.tab_tof_calibration)
+        self.text_edit_tof_cal_points.setObjectName(u"text_edit_tof_cal_points")
+        self.text_edit_tof_cal_points.setGeometry(QRect(470, 240, 91, 131))
+        self.text_edit_tof_constant_t0 = QTextEdit(self.tab_tof_calibration)
+        self.text_edit_tof_constant_t0.setObjectName(u"text_edit_tof_constant_t0")
+        self.text_edit_tof_constant_t0.setGeometry(QRect(610, 270, 131, 31))
         self.label_tof_constants = QLabel(self.tab_tof_calibration)
         self.label_tof_constants.setObjectName(u"label_tof_constants")
-        self.label_tof_constants.setGeometry(QRect(440, 300, 91, 16))
+        self.label_tof_constants.setGeometry(QRect(640, 210, 91, 21))
         self.button_apply_tof_calibration = QCommandLinkButton(self.tab_tof_calibration)
         self.button_apply_tof_calibration.setObjectName(u"button_apply_tof_calibration")
-        self.button_apply_tof_calibration.setGeometry(QRect(420, 250, 172, 41))
-        self.text_display_tof_constant_c = QTextBrowser(self.tab_tof_calibration)
-        self.text_display_tof_constant_c.setObjectName(u"text_display_tof_constant_c")
-        self.text_display_tof_constant_c.setGeometry(QRect(520, 330, 71, 31))
+        self.button_apply_tof_calibration.setGeometry(QRect(460, 370, 161, 41))
+        self.text_edit_tof_constant_c = QTextEdit(self.tab_tof_calibration)
+        self.text_edit_tof_constant_c.setObjectName(u"text_edit_tof_constant_c")
+        self.text_edit_tof_constant_c.setGeometry(QRect(610, 240, 131, 31))
         self.label_tof_constant_c = QLabel(self.tab_tof_calibration)
         self.label_tof_constant_c.setObjectName(u"label_tof_constant_c")
-        self.label_tof_constant_c.setGeometry(QRect(450, 340, 61, 16))
+        self.label_tof_constant_c.setGeometry(QRect(590, 240, 31, 16))
         self.label_tof_constant_t0 = QLabel(self.tab_tof_calibration)
         self.label_tof_constant_t0.setObjectName(u"label_tof_constant_t0")
-        self.label_tof_constant_t0.setGeometry(QRect(450, 380, 61, 16))
+        self.label_tof_constant_t0.setGeometry(QRect(590, 270, 31, 16))
+        self.label_mq_end = QLabel(self.tab_tof_calibration)
+        self.label_mq_end.setObjectName(u"label_mq_end")
+        self.label_mq_end.setGeometry(QRect(620, 480, 51, 16))
+        self.label_mq_start = QLabel(self.tab_tof_calibration)
+        self.label_mq_start.setObjectName(u"label_mq_start")
+        self.label_mq_start.setGeometry(QRect(550, 480, 51, 16))
+        self.text_edit_tof_end = QTextEdit(self.tab_tof_calibration)
+        self.text_edit_tof_end.setObjectName(u"text_edit_tof_end")
+        self.text_edit_tof_end.setGeometry(QRect(620, 440, 41, 31))
+        self.text_edit_mq_end = QTextEdit(self.tab_tof_calibration)
+        self.text_edit_mq_end.setObjectName(u"text_edit_mq_end")
+        self.text_edit_mq_end.setGeometry(QRect(620, 500, 41, 31))
+        self.text_edit_mq_bins = QTextEdit(self.tab_tof_calibration)
+        self.text_edit_mq_bins.setObjectName(u"text_edit_mq_bins")
+        self.text_edit_mq_bins.setGeometry(QRect(690, 500, 41, 31))
+        self.label_mq_bins = QLabel(self.tab_tof_calibration)
+        self.label_mq_bins.setObjectName(u"label_mq_bins")
+        self.label_mq_bins.setGeometry(QRect(690, 480, 51, 16))
+        self.label_tof_end = QLabel(self.tab_tof_calibration)
+        self.label_tof_end.setObjectName(u"label_tof_end")
+        self.label_tof_end.setGeometry(QRect(620, 420, 51, 16))
+        self.text_edit_mq_start = QTextEdit(self.tab_tof_calibration)
+        self.text_edit_mq_start.setObjectName(u"text_edit_mq_start")
+        self.text_edit_mq_start.setGeometry(QRect(550, 500, 41, 31))
+        self.text_edit_tof_start = QTextEdit(self.tab_tof_calibration)
+        self.text_edit_tof_start.setObjectName(u"text_edit_tof_start")
+        self.text_edit_tof_start.setGeometry(QRect(550, 440, 41, 31))
+        self.label_tof_start = QLabel(self.tab_tof_calibration)
+        self.label_tof_start.setObjectName(u"label_tof_start")
+        self.label_tof_start.setGeometry(QRect(550, 420, 51, 16))
+        self.label_tof_bins = QLabel(self.tab_tof_calibration)
+        self.label_tof_bins.setObjectName(u"label_tof_bins")
+        self.label_tof_bins.setGeometry(QRect(690, 420, 51, 16))
+        self.text_edit_tof_bins = QTextEdit(self.tab_tof_calibration)
+        self.text_edit_tof_bins.setObjectName(u"text_edit_tof_bins")
+        self.text_edit_tof_bins.setGeometry(QRect(690, 440, 41, 31))
+        self.gridLayoutWidget_9 = QWidget(self.tab_tof_calibration)
+        self.gridLayoutWidget_9.setObjectName(u"gridLayoutWidget_9")
+        self.gridLayoutWidget_9.setGeometry(QRect(450, 0, 301, 211))
+        self.tof_show_calibration = QGridLayout(self.gridLayoutWidget_9)
+        self.tof_show_calibration.setObjectName(u"tof_show_calibration")
+        self.tof_show_calibration.setContentsMargins(0, 0, 0, 0)
+        self.label_tof_calibration = QLabel(self.tab_tof_calibration)
+        self.label_tof_calibration.setObjectName(u"label_tof_calibration")
+        self.label_tof_calibration.setGeometry(QRect(490, 20, 161, 16))
+        self.button_apply_tof_use_constants = QCommandLinkButton(self.tab_tof_calibration)
+        self.button_apply_tof_use_constants.setObjectName(u"button_apply_tof_use_constants")
+        self.button_apply_tof_use_constants.setGeometry(QRect(610, 310, 131, 41))
         self.tabWidget.addTab(self.tab_tof_calibration, "")
+        self.gridLayoutWidget_7.raise_()
+        self.label_tof_cal_points.raise_()
+        self.gridLayoutWidget_8.raise_()
+        self.text_edit_tof_cal_points.raise_()
+        self.text_edit_tof_constant_t0.raise_()
+        self.label_tof_constants.raise_()
+        self.button_apply_tof_calibration.raise_()
+        self.text_edit_tof_constant_c.raise_()
+        self.label_tof_constant_c.raise_()
+        self.label_tof_constant_t0.raise_()
+        self.label_mq_end.raise_()
+        self.label_mq_start.raise_()
+        self.text_edit_tof_end.raise_()
+        self.text_edit_mq_end.raise_()
+        self.text_edit_mq_bins.raise_()
+        self.label_mq_bins.raise_()
+        self.label_tof_end.raise_()
+        self.text_edit_mq_start.raise_()
+        self.text_edit_tof_start.raise_()
+        self.label_tof_start.raise_()
+        self.label_tof_bins.raise_()
+        self.text_edit_tof_bins.raise_()
+        self.gridLayoutWidget_9.raise_()
+        self.label_tof_axis.raise_()
+        self.label_mq_axis.raise_()
+        self.label_tof_calibration.raise_()
+        self.button_apply_tof_use_constants.raise_()
         self.tab_settings = QWidget()
         self.tab_settings.setObjectName(u"tab_settings")
         self.label_search_dir_for_newest_folder = QLabel(self.tab_settings)
@@ -383,18 +564,18 @@ class Ui_MainWindow(object):
         self.text_edit_search_dir_for_newest_folder = QTextEdit(self.tab_settings)
         self.text_edit_search_dir_for_newest_folder.setObjectName(u"text_edit_search_dir_for_newest_folder")
         self.text_edit_search_dir_for_newest_folder.setGeometry(QRect(320, 30, 271, 31))
-        self.label_tof_start = QLabel(self.tab_settings)
-        self.label_tof_start.setObjectName(u"label_tof_start")
-        self.label_tof_start.setGeometry(QRect(20, 180, 51, 16))
-        self.text_edit_tof_start = QTextEdit(self.tab_settings)
-        self.text_edit_tof_start.setObjectName(u"text_edit_tof_start")
-        self.text_edit_tof_start.setGeometry(QRect(20, 200, 61, 31))
-        self.label_tof_stop = QLabel(self.tab_settings)
-        self.label_tof_stop.setObjectName(u"label_tof_stop")
-        self.label_tof_stop.setGeometry(QRect(100, 180, 51, 16))
-        self.text_edit_tof_stop = QTextEdit(self.tab_settings)
-        self.text_edit_tof_stop.setObjectName(u"text_edit_tof_stop")
-        self.text_edit_tof_stop.setGeometry(QRect(100, 200, 61, 31))
+        self.label_extract_tof_start = QLabel(self.tab_settings)
+        self.label_extract_tof_start.setObjectName(u"label_extract_tof_start")
+        self.label_extract_tof_start.setGeometry(QRect(20, 170, 51, 16))
+        self.text_edit_extract_tof_start = QTextEdit(self.tab_settings)
+        self.text_edit_extract_tof_start.setObjectName(u"text_edit_extract_tof_start")
+        self.text_edit_extract_tof_start.setGeometry(QRect(20, 190, 61, 31))
+        self.label_extract_tof_stop = QLabel(self.tab_settings)
+        self.label_extract_tof_stop.setObjectName(u"label_extract_tof_stop")
+        self.label_extract_tof_stop.setGeometry(QRect(100, 170, 51, 16))
+        self.text_edit_extract_tof_stop = QTextEdit(self.tab_settings)
+        self.text_edit_extract_tof_stop.setObjectName(u"text_edit_extract_tof_stop")
+        self.text_edit_extract_tof_stop.setGeometry(QRect(100, 190, 61, 31))
         self.box_slu_parity = QCheckBox(self.tab_settings)
         self.box_slu_parity.setObjectName(u"box_slu_parity")
         self.box_slu_parity.setGeometry(QRect(320, 330, 21, 22))
@@ -403,7 +584,7 @@ class Ui_MainWindow(object):
         self.label_slu_parity.setGeometry(QRect(350, 330, 121, 16))
         self.groupBox = QGroupBox(self.tab_settings)
         self.groupBox.setObjectName(u"groupBox")
-        self.groupBox.setGeometry(QRect(20, 20, 181, 151))
+        self.groupBox.setGeometry(QRect(20, 10, 181, 151))
         self.gridLayout_15 = QGridLayout(self.groupBox)
         self.gridLayout_15.setObjectName(u"gridLayout_15")
         self.label_files_per_cache = QLabel(self.groupBox)
@@ -499,30 +680,12 @@ class Ui_MainWindow(object):
         self.applyChangesSettings = QCommandLinkButton(self.tab_settings)
         self.applyChangesSettings.setObjectName(u"applyChangesSettings")
         self.applyChangesSettings.setGeometry(QRect(420, 400, 141, 31))
-        self.text_edit_ke_start = QTextEdit(self.tab_settings)
-        self.text_edit_ke_start.setObjectName(u"text_edit_ke_start")
-        self.text_edit_ke_start.setGeometry(QRect(20, 280, 41, 31))
-        self.label_ke_start = QLabel(self.tab_settings)
-        self.label_ke_start.setObjectName(u"label_ke_start")
-        self.label_ke_start.setGeometry(QRect(20, 260, 51, 16))
-        self.text_edit_ke_end = QTextEdit(self.tab_settings)
-        self.text_edit_ke_end.setObjectName(u"text_edit_ke_end")
-        self.text_edit_ke_end.setGeometry(QRect(90, 280, 41, 31))
-        self.label_ke_end = QLabel(self.tab_settings)
-        self.label_ke_end.setObjectName(u"label_ke_end")
-        self.label_ke_end.setGeometry(QRect(90, 260, 51, 16))
-        self.text_edit_ke_bins = QTextEdit(self.tab_settings)
-        self.text_edit_ke_bins.setObjectName(u"text_edit_ke_bins")
-        self.text_edit_ke_bins.setGeometry(QRect(160, 280, 41, 31))
-        self.label_ke_bins = QLabel(self.tab_settings)
-        self.label_ke_bins.setObjectName(u"label_ke_bins")
-        self.label_ke_bins.setGeometry(QRect(160, 260, 51, 16))
         self.label_abel_inversion_data_path = QLabel(self.tab_settings)
         self.label_abel_inversion_data_path.setObjectName(u"label_abel_inversion_data_path")
-        self.label_abel_inversion_data_path.setGeometry(QRect(20, 340, 131, 16))
+        self.label_abel_inversion_data_path.setGeometry(QRect(20, 330, 131, 16))
         self.text_edit_abel_inversion_data_path = QTextEdit(self.tab_settings)
         self.text_edit_abel_inversion_data_path.setObjectName(u"text_edit_abel_inversion_data_path")
-        self.text_edit_abel_inversion_data_path.setGeometry(QRect(20, 360, 171, 31))
+        self.text_edit_abel_inversion_data_path.setGeometry(QRect(20, 350, 171, 31))
         self.label_subfolder_extension = QLabel(self.tab_settings)
         self.label_subfolder_extension.setObjectName(u"label_subfolder_extension")
         self.label_subfolder_extension.setGeometry(QRect(320, 70, 211, 16))
@@ -537,18 +700,21 @@ class Ui_MainWindow(object):
         self.label_subfolder_extension_2.setFont(font)
         self.text_edit_num_cores = QTextEdit(self.tab_settings)
         self.text_edit_num_cores.setObjectName(u"text_edit_num_cores")
-        self.text_edit_num_cores.setGeometry(QRect(20, 422, 41, 31))
+        self.text_edit_num_cores.setGeometry(QRect(20, 412, 41, 31))
         self.label_num_cores = QLabel(self.tab_settings)
         self.label_num_cores.setObjectName(u"label_num_cores")
-        self.label_num_cores.setGeometry(QRect(20, 400, 171, 16))
+        self.label_num_cores.setGeometry(QRect(20, 390, 171, 16))
+        self.label_max_cores = QLabel(self.tab_settings)
+        self.label_max_cores.setObjectName(u"label_max_cores")
+        self.label_max_cores.setGeometry(QRect(70, 420, 41, 16))
         self.tabWidget.addTab(self.tab_settings, "")
         self.print_browser = QTextBrowser(self.centralwidget)
         self.print_browser.setObjectName(u"print_browser")
-        self.print_browser.setGeometry(QRect(20, 530, 621, 91))
+        self.print_browser.setGeometry(QRect(10, 580, 751, 91))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 662, 21))
+        self.menubar.setGeometry(QRect(0, 0, 773, 21))
         self.menuFERMI_On_line_analysis_tool = QMenu(self.menubar)
         self.menuFERMI_On_line_analysis_tool.setObjectName(u"menuFERMI_On_line_analysis_tool")
         MainWindow.setMenuBar(self.menubar)
@@ -560,9 +726,9 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(3)
+        self.tabWidget.setCurrentIndex(0)
         self.tabWidget_2.setCurrentIndex(0)
-        self.tabWidget_3.setCurrentIndex(0)
+        self.tabWidget_3.setCurrentIndex(3)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -724,18 +890,72 @@ class Ui_MainWindow(object):
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
         self.label_pes_constant_alpha.setText(QCoreApplication.translate("MainWindow", u"alpha", None))
+        self.text_edit_ke_start.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
+        self.text_edit_ke_end.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
+        self.label_ke_start.setText(QCoreApplication.translate("MainWindow", u"KE start", None))
+        self.label_ke_bins.setText(QCoreApplication.translate("MainWindow", u"KE bins", None))
+        self.text_edit_ke_bins.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
+        self.label_ke_end.setText(QCoreApplication.translate("MainWindow", u"KE end", None))
+        self.label_eke_calibration.setText(QCoreApplication.translate("MainWindow", u"Calibration fit", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_calibration), QCoreApplication.translate("MainWindow", u"Cal. (PES)", None))
         self.tabWidget_3.setTabText(self.tabWidget_3.indexOf(self.tab_9), QCoreApplication.translate("MainWindow", u"Fore", None))
         self.tabWidget_3.setTabText(self.tabWidget_3.indexOf(self.tab_11), QCoreApplication.translate("MainWindow", u"Back", None))
         self.tabWidget_3.setTabText(self.tabWidget_3.indexOf(self.tab_12), QCoreApplication.translate("MainWindow", u"Subt", None))
+        self.tabWidget_3.setTabText(self.tabWidget_3.indexOf(self.tab_2), QCoreApplication.translate("MainWindow", u"Fore (m/q)", None))
+        self.tabWidget_3.setTabText(self.tabWidget_3.indexOf(self.tab_3), QCoreApplication.translate("MainWindow", u"Back (m/q)", None))
+        self.tabWidget_3.setTabText(self.tabWidget_3.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"Subt (m/q)", None))
         self.combobox_tof_yscale.setItemText(0, QCoreApplication.translate("MainWindow", u"Linear", None))
         self.combobox_tof_yscale.setItemText(1, QCoreApplication.translate("MainWindow", u"Log", None))
 
+        self.button_fetch_new_files_2.setText(QCoreApplication.translate("MainWindow", u"Fetch new files", None))
+        self.label_update_status_2.setText(QCoreApplication.translate("MainWindow", u"Update status:", None))
+        self.label_current_folder_2.setText(QCoreApplication.translate("MainWindow", u"Current folder", None))
+        self.label_folder_status_2.setText(QCoreApplication.translate("MainWindow", u"Folder status:", None))
+        self.button_stay_current_folder_2.setText(QCoreApplication.translate("MainWindow", u"Stay current folder", None))
+        self.text_display_update_status_2.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Stopped</p></body></html>", None))
+        self.test_display_folder_status_2.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Stay</p></body></html>", None))
+        self.button_stop_fetch_2.setText(QCoreApplication.translate("MainWindow", u"Stop", None))
+        self.button_auto_newest_folder_2.setText(QCoreApplication.translate("MainWindow", u"Auto newest folder", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_tof_main), QCoreApplication.translate("MainWindow", u"TOF main", None))
         self.label_tof_axis.setText(QCoreApplication.translate("MainWindow", u"TOF", None))
-        self.label_mq_axis.setText(QCoreApplication.translate("MainWindow", u"mass/charge", None))
+        self.label_mq_axis.setText(QCoreApplication.translate("MainWindow", u"Mass/Charge", None))
         self.label_tof_cal_points.setText(QCoreApplication.translate("MainWindow", u"TOF, m/q", None))
-        self.test_edit_tof_cal_points.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.text_edit_tof_cal_points.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -744,7 +964,7 @@ class Ui_MainWindow(object):
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">0, 0</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">1, 1</p></body></html>", None))
-        self.text_display_tof_constant_t0.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.text_edit_tof_constant_t0.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -752,9 +972,9 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.label_tof_constants.setText(QCoreApplication.translate("MainWindow", u"Cal. constant", None))
+        self.label_tof_constants.setText(QCoreApplication.translate("MainWindow", u"Cal. constants", None))
         self.button_apply_tof_calibration.setText(QCoreApplication.translate("MainWindow", u"Apply calibration", None))
-        self.text_display_tof_constant_c.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.text_edit_tof_constant_c.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -764,9 +984,42 @@ class Ui_MainWindow(object):
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
         self.label_tof_constant_c.setText(QCoreApplication.translate("MainWindow", u"C", None))
         self.label_tof_constant_t0.setText(QCoreApplication.translate("MainWindow", u"t0", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_tof_calibration), QCoreApplication.translate("MainWindow", u"Cal. (TOF)", None))
-        self.label_search_dir_for_newest_folder.setText(QCoreApplication.translate("MainWindow", u"Auto-search newest folder in directory", None))
-        self.label_tof_start.setText(QCoreApplication.translate("MainWindow", u"TOF start", None))
+        self.label_mq_end.setText(QCoreApplication.translate("MainWindow", u"m/q end", None))
+        self.label_mq_start.setText(QCoreApplication.translate("MainWindow", u"m/q start", None))
+        self.text_edit_tof_end.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
+        self.text_edit_mq_end.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
+        self.text_edit_mq_bins.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
+        self.label_mq_bins.setText(QCoreApplication.translate("MainWindow", u"m/q bins", None))
+        self.label_tof_end.setText(QCoreApplication.translate("MainWindow", u"TOF end", None))
+        self.text_edit_mq_start.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
         self.text_edit_tof_start.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -774,16 +1027,39 @@ class Ui_MainWindow(object):
 "li.unchecked::marker { content: \"\\2610\"; }\n"
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">None</p></body></html>", None))
-        self.label_tof_stop.setText(QCoreApplication.translate("MainWindow", u"TOF stop", None))
-        self.text_edit_tof_stop.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
+        self.label_tof_start.setText(QCoreApplication.translate("MainWindow", u"TOF start", None))
+        self.label_tof_bins.setText(QCoreApplication.translate("MainWindow", u"TOF bins", None))
+        self.text_edit_tof_bins.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
 "li.unchecked::marker { content: \"\\2610\"; }\n"
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">None</p></body></html>", None))
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
+        self.label_tof_calibration.setText(QCoreApplication.translate("MainWindow", u"Calibration fit", None))
+        self.button_apply_tof_use_constants.setText(QCoreApplication.translate("MainWindow", u"Use constants", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_tof_calibration), QCoreApplication.translate("MainWindow", u"Cal. (TOF)", None))
+        self.label_search_dir_for_newest_folder.setText(QCoreApplication.translate("MainWindow", u"Auto-search newest folder in directory", None))
+        self.label_extract_tof_start.setText(QCoreApplication.translate("MainWindow", u"TOF start", None))
+        self.text_edit_extract_tof_start.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
+        self.label_extract_tof_stop.setText(QCoreApplication.translate("MainWindow", u"TOF stop", None))
+        self.text_edit_extract_tof_stop.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
         self.box_slu_parity.setText("")
         self.label_slu_parity.setText(QCoreApplication.translate("MainWindow", u"SLU@25Hz parity flip", None))
         self.groupBox.setTitle(QCoreApplication.translate("MainWindow", u"Cache settings", None))
@@ -821,33 +1097,6 @@ class Ui_MainWindow(object):
         self.box_flip_felonsluoff.setText("")
         self.box_flip_feloffsluoff.setText("")
         self.applyChangesSettings.setText(QCoreApplication.translate("MainWindow", u"Apply changes", None))
-        self.text_edit_ke_start.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">None</p></body></html>", None))
-        self.label_ke_start.setText(QCoreApplication.translate("MainWindow", u"KE start", None))
-        self.text_edit_ke_end.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">None</p></body></html>", None))
-        self.label_ke_end.setText(QCoreApplication.translate("MainWindow", u"KE end", None))
-        self.text_edit_ke_bins.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">None</p></body></html>", None))
-        self.label_ke_bins.setText(QCoreApplication.translate("MainWindow", u"KE bins", None))
         self.label_abel_inversion_data_path.setText(QCoreApplication.translate("MainWindow", u"Abel inversion data file", None))
         self.label_subfolder_extension.setText(QCoreApplication.translate("MainWindow", u"subfolder extension", None))
         self.text_edit_subfolder_extension.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
@@ -868,9 +1117,12 @@ class Ui_MainWindow(object):
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">1</p></body></html>", None))
         self.label_num_cores.setText(QCoreApplication.translate("MainWindow", u"Max # cores for multiprocess", None))
+        self.label_max_cores.setText(QCoreApplication.translate("MainWindow", u"/", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_settings), QCoreApplication.translate("MainWindow", u"Settings", None))
         self.menuFERMI_On_line_analysis_tool.setTitle(QCoreApplication.translate("MainWindow", u"FERMI LDM On-line analysis tool", None))
     # retranslateUi
+
+
 
 
 
@@ -886,16 +1138,18 @@ class Ui_MainWindow(object):
 
         self.box_fore_felonsluon.setChecked(True)
         self.box_back_felonsluoff.setChecked(True)
-        self.text_edit_search_dir_for_newest_folder.setText('{top_level_dir}/tests/_temp/TestBeamtime/Beamtime')
+        self.text_edit_search_dir_for_newest_folder.setText(f'{top_level_dir}/tests/_temp/TestBeamtime/Beamtime')
         self.text_edit_abel_inversion_data_path.setText(f'{top_level_dir}/examples/G_r256_k64_l4_half.h5')
         self.text_edit_ke_start.setText('')
         self.text_edit_ke_end.setText('')
         self.text_edit_ke_bins.setText('')
         self.text_edit_tof_start.setText('')
-        self.text_edit_tof_stop.setText('')
+        self.text_edit_tof_end.setText('')
         self.text_edit_num_cores.setText('8')
         self.box_pes.setChecked(True)
         self.text_edit_files_per_cache.setText('4')
+        # self.text_edit_tof_cal_points.setText('0, 0\n1, 1')
+        self.text_edit_tof_cal_points.setText('5000, 0\n10600, 14\n13000, 28')
 
     
     def __init__(self):
@@ -920,17 +1174,22 @@ class Ui_MainWindow(object):
             'vmi_fore' : np.array([[],]),
             'vmi_back' : np.array([[],]),
             'vmi_subt' : np.array([[],]),
-            'pes' : np.array([]),
-            'betas' : np.array(4*[[],]),
-            'eke' : np.array([]),
+            'pes' : np.array([0,]),
+            'betas' : np.array(4*[[0,],]),
+            'eke' : np.array([0,]),
             'eke_start' : None,
             'eke_end' : None,
             'eke_bins' : None,
             'tof_start' : None,
             'tof_end' : None,
-            'tof_fore' : np.array([[],[],]),
-            'tof_back' : np.array([[],[],]),
-            'tof_subt' : np.array([[],[],]),
+            'tof_bins' : None,
+            'tof_fore' : np.array([[0,], [0,],]),
+            'tof_back' : np.array([[0,], [0,],]),
+            'tof_subt' : np.array([[0,], [0,],]),
+            'mq_subt' : np.array([[0,], [0,],]),
+            'mq_start' : None,
+            'mq_end' : None,
+            'mq_bins' : None,
         }
 
         self.pes_calibration_constant = 1
@@ -944,6 +1203,7 @@ class Ui_MainWindow(object):
 
         self.vmi_data = np.zeros(shape=(4,1,1,1))
         self.tof_data = np.zeros(shape=(1,)), np.zeros(shape=(4,1,1))
+        self.mq_data = np.zeros(shape=(1,)), np.zeros(shape=(4,1,1))
         self.gdata = None
         self.betas = [] # the existent beta values from gdata
 
@@ -952,15 +1212,21 @@ class Ui_MainWindow(object):
         self.button_stay_current_folder.clicked.connect(self.click_stay_folder)
         self.button_fetch_new_files.clicked.connect(self.click_fetch_new_files)
         self.button_stop_fetch.clicked.connect(self.click_stop_fetch)
+        self.button_auto_newest_folder_2.clicked.connect(self.click_auto_newest_folder)
+        self.button_stay_current_folder_2.clicked.connect(self.click_stay_folder)
+        self.button_fetch_new_files_2.clicked.connect(self.click_fetch_new_files)
+        self.button_stop_fetch_2.clicked.connect(self.click_stop_fetch)
         self.box_pes.toggled.connect(self.update_pes_window)
         self.box_beta1.toggled.connect(self.update_pes_window)
         self.box_beta2.toggled.connect(self.update_pes_window)
         self.box_beta3.toggled.connect(self.update_pes_window)
         self.box_beta4.toggled.connect(self.update_pes_window)
         self.box_slu_parity.toggled.connect(self.update_main_vmi_window)
+        self.button_apply_tof_calibration.clicked.connect(self.update_main_tof_window)
         self.applyChangesSettings.clicked.connect(self.apply_settings)
         self.box_make_cache.toggled.connect(self.apply_settings)
         self.box_load_from_cache.toggled.connect(self.apply_settings)
+        self.combobox_tof_yscale.currentIndexChanged.connect(self.redraw_tof_data) # still need to do
 
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_data_if_change)
@@ -997,8 +1263,6 @@ class Ui_MainWindow(object):
             self.graph_data['eke_bins'] = float(eke_bins)
         self.status['make_cache'] = self.box_make_cache.isChecked()
         self.status['load_from_cache'] = self.box_load_from_cache.isChecked()
-        
-        if self.terminal_print: print('stopped working here!')
 
         time_string = strftime("%Y-%m-%d %H:%M:%S", localtime())
         self.update_print_box(f'{time_string}: settings applied')
@@ -1012,7 +1276,7 @@ class Ui_MainWindow(object):
         except FileNotFoundError:
             if self.terminal_print: print(f'search_in_directory ({main_directory}) cannot be found')
             list_of_folders = []
-        number_rule = re.compile('\d+')
+        number_rule = re.compile(r'\d+')
         numbered_folders = [name for name in list_of_folders if number_rule.search(name) is not None]
         if len(numbered_folders) > 0:
             numbers = np.array([number_rule.search(name)[0] for name in numbered_folders], dtype=int)
@@ -1043,6 +1307,7 @@ class Ui_MainWindow(object):
                 self.update_print_box(f'{time_string}: new folder found ({newest_folder})')
                 self.status['current_folder'] = newest_folder
                 self.text_edit_current_folder.setText(newest_folder)
+                self.text_edit_current_folder_2.setText(newest_folder)
                 # self.text_edit_current_folder.setReadOnly(True)
 
         sorted_found_files = self.get_filechange()
@@ -1069,6 +1334,8 @@ class Ui_MainWindow(object):
 
     def update_filechange(self):
         self.status['current_files'] = self.get_filechange()
+        self.text_browser_files.setText('\n'.join([filename[-20:] for filename in self.status['current_files']][::-1]))
+
 
     # def update_files(self):
     #     current_folder = self.status['current_folder']
@@ -1170,32 +1437,53 @@ class Ui_MainWindow(object):
         self.tof_data = tof_data
         return tof_data
     
-    def get_new_data_and_redraw_data(self):
-        self.get_new_vmi_data()
-        self.redraw_data()
-        self.get_new_tof_data()
-        self.redraw_data()
+    # def get_new_data_and_redraw_data(self):
+
+    #     '''
+    #     Separating the vmi and tof update is intentional; each of them take a significant
+    #     amount of time, so it's best to update one of them first, redraw the vmi data,
+    #     then update the tof and redraw the tof graphs.
+        
+    #     If I do combine them in other methods, it's probably unintentional :)
+    #     '''
+
+    #     self.get_new_vmi_data()
+    #     self.redraw_vmi_data()
+    #     self.get_new_tof_data()
+    #     self.redraw_tof_data()
 
     def return_background_key(self):
-        self.background_key = True
+        if self.background_key is False:
+            self.background_key = True
+        else:
+            raise Exception('background key was duplicated!')
     
     def borrow_background_key(self):
-        self.background_key = False
+        if self.background_key is True:
+            self.background_key = False
+            return True
+        else:
+            return False
+    
+    def start_get_tof_data_in_worker(self):
+        if not self.borrow_background_key():
+            print('background process running, cannot execute tof data retrieval!')
+            return None
+        worker = Worker(self.get_new_tof_data)
+        worker.signals.finished.connect(self.return_background_key)
+        worker.signals.finished.connect(self.redraw_tof_data)
+        self.threadpool.start(worker)
 
     def update_data(self, multithreading=True):
 
-        if multithreading:
+        if multithreading:  # complicated structure, because updating the GUI is NOT thread-safe!
+            # i.e. the threaded processes must not touch the GUI elements
             self.borrow_background_key()
-            if False:
-                worker = Worker(self.get_new_vmi_data)
-                worker.signals.result.connect(self.redraw_data)
-                # worker.signals.finished.connect(self.thread_complete)
-                worker.signals.finished.connect(self.return_background_key)
-                self.threadpool.start(worker)
-            else:
-                worker = Worker(self.get_new_data_and_redraw_data)
-                worker.signals.finished.connect(self.return_background_key)
-                self.threadpool.start(worker)
+            worker = Worker(self.get_new_vmi_data)
+            worker.signals.finished.connect(self.return_background_key)
+            worker.signals.finished.connect(self.redraw_vmi_data)
+            worker.signals.finished.connect(self.start_get_tof_data_in_worker)
+            self.threadpool.start(worker)
         else:
             self.get_new_vmi_data()
             self.get_new_tof_data()
@@ -1203,6 +1491,10 @@ class Ui_MainWindow(object):
 
 
     def redraw_data(self):
+        self.redraw_vmi_data()
+        self.redraw_tof_data()
+
+    def redraw_vmi_data(self):
         # VMI section
 
         vmi_data = self.vmi_data  # obtained through the self.get_new_vmi_data() method
@@ -1262,6 +1554,10 @@ class Ui_MainWindow(object):
         self.graph_data['betas'] = betas
         self.graph_data['eke'] = energies
 
+        self.update_pes_window()
+        self.update_main_vmi_window()
+
+    def redraw_tof_data(self):
 
         # TOF section
 
@@ -1289,8 +1585,7 @@ class Ui_MainWindow(object):
         self.graph_data['tof_subt'] = np.array([tof_coor, tof_subt])
         self.graph_data['tof_coor'] = np.array([tof_coor, tof_subt])
 
-
-        self.update_canvases()
+        self.update_main_tof_window()
     
     def update_pes_window(self):
         
@@ -1322,26 +1617,8 @@ class Ui_MainWindow(object):
             else:
                 betas_to_axes[l_value].set_data(energies, np.zeros(np.shape(betas[:,index]))*np.nan)
 
-        # None conditions for the eKE axis
-        current_pes_xlim = self._pes_ax.get_xlim()
-        new_pes_xlim = list(current_pes_xlim)
-        non_empty_energies = len(energies) > 0
-        if self.graph_data['eke_start'] is None and non_empty_energies:
-            new_pes_xlim[0] = np.min(energies)
-        if self.graph_data['eke_end'] is None and non_empty_energies:
-            new_pes_xlim[1] = np.max(energies)
-        self._pes_ax.set_xlim(new_pes_xlim)
-
-        current_pes_ylim = self._pes_ax.get_ylim()
-        new_pes_ylim = list(current_pes_ylim)
-        if self.graph_data['eke_start'] is None and non_empty_energies:
-            new_pes_ylim[0] = np.min(pes)
-        if self.graph_data['eke_end'] is None and non_empty_energies:
-            new_pes_ylim[1] = np.max(pes)
-        self._pes_ax.set_ylim(new_pes_ylim)
-        
-        # self._pes_ax.autoscale()
-        # self._betas_ax.autoscale()
+        self.set_new_xlim_ylim(energies, pes, self._pes_ax, 
+            self.graph_data['eke_start'], self.graph_data['eke_end'])
 
         self._pes_ax.figure.canvas.draw()
         self._betas_ax.figure.canvas.draw()
@@ -1380,89 +1657,196 @@ class Ui_MainWindow(object):
             self._fore_ax_data.figure.canvas.draw()
             self._back_ax_data.figure.canvas.draw()
             self._subt_ax_data.figure.canvas.draw()
+    
+    def get_mq_lim_data(self, mq_coor):
+        mq_start_string = self.text_edit_mq_start.toPlainText()
+        mq_end_string = self.text_edit_mq_end.toPlainText()
+        mq_bins_string = self.text_edit_mq_bins.toPlainText()
+        # mq_coor, *_ = self.mq_data
+        valid = np.isfinite(mq_coor)
+        valid_mq = mq_coor[valid]
+        if not valid.any():
+            valid_mq = np.array([0,])
+            
+        default_mq_start = np.min(valid_mq)
+        default_mq_end = np.max(valid_mq)
+        default_mq_bins = len(valid_mq)
+        if mq_start_string == '': 
+            mq_start = default_mq_start
+        else:
+            mq_start = float(mq_start_string)
+        if mq_end_string == '': 
+            mq_end = default_mq_end
+        else:
+            mq_end = float(mq_end_string)
+        if mq_bins_string == '': 
+            mq_bins = default_mq_bins
+        else:
+            mq_bins = int(mq_bins_string)
+        return mq_start, mq_end, mq_bins
+
+    def get_tof_lim_data(self):
+        tof_start_string = self.text_edit_tof_start.toPlainText()
+        tof_end_string = self.text_edit_tof_end.toPlainText()
+        tof_bins_string = self.text_edit_tof_bins.toPlainText()
+        tof_coor, *_ = self.tof_data
+        default_tof_start = np.min(tof_coor)
+        default_tof_end = np.max(tof_coor)
+        default_tof_bins = len(tof_coor)
+        if tof_start_string == '': 
+            tof_start = default_tof_start
+        else:
+            tof_start = float(tof_start_string)
+        if tof_end_string == '': 
+            tof_end = default_tof_end
+        else:
+            tof_end = float(tof_end_string)
+        if tof_bins_string == '': 
+            tof_bins = default_tof_bins
+        else:
+            tof_bins = int(tof_bins_string)
+        return tof_start, tof_end, tof_bins
+    
+
+    @staticmethod
+    def set_new_xlim_ylim(x, y, ax, start_str, end_str, kind='linear'):
+        valid = np.isfinite(y) * np.isfinite(x)
+        _x = x[valid]
+        _y = y[valid]
+        xlim = ax.get_xlim()
+        new_xlim = list(xlim)
+        non_empty_coor = len(_x) > 0
+        if start_str is None and non_empty_coor:
+            new_xlim[0] = np.min(_x)
+        elif start_str is not None and non_empty_coor:
+            new_xlim[0] = float(start_str)
+        if end_str is None and non_empty_coor:
+            new_xlim[1] = np.max(_x)
+        elif end_str is not None and non_empty_coor:
+            new_xlim[1] = float(end_str)
+        if new_xlim[0] == new_xlim[1]:
+            new_xlim = (None, None)
+        new_xlim = ax.set_xlim(new_xlim)
+        
+        crit = (new_xlim[0] <= _x) * (_x <= new_xlim[1])
+        ylim = ax.get_ylim()
+        if non_empty_coor:
+            new_ylim = (np.min(_y[crit]), np.max(_y[crit]))
+        else:
+            new_ylim = list(ylim)
+        if new_ylim[0] == new_ylim[1]:
+            new_ylim = (None, None)
+        new_ylim = list(ax.set_ylim(new_ylim))
+        if kind=='log':
+            new_ylim[0] = new_ylim[1]*1e-5
+        ax.set_ylim(new_ylim)
+
 
     def update_main_tof_window(self):
-        self._line_fore_tof.set_data(self.graph_data['tof_fore'])
-        self._line_back_tof.set_data(self.graph_data['tof_back'])
-        self._line_subt_tof.set_data(self.graph_data['tof_subt'])
+        tof_start, tof_end, tof_bins = self.get_tof_lim_data()
+        new_tof_coor = np.linspace(tof_start, tof_end, num=tof_bins)
+        new_fore_tof = rebinning(new_tof_coor, *self.graph_data['tof_fore'])
+        new_back_tof = rebinning(new_tof_coor, *self.graph_data['tof_back'])
+        new_subt_tof = rebinning(new_tof_coor, *self.graph_data['tof_subt'])
+        
+        self._line_fore_tof.set_data(new_tof_coor, new_fore_tof)
+        self._line_back_tof.set_data(new_tof_coor, new_back_tof)
+        self._line_subt_tof.set_data(new_tof_coor, new_subt_tof)
+        yscale = self.combobox_tof_yscale.currentText().lower()
+        self._fore_tof_ax.set_yscale(yscale)
+        self._back_tof_ax.set_yscale(yscale)
+        self._subt_tof_ax.set_yscale(yscale)
 
-
-
-        # None conditions for the tof axis
-        tof_coor, fore_tof = self.graph_data['tof_fore']
-        current_fore_tof_xlim = self._fore_tof_ax.get_xlim()
-        new_fore_tof_xlim = list(current_fore_tof_xlim)
-        non_empty_coor = len(tof_coor) > 0
-        if self.graph_data['tof_start'] is None and non_empty_coor:
-            new_fore_tof_xlim[0] = np.min(tof_coor)
-        if self.graph_data['tof_end'] is None and non_empty_coor:
-            new_fore_tof_xlim[1] = np.max(tof_coor)
-        if new_fore_tof_xlim[0] == new_fore_tof_xlim[1]:
-            new_fore_tof_xlim = (None, None)
-        self._fore_tof_ax.set_xlim(new_fore_tof_xlim)
-
-        current_fore_tof_ylim = self._fore_tof_ax.get_ylim()
-        new_fore_tof_ylim = list(current_fore_tof_ylim)
-        if self.graph_data['tof_start'] is None and non_empty_coor:
-            new_fore_tof_ylim[0] = np.min(fore_tof)
-        if self.graph_data['tof_end'] is None and non_empty_coor:
-            new_fore_tof_ylim[1] = np.max(fore_tof)
-        if new_fore_tof_ylim[0] == new_fore_tof_ylim[1]:
-            new_fore_tof_ylim = (None, None)
-        self._fore_tof_ax.set_ylim(new_fore_tof_ylim)
-
-        # None conditions for the tof axis
-        tof_coor, back_tof = self.graph_data['tof_back']
-        current_back_tof_xlim = self._back_tof_ax.get_xlim()
-        new_back_tof_xlim = list(current_back_tof_xlim)
-        non_empty_coor = len(tof_coor) > 0
-        if self.graph_data['tof_start'] is None and non_empty_coor:
-            new_back_tof_xlim[0] = np.min(tof_coor)
-        if self.graph_data['tof_end'] is None and non_empty_coor:
-            new_back_tof_xlim[1] = np.max(tof_coor)
-        if new_back_tof_xlim[0] == new_back_tof_xlim[1]:
-            new_back_tof_xlim = (None, None)
-        self._back_tof_ax.set_xlim(new_back_tof_xlim)
-
-        current_back_tof_ylim = self._back_tof_ax.get_ylim()
-        new_back_tof_ylim = list(current_back_tof_ylim)
-        if self.graph_data['tof_start'] is None and non_empty_coor:
-            new_back_tof_ylim[0] = np.min(back_tof)
-        if self.graph_data['tof_end'] is None and non_empty_coor:
-            new_back_tof_ylim[1] = np.max(back_tof)
-        if new_back_tof_ylim[0] == new_back_tof_ylim[1]:
-            new_back_tof_ylim = (None, None)
-        self._back_tof_ax.set_ylim(new_back_tof_ylim)
-
-        # None conditions for the tof axis
-        tof_coor, subt_tof = self.graph_data['tof_subt']
-        current_subt_tof_xlim = self._subt_tof_ax.get_xlim()
-        new_subt_tof_xlim = list(current_subt_tof_xlim)
-        non_empty_coor = len(tof_coor) > 0
-        if self.graph_data['tof_start'] is None and non_empty_coor:
-            new_subt_tof_xlim[0] = np.min(tof_coor)
-        if self.graph_data['tof_end'] is None and non_empty_coor:
-            new_subt_tof_xlim[1] = np.max(tof_coor)
-        if new_subt_tof_xlim[0] == new_subt_tof_xlim[1]:
-            new_subt_tof_xlim = (None, None)
-        self._subt_tof_ax.set_xlim(new_subt_tof_xlim)
-
-        current_subt_tof_ylim = self._subt_tof_ax.get_ylim()
-        new_subt_tof_ylim = list(current_subt_tof_ylim)
-        if self.graph_data['tof_start'] is None and non_empty_coor:
-            new_subt_tof_ylim[0] = np.min(subt_tof)
-        if self.graph_data['tof_end'] is None and non_empty_coor:
-            new_subt_tof_ylim[1] = np.max(subt_tof)
-        if new_subt_tof_ylim[0] == new_subt_tof_ylim[1]:
-            new_subt_tof_ylim = (None, None)
-        self._subt_tof_ax.set_ylim(new_subt_tof_ylim)
-
-
-
+        self.set_new_xlim_ylim(*self.graph_data['tof_fore'], self._fore_tof_ax, 
+            self.graph_data['tof_start'], self.graph_data['tof_end'], kind=yscale)
+        self.set_new_xlim_ylim(*self.graph_data['tof_back'], self._back_tof_ax, 
+            self.graph_data['tof_start'], self.graph_data['tof_end'], kind=yscale)
+        self.set_new_xlim_ylim(*self.graph_data['tof_subt'], self._subt_tof_ax, 
+            self.graph_data['tof_start'], self.graph_data['tof_end'], kind=yscale)
 
         self._line_fore_tof.figure.canvas.draw()
         self._line_back_tof.figure.canvas.draw()
         self._line_subt_tof.figure.canvas.draw()
+        
+        # update calibration part here!
+        
+        tof_coor, raw_tof = self.graph_data['tof_subt']
+        self._line_raw_tof.set_data(new_tof_coor, rebinning(new_tof_coor, tof_coor, raw_tof))
+
+
+        # perform calibration here!
+
+        ################
+
+        cal_points_string = self.text_edit_tof_cal_points.toPlainText()
+        cal_points_string = re.sub(' ', '', cal_points_string)
+        pairs = cal_points_string.split('\n')
+        ion_tof_mq_peaks = []
+        for pair in pairs:
+            ion_tof_mq_peaks.append(np.array(list(pair.split(',')), dtype=float))
+        ion_tof_mq_peaks = np.array(ion_tof_mq_peaks)
+        tof_points, mq_points = ion_tof_mq_peaks.T
+
+
+        ion_calibration_dict = tof_mq_calibration(peaks=ion_tof_mq_peaks)
+        (_, _, _, _, ion_constants_dict) = list(ion_calibration_dict.values())
+        ion_constants = ion_constants_dict['timezero'], ion_constants_dict['C']
+        tof_mq_coor_func = lambda tof: tof_mq_coordinate_func(tof, *ion_constants)
+        tof_to_mq = lambda tof, spec, axis=None: tof_to_mq_conversion(tof, spec, *ion_constants, axis=axis)
+        
+        self.ion_tof_calibration_constants = ion_constants
+
+        model_tof = np.linspace(np.min(tof_points), np.max(tof_points), num=1000)
+        self._line_raw_tof_points.set_data(tof_points, raw_tof[closest(tof_points, tof_coor)])
+
+        # set_default_labels(ax1, title='calibration points', xlabel='tof (ns)', ylabel='tof (ns)')
+        
+
+        self._line_cal_tof.set_data(model_tof, tof_mq_coor_func(model_tof))
+        self._line_cal_tof_points.set_data(tof_points, mq_points)
+        self.set_new_xlim_ylim(np.concatenate((model_tof, tof_points)), 
+                               np.concatenate((tof_mq_coor_func(model_tof), mq_points)), 
+                               self._cal_tof_ax, None, None)
+
+        # set_default_labels(ax2, title='calibration fit', xlabel='tof (ns)', ylabel='m/q')
+
+        
+        ################
+        
+
+        mq_raw_coor, mq_raw_spectra = tof_to_mq(tof_coor, raw_tof)
+        mq_start, mq_end, mq_bins = self.get_mq_lim_data(tof_mq_coor_func(tof_coor))
+
+        mq_coor = np.linspace(mq_start, mq_end, num=mq_bins)
+        if len(mq_raw_coor) < 2:
+            mq_coor = np.array([])
+            mq_spectra = np.array([])
+        else:
+            mq_spectra = rebinning(mq_coor, mq_raw_coor, mq_raw_spectra)
+
+        self.graph_data['mq_subt'] = mq_coor, mq_spectra
+        self._line_mq_tof.set_data(self.graph_data['mq_subt'])
+
+        
+        self.set_new_xlim_ylim(*self.graph_data['tof_subt'], self._raw_tof_ax, 
+            *self.get_tof_lim_data()[:2])
+        self.set_new_xlim_ylim(*self.graph_data['mq_subt'], self._mq_tof_ax, 
+            *self.get_mq_lim_data(tof_mq_coor_func(tof_coor))[:2])
+        
+
+        self._line_raw_tof.figure.canvas.draw()
+        self._line_cal_tof.figure.canvas.draw()
+        self._line_cal_tof_points.figure.canvas.draw()
+        self._line_mq_tof.figure.canvas.draw()
+        self._line_raw_tof_points.figure.canvas.draw()
+        
+        self.change_ion_tof_calibration_constants()
+
+    def change_ion_tof_calibration_constants(self):
+        def round_to_n(x, n):
+                return round(x, -int(np.floor(np.sign(x) * np.log10(abs(x)))) + n)
+        self.text_edit_tof_constant_t0.setText(str(round_to_n(self.ion_tof_calibration_constants[0], 8)))
+        self.text_edit_tof_constant_c.setText(str(round_to_n(self.ion_tof_calibration_constants[1], 8)))
 
 
     def update_canvases(self):
@@ -1474,20 +1858,23 @@ class Ui_MainWindow(object):
     def click_fetch_new_files(self):
         self.status['fetch_new_files'] = True
         self.text_display_update_status.setText('Fetch')
+        self.text_display_update_status_2.setText('Fetch')
         self.resume_timer()
     
     def click_auto_newest_folder(self):
         self.status['auto_newest_folder'] = True
         self.test_display_folder_status.setText('Search')
+        self.test_display_folder_status_2.setText('Search')
 
     def click_stop_fetch(self):
         self.status['fetch_new_files'] = False
-        self.text_display_update_status.setText('Stopped')
+        self.text_display_update_status_2.setText('Stopped')
         self.stop_timer()
 
     def click_stay_folder(self):
         self.status['auto_newest_folder'] = False
         self.test_display_folder_status.setText('Stay')
+        self.test_display_folder_status_2.setText('Stay')
 
 import os, sys, traceback, re, pathlib
 import numpy as np
@@ -1505,8 +1892,12 @@ from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QApplication
 
 from fermi_libraries.run_module import MultithreadRun as Run
 # from fermi_libraries.run_module import Run
-from fermi_libraries.common_functions import set_recursion_limit, resolve_path
+from fermi_libraries.common_functions import (
+    set_recursion_limit, resolve_path, closest, set_default_labels, rebinning)
 from fermi_libraries.dictionary_search import search_symbols
+from fermi_libraries.calibration_tools import (
+    tof_mq_calibration, tof_mq_coordinate_func, mq_tof_coordinate_func, 
+    tof_to_mq_conversion, mq_to_tof_conversion)
 
 from cpbasex.cpbasex import cpbasex_energy as cpbasex_energy_inversion
 from cpbasex.gData import loadG
@@ -1709,34 +2100,32 @@ class MainWindow(QMainWindow):
         vmi_raw_fig.subplots_adjust(bottom=0.15, left=0.05, right=1.0, top=0.95)
         vmi_corrected_fig.subplots_adjust(bottom=0.15, left=0.05, right=1.0, top=0.95)
 
+        # TOF calibratino plot
+        cal_tof_fig = Figure(figsize=(5, 3))
+        cal_tof_canvas = FigureCanvas(cal_tof_fig)
+        app.tof_show_calibration.addWidget(cal_tof_canvas)
+        app.tof_show_calibration.addWidget(NavigationToolbar(cal_tof_canvas, self))
+        app._cal_tof_ax = cal_tof_canvas.figure.subplots()
 
-        # tof
-
-        # app._line_pes, = app._pes_ax.plot([], [])
-        # app._line_beta1, = app._betas_ax.plot([], [])
-        # app._line_beta2, = app._betas_ax.plot([], [])
-        # app._line_beta3, = app._betas_ax.plot([], [])
-        # app._line_beta4, = app._betas_ax.plot([], [])
-        # app._betas_ax.set_ylim(-2, 2)
-        # app._pes_ax.set_xlabel('eKE (eV)')
-        # app._pes_ax.xaxis.labelpad = 0
-        # plt.tight_layout()
-        # pes_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
-        
-
-
-
+        app._line_cal_tof, = app._cal_tof_ax.plot([], [], color='black')
+        app._line_cal_tof_points, = app._cal_tof_ax.plot([], [], marker='o', linestyle='')
+        app._cal_tof_ax.set_xlabel('TOF (ns)')
+        app._cal_tof_ax.set_ylabel('m/q')
+        app._cal_tof_ax.xaxis.labelpad = 0
+        app._cal_tof_ax.yaxis.labelpad = 0
+        plt.tight_layout()
+        cal_tof_fig.subplots_adjust(bottom=0.26, left=0.15, right=0.95, top=0.95)
 
 
         # fore, back, and subt plots
         app.fore_tof_fig = Figure(figsize=(5, 3))
         fore_tof_canvas = FigureCanvas(app.fore_tof_fig)
-        app.tof_fore_2.addWidget(fore_tof_canvas)
-        app.tof_fore_2.addWidget(NavigationToolbar(fore_tof_canvas, self))
+        app.tof_fore.addWidget(fore_tof_canvas)
+        app.tof_fore.addWidget(NavigationToolbar(fore_tof_canvas, self))
         app._fore_tof_ax = fore_tof_canvas.figure.subplots()
         app._line_fore_tof, = app._fore_tof_ax.plot([], [])
         app._fore_tof_ax.set_xlabel('m/q')
-        app._pes_ax.xaxis.labelpad = 0
+        app._fore_tof_ax.xaxis.labelpad = 0
         plt.tight_layout()
         app.fore_tof_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
 
@@ -1745,27 +2134,26 @@ class MainWindow(QMainWindow):
         # back, back, and subt plots
         app.back_tof_fig = Figure(figsize=(5, 3))
         back_tof_canvas = FigureCanvas(app.back_tof_fig)
-        app.tof_back_2.addWidget(back_tof_canvas)
-        app.tof_back_2.addWidget(NavigationToolbar(back_tof_canvas, self))
+        app.tof_back.addWidget(back_tof_canvas)
+        app.tof_back.addWidget(NavigationToolbar(back_tof_canvas, self))
         app._back_tof_ax = back_tof_canvas.figure.subplots()
         app._line_back_tof, = app._back_tof_ax.plot([], [])
         app._back_tof_ax.set_xlabel('m/q')
-        app._pes_ax.xaxis.labelpad = 0
+        app._back_tof_ax.xaxis.labelpad = 0
         plt.tight_layout()
         app.back_tof_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
 
         # subt, subt, and subt plots
         app.subt_tof_fig = Figure(figsize=(5, 3))
         subt_tof_canvas = FigureCanvas(app.subt_tof_fig)
-        app.tof_subt_2.addWidget(subt_tof_canvas)
-        app.tof_subt_2.addWidget(NavigationToolbar(subt_tof_canvas, self))
+        app.tof_subt.addWidget(subt_tof_canvas)
+        app.tof_subt.addWidget(NavigationToolbar(subt_tof_canvas, self))
         app._subt_tof_ax = subt_tof_canvas.figure.subplots()
         app._line_subt_tof, = app._subt_tof_ax.plot([], [])
         app._subt_tof_ax.set_xlabel('m/q')
-        app._pes_ax.xaxis.labelpad = 0
+        app._subt_tof_ax.xaxis.labelpad = 0
         plt.tight_layout()
         app.subt_tof_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
-
         
         # fig.subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=None, hspace=None)
         app.fore_fig.subplots_adjust(bottom=0.10, left=0.05, right=1.0, top=0.95)
@@ -1773,20 +2161,27 @@ class MainWindow(QMainWindow):
         app.subt_fig.subplots_adjust(bottom=0.10, left=0.05, right=1.0, top=0.95)
 
         # # tof calibration tab
-        tof_raw_fig = Figure(figsize=(5,3))
-        tof_raw_canvas = FigureCanvas(tof_raw_fig)
-        app.tof_show_raw.addWidget(tof_raw_canvas)
-        app.tof_show_raw.addWidget(NavigationToolbar(tof_raw_canvas, self))
-        app._tof_raw_ax = tof_raw_canvas.figure.subplots()
-        app.__line_tof_raw, = app._tof_raw_ax.plot([], [])
+        raw_tof_fig = Figure(figsize=(5,3))
+        raw_tof_canvas = FigureCanvas(raw_tof_fig)
+        app.tof_show_raw.addWidget(raw_tof_canvas)
+        app.tof_show_raw.addWidget(NavigationToolbar(raw_tof_canvas, self))
+        app._raw_tof_ax = raw_tof_canvas.figure.subplots()
+        app._raw_tof_ax.set_ylabel('TOF signal')
+        app._line_raw_tof, = app._raw_tof_ax.plot([], [])
+        app._line_raw_tof_points, = app._raw_tof_ax.plot([], [], marker='v', linestyle='')
+        app._raw_tof_ax.xaxis.labelpad = 0
+        raw_tof_fig.subplots_adjust(bottom=0.26, left=0.20, right=0.95, top=0.95)
         plt.tight_layout()
         
-        tof_mq_fig = Figure(figsize=(5,3))
-        tof_mq_canvas = FigureCanvas(tof_mq_fig)
-        app.tof_show_mq.addWidget(tof_mq_canvas)
-        app.tof_show_mq.addWidget(NavigationToolbar(tof_mq_canvas, self))
-        app._tof_mq_ax = tof_mq_canvas.figure.subplots()
-        app.__line_tof_mq, = app._tof_mq_ax.plot([], [])
+        mq_tof_fig = Figure(figsize=(5,3))
+        mq_tof_canvas = FigureCanvas(mq_tof_fig)
+        app.tof_show_mq.addWidget(mq_tof_canvas)
+        app.tof_show_mq.addWidget(NavigationToolbar(mq_tof_canvas, self))
+        app._mq_tof_ax = mq_tof_canvas.figure.subplots()
+        app._mq_tof_ax.set_ylabel('m/q-signal')
+        app._line_mq_tof, = app._mq_tof_ax.plot([], [])
+        app._mq_tof_ax.xaxis.labelpad = 0
+        mq_tof_fig.subplots_adjust(bottom=0.26, left=0.20, right=0.95, top=0.95)
         plt.tight_layout()
         
         # tof_raw_fig.subplots_adjust(bottom=0.15, left=0.05, right=1.0, top=0.95)
