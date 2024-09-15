@@ -55,14 +55,24 @@ if __name__ == "__main__":
     print(os.path.exists(test_dir))
     print()
 
-
 class TestGUIMethods(unittest.TestCase):
-
+    
     @staticmethod
-    def setup():
+    def setup_qapplication():
+        if not (app := QApplication.instance()):
+            app = QApplication(sys.argv)
+        return app
 
-        # set up of the app
-        app = QApplication(sys.argv)
+    # # @staticmethod
+    # def remove_qapplication_singleton(self):
+    #     print('here!')
+    #     if app := QApplication.instance():
+    #         app.exit()  # doesn't seem to work!
+    #         del app  
+
+    def setup(self):
+
+        app = self.setup_qapplication()
         tabWidgetApp = Ui_MainWindow()
         w = MainWindow()
 
@@ -76,8 +86,13 @@ class TestGUIMethods(unittest.TestCase):
 
         return app, tabWidgetApp, w
     
+    def tear_down(self):
+        self.app.exit()
+
+
     def test_new_file_detection(self):
         app, tabWidgetApp, w = self.setup()
+        self.app = app
         tabWidgetApp.terminal_print = False
 
         clear_test_data_folder(test_dir)
@@ -107,6 +122,8 @@ class TestGUIMethods(unittest.TestCase):
         tabWidgetApp.get_filechange()
         self.assertFalse(tabWidgetApp.check_filechange())
         self.assertTrue(tabWidgetApp.background_key)
+    
+        self.tear_down()
 
-if __name__ == '__main__':
-    unittest.main()
+# if __name__ == '__main__':
+#     unittest.main()
