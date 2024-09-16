@@ -479,18 +479,18 @@ class Ui_MainWindow(object):
         self.gridLayoutWidget_5 = QWidget(self.tab_calibration)
         self.gridLayoutWidget_5.setObjectName(u"gridLayoutWidget_5")
         self.gridLayoutWidget_5.setGeometry(QRect(0, 0, 451, 261))
-        self.pes_show_pixels = QGridLayout(self.gridLayoutWidget_5)
-        self.pes_show_pixels.setObjectName(u"pes_show_pixels")
-        self.pes_show_pixels.setContentsMargins(0, 0, 0, 0)
+        self.pes_show_rsquare = QGridLayout(self.gridLayoutWidget_5)
+        self.pes_show_rsquare.setObjectName(u"pes_show_rsquare")
+        self.pes_show_rsquare.setContentsMargins(0, 0, 0, 0)
         self.gridLayoutWidget_6 = QWidget(self.tab_calibration)
         self.gridLayoutWidget_6.setObjectName(u"gridLayoutWidget_6")
         self.gridLayoutWidget_6.setGeometry(QRect(0, 270, 451, 261))
-        self.pes_show_energy = QGridLayout(self.gridLayoutWidget_6)
-        self.pes_show_energy.setObjectName(u"pes_show_energy")
-        self.pes_show_energy.setContentsMargins(0, 0, 0, 0)
-        self.label_pixel_axis = QLabel(self.tab_calibration)
-        self.label_pixel_axis.setObjectName(u"label_pixel_axis")
-        self.label_pixel_axis.setGeometry(QRect(40, 20, 49, 16))
+        self.pes_show_ke = QGridLayout(self.gridLayoutWidget_6)
+        self.pes_show_ke.setObjectName(u"pes_show_ke")
+        self.pes_show_ke.setContentsMargins(0, 0, 0, 0)
+        self.label_rsquare_axis = QLabel(self.tab_calibration)
+        self.label_rsquare_axis.setObjectName(u"label_rsquare_axis")
+        self.label_rsquare_axis.setGeometry(QRect(40, 20, 49, 16))
         self.label_energy_axis = QLabel(self.tab_calibration)
         self.label_energy_axis.setObjectName(u"label_energy_axis")
         self.label_energy_axis.setGeometry(QRect(40, 290, 49, 16))
@@ -506,9 +506,9 @@ class Ui_MainWindow(object):
         self.label_pes_cal_constants = QLabel(self.tab_calibration)
         self.label_pes_cal_constants.setObjectName(u"label_pes_cal_constants")
         self.label_pes_cal_constants.setGeometry(QRect(640, 210, 91, 21))
-        self.text_display_cal_constant = QTextBrowser(self.tab_calibration)
-        self.text_display_cal_constant.setObjectName(u"text_display_cal_constant")
-        self.text_display_cal_constant.setGeometry(QRect(620, 240, 121, 31))
+        self.text_edit_cal_constant = QTextEdit(self.tab_calibration)
+        self.text_edit_cal_constant.setObjectName(u"text_edit_cal_constant")
+        self.text_edit_cal_constant.setGeometry(QRect(620, 240, 121, 31))
         self.label_pes_constant_alpha = QLabel(self.tab_calibration)
         self.label_pes_constant_alpha.setObjectName(u"label_pes_constant_alpha")
         self.label_pes_constant_alpha.setGeometry(QRect(580, 240, 61, 16))
@@ -533,9 +533,9 @@ class Ui_MainWindow(object):
         self.gridLayoutWidget_10 = QWidget(self.tab_calibration)
         self.gridLayoutWidget_10.setObjectName(u"gridLayoutWidget_10")
         self.gridLayoutWidget_10.setGeometry(QRect(450, 0, 301, 211))
-        self.eke_show_calibration = QGridLayout(self.gridLayoutWidget_10)
-        self.eke_show_calibration.setObjectName(u"eke_show_calibration")
-        self.eke_show_calibration.setContentsMargins(0, 0, 0, 0)
+        self.rsquare_show_calibration = QGridLayout(self.gridLayoutWidget_10)
+        self.rsquare_show_calibration.setObjectName(u"rsquare_show_calibration")
+        self.rsquare_show_calibration.setContentsMargins(0, 0, 0, 0)
         self.label_eke_calibration = QLabel(self.tab_calibration)
         self.label_eke_calibration.setObjectName(u"label_eke_calibration")
         self.label_eke_calibration.setGeometry(QRect(490, 20, 161, 16))
@@ -989,7 +989,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 787, 21))
+        self.menubar.setGeometry(QRect(0, 0, 787, 22))
         self.menuFERMI_On_line_analysis_tool = QMenu(self.menubar)
         self.menuFERMI_On_line_analysis_tool.setObjectName(u"menuFERMI_On_line_analysis_tool")
         MainWindow.setMenuBar(self.menubar)
@@ -1167,7 +1167,7 @@ class Ui_MainWindow(object):
         self.label_correct_yzoom.setText(QCoreApplication.translate("MainWindow", u"y-zoom", None))
         self.button_apply_vmi_corrections.setText(QCoreApplication.translate("MainWindow", u"Apply correction", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_image_correction), QCoreApplication.translate("MainWindow", u"Image", None))
-        self.label_pixel_axis.setText(QCoreApplication.translate("MainWindow", u"Pixels", None))
+        self.label_rsquare_axis.setText(QCoreApplication.translate("MainWindow", u"r-square", None))
         self.label_energy_axis.setText(QCoreApplication.translate("MainWindow", u"Energies", None))
         self.test_edit_cal_points.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
@@ -1181,7 +1181,7 @@ class Ui_MainWindow(object):
         self.label_cal_points.setText(QCoreApplication.translate("MainWindow", u"Pixel, Energy", None))
         self.button_apply_pes_calibration.setText(QCoreApplication.translate("MainWindow", u"Apply calibration", None))
         self.label_pes_cal_constants.setText(QCoreApplication.translate("MainWindow", u"Cal. constant", None))
-        self.text_display_cal_constant.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.text_edit_cal_constant.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -1463,6 +1463,7 @@ class Ui_MainWindow(object):
         # self.text_edit_tof_cal_points.setText('0, 0\n1, 1')
         self.text_edit_tof_cal_points.setText('5000, 0\n10600, 14\n13000, 28')
         self.text_browser_max_cores.setText(str(os.cpu_count()))
+        self.test_edit_cal_points.setText('0,0\n2500,1')
 
         look_in_dir = resolve_path(CURRENT_SCRIPT_DIR, '..')
         list_of_files = os.listdir(look_in_dir)
@@ -1509,11 +1510,16 @@ class Ui_MainWindow(object):
             'vmi_reduced' : np.array([[np.nan,],]),
             'vmi_inverse' : np.array([[np.nan,],]),
             'vmi_fit' : np.array([[np.nan,],]),
-            'eke' : np.array([]),
-            'pes' : np.array([]),
-            'betas' : np.zeros(shape=(1,4)),
+            # 'pes_subt' : [np.array([]), np.array([])],
+            'pes_subt' : [np.array([0,]), np.array([0,])],
+            # 'eke' : np.array([]),
+            # 'pes' : np.array([]),
+            'betas' : [np.array([]), np.zeros(shape=(0,4))],
             'radial' : np.array([]),
-            'rdf' : np.array([]),
+            'rsquare' : np.array([]),
+            'subt_rdf' : [np.array([]), np.array([])],
+            # 'subt_rsdf' : [np.array([]), np.array([])],
+            'subt_rsdf' : [np.array([0,]), np.array([0,])],
             'eke_start' : None,
             'eke_end' : None,
             'eke_bins' : None,
@@ -1578,6 +1584,7 @@ class Ui_MainWindow(object):
         self.box_load_from_cache.toggled.connect(self.apply_settings)
         self.combobox_tof_yscale.currentIndexChanged.connect(self.redraw_tof_data) # still need to do
         self.button_apply_vmi_corrections.clicked.connect(self.apply_settings)
+        self.button_apply_pes_calibration.clicked.connect(self.update_pes_calibration_window)
 
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_data_if_change)
@@ -1619,8 +1626,8 @@ class Ui_MainWindow(object):
         time_string = strftime("%Y-%m-%d %H:%M:%S", localtime())
         self.update_print_box(f'{time_string}: settings applied')
 
-        self.redraw_vmi_data()
         self.redraw_tof_data()
+        self.redraw_vmi_data()
         
     def get_newest_folder(self):
         main_directory = self.status['search_in_directory']
@@ -1983,10 +1990,10 @@ class Ui_MainWindow(object):
             rdf = pes * 2/radial  # radial distirubtion function w/ jacobian correction
 
             self.graph_data['radial'] = radial
-            self.graph_data['rdf'] = rdf
-            self.graph_data['pes'] = pes
-            self.graph_data['betas'] = betas
-            self.graph_data['eke'] = energies
+            self.graph_data['subt_rdf'] = radial, rdf
+            self.graph_data['subt_rsdf'] = rsquare, pes
+            # self.graph_data['pes_subt'] = energies, pes
+            self.graph_data['betas'] = rsquare, betas
             self.graph_data['vmi_inverse'] = inv
             self.graph_data['vmi_fit'] = fit
 
@@ -2071,10 +2078,12 @@ class Ui_MainWindow(object):
     
     def update_pes_window(self):
         
-        energies = self.graph_data['eke']
-        pes = self.graph_data['pes']
+
+        self.update_pes_calibration_window()
+
+        energies, pes = self.graph_data['pes_subt']
         # beta1, beta2, beta3, beta4, *_ = self.graph_data['betas']
-        betas = self.graph_data['betas']
+        energies, betas = self.graph_data['betas']
         l_values = self.betas
         betas_to_axes = {
             1 : self._line_beta1,
@@ -2193,8 +2202,7 @@ class Ui_MainWindow(object):
             self._vmi_inverse_ax.figure.canvas.draw()
 
             # PES in the image correction tab
-            radial = self.graph_data['radial']
-            rdf = self.graph_data['rdf']
+            radial, rdf = self.graph_data['subt_rdf']
             self._vmi_rdf_ax_data.set_data(radial, rdf)
             self.set_new_xlim_ylim(radial, rdf, self._vmi_rdf_ax, 
                 None, None)
@@ -2272,8 +2280,9 @@ class Ui_MainWindow(object):
         new_xlim = ax.set_xlim(new_xlim)
         
         crit = (new_xlim[0] <= _x) * (_x <= new_xlim[1])
+        y_crit = _y[crit]
         ylim = ax.get_ylim()
-        if non_empty_coor:
+        if non_empty_coor and (len(y_crit)>0):
             new_ylim = (np.min(_y[crit]), np.max(_y[crit]))
         else:
             new_ylim = list(ylim)
@@ -2453,9 +2462,111 @@ class Ui_MainWindow(object):
         
         self.change_ion_tof_calibration_constants()
 
+    def get_ke_lim_data(self, ke_coor):
+        ke_start_string = self.text_edit_ke_start.toPlainText()
+        ke_end_string = self.text_edit_ke_end.toPlainText()
+        ke_bins_string = self.text_edit_ke_bins.toPlainText()
+        # ke_coor, *_ = self.ke_data
+        valid = np.isfinite(ke_coor)
+        valid_ke = ke_coor[valid]
+        if not valid.any():
+            valid_ke = np.array([0,])
+            
+        default_ke_start = np.min(valid_ke)
+        default_ke_end = np.max(valid_ke)
+        default_ke_bins = len(valid_ke)
+        if ke_start_string == '': 
+            ke_start = default_ke_start
+        else:
+            ke_start = float(ke_start_string)
+        if ke_end_string == '': 
+            ke_end = default_ke_end
+        else:
+            ke_end = float(ke_end_string)
+        if ke_bins_string == '': 
+            ke_bins = default_ke_bins
+        else:
+            ke_bins = int(ke_bins_string)
+        return ke_start, ke_end, ke_bins
+
+
+    def update_pes_calibration_window(self):
+
+        rsquare, subt_rsdf = self.graph_data['subt_rsdf']
+
+        # perform calibration here!
+
+        cal_points_string = self.test_edit_cal_points.toPlainText()
+        cal_points_string = re.sub(' ', '', cal_points_string)
+        pairs = cal_points_string.split('\n')
+        pairs = [item for item in pairs if item != '']
+        rsquare_ke_peaks = []
+        for pair in pairs:
+            rsquare_ke_peaks.append(np.array(list(pair.split(',')), dtype=float))
+        rsquare_ke_peaks = np.array(rsquare_ke_peaks)
+        rsquare_points, ke_points = rsquare_ke_peaks.T
+
+
+        from fermi_libraries.common_functions import weighted_linear_regression
+
+        slope, *_ = weighted_linear_regression(rsquare_points, ke_points, zero_intercept=True)
+
+        self.pes_calibration_constant = slope
+
+        rsquare_ke_coor_func = lambda x: slope * x
+
+        ke = rsquare_ke_coor_func(rsquare)
+        pes = subt_rsdf / slope # jacobian correction
+
+        self.graph_data['pes_subt'] = ke, pes
+
+
+        ke_start, ke_end, ke_bins = self.get_ke_lim_data(ke)
+        new_ke_coor = np.linspace(ke_start, ke_end, num=ke_bins)
+        ke_coor, raw_pes = ke, pes
+        with IgnoreWarnings("length one"):
+            new_raw_pes = rebinning(new_ke_coor, ke_coor, raw_pes)
+        self._line_ke_rsquare.set_data(new_ke_coor, new_raw_pes)
+
+
+        #########
+
+
+        model_rsquare = np.linspace(np.min(rsquare_points), np.max(rsquare_points), num=1000)
+
+        self._line_cal_rsquare.set_data(model_rsquare, rsquare_ke_coor_func(model_rsquare))
+        self._line_cal_rsquare_points.set_data(rsquare_points, ke_points)
+        self.set_new_xlim_ylim(np.concatenate((model_rsquare, rsquare_points)), 
+                               np.concatenate((rsquare_ke_coor_func(model_rsquare), ke_points)), 
+                               self._cal_rsquare_ax, None, None)
+
+        self.graph_data['ke_subt'] = ke, pes
+
+
+
+        self._line_raw_rsquare.set_data(*self.graph_data['subt_rsdf'])
+        self._line_raw_rsquare_points.set_data(rsquare_points, subt_rsdf[closest(rsquare_points, rsquare)])
+
+        
+        self.set_new_xlim_ylim(*self.graph_data['subt_rsdf'], self._raw_rsquare_ax, 
+            None, None)
+        test_data = self.get_ke_lim_data(ke)[:2]
+        self.set_new_xlim_ylim(*self.graph_data['pes_subt'], self._ke_rsquare_ax, 
+            *self.get_ke_lim_data(ke)[:2])
+        # self._mq_tof_ax.ticklabel_format(axis='y', useOffset=False)  # setting the ylim resets the format! This is a quick fix
+
+
+        self._line_cal_rsquare_points.figure.canvas.draw()
+        self._line_raw_rsquare.figure.canvas.draw()
+        # self._line_subt_ke.figure.canvas.draw()
+        self._line_ke_rsquare.figure.canvas.draw()
+        self.change_pes_calibration_constants()
+
+
+    def change_pes_calibration_constants(self):
+        self.text_edit_cal_constant.setText(str(round_to_n(self.pes_calibration_constant, 8)))
+
     def change_ion_tof_calibration_constants(self):
-        def round_to_n(x, n):
-                return round(x, -int(np.floor(np.sign(x) * np.log10(abs(x)))) + n)
         self.text_edit_tof_constant_t0.setText(str(round_to_n(self.ion_tof_calibration_constants[0], 8)))
         self.text_edit_tof_constant_c.setText(str(round_to_n(self.ion_tof_calibration_constants[1], 8)))
 
@@ -2602,6 +2713,8 @@ class IgnoreWarnings(object):
     def __exit__(self, *_):
         warnings.filterwarnings("default", message=f".*{self.message}.*")
 
+def round_to_n(x, n):
+    return round(x, -int(np.floor(np.sign(x) * np.log10(abs(x)))) + n)
 
 class MainWindow(QMainWindow):
 
@@ -2775,22 +2888,6 @@ class MainWindow(QMainWindow):
         vmi_inverse_fig.subplots_adjust(bottom=0.15, left=0.05, right=1.0, top=0.95)
         vmi_rdf_fig.subplots_adjust(bottom=0.15, left=0.05, right=0.95, top=0.95)
         
-        # TOF calibratino plot
-        cal_tof_fig = Figure(figsize=(5, 3))
-        cal_tof_canvas = FigureCanvas(cal_tof_fig)
-        app.tof_show_calibration.addWidget(cal_tof_canvas)
-        app.tof_show_calibration.addWidget(NavigationToolbar(cal_tof_canvas, self))
-        app._cal_tof_ax = cal_tof_canvas.figure.subplots()
-
-        app._line_cal_tof, = app._cal_tof_ax.plot([], [], color='black')
-        app._line_cal_tof_points, = app._cal_tof_ax.plot([], [], marker='o', linestyle='')
-        app._cal_tof_ax.set_xlabel('TOF (ns)')
-        app._cal_tof_ax.set_ylabel('m/q')
-        app._cal_tof_ax.xaxis.labelpad = 0
-        app._cal_tof_ax.yaxis.labelpad = 0
-        plt.tight_layout()
-        cal_tof_fig.subplots_adjust(bottom=0.26, left=0.15, right=0.95, top=0.95)
-
 
         # fore, back, and subt plots
         app.fore_tof_fig = Figure(figsize=(5, 3))
@@ -2838,7 +2935,7 @@ class MainWindow(QMainWindow):
         app.back_fig.subplots_adjust(bottom=0.10, left=0.05, right=1.0, top=0.95)
         app.subt_fig.subplots_adjust(bottom=0.10, left=0.05, right=1.0, top=0.95)
 
-        # # tof calibration tab
+        # TOF calibration tab
         raw_tof_fig = Figure(figsize=(5,3))
         raw_tof_canvas = FigureCanvas(raw_tof_fig)
         app.tof_show_raw.addWidget(raw_tof_canvas)
@@ -2864,6 +2961,24 @@ class MainWindow(QMainWindow):
         app._mq_tof_ax.ticklabel_format(axis='y', useOffset=False, scilimits=(0,0))
         mq_tof_fig.subplots_adjust(bottom=0.16, left=0.15, right=0.95, top=0.92)
         plt.tight_layout()
+
+        # TOF calibration plot
+        cal_tof_fig = Figure(figsize=(5, 3))
+        cal_tof_canvas = FigureCanvas(cal_tof_fig)
+        app.tof_show_calibration.addWidget(cal_tof_canvas)
+        app.tof_show_calibration.addWidget(NavigationToolbar(cal_tof_canvas, self))
+        app._cal_tof_ax = cal_tof_canvas.figure.subplots()
+
+        app._line_cal_tof, = app._cal_tof_ax.plot([], [], color='black')
+        app._line_cal_tof_points, = app._cal_tof_ax.plot([], [], marker='o', linestyle='')
+        app._cal_tof_ax.set_xlabel('TOF (ns)')
+        app._cal_tof_ax.set_ylabel('m/q')
+        app._cal_tof_ax.xaxis.labelpad = 0
+        app._cal_tof_ax.yaxis.labelpad = 0
+        plt.tight_layout()
+        cal_tof_fig.subplots_adjust(bottom=0.26, left=0.15, right=0.95, top=0.95)
+
+
         
         # tof_raw_fig.subplots_adjust(bottom=0.15, left=0.05, right=1.0, top=0.95)
         # tof_corr_fig.subplots_adjust(bottom=0.15, left=0.05, right=1.0, top=0.95)
@@ -2900,6 +3015,50 @@ class MainWindow(QMainWindow):
         app._subt_mq_ax.xaxis.labelpad = 0
         plt.tight_layout()
         app.subt_mq_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
+
+        # PES calibration tab
+        raw_rsquare_fig = Figure(figsize=(5,3))
+        raw_rsquare_canvas = FigureCanvas(raw_rsquare_fig)
+        app.pes_show_rsquare.addWidget(raw_rsquare_canvas)
+        app.pes_show_rsquare.addWidget(NavigationToolbar(raw_rsquare_canvas, self))
+        app._raw_rsquare_ax = raw_rsquare_canvas.figure.subplots()
+        app._raw_rsquare_ax.set_ylabel('radial-squared signal')
+        app._raw_rsquare_ax.set_xlabel(r'r$^{2}$ (pixels$^{2}$)')
+        app._line_raw_rsquare, = app._raw_rsquare_ax.plot([], [])
+        app._line_raw_rsquare_points, = app._raw_rsquare_ax.plot([], [], marker='v', linestyle='')
+        app._raw_rsquare_ax.xaxis.labelpad = 0
+        raw_rsquare_fig.subplots_adjust(bottom=0.16, left=0.15, right=0.95, top=0.95)
+        plt.tight_layout()
+        
+        ke_rsquare_fig = Figure(figsize=(5,3))
+        ke_rsquare_canvas = FigureCanvas(ke_rsquare_fig)
+        app.pes_show_ke.addWidget(ke_rsquare_canvas)
+        app.pes_show_ke.addWidget(NavigationToolbar(ke_rsquare_canvas, self))
+        app._ke_rsquare_ax = ke_rsquare_canvas.figure.subplots()
+        app._ke_rsquare_ax.set_ylabel('KE-signal')
+        app._ke_rsquare_ax.set_xlabel('eKE (eV)')
+        app._line_ke_rsquare, = app._ke_rsquare_ax.plot([], [])
+        app._ke_rsquare_ax.xaxis.labelpad = 0
+        app._ke_rsquare_ax.ticklabel_format(axis='y', useOffset=False, scilimits=(0,0))
+        ke_rsquare_fig.subplots_adjust(bottom=0.16, left=0.15, right=0.95, top=0.92)
+        plt.tight_layout()
+
+        # rsquare calibration plot
+        cal_rsquare_fig = Figure(figsize=(5, 3))
+        cal_rsquare_canvas = FigureCanvas(cal_rsquare_fig)
+        app.rsquare_show_calibration.addWidget(cal_rsquare_canvas)
+        app.rsquare_show_calibration.addWidget(NavigationToolbar(cal_rsquare_canvas, self))
+        app._cal_rsquare_ax = cal_rsquare_canvas.figure.subplots()
+
+        app._line_cal_rsquare, = app._cal_rsquare_ax.plot([], [], color='black')
+        app._line_cal_rsquare_points, = app._cal_rsquare_ax.plot([], [], marker='o', linestyle='')
+        app._cal_rsquare_ax.set_xlabel(r'r$^{2}$ (pixels$^{2}$)')
+        app._cal_rsquare_ax.set_ylabel('KE (eV)')
+        app._cal_rsquare_ax.xaxis.labelpad = 0
+        app._cal_rsquare_ax.yaxis.labelpad = 0
+        plt.tight_layout()
+        cal_rsquare_fig.subplots_adjust(bottom=0.26, left=0.15, right=0.95, top=0.95)
+
 
 
         self.show()

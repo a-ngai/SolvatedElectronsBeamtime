@@ -41,7 +41,7 @@ gData['rBF'] = 'gauss' # Gaussian basis function
 
 # %%
 # Set up the parameters
-gData['x'] = np.arange(nx, dtype='double')-0.5 # we should have 0 = x[0] - 0.5*xstep 
+gData['x'] = np.arange(nx, dtype='double')+0.5 # we should have 0 = x[0] - 0.5*xstep 
 
 # linear k-spacing
 gData['k'] = np.arange(0, nx, xkratio) + 0.5 * (xkratio - 1)
