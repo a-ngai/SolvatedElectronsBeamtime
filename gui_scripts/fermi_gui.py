@@ -19,8 +19,9 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QCommandLinkButton,
     QFrame, QGridLayout, QGroupBox, QHBoxLayout,
     QLabel, QMainWindow, QMenu, QMenuBar,
-    QScrollArea, QSizePolicy, QStatusBar, QTabWidget,
-    QTextBrowser, QTextEdit, QVBoxLayout, QWidget)
+    QPushButton, QScrollArea, QSizePolicy, QStatusBar,
+    QTabWidget, QTextBrowser, QTextEdit, QVBoxLayout,
+    QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -298,10 +299,10 @@ class Ui_MainWindow(object):
         self.tab_6.setSizePolicy(sizePolicy)
         self.gridLayout_8 = QGridLayout(self.tab_6)
         self.gridLayout_8.setObjectName(u"gridLayout_8")
-        self.vmi_show_rdf = QGridLayout()
-        self.vmi_show_rdf.setObjectName(u"vmi_show_rdf")
+        self.vmi_show_radialdist = QGridLayout()
+        self.vmi_show_radialdist.setObjectName(u"vmi_show_radialdist")
 
-        self.gridLayout_8.addLayout(self.vmi_show_rdf, 0, 0, 1, 1)
+        self.gridLayout_8.addLayout(self.vmi_show_radialdist, 0, 0, 1, 1)
 
         self.tabWidget_4.addTab(self.tab_6, "")
 
@@ -316,10 +317,10 @@ class Ui_MainWindow(object):
         self.tab_13.setSizePolicy(sizePolicy)
         self.gridLayout_9 = QGridLayout(self.tab_13)
         self.gridLayout_9.setObjectName(u"gridLayout_9")
-        self.vmi_show_corr = QGridLayout()
-        self.vmi_show_corr.setObjectName(u"vmi_show_corr")
+        self.vmi_show_corrected = QGridLayout()
+        self.vmi_show_corrected.setObjectName(u"vmi_show_corrected")
 
-        self.gridLayout_9.addLayout(self.vmi_show_corr, 0, 0, 1, 1)
+        self.gridLayout_9.addLayout(self.vmi_show_corrected, 0, 0, 1, 1)
 
         self.tabWidget_5.addTab(self.tab_13, "")
         self.tab_14 = QWidget()
@@ -499,7 +500,7 @@ class Ui_MainWindow(object):
         self.test_edit_cal_points.setGeometry(QRect(470, 240, 91, 131))
         self.label_cal_points = QLabel(self.tab_calibration)
         self.label_cal_points.setObjectName(u"label_cal_points")
-        self.label_cal_points.setGeometry(QRect(480, 210, 71, 21))
+        self.label_cal_points.setGeometry(QRect(470, 210, 91, 21))
         self.button_apply_pes_calibration = QCommandLinkButton(self.tab_calibration)
         self.button_apply_pes_calibration.setObjectName(u"button_apply_pes_calibration")
         self.button_apply_pes_calibration.setGeometry(QRect(460, 370, 172, 41))
@@ -973,6 +974,9 @@ class Ui_MainWindow(object):
         self.text_edit_tof_baseline_points = QTextEdit(self.tab_settings)
         self.text_edit_tof_baseline_points.setObjectName(u"text_edit_tof_baseline_points")
         self.text_edit_tof_baseline_points.setGeometry(QRect(20, 260, 71, 31))
+        self.push_button = QPushButton(self.tab_settings)
+        self.push_button.setObjectName(u"push_button")
+        self.push_button.setGeometry(QRect(730, 500, 31, 24))
         self.tabWidget.addTab(self.tab_settings, "")
 
         self.verticalLayout_2.addWidget(self.tabWidget)
@@ -989,7 +993,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 787, 22))
+        self.menubar.setGeometry(QRect(0, 0, 787, 21))
         self.menuFERMI_On_line_analysis_tool = QMenu(self.menubar)
         self.menuFERMI_On_line_analysis_tool.setObjectName(u"menuFERMI_On_line_analysis_tool")
         MainWindow.setMenuBar(self.menubar)
@@ -998,9 +1002,9 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(5)
         self.tabWidget_2.setCurrentIndex(2)
-        self.tabWidget_4.setCurrentIndex(0)
+        self.tabWidget_4.setCurrentIndex(3)
         self.tabWidget_5.setCurrentIndex(0)
         self.tabWidget_3.setCurrentIndex(2)
 
@@ -1178,7 +1182,7 @@ class Ui_MainWindow(object):
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">0, 0</p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.label_cal_points.setText(QCoreApplication.translate("MainWindow", u"Pixel, Energy", None))
+        self.label_cal_points.setText(QCoreApplication.translate("MainWindow", u"Pixel^2, Energy", None))
         self.button_apply_pes_calibration.setText(QCoreApplication.translate("MainWindow", u"Apply calibration", None))
         self.label_pes_cal_constants.setText(QCoreApplication.translate("MainWindow", u"Cal. constant", None))
         self.text_edit_cal_constant.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
@@ -1429,10 +1433,10 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
+        self.push_button.setText("")
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_settings), QCoreApplication.translate("MainWindow", u"Settings", None))
         self.menuFERMI_On_line_analysis_tool.setTitle(QCoreApplication.translate("MainWindow", u"FERMI LDM On-line analysis tool", None))
     # retranslateUi
-
 
 
 
@@ -1585,7 +1589,7 @@ class Ui_MainWindow(object):
         self.box_make_cache.toggled.connect(self.apply_settings)
         self.box_load_from_cache.toggled.connect(self.apply_settings)
         self.combobox_tof_yscale.currentIndexChanged.connect(self.redraw_tof_data) # still need to do
-        self.button_apply_vmi_corrections.clicked.connect(self.apply_settings)
+        self.button_apply_vmi_corrections.clicked.connect(self.process_redraw_vmi_data)
         self.button_apply_pes_calibration.clicked.connect(self.update_pes_calibration_window)
 
         self.timer = QTimer()
@@ -1874,6 +1878,8 @@ class Ui_MainWindow(object):
         else:
             ycenter = int(ycenter_text)
         self.image_correction_data['center'] = (xcenter, ycenter)
+        # reversed, because cpbasex requires polarization axis along second axis i.e. transposed
+        self.image_correction_data['center'] = (ycenter, xcenter)
 
         xzoom_text = self.text_edit_correct_xzoom.toPlainText()
         if xzoom_text == '':
@@ -2015,10 +2021,13 @@ class Ui_MainWindow(object):
 
 
     def redraw_vmi_data(self):
-
+        
+        time_start = time.time()
         self.update_pes_window()
         self.update_main_vmi_window()
         self.update_image_window()
+        time_end = time.time()
+        print('time elapsed (redraw_vmi_data): ', time_end-time_start)
         
     def load_gdata(self):
         if (self.gdata is None) or self.flags['changed_gdata_filepath']: 
@@ -2050,25 +2059,12 @@ class Ui_MainWindow(object):
 
     def process_redraw_tof_data(self):
 
-        if False:
-            worker = Worker(self.remake_tof_data)
-            worker.signals.finished.connect(self.redraw_tof_data)
-            print('about to start the process_redraw_tof_data worker')
-            self.threadpool.start(worker)
-        else:
-            print('not threading here')
-            import time
-            time_start = time.time()
-            self.remake_tof_data()
-            time_end = time.time()
-            print('time elapsed (remake tof): ', time_end-time_start)
-            time_start = time.time()
-            self.redraw_tof_data()
-            time_end = time.time()
-            print('time elapsed (redraw): ', time_end-time_start)
+        self.change_ion_tof_calibration_constants()
+        worker = Worker(self.remake_tof_data)
+        worker.signals.finished.connect(self.redraw_tof_data)
+        self.threadpool.start(worker)
     
     def remake_tof_data(self):
-        print('stepped into remake_tof_data')
 
         # TOF section
 
@@ -2090,7 +2086,6 @@ class Ui_MainWindow(object):
             + (-1)**self.box_flip_feloffsluon.isChecked() * self.box_back_feloffsluon.isChecked() * tof_feloff_sluon
             + (-1)**self.box_flip_feloffsluoff.isChecked() * self.box_back_feloffsluoff.isChecked() * tof_feloff_sluoff
         )
-        print('in the middle of remake_tof_data')
         
         Nbaseline = self.status['tof_baseline_points']
         baseline = np.average(tof_fore[:Nbaseline])
@@ -2103,12 +2098,9 @@ class Ui_MainWindow(object):
         self.graph_data['tof_subt'] = tof_coor, tof_subt
 
         
-        self.change_ion_tof_calibration_constants()
-        print('I also made it right before remake_mq_data')
         self.remake_mq_data()
 
     def remake_mq_data(self):
-        print('...and to remake_mq_data')
     
         # perform calibration here!
 
@@ -2130,8 +2122,16 @@ class Ui_MainWindow(object):
         
         self.ion_tof_calibration_constants = ion_constants
 
-
         tof_coor, tof_subt = self.graph_data['tof_subt']
+        if len(tof_points) > 0:
+            tof_model = np.linspace(
+                np.min(np.concatenate((tof_points, tof_coor))), 
+                np.max(np.concatenate((tof_points, tof_coor))), 
+                num=1000)
+        mq_model = tof_mq_coor_func(tof_model)
+        self.calibration_data['tof_mq_points'] = tof_points, mq_points
+        self.calibration_data['tof_mq_model'] = tof_model, mq_model
+
         mq_raw_coor, mq_raw_subt = tof_to_mq(tof_coor, tof_subt)
         mq_start, mq_end, mq_bins = self.get_mq_lim_data(tof_mq_coor_func(tof_coor))
 
@@ -2177,7 +2177,6 @@ class Ui_MainWindow(object):
 
 
     def redraw_tof_data(self):
-        print("I also made it to redraw!")
 
         tof_start, tof_end, tof_bins = self.get_tof_lim_data()
         new_tof_coor = np.linspace(tof_start, tof_end, num=tof_bins)
@@ -2218,9 +2217,7 @@ class Ui_MainWindow(object):
 
         self._line_cal_tof.set_data(tof_model, mq_model)
         self._line_cal_tof_points.set_data(tof_points, mq_points)
-        self.set_new_xlim_ylim(np.concatenate((tof_model, tof_points)), 
-                               np.concatenate((mq_model, mq_points)), 
-                               self._cal_tof_ax, None, None)
+        self.set_new_xlim_ylim(tof_points, mq_points, self._cal_tof_ax, None, None)
 
 
         self._line_mq_tof.set_data(self.graph_data['mq_subt'])
@@ -2337,22 +2334,17 @@ class Ui_MainWindow(object):
             self.subt_fig.canvas.blit(self._subt_ax.bbox)
             
         else:
-            self._fore_ax_data.set_data(self.graph_data['vmi_fore'])
+            # extent = (0, data_shape[0], 0, data_shape[1])
             data_shape = self.graph_data['vmi_fore'].shape
-            extent = (0, data_shape[0], 0, data_shape[1])
-            with IgnoreWarnings("makes transformation singular"):
-                self._fore_ax_data.set_extent(extent)
+            extent = (0, data_shape[0], data_shape[1], 0)
+            self._fore_ax_data.set_data(self.graph_data['vmi_fore'])
             self._fore_ax_data.autoscale()
             self._back_ax_data.set_data(self.graph_data['vmi_back'])
-            data_shape = self.graph_data['vmi_back'].shape
-            extent = (0, data_shape[0], 0, data_shape[1])
-            with IgnoreWarnings("makes transformation singular"):
-                self._back_ax_data.set_extent(extent)
             self._back_ax_data.autoscale()
             self._subt_ax_data.set_data(self.graph_data['vmi_subt'])
-            data_shape = self.graph_data['vmi_subt'].shape
-            extent = (0, data_shape[0], 0, data_shape[1])
             with IgnoreWarnings("makes transformation singular"):
+                self._fore_ax_data.set_extent(extent)
+                self._back_ax_data.set_extent(extent)
                 self._subt_ax_data.set_extent(extent)
             self._subt_ax_data.autoscale()
             self._fore_ax_data.figure.canvas.draw()
@@ -2363,7 +2355,7 @@ class Ui_MainWindow(object):
             
         self._vmi_raw_ax_data.set_data(self.graph_data['vmi_raw'])
         data_shape = self.graph_data['vmi_raw'].shape
-        extent = (0, data_shape[0], 0, data_shape[1])
+        extent = (0, data_shape[0], data_shape[1], 0)
         with IgnoreWarnings("makes transformation singular"):
             self._vmi_raw_ax_data.set_extent(extent)
         self._vmi_raw_ax_data.autoscale()
@@ -2371,7 +2363,7 @@ class Ui_MainWindow(object):
         
         self._vmi_corr_ax_data.set_data(self.graph_data['vmi_corr'])
         data_shape = self.graph_data['vmi_corr'].shape
-        extent = (0, data_shape[0], 0, data_shape[1])
+        extent = (0, data_shape[0], data_shape[1], 0)
         with IgnoreWarnings("makes transformation singular"):
             self._vmi_corr_ax_data.set_extent(extent)
         self._vmi_corr_ax_data.autoscale()
@@ -2379,7 +2371,7 @@ class Ui_MainWindow(object):
         
         self._vmi_reduced_ax_data.set_data(self.graph_data['vmi_reduced'])
         data_shape = self.graph_data['vmi_reduced'].shape
-        extent = (0, data_shape[0], 0, data_shape[1])
+        extent = (0, data_shape[0], data_shape[1], 0)
         with IgnoreWarnings("makes transformation singular"):
             self._vmi_reduced_ax_data.set_extent(extent)
         self._vmi_reduced_ax_data.autoscale()
@@ -2387,7 +2379,7 @@ class Ui_MainWindow(object):
 
         self._vmi_fit_ax_data.set_data(self.graph_data['vmi_fit'])
         data_shape = self.graph_data['vmi_fit'].shape
-        extent = (0, data_shape[0], 0, data_shape[1])
+        extent = (0, data_shape[0], data_shape[1], 0)
         with IgnoreWarnings("makes transformation singular"):
             self._vmi_fit_ax_data.set_extent(extent)
         self._vmi_fit_ax_data.autoscale()
@@ -2395,7 +2387,7 @@ class Ui_MainWindow(object):
 
         self._vmi_inverse_ax_data.set_data(self.graph_data['vmi_inverse'])
         data_shape = self.graph_data['vmi_inverse'].shape
-        extent = (0, data_shape[0], 0, data_shape[1])
+        extent = (0, data_shape[0], data_shape[1], 0)
         with IgnoreWarnings("makes transformation singular"):
             self._vmi_inverse_ax_data.set_extent(extent)
         self._vmi_inverse_ax_data.autoscale()
@@ -2770,24 +2762,6 @@ class MainWindow(QMainWindow):
     def add_canvas(self, app):
         app.vmi_abel
 
-        # # test window for dynamic updating (sinusoidal)
-        # pes_fig = Figure(figsize=(5, 3))
-        # dynamic_canvas = FigureCanvas(pes_fig)
-        # layout.addWidget(dynamic_canvas)
-        # layout.addWidget(NavigationToolbar(dynamic_canvas, self))
-        # t = np.linspace(0, 10, 501)
-        # self._dynamic_ax = dynamic_canvas.figure.subplots()
-        # t = np.linspace(0, 10, 101)
-        # self._line, = self._dynamic_ax.plot(t, np.sin(t + time()))
-        # self._timer = dynamic_canvas.new_timer(50)
-        # self._timer.add_callback(self._update_canvas)
-        # self._timer.start()
-        # self._dynamic_ax.text(0, 0, 'Placeholder!', fontsize=20)
-        # self._dynamic_ax.set_xlabel('eKE (eV)')
-        # self._dynamic_ax.xaxis.labelpad = 0
-        # plt.tight_layout()
-        # pes_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
-
         # main window PES canvas
         pes_fig = Figure(figsize=(5, 3))
         pes_canvas = FigureCanvas(pes_fig)
@@ -2806,7 +2780,6 @@ class MainWindow(QMainWindow):
         app._pes_ax.xaxis.labelpad = 0
         plt.tight_layout()
         pes_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
-        
         
         x_lin, y_lin = np.linspace(-3,3,num=300), np.linspace(-3,3,num=300)
         x, y = np.meshgrid(x_lin, y_lin, indexing='ij')
@@ -2857,19 +2830,15 @@ class MainWindow(QMainWindow):
         app.vmi_show_raw.addWidget(NavigationToolbar(vmi_raw_canvas, self))
         app._vmi_raw_ax = vmi_raw_canvas.figure.subplots()
         app._vmi_raw_ax_data = app._vmi_raw_ax.imshow([[np.nan,],])
-        app._vmi_raw_ax.set_xlabel('y')
-        app._vmi_raw_ax.set_ylabel('x')
         # self._vmi_raw_ax.text(0, 200, 'Placeholder!', fontsize=20)
         plt.tight_layout()
         
         vmi_corr_fig = Figure(figsize=(7, 7))
         vmi_corr_canvas = FigureCanvas(vmi_corr_fig)
-        app.vmi_show_corr.addWidget(vmi_corr_canvas)
-        app.vmi_show_corr.addWidget(NavigationToolbar(vmi_corr_canvas, self))
+        app.vmi_show_corrected.addWidget(vmi_corr_canvas)
+        app.vmi_show_corrected.addWidget(NavigationToolbar(vmi_corr_canvas, self))
         app._vmi_corr_ax = vmi_corr_canvas.figure.subplots()
         app._vmi_corr_ax_data = app._vmi_corr_ax.imshow([[np.nan,],])
-        app._vmi_corr_ax.set_xlabel('y')
-        app._vmi_corr_ax.set_ylabel('x')
         # self._vmi_corr_ax.text(0, 200, 'Placeholder!', fontsize=20)
         plt.tight_layout()
         
@@ -2879,8 +2848,6 @@ class MainWindow(QMainWindow):
         app.vmi_show_reduced.addWidget(NavigationToolbar(vmi_reduced_canvas, self))
         app._vmi_reduced_ax = vmi_reduced_canvas.figure.subplots()
         app._vmi_reduced_ax_data = app._vmi_reduced_ax.imshow([[np.nan,],])
-        app._vmi_reduced_ax.set_xlabel('y')
-        app._vmi_reduced_ax.set_ylabel('x')
         # self._vmi_reduced_ax.text(0, 200, 'Placeholder!', fontsize=20)
         plt.tight_layout()
 
@@ -2890,8 +2857,6 @@ class MainWindow(QMainWindow):
         app.vmi_show_fit.addWidget(NavigationToolbar(vmi_fit_canvas, self))
         app._vmi_fit_ax = vmi_fit_canvas.figure.subplots()
         app._vmi_fit_ax_data = app._vmi_fit_ax.imshow([[np.nan,],])
-        app._vmi_fit_ax.set_xlabel('y')
-        app._vmi_fit_ax.set_ylabel('x')
         # self._vmi_fit_ax.text(0, 200, 'Placeholder!', fontsize=20)
         plt.tight_layout()
         
@@ -2901,15 +2866,13 @@ class MainWindow(QMainWindow):
         app.vmi_show_inverse.addWidget(NavigationToolbar(vmi_inverse_canvas, self))
         app._vmi_inverse_ax = vmi_inverse_canvas.figure.subplots()
         app._vmi_inverse_ax_data = app._vmi_inverse_ax.imshow([[np.nan,],])
-        app._vmi_inverse_ax.set_xlabel('y')
-        app._vmi_inverse_ax.set_ylabel('x')
         # self._vmi_inverse_ax.text(0, 200, 'Placeholder!', fontsize=20)
         plt.tight_layout()
 
         vmi_rdf_fig = Figure(figsize=(7, 7))
         vmi_rdf_canvas = FigureCanvas(vmi_rdf_fig)
-        app.vmi_show_rdf.addWidget(vmi_rdf_canvas)
-        app.vmi_show_rdf.addWidget(NavigationToolbar(vmi_rdf_canvas, self))
+        app.vmi_show_radialdist.addWidget(vmi_rdf_canvas)
+        app.vmi_show_radialdist.addWidget(NavigationToolbar(vmi_rdf_canvas, self))
         app._vmi_rdf_ax = vmi_rdf_canvas.figure.subplots()
         app._vmi_rdf_ax_data, *_ = app._vmi_rdf_ax.plot([], [])
         app._vmi_rdf_ax.set_xlabel('radius')
@@ -3094,7 +3057,6 @@ class MainWindow(QMainWindow):
         app._cal_rsquare_ax.yaxis.labelpad = 0
         plt.tight_layout()
         cal_rsquare_fig.subplots_adjust(bottom=0.26, left=0.15, right=0.95, top=0.95)
-
 
 
         self.show()

@@ -19,8 +19,9 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QCommandLinkButton,
     QFrame, QGridLayout, QGroupBox, QHBoxLayout,
     QLabel, QMainWindow, QMenu, QMenuBar,
-    QScrollArea, QSizePolicy, QStatusBar, QTabWidget,
-    QTextBrowser, QTextEdit, QVBoxLayout, QWidget)
+    QPushButton, QScrollArea, QSizePolicy, QStatusBar,
+    QTabWidget, QTextBrowser, QTextEdit, QVBoxLayout,
+    QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -298,10 +299,10 @@ class Ui_MainWindow(object):
         self.tab_6.setSizePolicy(sizePolicy)
         self.gridLayout_8 = QGridLayout(self.tab_6)
         self.gridLayout_8.setObjectName(u"gridLayout_8")
-        self.vmi_show_rdf = QGridLayout()
-        self.vmi_show_rdf.setObjectName(u"vmi_show_rdf")
+        self.vmi_show_radialdist = QGridLayout()
+        self.vmi_show_radialdist.setObjectName(u"vmi_show_radialdist")
 
-        self.gridLayout_8.addLayout(self.vmi_show_rdf, 0, 0, 1, 1)
+        self.gridLayout_8.addLayout(self.vmi_show_radialdist, 0, 0, 1, 1)
 
         self.tabWidget_4.addTab(self.tab_6, "")
 
@@ -316,10 +317,10 @@ class Ui_MainWindow(object):
         self.tab_13.setSizePolicy(sizePolicy)
         self.gridLayout_9 = QGridLayout(self.tab_13)
         self.gridLayout_9.setObjectName(u"gridLayout_9")
-        self.vmi_show_corr = QGridLayout()
-        self.vmi_show_corr.setObjectName(u"vmi_show_corr")
+        self.vmi_show_corrected = QGridLayout()
+        self.vmi_show_corrected.setObjectName(u"vmi_show_corrected")
 
-        self.gridLayout_9.addLayout(self.vmi_show_corr, 0, 0, 1, 1)
+        self.gridLayout_9.addLayout(self.vmi_show_corrected, 0, 0, 1, 1)
 
         self.tabWidget_5.addTab(self.tab_13, "")
         self.tab_14 = QWidget()
@@ -499,7 +500,7 @@ class Ui_MainWindow(object):
         self.test_edit_cal_points.setGeometry(QRect(470, 240, 91, 131))
         self.label_cal_points = QLabel(self.tab_calibration)
         self.label_cal_points.setObjectName(u"label_cal_points")
-        self.label_cal_points.setGeometry(QRect(480, 210, 71, 21))
+        self.label_cal_points.setGeometry(QRect(470, 210, 91, 21))
         self.button_apply_pes_calibration = QCommandLinkButton(self.tab_calibration)
         self.button_apply_pes_calibration.setObjectName(u"button_apply_pes_calibration")
         self.button_apply_pes_calibration.setGeometry(QRect(460, 370, 172, 41))
@@ -973,6 +974,9 @@ class Ui_MainWindow(object):
         self.text_edit_tof_baseline_points = QTextEdit(self.tab_settings)
         self.text_edit_tof_baseline_points.setObjectName(u"text_edit_tof_baseline_points")
         self.text_edit_tof_baseline_points.setGeometry(QRect(20, 260, 71, 31))
+        self.push_button = QPushButton(self.tab_settings)
+        self.push_button.setObjectName(u"push_button")
+        self.push_button.setGeometry(QRect(730, 500, 31, 24))
         self.tabWidget.addTab(self.tab_settings, "")
 
         self.verticalLayout_2.addWidget(self.tabWidget)
@@ -989,7 +993,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 787, 22))
+        self.menubar.setGeometry(QRect(0, 0, 787, 21))
         self.menuFERMI_On_line_analysis_tool = QMenu(self.menubar)
         self.menuFERMI_On_line_analysis_tool.setObjectName(u"menuFERMI_On_line_analysis_tool")
         MainWindow.setMenuBar(self.menubar)
@@ -998,9 +1002,9 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(5)
         self.tabWidget_2.setCurrentIndex(2)
-        self.tabWidget_4.setCurrentIndex(0)
+        self.tabWidget_4.setCurrentIndex(3)
         self.tabWidget_5.setCurrentIndex(0)
         self.tabWidget_3.setCurrentIndex(2)
 
@@ -1178,7 +1182,7 @@ class Ui_MainWindow(object):
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">0, 0</p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.label_cal_points.setText(QCoreApplication.translate("MainWindow", u"Pixel, Energy", None))
+        self.label_cal_points.setText(QCoreApplication.translate("MainWindow", u"Pixel^2, Energy", None))
         self.button_apply_pes_calibration.setText(QCoreApplication.translate("MainWindow", u"Apply calibration", None))
         self.label_pes_cal_constants.setText(QCoreApplication.translate("MainWindow", u"Cal. constant", None))
         self.text_edit_cal_constant.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
@@ -1429,6 +1433,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
+        self.push_button.setText("")
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_settings), QCoreApplication.translate("MainWindow", u"Settings", None))
         self.menuFERMI_On_line_analysis_tool.setTitle(QCoreApplication.translate("MainWindow", u"FERMI LDM On-line analysis tool", None))
     # retranslateUi
