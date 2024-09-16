@@ -2011,17 +2011,23 @@ class Ui_MainWindow(object):
         
     def load_gdata(self):
         if (self.gdata is None) or self.flags['changed_gdata_filepath']: 
-            gData = loadG(self.status['gdata_filepath'], make_images=True)
-            self.gdata = gData
-            self.betas = gData['l']
-            Nx = len(gData['x'])
-            image_size = Nx * 2
-            self.gdata_size = image_size
-            self.text_browser_gdata_image_size.setText(str(self.gdata_size))
+            try:
+                gData_filepath = self.status['gdata_filepath']
+                gData = loadG(self.status['gdata_filepath'], make_images=True)
+                self.gdata = gData
+                self.betas = gData['l']
+                Nx = len(gData['x'])
+                image_size = Nx * 2
+                self.gdata_size = image_size
+                self.text_browser_gdata_image_size.setText(str(self.gdata_size))
+                if self.image_correction_data['reduce_size'] is None:
+                    self.image_correction_data['reduce_size'] = self.gdata_size
+            except OSError:
+                time_string = strftime("%Y-%m-%d %H:%M:%S", localtime())
+                self.update_print_box(f'{time_string}: Could not found inversion data ({gData_filepath})')
+                return None
         self.flags['changed_gdata'] = True
         
-        if self.image_correction_data['reduce_size'] is None:
-            self.image_correction_data['reduce_size'] = self.gdata_size
     
     def valid_inversion_condition(self):
         
