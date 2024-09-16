@@ -2,8 +2,8 @@ import re
 import os
 
 def test_multithread_abel_template():
-    with (open("examples/basic_abel_inversion.py", 'r') as f, 
-        open("examples/_temp_multithread_abel.py", 'w') as g):
+    with (open("examples/py_scripts/basic_abel_inversion.py", 'r') as f, 
+        open("examples/py_scripts/_temp_multithread_abel.py", 'w') as g):
         new_lines = []
         for line in f.readlines():
             mod_line = re.sub(r"plt\.show\(\)", r"plt.close()", line)
@@ -15,8 +15,8 @@ def test_multithread_abel_template():
             new_lines.append(mod_line)
         g.writelines(new_lines)
     try:
-        from examples import _temp_multithread_abel
+        from examples.py_scripts import _temp_multithread_abel
     except Exception as e:
-        # if os.path.exists("examples/_temp_multithread_abel.py"): os.remove("examples/_temp_multithread_abel.py")
+        # if os.path.exists("examples/py_scripts/_temp_multithread_abel.py"): os.remove("examples/py_scripts/_temp_multithread_abel.py")
         raise e
-    # if os.path.exists("examples/_temp_multithread_abel.py"): os.remove("examples/_temp_multithread_abel.py")
+    if os.path.exists("examples/py_scripts/_temp_multithread_abel.py"): os.remove("examples/py_scripts/_temp_multithread_abel.py")

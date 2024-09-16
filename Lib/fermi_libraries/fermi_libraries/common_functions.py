@@ -8,6 +8,7 @@ from scipy.integrate import cumulative_simpson
 from scipy.interpolate import interp1d
 import scipy.constants as spc
 from scipy.special import erf
+import warnings
 
 def first_arg_scalar_into_array(func):
     def wrap_and_call(*args, **kwargs):
@@ -78,82 +79,60 @@ def combination(list_of_lists):
 
     return output
 
-def rebinning(xnew, x, y, axis=None):
-    '''changed on 20230525, so that nans are accepted. Another change on 20230625
-    for smooth boundaries when the new range is wider than the original range'''
+def rebinning(xnew: np.ndarray, x: np.ndarray, y: np.ndarray, axis: int=-1):
+    '''
+    Rebin the data of (x, y) into (xnew, ynew).
+    '''
+    
+    transpose_order = np.arange(np.ndim(y))
+    if axis!=0:
+        transpose_order[0]=axis
+        transpose_order[axis]=0
 
-    if (axis is None) or (np.ndim(y)==1):
-        if (len(xnew)==1) or (len(x) == 1):
-            if np.ndim(y)==1:
-                ynew = xnew*0
-            else: 
-                ynew = np.zeros(shape=[len(xnew)] + list(np.shape(y)[1:]))
-            return ynew
+    y_transpose = np.transpose(y, axes=transpose_order)
+    y_shape = np.array(np.shape(y))
+    new_y_shape = y_shape[transpose_order]
+    new_y_shape[0]=len(xnew)
+    
+    nan_bool_array = np.isnan(y_transpose)
+    y_remove_nans = np.copy(y_transpose)
+    y_remove_nans[np.isnan(y_transpose)]=0
+    ynew_integral = np.zeros(shape=new_y_shape)
+    ynew = 0*ynew_integral  # default setup
+    y_integral = 0*y_remove_nans  # default setup
 
-        nan_bool_array = np.isnan(x)
-        y_remove_nans = np.copy(y)
-        nans_indices = np.where(np.isnan(y))[0]
-        y_remove_nans[nans_indices]=0#y_remove_nans[nans_indices-1]
-
-        y_integral = cumulative_simpson(y_remove_nans, x=x, initial=0)
-        y_interpolate = interp1d(x, y_integral, kind='linear')
-
-        ynew_integral = np.zeros(shape=np.shape(xnew))
-        xnew_in = (np.min(x)<=xnew) * (xnew<=np.max(x))
-        xnew_out_right = np.max(x) < xnew
-
-        ynew_integral[xnew<np.min(x)] = y_interpolate(xnew[xnew_in][0])
-        ynew_integral[xnew_in] = y_interpolate(xnew[xnew_in])
-        ynew_integral[xnew_out_right] = ynew_integral[xnew_in][-1]
-
-        ynew = np.gradient(ynew_integral, xnew)
-
-        for i, is_nan in zip(range(len(xnew)-1), nan_bool_array):
-            if not is_nan:
-                continue
-            x_loc = x[i]
-            x_lo, x_hi = xnew[i], xnew[i+1]
-            crit_nan =  (x_lo<=x_loc)*(x_loc<x_hi)
-            ynew[crit_nan] = np.nan
-
-    else:
-        transpose_order = np.arange(np.ndim(y))
-        if axis!=0:
-            transpose_order[0]=axis
-            transpose_order[axis]=0
-
-        y_transpose = np.transpose(y, axes=transpose_order)
-        y_shape = np.array(np.shape(y))
-        new_y_shape = y_shape[transpose_order]
-        new_y_shape[0]=len(xnew)
-
-        nan_bool_array = np.isnan(y_transpose)
-        y_remove_nans = np.copy(y_transpose)
-        y_remove_nans[np.isnan(y_transpose)]=0
-
+    if len(x) != 0:
         y_integral = cumulative_simpson(y_remove_nans, x=x, initial=0, axis=0)
         y_interpolate = interp1d(x, y_integral, kind='linear',axis=0)
 
-        ynew_integral = np.zeros(shape=new_y_shape)
         xnew_in = (np.min(x)<=xnew) * (xnew<=np.max(x))
         xnew_out_right = np.max(x) < xnew
 
-        ynew_integral[xnew<np.min(x)] = y_interpolate(xnew[xnew_in][0])
-        ynew_integral[xnew_in] = y_interpolate(xnew[xnew_in])
-        ynew_integral[xnew_out_right] = ynew_integral[xnew_in][-1]
+        if len(xnew) == 1:
+            warnings.warn('xnew only has length one')
 
-        ynew = np.gradient(ynew_integral, xnew, axis=0)
+        elif len(xnew) == 0:
+            warnings.warn('xnew has zero length')
 
-        for i, is_nan in zip(range(len(xnew)-1), nan_bool_array):
-            if np.sum(is_nan)==0:
-                continue
-            x_loc = x[i]
-            x_lo, x_hi = xnew[i], xnew[i+1]
-            crit_nan =  (x_lo<=xnew)*(xnew<x_hi)
-            ynew[:,is_nan][crit_nan] = np.nan
+        elif len(xnew[xnew_in]) == 0:  # xnew is completely outside of x
+            warnings.warn('xnew is completely outside of x')
+        
+        elif len(x) != 0:
+            ynew_integral[xnew<np.min(x)] = y_interpolate(xnew[xnew_in][0])
+            ynew_integral[xnew_in] = y_interpolate(xnew[xnew_in])
+            ynew_integral[xnew_out_right] = ynew_integral[xnew_in][-1]
 
-        ynew = np.transpose(ynew, axes=transpose_order)  # revert transposition
+            ynew = np.gradient(ynew_integral, xnew, axis=0)
 
+            for i, is_nan in zip(range(len(xnew)-1), nan_bool_array):
+                if np.sum(is_nan)==0:
+                    continue
+                x_loc = x[i]
+                x_lo, x_hi = xnew[i], xnew[i+1]
+                crit_nan =  (x_lo<=xnew)*(xnew<x_hi)
+                ynew[:,is_nan][crit_nan] = np.nan
+
+    ynew = np.transpose(ynew, axes=transpose_order)  # revert transposition
 
     return ynew
 
@@ -873,11 +852,13 @@ def resolve_path(basepath: str, addpath: str = '') -> str:
 
     /first_base/second_base/third_add/fourth_add
     '''
-    compat_basepath = re.sub(r'\\', '/', basepath)
+    compat_basepath = re.sub(r'\\\\', '/', basepath)
+    compat_basepath = re.sub(r'\\', '/', compat_basepath)
     if compat_basepath[-1] == '/':
         compat_basepath = compat_basepath[:-1]
     base_hierarchy_list = compat_basepath.split('/')
     compat_addpath = re.sub(r'\\\\', '/', addpath)
+    compat_addpath = re.sub(r'\\', '/', compat_addpath)
     if compat_addpath[:2] == './':
         compat_addpath = compat_addpath[2:]
     add_hierarchy_list = compat_addpath.split('/')
@@ -888,3 +869,47 @@ def resolve_path(basepath: str, addpath: str = '') -> str:
     newpath = '/'.join(base_hierarchy_list + reverse_add_list[::-1])
 
     return newpath
+
+def find_subdir(name: str, root: str, skip: int=0, give_single: bool=True) -> str:
+    '''
+    Look through the sub-directories of root to find a sub-directory with a 
+    particular name. Level determines which depth to return any found 
+    sub-directories.
+
+    e.g. 
+    skip=0: give the found subdirectory with the shortest path
+    skip=1: give the found subdirectory with the next-to-shortest path
+    skip=-1: give the found subdirectory with the longest path
+    
+    '''
+
+    standard_root = resolve_path(root)
+    standard_name = resolve_path(name)
+    Nchar = len(standard_root)
+    all_paths = []
+    for path, subdirs, files in list(os.walk(root))[:]:
+        rel_path = resolve_path(path)[Nchar:]
+        if (len(rel_path)>0) and (rel_path[-1] == '/'): rel_path = rel_path[:-1]
+        all_paths.append(rel_path)
+        for subdir in subdirs:
+            full_filepath = os.path.join(path, subdir)
+            rel_path = resolve_path(full_filepath)[Nchar:]
+            all_paths.append(rel_path)
+
+    found_paths = []
+    levels = []
+    for filepath in all_paths:
+        if standard_name not in filepath:
+            continue
+        found_paths.append(f'{standard_root}{filepath}')
+        levels.append(len(filepath.split('/')))
+    if found_paths == []: # none found
+        return None
+    found_paths = np.array(found_paths)
+    levels = np.array(levels)
+    unique_levels = np.sort(list(set(levels)))
+    target_depth = unique_levels[skip]
+        
+    found_paths[levels==target_depth]
+    if give_single: found_paths = found_paths[0]
+    return found_paths
