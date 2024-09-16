@@ -1512,17 +1512,12 @@ class Ui_MainWindow(object):
             'vmi_fit' : np.array([[np.nan,],]),
             # 'pes_subt' : [np.array([]), np.array([])],
             'pes_subt' : [np.array([0,]), np.array([0,])],
-            # 'eke' : np.array([]),
-            # 'pes' : np.array([]),
             'betas' : [np.array([]), np.zeros(shape=(0,4))],
             'radial' : np.array([]),
             'rsquare' : np.array([]),
             'subt_rdf' : [np.array([]), np.array([])],
             # 'subt_rsdf' : [np.array([]), np.array([])],
             'subt_rsdf' : [np.array([0,]), np.array([0,])],
-            'eke_start' : None,
-            'eke_end' : None,
-            'eke_bins' : None,
             'tof_start' : None,
             'tof_end' : None,
             'tof_bins' : None,
@@ -1542,6 +1537,13 @@ class Ui_MainWindow(object):
             'zoom' : (1, 1),
             'rotate' : 0,
             'reduce_size' : None,
+        }
+
+        self.calibration_data = {
+            'tof_mq_points' : np.array([[],[]]),
+            'tof_mq_model' : np.array([[],[]]),
+            'rsquare_ke_points' : np.array([[],[]]),
+            'rsquare_ke_model' : np.array([[],[]]),
         }
 
         self.pes_calibration_constant = 1
@@ -1607,18 +1609,6 @@ class Ui_MainWindow(object):
         self.status['search_in_directory'] = self.text_edit_search_dir_for_newest_folder.toPlainText()
         self.status['subfolder_extension'] = self.text_edit_subfolder_extension.toPlainText()
         self.status['gdata_filepath'] = self.text_edit_abel_inversion_data_path.toPlainText()
-        if eke_start := self.text_edit_ke_start.toPlainText() == '':
-            self.graph_data['eke_start'] = None
-        else:
-            self.graph_data['eke_start'] = float(eke_start)
-        if eke_end := self.text_edit_ke_end.toPlainText() == '':
-            self.graph_data['eke_end'] = None
-        else:
-            self.graph_data['eke_end'] = float(eke_end)
-        if eke_bins := self.text_edit_ke_bins.toPlainText() == '':
-            self.graph_data['eke_bins'] = None
-        else:
-            self.graph_data['eke_bins'] = float(eke_bins)
         self.status['make_cache'] = self.box_make_cache.isChecked()
         self.status['load_from_cache'] = self.box_load_from_cache.isChecked()
         self.status['tof_baseline_points'] = int(self.text_edit_tof_baseline_points.toPlainText())
@@ -1674,7 +1664,6 @@ class Ui_MainWindow(object):
         if sorted_found_files is None:
             return False
         if sorted_found_files == sorted(self.status['current_files']):
-            if self.terminal_print: print('no change in files...')
             return False
         return True
 
@@ -1718,6 +1707,8 @@ class Ui_MainWindow(object):
 
             self.update_filechange()
             self.update_data()
+        else:
+            if self.terminal_print: print('no change in files...')
 
     def get_new_vmi_data(self):
         @set_recursion_limit(1)
@@ -1830,14 +1821,26 @@ class Ui_MainWindow(object):
         if not self.borrow_background_key():
             print('background process running, cannot execute tof data retrieval!')
             return None
-        worker = Worker(self.get_new_tof_data)
-        worker.signals.finished.connect(self.return_background_key)
-        worker.signals.finished.connect(self.redraw_tof_data)
-        self.threadpool.start(worker)
+        if True:
+            worker = Worker(self.get_new_tof_data)
+            worker.signals.finished.connect(self.return_background_key)
+            worker.signals.finished.connect(self.process_redraw_tof_data)
+            self.threadpool.start(worker)
+        else:
+            print('not threading here')
+            self.get_new_tof_data()
+            self.process_redraw_tof_data()
 
     def combine_process_redraw_vmi_data_and_start_get_tof_data_in_worker(self):
+        time_start = time.time()
         self.start_get_tof_data_in_worker()
+        time_end = time.time()
+        print('time elapsed (get tof data in worker): ', time_end-time_start)
+
+        time_start = time.time()
         self.process_redraw_vmi_data()
+        time_end = time.time()
+        print('time elapsed (process redraw vmi data): ', time_end-time_start)
 
     def update_data(self, multithreading=True):
 
@@ -2015,6 +2018,7 @@ class Ui_MainWindow(object):
 
         self.update_pes_window()
         self.update_main_vmi_window()
+        self.update_image_window()
         
     def load_gdata(self):
         if (self.gdata is None) or self.flags['changed_gdata_filepath']: 
@@ -2040,8 +2044,31 @@ class Ui_MainWindow(object):
         
         reduce_size_matches_gdata =  self.gdata_size == self.image_correction_data['reduce_size']
         return reduce_size_matches_gdata
+    
+    def update_main_tof_window(self):
+        self.process_redraw_tof_data()
 
-    def redraw_tof_data(self):
+    def process_redraw_tof_data(self):
+
+        if False:
+            worker = Worker(self.remake_tof_data)
+            worker.signals.finished.connect(self.redraw_tof_data)
+            print('about to start the process_redraw_tof_data worker')
+            self.threadpool.start(worker)
+        else:
+            print('not threading here')
+            import time
+            time_start = time.time()
+            self.remake_tof_data()
+            time_end = time.time()
+            print('time elapsed (remake tof): ', time_end-time_start)
+            time_start = time.time()
+            self.redraw_tof_data()
+            time_end = time.time()
+            print('time elapsed (redraw): ', time_end-time_start)
+    
+    def remake_tof_data(self):
+        print('stepped into remake_tof_data')
 
         # TOF section
 
@@ -2063,6 +2090,7 @@ class Ui_MainWindow(object):
             + (-1)**self.box_flip_feloffsluon.isChecked() * self.box_back_feloffsluon.isChecked() * tof_feloff_sluon
             + (-1)**self.box_flip_feloffsluoff.isChecked() * self.box_back_feloffsluoff.isChecked() * tof_feloff_sluoff
         )
+        print('in the middle of remake_tof_data')
         
         Nbaseline = self.status['tof_baseline_points']
         baseline = np.average(tof_fore[:Nbaseline])
@@ -2074,16 +2102,182 @@ class Ui_MainWindow(object):
         self.graph_data['tof_back'] = tof_coor, tof_back
         self.graph_data['tof_subt'] = tof_coor, tof_subt
 
-        self.update_main_tof_window()
+        
+        self.change_ion_tof_calibration_constants()
+        print('I also made it right before remake_mq_data')
+        self.remake_mq_data()
+
+    def remake_mq_data(self):
+        print('...and to remake_mq_data')
     
+        # perform calibration here!
+
+        cal_points_string = self.text_edit_tof_cal_points.toPlainText()
+        cal_points_string = re.sub(' ', '', cal_points_string)
+        pairs = cal_points_string.split('\n')
+        ion_tof_mq_peaks = []
+        for pair in pairs:
+            ion_tof_mq_peaks.append(np.array(list(pair.split(',')), dtype=float))
+        ion_tof_mq_peaks = np.array(ion_tof_mq_peaks)
+        tof_points, mq_points = ion_tof_mq_peaks.T
+
+
+        ion_calibration_dict = tof_mq_calibration(peaks=ion_tof_mq_peaks)
+        (_, _, _, _, ion_constants_dict) = list(ion_calibration_dict.values())
+        ion_constants = ion_constants_dict['timezero'], ion_constants_dict['C']
+        tof_mq_coor_func = lambda tof: tof_mq_coordinate_func(tof, *ion_constants)
+        tof_to_mq = lambda tof, spec, axis=None: tof_to_mq_conversion(tof, spec, *ion_constants, axis=axis)
+        
+        self.ion_tof_calibration_constants = ion_constants
+
+
+        tof_coor, tof_subt = self.graph_data['tof_subt']
+        mq_raw_coor, mq_raw_subt = tof_to_mq(tof_coor, tof_subt)
+        mq_start, mq_end, mq_bins = self.get_mq_lim_data(tof_mq_coor_func(tof_coor))
+
+        mq_coor = np.linspace(mq_start, mq_end, num=mq_bins)
+        if len(mq_raw_coor) < 2:
+            mq_coor = np.array([])
+            mq_subt = np.array([])
+        else:
+            mq_subt = rebinning(mq_coor, mq_raw_coor, mq_raw_subt)
+
+        self.graph_data['mq_subt'] = mq_coor, mq_subt
+
+        mq_raw_coor, mq_raw_fore = tof_to_mq(*self.graph_data['tof_fore'])
+        mq_start, mq_end, mq_bins = self.get_mq_lim_data(tof_mq_coor_func(tof_coor))
+        mq_coor = np.linspace(mq_start, mq_end, num=mq_bins)
+        if len(mq_raw_coor) < 2:
+            mq_coor = np.array([])
+            mq_fore = np.array([])
+        else:
+            mq_fore = rebinning(mq_coor, mq_raw_coor, mq_raw_fore)
+            
+        mq_raw_coor, mq_raw_back = tof_to_mq(*self.graph_data['tof_back'])
+        mq_start, mq_end, mq_bins = self.get_mq_lim_data(tof_mq_coor_func(tof_coor))
+        mq_coor = np.linspace(mq_start, mq_end, num=mq_bins)
+        if len(mq_raw_coor) < 2:
+            mq_coor = np.array([])
+            mq_back = np.array([])
+        else:
+            mq_back = rebinning(mq_coor, mq_raw_coor, mq_raw_back)
+
+        mq_raw_coor, mq_raw_subt = tof_to_mq(*self.graph_data['tof_subt'])
+        mq_start, mq_end, mq_bins = self.get_mq_lim_data(tof_mq_coor_func(tof_coor))
+        mq_coor = np.linspace(mq_start, mq_end, num=mq_bins)
+        if len(mq_raw_coor) < 2:
+            mq_coor = np.array([])
+            mq_subt = np.array([])
+        else:
+            mq_subt = rebinning(mq_coor, mq_raw_coor, mq_raw_subt)
+
+        self.graph_data['mq_fore'] = mq_coor, mq_fore
+        self.graph_data['mq_back'] = mq_coor, mq_back
+        self.graph_data['mq_subt'] = mq_coor, mq_subt
+
+
+    def redraw_tof_data(self):
+        print("I also made it to redraw!")
+
+        tof_start, tof_end, tof_bins = self.get_tof_lim_data()
+        new_tof_coor = np.linspace(tof_start, tof_end, num=tof_bins)
+        with IgnoreWarnings("length one"):
+            new_fore_tof = rebinning(new_tof_coor, *self.graph_data['tof_fore'])
+            new_back_tof = rebinning(new_tof_coor, *self.graph_data['tof_back'])
+            new_subt_tof = rebinning(new_tof_coor, *self.graph_data['tof_subt'])
+
+        self._line_fore_tof.set_data(new_tof_coor, new_fore_tof)
+        self._line_back_tof.set_data(new_tof_coor, new_back_tof)
+        self._line_subt_tof.set_data(new_tof_coor, new_subt_tof)
+        yscale = self.combobox_tof_yscale.currentText().lower()
+        self._fore_tof_ax.set_yscale(yscale)
+        self._back_tof_ax.set_yscale(yscale)
+        self._subt_tof_ax.set_yscale(yscale)
+        
+        self.set_new_xlim_ylim(*self.graph_data['tof_fore'], self._fore_tof_ax, 
+            self.graph_data['tof_start'], self.graph_data['tof_end'], kind=yscale)
+        self.set_new_xlim_ylim(*self.graph_data['tof_back'], self._back_tof_ax, 
+            self.graph_data['tof_start'], self.graph_data['tof_end'], kind=yscale)
+        self.set_new_xlim_ylim(*self.graph_data['tof_subt'], self._subt_tof_ax, 
+            self.graph_data['tof_start'], self.graph_data['tof_end'], kind=yscale)
+
+        self._line_fore_tof.figure.canvas.draw()
+        self._line_back_tof.figure.canvas.draw()
+        self._line_subt_tof.figure.canvas.draw()
+        
+        tof_coor, raw_tof = self.graph_data['tof_subt']
+        with IgnoreWarnings("length one"):
+            new_raw_tof = rebinning(new_tof_coor, tof_coor, raw_tof)
+        self._line_raw_tof.set_data(new_tof_coor, new_raw_tof)
+
+        tof_points, mq_points = self.calibration_data['tof_mq_points']
+        tof_model, mq_model = self.calibration_data['tof_mq_model']
+
+        # tof_model = np.linspace(np.min(tof_points), np.max(tof_points), num=1000)
+        self._line_raw_tof_points.set_data(tof_points, raw_tof[closest(tof_points, tof_coor)])
+
+        self._line_cal_tof.set_data(tof_model, mq_model)
+        self._line_cal_tof_points.set_data(tof_points, mq_points)
+        self.set_new_xlim_ylim(np.concatenate((tof_model, tof_points)), 
+                               np.concatenate((mq_model, mq_points)), 
+                               self._cal_tof_ax, None, None)
+
+
+        self._line_mq_tof.set_data(self.graph_data['mq_subt'])
+
+        
+        self.set_new_xlim_ylim(*self.graph_data['tof_subt'], self._raw_tof_ax, 
+            *self.get_tof_lim_data()[:2])
+        self.set_new_xlim_ylim(*self.graph_data['mq_subt'], self._mq_tof_ax, 
+            *self.get_mq_lim_data(self.graph_data['mq_subt'][0])[:2])
+        # self._mq_tof_ax.ticklabel_format(axis='y', useOffset=False)  # setting the ylim resets the format! This is a quick fix
+        
+        self._line_raw_tof.figure.canvas.draw()
+        self._line_cal_tof.figure.canvas.draw()
+        self._line_cal_tof_points.figure.canvas.draw()
+        self._line_mq_tof.figure.canvas.draw()
+        self._line_raw_tof_points.figure.canvas.draw()
+
+        mq_start, mq_end, mq_bins = self.get_mq_lim_data(self.graph_data['mq_subt'][0])
+        new_mq_coor = np.linspace(mq_start, mq_end, num=mq_bins)
+        with IgnoreWarnings("length one"):
+            new_fore_mq = rebinning(new_mq_coor, *self.graph_data['mq_fore'])
+            new_back_mq = rebinning(new_mq_coor, *self.graph_data['mq_back'])
+            new_subt_mq = rebinning(new_mq_coor, *self.graph_data['mq_subt'])
+
+        self._line_fore_mq.set_data(new_mq_coor, new_fore_mq)
+        self._line_back_mq.set_data(new_mq_coor, new_back_mq)
+        self._line_subt_mq.set_data(new_mq_coor, new_subt_mq)
+        yscale = self.combobox_tof_yscale.currentText().lower()
+        self._fore_mq_ax.set_yscale(yscale)
+        self._back_mq_ax.set_yscale(yscale)
+        self._subt_mq_ax.set_yscale(yscale)
+        
+        self.set_new_xlim_ylim(*self.graph_data['mq_fore'], self._fore_mq_ax, 
+            self.graph_data['mq_start'], self.graph_data['mq_end'], kind=yscale)
+        self.set_new_xlim_ylim(*self.graph_data['mq_back'], self._back_mq_ax, 
+            self.graph_data['mq_start'], self.graph_data['mq_end'], kind=yscale)
+        self.set_new_xlim_ylim(*self.graph_data['mq_subt'], self._subt_mq_ax, 
+            self.graph_data['mq_start'], self.graph_data['mq_end'], kind=yscale)
+
+        self._line_fore_mq.figure.canvas.draw()
+        self._line_back_mq.figure.canvas.draw()
+        self._line_subt_mq.figure.canvas.draw()
+
+
+
+
     def update_pes_window(self):
+        '''
+        Draw the PES window in the Main VMI tab. This function is fine.
+        '''
         
 
         self.update_pes_calibration_window()
 
         energies, pes = self.graph_data['pes_subt']
         # beta1, beta2, beta3, beta4, *_ = self.graph_data['betas']
-        energies, betas = self.graph_data['betas']
+        rsquared, betas = self.graph_data['betas']
         l_values = self.betas
         betas_to_axes = {
             1 : self._line_beta1,
@@ -2108,13 +2302,17 @@ class Ui_MainWindow(object):
             else:
                 betas_to_axes[l_value].set_data(energies, np.zeros(np.shape(betas[:,index]))*np.nan)
 
+        ke, pes = self.graph_data['pes_subt']
         self.set_new_xlim_ylim(energies, pes, self._pes_ax, 
-            self.graph_data['eke_start'], self.graph_data['eke_end'])
+            *self.get_ke_lim_data(ke)[:2])
 
         self._pes_ax.figure.canvas.draw()
         self._betas_ax.figure.canvas.draw()
 
     def update_main_vmi_window(self):
+        """
+        Update the VMI window in the Main VMI tab.
+        """
         BLITTING = False
         if BLITTING:
             fore_background = self.fore_fig.canvas.copy_from_bbox(self._fore_ax.bbox)
@@ -2160,53 +2358,55 @@ class Ui_MainWindow(object):
             self._fore_ax_data.figure.canvas.draw()
             self._back_ax_data.figure.canvas.draw()
             self._subt_ax_data.figure.canvas.draw()
-            
-            self._vmi_raw_ax_data.set_data(self.graph_data['vmi_raw'])
-            data_shape = self.graph_data['vmi_raw'].shape
-            extent = (0, data_shape[0], 0, data_shape[1])
-            with IgnoreWarnings("makes transformation singular"):
-                self._vmi_raw_ax_data.set_extent(extent)
-            self._vmi_raw_ax_data.autoscale()
-            self._vmi_raw_ax.figure.canvas.draw()
-            
-            self._vmi_corr_ax_data.set_data(self.graph_data['vmi_corr'])
-            data_shape = self.graph_data['vmi_corr'].shape
-            extent = (0, data_shape[0], 0, data_shape[1])
-            with IgnoreWarnings("makes transformation singular"):
-                self._vmi_corr_ax_data.set_extent(extent)
-            self._vmi_corr_ax_data.autoscale()
-            self._vmi_corr_ax.figure.canvas.draw()
-            
-            self._vmi_reduced_ax_data.set_data(self.graph_data['vmi_reduced'])
-            data_shape = self.graph_data['vmi_reduced'].shape
-            extent = (0, data_shape[0], 0, data_shape[1])
-            with IgnoreWarnings("makes transformation singular"):
-                self._vmi_reduced_ax_data.set_extent(extent)
-            self._vmi_reduced_ax_data.autoscale()
-            self._vmi_reduced_ax.figure.canvas.draw()
 
-            self._vmi_fit_ax_data.set_data(self.graph_data['vmi_fit'])
-            data_shape = self.graph_data['vmi_fit'].shape
-            extent = (0, data_shape[0], 0, data_shape[1])
-            with IgnoreWarnings("makes transformation singular"):
-                self._vmi_fit_ax_data.set_extent(extent)
-            self._vmi_fit_ax_data.autoscale()
-            self._vmi_fit_ax.figure.canvas.draw()
+    def update_image_window(self):
+            
+        self._vmi_raw_ax_data.set_data(self.graph_data['vmi_raw'])
+        data_shape = self.graph_data['vmi_raw'].shape
+        extent = (0, data_shape[0], 0, data_shape[1])
+        with IgnoreWarnings("makes transformation singular"):
+            self._vmi_raw_ax_data.set_extent(extent)
+        self._vmi_raw_ax_data.autoscale()
+        self._vmi_raw_ax.figure.canvas.draw()
+        
+        self._vmi_corr_ax_data.set_data(self.graph_data['vmi_corr'])
+        data_shape = self.graph_data['vmi_corr'].shape
+        extent = (0, data_shape[0], 0, data_shape[1])
+        with IgnoreWarnings("makes transformation singular"):
+            self._vmi_corr_ax_data.set_extent(extent)
+        self._vmi_corr_ax_data.autoscale()
+        self._vmi_corr_ax.figure.canvas.draw()
+        
+        self._vmi_reduced_ax_data.set_data(self.graph_data['vmi_reduced'])
+        data_shape = self.graph_data['vmi_reduced'].shape
+        extent = (0, data_shape[0], 0, data_shape[1])
+        with IgnoreWarnings("makes transformation singular"):
+            self._vmi_reduced_ax_data.set_extent(extent)
+        self._vmi_reduced_ax_data.autoscale()
+        self._vmi_reduced_ax.figure.canvas.draw()
 
-            self._vmi_inverse_ax_data.set_data(self.graph_data['vmi_inverse'])
-            data_shape = self.graph_data['vmi_inverse'].shape
-            extent = (0, data_shape[0], 0, data_shape[1])
-            with IgnoreWarnings("makes transformation singular"):
-                self._vmi_inverse_ax_data.set_extent(extent)
-            self._vmi_inverse_ax_data.autoscale()
-            self._vmi_inverse_ax.figure.canvas.draw()
+        self._vmi_fit_ax_data.set_data(self.graph_data['vmi_fit'])
+        data_shape = self.graph_data['vmi_fit'].shape
+        extent = (0, data_shape[0], 0, data_shape[1])
+        with IgnoreWarnings("makes transformation singular"):
+            self._vmi_fit_ax_data.set_extent(extent)
+        self._vmi_fit_ax_data.autoscale()
+        self._vmi_fit_ax.figure.canvas.draw()
 
-            # PES in the image correction tab
-            radial, rdf = self.graph_data['subt_rdf']
-            self._vmi_rdf_ax_data.set_data(radial, rdf)
-            self.set_new_xlim_ylim(radial, rdf, self._vmi_rdf_ax, 
-                None, None)
-            self._vmi_rdf_ax.figure.canvas.draw()
+        self._vmi_inverse_ax_data.set_data(self.graph_data['vmi_inverse'])
+        data_shape = self.graph_data['vmi_inverse'].shape
+        extent = (0, data_shape[0], 0, data_shape[1])
+        with IgnoreWarnings("makes transformation singular"):
+            self._vmi_inverse_ax_data.set_extent(extent)
+        self._vmi_inverse_ax_data.autoscale()
+        self._vmi_inverse_ax.figure.canvas.draw()
+
+        # PES in the image correction tab
+        radial, rdf = self.graph_data['subt_rdf']
+        self._vmi_rdf_ax_data.set_data(radial, rdf)
+        self.set_new_xlim_ylim(radial, rdf, self._vmi_rdf_ax, 
+            None, None)
+        self._vmi_rdf_ax.figure.canvas.draw()
 
     
     def get_mq_lim_data(self, mq_coor):
@@ -2294,173 +2494,6 @@ class Ui_MainWindow(object):
         ax.set_ylim(new_ylim)
 
 
-    def update_main_tof_window(self):
-        tof_start, tof_end, tof_bins = self.get_tof_lim_data()
-        new_tof_coor = np.linspace(tof_start, tof_end, num=tof_bins)
-        with IgnoreWarnings("length one"):
-            new_fore_tof = rebinning(new_tof_coor, *self.graph_data['tof_fore'])
-            new_back_tof = rebinning(new_tof_coor, *self.graph_data['tof_back'])
-            new_subt_tof = rebinning(new_tof_coor, *self.graph_data['tof_subt'])
-        
-        self._line_fore_tof.set_data(new_tof_coor, new_fore_tof)
-        self._line_back_tof.set_data(new_tof_coor, new_back_tof)
-        self._line_subt_tof.set_data(new_tof_coor, new_subt_tof)
-        yscale = self.combobox_tof_yscale.currentText().lower()
-        self._fore_tof_ax.set_yscale(yscale)
-        self._back_tof_ax.set_yscale(yscale)
-        self._subt_tof_ax.set_yscale(yscale)
-        
-        self.set_new_xlim_ylim(*self.graph_data['tof_fore'], self._fore_tof_ax, 
-            self.graph_data['tof_start'], self.graph_data['tof_end'], kind=yscale)
-        self.set_new_xlim_ylim(*self.graph_data['tof_back'], self._back_tof_ax, 
-            self.graph_data['tof_start'], self.graph_data['tof_end'], kind=yscale)
-        self.set_new_xlim_ylim(*self.graph_data['tof_subt'], self._subt_tof_ax, 
-            self.graph_data['tof_start'], self.graph_data['tof_end'], kind=yscale)
-
-        self._line_fore_tof.figure.canvas.draw()
-        self._line_back_tof.figure.canvas.draw()
-        self._line_subt_tof.figure.canvas.draw()
-        
-        # update calibration part here!
-        
-        tof_coor, raw_tof = self.graph_data['tof_subt']
-        with IgnoreWarnings("length one"):
-            new_raw_tof = rebinning(new_tof_coor, tof_coor, raw_tof)
-        self._line_raw_tof.set_data(new_tof_coor, new_raw_tof)
-
-
-        # perform calibration here!
-
-        ################
-
-        cal_points_string = self.text_edit_tof_cal_points.toPlainText()
-        cal_points_string = re.sub(' ', '', cal_points_string)
-        pairs = cal_points_string.split('\n')
-        ion_tof_mq_peaks = []
-        for pair in pairs:
-            ion_tof_mq_peaks.append(np.array(list(pair.split(',')), dtype=float))
-        ion_tof_mq_peaks = np.array(ion_tof_mq_peaks)
-        tof_points, mq_points = ion_tof_mq_peaks.T
-
-
-        ion_calibration_dict = tof_mq_calibration(peaks=ion_tof_mq_peaks)
-        (_, _, _, _, ion_constants_dict) = list(ion_calibration_dict.values())
-        ion_constants = ion_constants_dict['timezero'], ion_constants_dict['C']
-        tof_mq_coor_func = lambda tof: tof_mq_coordinate_func(tof, *ion_constants)
-        tof_to_mq = lambda tof, spec, axis=None: tof_to_mq_conversion(tof, spec, *ion_constants, axis=axis)
-        
-        self.ion_tof_calibration_constants = ion_constants
-
-        model_tof = np.linspace(np.min(tof_points), np.max(tof_points), num=1000)
-        self._line_raw_tof_points.set_data(tof_points, raw_tof[closest(tof_points, tof_coor)])
-
-        # set_default_labels(ax1, title='calibration points', xlabel='tof (ns)', ylabel='tof (ns)')
-        
-
-        self._line_cal_tof.set_data(model_tof, tof_mq_coor_func(model_tof))
-        self._line_cal_tof_points.set_data(tof_points, mq_points)
-        self.set_new_xlim_ylim(np.concatenate((model_tof, tof_points)), 
-                               np.concatenate((tof_mq_coor_func(model_tof), mq_points)), 
-                               self._cal_tof_ax, None, None)
-
-        # set_default_labels(ax2, title='calibration fit', xlabel='tof (ns)', ylabel='m/q')
-
-        
-        ################
-        
-
-        mq_raw_coor, mq_raw_spectra = tof_to_mq(tof_coor, raw_tof)
-        mq_start, mq_end, mq_bins = self.get_mq_lim_data(tof_mq_coor_func(tof_coor))
-
-        mq_coor = np.linspace(mq_start, mq_end, num=mq_bins)
-        if len(mq_raw_coor) < 2:
-            mq_coor = np.array([])
-            mq_spectra = np.array([])
-        else:
-            mq_spectra = rebinning(mq_coor, mq_raw_coor, mq_raw_spectra)
-
-        self.graph_data['mq_subt'] = mq_coor, mq_spectra
-        self._line_mq_tof.set_data(self.graph_data['mq_subt'])
-
-        
-        self.set_new_xlim_ylim(*self.graph_data['tof_subt'], self._raw_tof_ax, 
-            *self.get_tof_lim_data()[:2])
-        self.set_new_xlim_ylim(*self.graph_data['mq_subt'], self._mq_tof_ax, 
-            *self.get_mq_lim_data(tof_mq_coor_func(tof_coor))[:2])
-        # self._mq_tof_ax.ticklabel_format(axis='y', useOffset=False)  # setting the ylim resets the format! This is a quick fix
-        
-        self._line_raw_tof.figure.canvas.draw()
-        self._line_cal_tof.figure.canvas.draw()
-        self._line_cal_tof_points.figure.canvas.draw()
-        self._line_mq_tof.figure.canvas.draw()
-        self._line_raw_tof_points.figure.canvas.draw()
-
-        mq_raw_coor, mq_raw_fore = tof_to_mq(*self.graph_data['tof_fore'])
-        mq_start, mq_end, mq_bins = self.get_mq_lim_data(tof_mq_coor_func(tof_coor))
-        mq_coor = np.linspace(mq_start, mq_end, num=mq_bins)
-        if len(mq_raw_coor) < 2:
-            mq_coor = np.array([])
-            mq_fore = np.array([])
-        else:
-            mq_fore = rebinning(mq_coor, mq_raw_coor, mq_raw_fore)
-            
-        mq_raw_coor, mq_raw_back = tof_to_mq(*self.graph_data['tof_back'])
-        mq_start, mq_end, mq_bins = self.get_mq_lim_data(tof_mq_coor_func(tof_coor))
-        mq_coor = np.linspace(mq_start, mq_end, num=mq_bins)
-        if len(mq_raw_coor) < 2:
-            mq_coor = np.array([])
-            mq_back = np.array([])
-        else:
-            mq_back = rebinning(mq_coor, mq_raw_coor, mq_raw_back)
-
-        mq_raw_coor, mq_raw_subt = tof_to_mq(*self.graph_data['tof_subt'])
-        mq_start, mq_end, mq_bins = self.get_mq_lim_data(tof_mq_coor_func(tof_coor))
-        mq_coor = np.linspace(mq_start, mq_end, num=mq_bins)
-        if len(mq_raw_coor) < 2:
-            mq_coor = np.array([])
-            mq_subt = np.array([])
-        else:
-            mq_subt = rebinning(mq_coor, mq_raw_coor, mq_raw_subt)
-
-        self.graph_data['mq_fore'] = mq_coor, mq_fore
-        self.graph_data['mq_back'] = mq_coor, mq_back
-        self.graph_data['mq_subt'] = mq_coor, mq_subt
-        
-
-
-
-
-
-        mq_start, mq_end, mq_bins = self.get_mq_lim_data(mq_coor)
-        new_mq_coor = np.linspace(mq_start, mq_end, num=mq_bins)
-        with IgnoreWarnings("length one"):
-            new_fore_mq = rebinning(new_mq_coor, *self.graph_data['mq_fore'])
-            new_back_mq = rebinning(new_mq_coor, *self.graph_data['mq_back'])
-            new_subt_mq = rebinning(new_mq_coor, *self.graph_data['mq_subt'])
-        
-        self._line_fore_mq.set_data(new_mq_coor, new_fore_mq)
-        self._line_back_mq.set_data(new_mq_coor, new_back_mq)
-        self._line_subt_mq.set_data(new_mq_coor, new_subt_mq)
-        yscale = self.combobox_tof_yscale.currentText().lower()
-        self._fore_mq_ax.set_yscale(yscale)
-        self._back_mq_ax.set_yscale(yscale)
-        self._subt_mq_ax.set_yscale(yscale)
-        
-        self.set_new_xlim_ylim(*self.graph_data['mq_fore'], self._fore_mq_ax, 
-            self.graph_data['mq_start'], self.graph_data['mq_end'], kind=yscale)
-        self.set_new_xlim_ylim(*self.graph_data['mq_back'], self._back_mq_ax, 
-            self.graph_data['mq_start'], self.graph_data['mq_end'], kind=yscale)
-        self.set_new_xlim_ylim(*self.graph_data['mq_subt'], self._subt_mq_ax, 
-            self.graph_data['mq_start'], self.graph_data['mq_end'], kind=yscale)
-
-        self._line_fore_mq.figure.canvas.draw()
-        self._line_back_mq.figure.canvas.draw()
-        self._line_subt_mq.figure.canvas.draw()
-
-
-        
-        
-        self.change_ion_tof_calibration_constants()
 
     def get_ke_lim_data(self, ke_coor):
         ke_start_string = self.text_edit_ke_start.toPlainText()
@@ -2699,6 +2732,7 @@ class Worker(QRunnable):
             self.signals.finished.emit()  # Done
 
 import warnings
+import time
 
 # the threadpool won't be closed until program exit, so we'll ignore this "pool not closed" warning
 warnings.filterwarnings(action='ignore', category=ResourceWarning, module='.*pool')
@@ -2714,6 +2748,8 @@ class IgnoreWarnings(object):
         warnings.filterwarnings("default", message=f".*{self.message}.*")
 
 def round_to_n(x, n):
+    if x == 0:
+        return 0
     return round(x, -int(np.floor(np.sign(x) * np.log10(abs(x)))) + n)
 
 class MainWindow(QMainWindow):
@@ -2732,7 +2768,7 @@ class MainWindow(QMainWindow):
         self.widget = widget
     
     def add_canvas(self, app):
-        layout = app.vmi_abel
+        app.vmi_abel
 
         # # test window for dynamic updating (sinusoidal)
         # pes_fig = Figure(figsize=(5, 3))
@@ -2755,8 +2791,8 @@ class MainWindow(QMainWindow):
         # main window PES canvas
         pes_fig = Figure(figsize=(5, 3))
         pes_canvas = FigureCanvas(pes_fig)
-        layout.addWidget(pes_canvas)
-        layout.addWidget(NavigationToolbar(pes_canvas, self))
+        app.vmi_abel.addWidget(pes_canvas)
+        app.vmi_abel.addWidget(NavigationToolbar(pes_canvas, self))
         app._pes_ax = pes_canvas.figure.subplots()
         app._betas_ax = app._pes_ax.twinx()
 

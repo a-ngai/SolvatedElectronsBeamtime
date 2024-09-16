@@ -54,7 +54,7 @@
        <string notr="true"/>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_vmi_main">
        <property name="sizePolicy">
@@ -472,7 +472,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
            <item>
             <widget class="QTabWidget" name="tabWidget_4">
              <property name="currentIndex">
-              <number>0</number>
+              <number>3</number>
              </property>
              <widget class="QWidget" name="tab_4">
               <property name="sizePolicy">
@@ -534,7 +534,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
               </attribute>
               <layout class="QGridLayout" name="gridLayout_8">
                <item row="0" column="0">
-                <layout class="QGridLayout" name="vmi_show_rdf"/>
+                <layout class="QGridLayout" name="vmi_show_radialdist"/>
                </item>
               </layout>
              </widget>
@@ -560,7 +560,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
               </attribute>
               <layout class="QGridLayout" name="gridLayout_9">
                <item row="0" column="0">
-                <layout class="QGridLayout" name="vmi_show_corr"/>
+                <layout class="QGridLayout" name="vmi_show_corrected"/>
                </item>
               </layout>
              </widget>

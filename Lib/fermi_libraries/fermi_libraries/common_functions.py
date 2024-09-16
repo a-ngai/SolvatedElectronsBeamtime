@@ -673,7 +673,7 @@ def lrange(start, end, step=1, remove=None):
     return changed_list
 
 def closest(locs, array):
-    indices = np.array([np.argmin((array - loc)**2) for loc in locs])
+    indices = np.array([np.argmin((array - loc)**2) for loc in locs], dtype=int)
     return indices
 
 def non_normalized_gaussians(params, x):
