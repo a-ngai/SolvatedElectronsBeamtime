@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>773</width>
+    <width>776</width>
     <height>728</height>
    </rect>
   </property>
@@ -25,7 +25,7 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>751</width>
+      <width>761</width>
       <height>571</height>
      </rect>
     </property>
@@ -100,14 +100,14 @@
      <widget class="QTabWidget" name="tabWidget_2">
       <property name="geometry">
        <rect>
-        <x>430</x>
+        <x>440</x>
         <y>10</y>
         <width>311</width>
         <height>321</height>
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab_7">
        <property name="autoFillBackground">
@@ -360,10 +360,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <widget class="QWidget" name="verticalLayoutWidget">
       <property name="geometry">
        <rect>
-        <x>140</x>
-        <y>340</y>
+        <x>150</x>
+        <y>330</y>
         <width>601</width>
-        <height>201</height>
+        <height>211</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="vmi_abel"/>
@@ -373,63 +373,352 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <attribute name="title">
       <string>Image</string>
      </attribute>
-     <widget class="QWidget" name="gridLayoutWidget_4">
+     <widget class="QGroupBox" name="groupBox_5">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>300</y>
-        <width>471</width>
-        <height>231</height>
+        <x>420</x>
+        <y>390</y>
+        <width>331</width>
+        <height>141</height>
        </rect>
       </property>
-      <layout class="QGridLayout" name="vmi_show_corrected"/>
+      <property name="title">
+       <string>Correction parameters</string>
+      </property>
+      <widget class="QTextEdit" name="text_edit_correct_yzoom">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>100</y>
+         <width>51</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="html">
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_correct_ycenter">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>20</y>
+         <width>49</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>y-center</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="text_edit_correct_rotate">
+       <property name="geometry">
+        <rect>
+         <x>160</x>
+         <y>40</y>
+         <width>51</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="html">
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="text_edit_correct_xcenter">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>51</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="html">
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="text_edit_correct_xzoom">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>100</y>
+         <width>51</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="html">
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="text_edit_correct_ycenter">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>40</y>
+         <width>51</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="html">
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_correct_rotate">
+       <property name="geometry">
+        <rect>
+         <x>160</x>
+         <y>20</y>
+         <width>49</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>rotate</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_correct_xzoom">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>80</y>
+         <width>49</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>x-zoom</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_correct_xcenter">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>49</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>x-center</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_correct_yzoom">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>80</y>
+         <width>49</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>y-zoom</string>
+       </property>
+      </widget>
+      <widget class="QCommandLinkButton" name="button_apply_vmi_corrections">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>100</y>
+         <width>181</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Apply correction</string>
+       </property>
+      </widget>
      </widget>
-     <widget class="QLabel" name="label_raw_image">
+     <widget class="QTabWidget" name="tabWidget_4">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>20</y>
-        <width>71</width>
+        <x>10</x>
+        <y>10</y>
+        <width>361</width>
+        <height>381</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab_4">
+       <attribute name="title">
+        <string>Raw</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_6">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="vmi_show_raw"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_15">
+       <attribute name="title">
+        <string>Fit</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_11">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="vmi_show_fit"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_5">
+       <attribute name="title">
+        <string>Inverse</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_7">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="vmi_show_inverse"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_6">
+       <attribute name="title">
+        <string>Radial dist.</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_8">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="vmi_show_rdf"/>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QTabWidget" name="tabWidget_5">
+      <property name="geometry">
+       <rect>
+        <x>380</x>
+        <y>10</y>
+        <width>371</width>
+        <height>381</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab_13">
+       <attribute name="title">
+        <string>Corrected</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_9">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="vmi_show_corr"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_14">
+       <attribute name="title">
+        <string>Reduced</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_10">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="vmi_show_reduced"/>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QTextEdit" name="text_edit_reduce_image_size">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>430</y>
+        <width>51</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="html">
+       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_reduce_image_size">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>410</y>
+        <width>101</width>
         <height>16</height>
        </rect>
       </property>
       <property name="text">
-       <string>Raw</string>
+       <string>Reduce image size</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_corrected_image">
+     <widget class="QTextBrowser" name="text_browser_gdata_image_size">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>310</y>
-        <width>61</width>
+        <x>320</x>
+        <y>490</y>
+        <width>51</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(144, 144, 144);</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_gdata_image_size">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>470</y>
+        <width>101</width>
         <height>16</height>
        </rect>
       </property>
       <property name="text">
-       <string>Corrected</string>
-      </property>
-     </widget>
-     <widget class="QCommandLinkButton" name="button_apply_vmi_corrections">
-      <property name="geometry">
-       <rect>
-        <x>520</x>
-        <y>400</y>
-        <width>161</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Apply correction</string>
+       <string>gdata image size</string>
       </property>
      </widget>
      <widget class="QGroupBox" name="groupBox_4">
       <property name="geometry">
        <rect>
-        <x>520</x>
-        <y>10</y>
-        <width>221</width>
-        <height>151</height>
+        <x>10</x>
+        <y>390</y>
+        <width>281</width>
+        <height>141</height>
        </rect>
       </property>
       <property name="title">
@@ -465,7 +754,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>90</y>
+         <y>80</y>
          <width>49</width>
          <height>16</height>
         </rect>
@@ -491,7 +780,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <property name="geometry">
         <rect>
          <x>80</x>
-         <y>90</y>
+         <y>80</y>
          <width>49</width>
          <height>16</height>
         </rect>
@@ -564,7 +853,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>110</y>
+         <y>100</y>
          <width>51</width>
          <height>31</height>
         </rect>
@@ -584,7 +873,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <property name="geometry">
         <rect>
          <x>80</x>
-         <y>110</y>
+         <y>100</y>
          <width>51</width>
          <height>31</height>
         </rect>
@@ -604,8 +893,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <widget class="QCommandLinkButton" name="button_get_guess_vmi_corrections">
       <property name="geometry">
        <rect>
-        <x>520</x>
-        <y>160</y>
+        <x>160</x>
+        <y>490</y>
         <width>131</width>
         <height>41</height>
        </rect>
@@ -614,235 +903,15 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <string>Get guess</string>
       </property>
      </widget>
-     <widget class="QGroupBox" name="groupBox_5">
-      <property name="geometry">
-       <rect>
-        <x>520</x>
-        <y>250</y>
-        <width>221</width>
-        <height>151</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>Correction parameters</string>
-      </property>
-      <widget class="QTextEdit" name="text_edit_correct_yzoom">
-       <property name="geometry">
-        <rect>
-         <x>80</x>
-         <y>100</y>
-         <width>51</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="html">
-        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-hr { height: 1px; border-width: 0; }
-li.unchecked::marker { content: &quot;\2610&quot;; }
-li.checked::marker { content: &quot;\2612&quot;; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;1&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_correct_ycenter">
-       <property name="geometry">
-        <rect>
-         <x>80</x>
-         <y>20</y>
-         <width>49</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>y-center</string>
-       </property>
-      </widget>
-      <widget class="QTextEdit" name="text_edit_correct_rotate">
-       <property name="geometry">
-        <rect>
-         <x>160</x>
-         <y>40</y>
-         <width>51</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="html">
-        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-hr { height: 1px; border-width: 0; }
-li.unchecked::marker { content: &quot;\2610&quot;; }
-li.checked::marker { content: &quot;\2612&quot;; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-      <widget class="QTextEdit" name="text_edit_correct_xcenter">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>40</y>
-         <width>51</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="html">
-        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-hr { height: 1px; border-width: 0; }
-li.unchecked::marker { content: &quot;\2610&quot;; }
-li.checked::marker { content: &quot;\2612&quot;; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-      <widget class="QTextEdit" name="text_edit_correct_xzoom">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>100</y>
-         <width>51</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="html">
-        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-hr { height: 1px; border-width: 0; }
-li.unchecked::marker { content: &quot;\2610&quot;; }
-li.checked::marker { content: &quot;\2612&quot;; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;1&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-      <widget class="QTextEdit" name="text_edit_correct_ycenter">
-       <property name="geometry">
-        <rect>
-         <x>80</x>
-         <y>40</y>
-         <width>51</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="html">
-        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-hr { height: 1px; border-width: 0; }
-li.unchecked::marker { content: &quot;\2610&quot;; }
-li.checked::marker { content: &quot;\2612&quot;; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_correct_rotate">
-       <property name="geometry">
-        <rect>
-         <x>160</x>
-         <y>20</y>
-         <width>49</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>rotate</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_correct_xzoom">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>80</y>
-         <width>49</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>x-zoom</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_correct_xcenter">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>49</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>x-center</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_correct_yzoom">
-       <property name="geometry">
-        <rect>
-         <x>80</x>
-         <y>80</y>
-         <width>49</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>y-zoom</string>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QTabWidget" name="tabWidget_4">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>491</width>
-        <height>281</height>
-       </rect>
-      </property>
-      <property name="currentIndex">
-       <number>2</number>
-      </property>
-      <widget class="QWidget" name="tab_4">
-       <attribute name="title">
-        <string>Raw</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout_6">
-        <item row="0" column="0">
-         <layout class="QGridLayout" name="vmi_show_raw"/>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="tab_5">
-       <attribute name="title">
-        <string>Inverse</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout_7">
-        <item row="0" column="0">
-         <layout class="QGridLayout" name="vmi_show_inverse"/>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="tab_6">
-       <attribute name="title">
-        <string>PES</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout_8">
-        <item row="0" column="0">
-         <layout class="QGridLayout" name="vmi_show_pes"/>
-        </item>
-       </layout>
-      </widget>
-     </widget>
-     <zorder>gridLayoutWidget_4</zorder>
-     <zorder>button_apply_vmi_corrections</zorder>
+     <zorder>groupBox_5</zorder>
+     <zorder>tabWidget_4</zorder>
+     <zorder>text_edit_reduce_image_size</zorder>
+     <zorder>label_reduce_image_size</zorder>
+     <zorder>text_browser_gdata_image_size</zorder>
+     <zorder>label_gdata_image_size</zorder>
      <zorder>groupBox_4</zorder>
      <zorder>button_get_guess_vmi_corrections</zorder>
-     <zorder>groupBox_5</zorder>
-     <zorder>label_corrected_image</zorder>
-     <zorder>label_raw_image</zorder>
-     <zorder>tabWidget_4</zorder>
+     <zorder>tabWidget_5</zorder>
     </widget>
     <widget class="QWidget" name="tab_calibration">
      <attribute name="title">
@@ -930,11 +999,11 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <string>Pixel, Energy</string>
       </property>
      </widget>
-     <widget class="QCommandLinkButton" name="button_apply_calibration">
+     <widget class="QCommandLinkButton" name="button_apply_pes_calibration">
       <property name="geometry">
        <rect>
-        <x>570</x>
-        <y>390</y>
+        <x>460</x>
+        <y>370</y>
         <width>172</width>
         <height>41</height>
        </rect>
@@ -1112,6 +1181,19 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <string>Calibration fit</string>
       </property>
      </widget>
+     <widget class="QCommandLinkButton" name="button_apply_pes_use_constants">
+      <property name="geometry">
+       <rect>
+        <x>610</x>
+        <y>310</y>
+        <width>131</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Use constants</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_tof_main">
      <attribute name="title">
@@ -1122,12 +1204,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>731</width>
+        <width>741</width>
         <height>361</height>
        </rect>
       </property>
       <property name="currentIndex">
-       <number>5</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab_9">
        <property name="autoFillBackground">
@@ -2420,7 +2502,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <rect>
       <x>10</x>
       <y>580</y>
-      <width>751</width>
+      <width>761</width>
       <height>91</height>
      </rect>
     </property>
@@ -2431,7 +2513,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>773</width>
+     <width>776</width>
      <height>21</height>
     </rect>
    </property>

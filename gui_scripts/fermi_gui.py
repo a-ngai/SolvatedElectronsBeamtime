@@ -26,14 +26,14 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(773, 728)
+        MainWindow.resize(776, 728)
         MainWindow.setStyleSheet(u"")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.tabWidget = QTabWidget(self.centralwidget)
         self.tabWidget.setObjectName(u"tabWidget")
         self.tabWidget.setEnabled(True)
-        self.tabWidget.setGeometry(QRect(10, 10, 751, 571))
+        self.tabWidget.setGeometry(QRect(10, 10, 761, 571))
         self.tabWidget.setContextMenuPolicy(Qt.ContextMenuPolicy.PreventContextMenu)
         self.tabWidget.setStyleSheet(u"")
         self.tab_vmi_main = QWidget()
@@ -63,7 +63,7 @@ class Ui_MainWindow(object):
         self.button_fetch_new_files.setGeometry(QRect(10, 210, 181, 31))
         self.tabWidget_2 = QTabWidget(self.tab_vmi_main)
         self.tabWidget_2.setObjectName(u"tabWidget_2")
-        self.tabWidget_2.setGeometry(QRect(430, 10, 311, 321))
+        self.tabWidget_2.setGeometry(QRect(440, 10, 311, 321))
         self.tab_7 = QWidget()
         self.tab_7.setObjectName(u"tab_7")
         self.tab_7.setAutoFillBackground(False)
@@ -165,67 +165,16 @@ class Ui_MainWindow(object):
         self.label_folder_status.setGeometry(QRect(20, 70, 91, 16))
         self.verticalLayoutWidget = QWidget(self.tab_vmi_main)
         self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(140, 340, 601, 201))
+        self.verticalLayoutWidget.setGeometry(QRect(150, 330, 601, 211))
         self.vmi_abel = QVBoxLayout(self.verticalLayoutWidget)
         self.vmi_abel.setObjectName(u"vmi_abel")
         self.vmi_abel.setContentsMargins(0, 0, 0, 0)
         self.tabWidget.addTab(self.tab_vmi_main, "")
         self.tab_image_correction = QWidget()
         self.tab_image_correction.setObjectName(u"tab_image_correction")
-        self.gridLayoutWidget_4 = QWidget(self.tab_image_correction)
-        self.gridLayoutWidget_4.setObjectName(u"gridLayoutWidget_4")
-        self.gridLayoutWidget_4.setGeometry(QRect(20, 300, 471, 231))
-        self.vmi_show_corrected = QGridLayout(self.gridLayoutWidget_4)
-        self.vmi_show_corrected.setObjectName(u"vmi_show_corrected")
-        self.vmi_show_corrected.setContentsMargins(0, 0, 0, 0)
-        self.label_raw_image = QLabel(self.tab_image_correction)
-        self.label_raw_image.setObjectName(u"label_raw_image")
-        self.label_raw_image.setGeometry(QRect(40, 20, 71, 16))
-        self.label_corrected_image = QLabel(self.tab_image_correction)
-        self.label_corrected_image.setObjectName(u"label_corrected_image")
-        self.label_corrected_image.setGeometry(QRect(40, 310, 61, 16))
-        self.button_apply_vmi_corrections = QCommandLinkButton(self.tab_image_correction)
-        self.button_apply_vmi_corrections.setObjectName(u"button_apply_vmi_corrections")
-        self.button_apply_vmi_corrections.setGeometry(QRect(520, 400, 161, 41))
-        self.groupBox_4 = QGroupBox(self.tab_image_correction)
-        self.groupBox_4.setObjectName(u"groupBox_4")
-        self.groupBox_4.setGeometry(QRect(520, 10, 221, 151))
-        self.label_guess_ycenter = QLabel(self.groupBox_4)
-        self.label_guess_ycenter.setObjectName(u"label_guess_ycenter")
-        self.label_guess_ycenter.setGeometry(QRect(80, 20, 49, 16))
-        self.label_guess_rotate = QLabel(self.groupBox_4)
-        self.label_guess_rotate.setObjectName(u"label_guess_rotate")
-        self.label_guess_rotate.setGeometry(QRect(160, 20, 49, 16))
-        self.label_guess_xzoom = QLabel(self.groupBox_4)
-        self.label_guess_xzoom.setObjectName(u"label_guess_xzoom")
-        self.label_guess_xzoom.setGeometry(QRect(10, 90, 49, 16))
-        self.label_guess_xcenter = QLabel(self.groupBox_4)
-        self.label_guess_xcenter.setObjectName(u"label_guess_xcenter")
-        self.label_guess_xcenter.setGeometry(QRect(10, 20, 49, 16))
-        self.label_guess_yzoom = QLabel(self.groupBox_4)
-        self.label_guess_yzoom.setObjectName(u"label_guess_yzoom")
-        self.label_guess_yzoom.setGeometry(QRect(80, 90, 49, 16))
-        self.text_display_guess_xcenter = QTextBrowser(self.groupBox_4)
-        self.text_display_guess_xcenter.setObjectName(u"text_display_guess_xcenter")
-        self.text_display_guess_xcenter.setGeometry(QRect(10, 40, 51, 31))
-        self.text_dsplay_guess_ycenter = QTextBrowser(self.groupBox_4)
-        self.text_dsplay_guess_ycenter.setObjectName(u"text_dsplay_guess_ycenter")
-        self.text_dsplay_guess_ycenter.setGeometry(QRect(80, 40, 51, 31))
-        self.text_display_guess_rotate = QTextBrowser(self.groupBox_4)
-        self.text_display_guess_rotate.setObjectName(u"text_display_guess_rotate")
-        self.text_display_guess_rotate.setGeometry(QRect(160, 40, 51, 31))
-        self.text_display_guess_xzoom = QTextBrowser(self.groupBox_4)
-        self.text_display_guess_xzoom.setObjectName(u"text_display_guess_xzoom")
-        self.text_display_guess_xzoom.setGeometry(QRect(10, 110, 51, 31))
-        self.text_diesplay_guess_yzoom = QTextBrowser(self.groupBox_4)
-        self.text_diesplay_guess_yzoom.setObjectName(u"text_diesplay_guess_yzoom")
-        self.text_diesplay_guess_yzoom.setGeometry(QRect(80, 110, 51, 31))
-        self.button_get_guess_vmi_corrections = QCommandLinkButton(self.tab_image_correction)
-        self.button_get_guess_vmi_corrections.setObjectName(u"button_get_guess_vmi_corrections")
-        self.button_get_guess_vmi_corrections.setGeometry(QRect(520, 160, 131, 41))
         self.groupBox_5 = QGroupBox(self.tab_image_correction)
         self.groupBox_5.setObjectName(u"groupBox_5")
-        self.groupBox_5.setGeometry(QRect(520, 250, 221, 151))
+        self.groupBox_5.setGeometry(QRect(420, 390, 331, 141))
         self.text_edit_correct_yzoom = QTextEdit(self.groupBox_5)
         self.text_edit_correct_yzoom.setObjectName(u"text_edit_correct_yzoom")
         self.text_edit_correct_yzoom.setGeometry(QRect(80, 100, 51, 31))
@@ -256,9 +205,12 @@ class Ui_MainWindow(object):
         self.label_correct_yzoom = QLabel(self.groupBox_5)
         self.label_correct_yzoom.setObjectName(u"label_correct_yzoom")
         self.label_correct_yzoom.setGeometry(QRect(80, 80, 49, 16))
+        self.button_apply_vmi_corrections = QCommandLinkButton(self.groupBox_5)
+        self.button_apply_vmi_corrections.setObjectName(u"button_apply_vmi_corrections")
+        self.button_apply_vmi_corrections.setGeometry(QRect(140, 100, 181, 41))
         self.tabWidget_4 = QTabWidget(self.tab_image_correction)
         self.tabWidget_4.setObjectName(u"tabWidget_4")
-        self.tabWidget_4.setGeometry(QRect(10, 10, 491, 281))
+        self.tabWidget_4.setGeometry(QRect(10, 10, 361, 381))
         self.tab_4 = QWidget()
         self.tab_4.setObjectName(u"tab_4")
         self.gridLayout_6 = QGridLayout(self.tab_4)
@@ -269,6 +221,16 @@ class Ui_MainWindow(object):
         self.gridLayout_6.addLayout(self.vmi_show_raw, 0, 0, 1, 1)
 
         self.tabWidget_4.addTab(self.tab_4, "")
+        self.tab_15 = QWidget()
+        self.tab_15.setObjectName(u"tab_15")
+        self.gridLayout_11 = QGridLayout(self.tab_15)
+        self.gridLayout_11.setObjectName(u"gridLayout_11")
+        self.vmi_show_fit = QGridLayout()
+        self.vmi_show_fit.setObjectName(u"vmi_show_fit")
+
+        self.gridLayout_11.addLayout(self.vmi_show_fit, 0, 0, 1, 1)
+
+        self.tabWidget_4.addTab(self.tab_15, "")
         self.tab_5 = QWidget()
         self.tab_5.setObjectName(u"tab_5")
         self.gridLayout_7 = QGridLayout(self.tab_5)
@@ -283,21 +245,95 @@ class Ui_MainWindow(object):
         self.tab_6.setObjectName(u"tab_6")
         self.gridLayout_8 = QGridLayout(self.tab_6)
         self.gridLayout_8.setObjectName(u"gridLayout_8")
-        self.vmi_show_pes = QGridLayout()
-        self.vmi_show_pes.setObjectName(u"vmi_show_pes")
+        self.vmi_show_rdf = QGridLayout()
+        self.vmi_show_rdf.setObjectName(u"vmi_show_rdf")
 
-        self.gridLayout_8.addLayout(self.vmi_show_pes, 0, 0, 1, 1)
+        self.gridLayout_8.addLayout(self.vmi_show_rdf, 0, 0, 1, 1)
 
         self.tabWidget_4.addTab(self.tab_6, "")
+        self.tabWidget_5 = QTabWidget(self.tab_image_correction)
+        self.tabWidget_5.setObjectName(u"tabWidget_5")
+        self.tabWidget_5.setGeometry(QRect(380, 10, 371, 381))
+        self.tabWidget_5.setStyleSheet(u"")
+        self.tab_13 = QWidget()
+        self.tab_13.setObjectName(u"tab_13")
+        self.gridLayout_9 = QGridLayout(self.tab_13)
+        self.gridLayout_9.setObjectName(u"gridLayout_9")
+        self.vmi_show_corr = QGridLayout()
+        self.vmi_show_corr.setObjectName(u"vmi_show_corr")
+
+        self.gridLayout_9.addLayout(self.vmi_show_corr, 0, 0, 1, 1)
+
+        self.tabWidget_5.addTab(self.tab_13, "")
+        self.tab_14 = QWidget()
+        self.tab_14.setObjectName(u"tab_14")
+        self.gridLayout_10 = QGridLayout(self.tab_14)
+        self.gridLayout_10.setObjectName(u"gridLayout_10")
+        self.vmi_show_reduced = QGridLayout()
+        self.vmi_show_reduced.setObjectName(u"vmi_show_reduced")
+
+        self.gridLayout_10.addLayout(self.vmi_show_reduced, 0, 0, 1, 1)
+
+        self.tabWidget_5.addTab(self.tab_14, "")
+        self.text_edit_reduce_image_size = QTextEdit(self.tab_image_correction)
+        self.text_edit_reduce_image_size.setObjectName(u"text_edit_reduce_image_size")
+        self.text_edit_reduce_image_size.setGeometry(QRect(320, 430, 51, 31))
+        self.label_reduce_image_size = QLabel(self.tab_image_correction)
+        self.label_reduce_image_size.setObjectName(u"label_reduce_image_size")
+        self.label_reduce_image_size.setGeometry(QRect(300, 410, 101, 16))
+        self.text_browser_gdata_image_size = QTextBrowser(self.tab_image_correction)
+        self.text_browser_gdata_image_size.setObjectName(u"text_browser_gdata_image_size")
+        self.text_browser_gdata_image_size.setGeometry(QRect(320, 490, 51, 31))
+        self.text_browser_gdata_image_size.setStyleSheet(u"background-color: rgb(144, 144, 144);")
+        self.label_gdata_image_size = QLabel(self.tab_image_correction)
+        self.label_gdata_image_size.setObjectName(u"label_gdata_image_size")
+        self.label_gdata_image_size.setGeometry(QRect(300, 470, 101, 16))
+        self.groupBox_4 = QGroupBox(self.tab_image_correction)
+        self.groupBox_4.setObjectName(u"groupBox_4")
+        self.groupBox_4.setGeometry(QRect(10, 390, 281, 141))
+        self.label_guess_ycenter = QLabel(self.groupBox_4)
+        self.label_guess_ycenter.setObjectName(u"label_guess_ycenter")
+        self.label_guess_ycenter.setGeometry(QRect(80, 20, 49, 16))
+        self.label_guess_rotate = QLabel(self.groupBox_4)
+        self.label_guess_rotate.setObjectName(u"label_guess_rotate")
+        self.label_guess_rotate.setGeometry(QRect(160, 20, 49, 16))
+        self.label_guess_xzoom = QLabel(self.groupBox_4)
+        self.label_guess_xzoom.setObjectName(u"label_guess_xzoom")
+        self.label_guess_xzoom.setGeometry(QRect(10, 80, 49, 16))
+        self.label_guess_xcenter = QLabel(self.groupBox_4)
+        self.label_guess_xcenter.setObjectName(u"label_guess_xcenter")
+        self.label_guess_xcenter.setGeometry(QRect(10, 20, 49, 16))
+        self.label_guess_yzoom = QLabel(self.groupBox_4)
+        self.label_guess_yzoom.setObjectName(u"label_guess_yzoom")
+        self.label_guess_yzoom.setGeometry(QRect(80, 80, 49, 16))
+        self.text_display_guess_xcenter = QTextBrowser(self.groupBox_4)
+        self.text_display_guess_xcenter.setObjectName(u"text_display_guess_xcenter")
+        self.text_display_guess_xcenter.setGeometry(QRect(10, 40, 51, 31))
+        self.text_dsplay_guess_ycenter = QTextBrowser(self.groupBox_4)
+        self.text_dsplay_guess_ycenter.setObjectName(u"text_dsplay_guess_ycenter")
+        self.text_dsplay_guess_ycenter.setGeometry(QRect(80, 40, 51, 31))
+        self.text_display_guess_rotate = QTextBrowser(self.groupBox_4)
+        self.text_display_guess_rotate.setObjectName(u"text_display_guess_rotate")
+        self.text_display_guess_rotate.setGeometry(QRect(160, 40, 51, 31))
+        self.text_display_guess_xzoom = QTextBrowser(self.groupBox_4)
+        self.text_display_guess_xzoom.setObjectName(u"text_display_guess_xzoom")
+        self.text_display_guess_xzoom.setGeometry(QRect(10, 100, 51, 31))
+        self.text_diesplay_guess_yzoom = QTextBrowser(self.groupBox_4)
+        self.text_diesplay_guess_yzoom.setObjectName(u"text_diesplay_guess_yzoom")
+        self.text_diesplay_guess_yzoom.setGeometry(QRect(80, 100, 51, 31))
+        self.button_get_guess_vmi_corrections = QCommandLinkButton(self.tab_image_correction)
+        self.button_get_guess_vmi_corrections.setObjectName(u"button_get_guess_vmi_corrections")
+        self.button_get_guess_vmi_corrections.setGeometry(QRect(160, 490, 131, 41))
         self.tabWidget.addTab(self.tab_image_correction, "")
-        self.gridLayoutWidget_4.raise_()
-        self.button_apply_vmi_corrections.raise_()
+        self.groupBox_5.raise_()
+        self.tabWidget_4.raise_()
+        self.text_edit_reduce_image_size.raise_()
+        self.label_reduce_image_size.raise_()
+        self.text_browser_gdata_image_size.raise_()
+        self.label_gdata_image_size.raise_()
         self.groupBox_4.raise_()
         self.button_get_guess_vmi_corrections.raise_()
-        self.groupBox_5.raise_()
-        self.label_corrected_image.raise_()
-        self.label_raw_image.raise_()
-        self.tabWidget_4.raise_()
+        self.tabWidget_5.raise_()
         self.tab_calibration = QWidget()
         self.tab_calibration.setObjectName(u"tab_calibration")
         self.gridLayoutWidget_5 = QWidget(self.tab_calibration)
@@ -324,9 +360,9 @@ class Ui_MainWindow(object):
         self.label_cal_points = QLabel(self.tab_calibration)
         self.label_cal_points.setObjectName(u"label_cal_points")
         self.label_cal_points.setGeometry(QRect(480, 210, 71, 21))
-        self.button_apply_calibration = QCommandLinkButton(self.tab_calibration)
-        self.button_apply_calibration.setObjectName(u"button_apply_calibration")
-        self.button_apply_calibration.setGeometry(QRect(570, 390, 172, 41))
+        self.button_apply_pes_calibration = QCommandLinkButton(self.tab_calibration)
+        self.button_apply_pes_calibration.setObjectName(u"button_apply_pes_calibration")
+        self.button_apply_pes_calibration.setGeometry(QRect(460, 370, 172, 41))
         self.label_pes_cal_constants = QLabel(self.tab_calibration)
         self.label_pes_cal_constants.setObjectName(u"label_pes_cal_constants")
         self.label_pes_cal_constants.setGeometry(QRect(640, 210, 91, 21))
@@ -363,12 +399,15 @@ class Ui_MainWindow(object):
         self.label_eke_calibration = QLabel(self.tab_calibration)
         self.label_eke_calibration.setObjectName(u"label_eke_calibration")
         self.label_eke_calibration.setGeometry(QRect(490, 20, 161, 16))
+        self.button_apply_pes_use_constants = QCommandLinkButton(self.tab_calibration)
+        self.button_apply_pes_use_constants.setObjectName(u"button_apply_pes_use_constants")
+        self.button_apply_pes_use_constants.setGeometry(QRect(610, 310, 131, 41))
         self.tabWidget.addTab(self.tab_calibration, "")
         self.tab_tof_main = QWidget()
         self.tab_tof_main.setObjectName(u"tab_tof_main")
         self.tabWidget_3 = QTabWidget(self.tab_tof_main)
         self.tabWidget_3.setObjectName(u"tabWidget_3")
-        self.tabWidget_3.setGeometry(QRect(10, 10, 731, 361))
+        self.tabWidget_3.setGeometry(QRect(10, 10, 741, 361))
         self.tab_9 = QWidget()
         self.tab_9.setObjectName(u"tab_9")
         self.tab_9.setAutoFillBackground(False)
@@ -753,11 +792,11 @@ class Ui_MainWindow(object):
         self.tabWidget.addTab(self.tab_settings, "")
         self.print_browser = QTextBrowser(self.centralwidget)
         self.print_browser.setObjectName(u"print_browser")
-        self.print_browser.setGeometry(QRect(10, 580, 751, 91))
+        self.print_browser.setGeometry(QRect(10, 580, 761, 91))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 773, 21))
+        self.menubar.setGeometry(QRect(0, 0, 776, 21))
         self.menuFERMI_On_line_analysis_tool = QMenu(self.menubar)
         self.menuFERMI_On_line_analysis_tool.setObjectName(u"menuFERMI_On_line_analysis_tool")
         MainWindow.setMenuBar(self.menubar)
@@ -770,9 +809,10 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
 
         self.tabWidget.setCurrentIndex(0)
-        self.tabWidget_2.setCurrentIndex(0)
-        self.tabWidget_4.setCurrentIndex(2)
-        self.tabWidget_3.setCurrentIndex(5)
+        self.tabWidget_2.setCurrentIndex(2)
+        self.tabWidget_4.setCurrentIndex(0)
+        self.tabWidget_5.setCurrentIndex(0)
+        self.tabWidget_3.setCurrentIndex(2)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -814,9 +854,69 @@ class Ui_MainWindow(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Stay</p></body></html>", None))
         self.label_folder_status.setText(QCoreApplication.translate("MainWindow", u"Folder status:", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_vmi_main), QCoreApplication.translate("MainWindow", u"VMI Main", None))
-        self.label_raw_image.setText(QCoreApplication.translate("MainWindow", u"Raw", None))
-        self.label_corrected_image.setText(QCoreApplication.translate("MainWindow", u"Corrected", None))
+        self.groupBox_5.setTitle(QCoreApplication.translate("MainWindow", u"Correction parameters", None))
+        self.text_edit_correct_yzoom.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
+        self.label_correct_ycenter.setText(QCoreApplication.translate("MainWindow", u"y-center", None))
+        self.text_edit_correct_rotate.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
+        self.text_edit_correct_xcenter.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
+        self.text_edit_correct_xzoom.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
+        self.text_edit_correct_ycenter.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
+        self.label_correct_rotate.setText(QCoreApplication.translate("MainWindow", u"rotate", None))
+        self.label_correct_xzoom.setText(QCoreApplication.translate("MainWindow", u"x-zoom", None))
+        self.label_correct_xcenter.setText(QCoreApplication.translate("MainWindow", u"x-center", None))
+        self.label_correct_yzoom.setText(QCoreApplication.translate("MainWindow", u"y-zoom", None))
         self.button_apply_vmi_corrections.setText(QCoreApplication.translate("MainWindow", u"Apply correction", None))
+        self.tabWidget_4.setTabText(self.tabWidget_4.indexOf(self.tab_4), QCoreApplication.translate("MainWindow", u"Raw", None))
+        self.tabWidget_4.setTabText(self.tabWidget_4.indexOf(self.tab_15), QCoreApplication.translate("MainWindow", u"Fit", None))
+        self.tabWidget_4.setTabText(self.tabWidget_4.indexOf(self.tab_5), QCoreApplication.translate("MainWindow", u"Inverse", None))
+        self.tabWidget_4.setTabText(self.tabWidget_4.indexOf(self.tab_6), QCoreApplication.translate("MainWindow", u"Radial dist.", None))
+        self.tabWidget_5.setTabText(self.tabWidget_5.indexOf(self.tab_13), QCoreApplication.translate("MainWindow", u"Corrected", None))
+        self.tabWidget_5.setTabText(self.tabWidget_5.indexOf(self.tab_14), QCoreApplication.translate("MainWindow", u"Reduced", None))
+        self.text_edit_reduce_image_size.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
+        self.label_reduce_image_size.setText(QCoreApplication.translate("MainWindow", u"Reduce image size", None))
+        self.label_gdata_image_size.setText(QCoreApplication.translate("MainWindow", u"gdata image size", None))
         self.groupBox_4.setTitle(QCoreApplication.translate("MainWindow", u"Guess parameters", None))
         self.label_guess_ycenter.setText(QCoreApplication.translate("MainWindow", u"y-center", None))
         self.label_guess_rotate.setText(QCoreApplication.translate("MainWindow", u"rotate", None))
@@ -864,55 +964,6 @@ class Ui_MainWindow(object):
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
         self.button_get_guess_vmi_corrections.setText(QCoreApplication.translate("MainWindow", u"Get guess", None))
-        self.groupBox_5.setTitle(QCoreApplication.translate("MainWindow", u"Correction parameters", None))
-        self.text_edit_correct_yzoom.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">1</p></body></html>", None))
-        self.label_correct_ycenter.setText(QCoreApplication.translate("MainWindow", u"y-center", None))
-        self.text_edit_correct_rotate.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">0</p></body></html>", None))
-        self.text_edit_correct_xcenter.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">0</p></body></html>", None))
-        self.text_edit_correct_xzoom.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">1</p></body></html>", None))
-        self.text_edit_correct_ycenter.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">0</p></body></html>", None))
-        self.label_correct_rotate.setText(QCoreApplication.translate("MainWindow", u"rotate", None))
-        self.label_correct_xzoom.setText(QCoreApplication.translate("MainWindow", u"x-zoom", None))
-        self.label_correct_xcenter.setText(QCoreApplication.translate("MainWindow", u"x-center", None))
-        self.label_correct_yzoom.setText(QCoreApplication.translate("MainWindow", u"y-zoom", None))
-        self.tabWidget_4.setTabText(self.tabWidget_4.indexOf(self.tab_4), QCoreApplication.translate("MainWindow", u"Raw", None))
-        self.tabWidget_4.setTabText(self.tabWidget_4.indexOf(self.tab_5), QCoreApplication.translate("MainWindow", u"Inverse", None))
-        self.tabWidget_4.setTabText(self.tabWidget_4.indexOf(self.tab_6), QCoreApplication.translate("MainWindow", u"PES", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_image_correction), QCoreApplication.translate("MainWindow", u"Image", None))
         self.label_pixel_axis.setText(QCoreApplication.translate("MainWindow", u"Pixels", None))
         self.label_energy_axis.setText(QCoreApplication.translate("MainWindow", u"Energies", None))
@@ -926,7 +977,7 @@ class Ui_MainWindow(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">0, 0</p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
         self.label_cal_points.setText(QCoreApplication.translate("MainWindow", u"Pixel, Energy", None))
-        self.button_apply_calibration.setText(QCoreApplication.translate("MainWindow", u"Apply calibration", None))
+        self.button_apply_pes_calibration.setText(QCoreApplication.translate("MainWindow", u"Apply calibration", None))
         self.label_pes_cal_constants.setText(QCoreApplication.translate("MainWindow", u"Cal. constant", None))
         self.text_display_cal_constant.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
@@ -965,6 +1016,7 @@ class Ui_MainWindow(object):
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
         self.label_ke_end.setText(QCoreApplication.translate("MainWindow", u"KE end", None))
         self.label_eke_calibration.setText(QCoreApplication.translate("MainWindow", u"Calibration fit", None))
+        self.button_apply_pes_use_constants.setText(QCoreApplication.translate("MainWindow", u"Use constants", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_calibration), QCoreApplication.translate("MainWindow", u"Cal. (PES)", None))
         self.tabWidget_3.setTabText(self.tabWidget_3.indexOf(self.tab_9), QCoreApplication.translate("MainWindow", u"Fore", None))
         self.tabWidget_3.setTabText(self.tabWidget_3.indexOf(self.tab_11), QCoreApplication.translate("MainWindow", u"Back", None))
@@ -1174,7 +1226,6 @@ class Ui_MainWindow(object):
 
 
 
-
         try:
             CURRENT_SCRIPT_DIR = str(pathlib.Path(__file__).parent.resolve())+'/'
         except NameError:  # this will happen in .ipynb files
@@ -1203,7 +1254,7 @@ class Ui_MainWindow(object):
         look_in_dir = resolve_path(CURRENT_SCRIPT_DIR, '..')
         list_of_files = os.listdir(look_in_dir)
 
-        matches = np.argwhere(np.array([True if re.match('G_r.*\.h5', file) else False for file in list_of_files]))
+        matches = np.argwhere(np.array([True if re.match(r'G_r.*\.h5', file) else False for file in list_of_files]))
         if len(matches) > 0:
             match_filename = f'{look_in_dir}/{list_of_files[matches[0][0]]}'
         else:
@@ -1230,26 +1281,44 @@ class Ui_MainWindow(object):
             'background_process_active' : False,
             'gdata_filepath' : '',
         }
+        self.flags = {
+            'changed_gdata_filepath' : False,
+            'changed_gdata' : False,  # not implemented yet!
+        }
         self.graph_data = {
-            'vmi_fore' : np.array([[],]),
-            'vmi_back' : np.array([[],]),
-            'vmi_subt' : np.array([[],]),
-            'pes' : np.array([0,]),
-            'betas' : np.array(4*[[0,],]),
-            'eke' : np.array([0,]),
+            'vmi_fore' : np.array([[np.nan,],]),
+            'vmi_back' : np.array([[np.nan,],]),
+            'vmi_subt' : np.array([[np.nan,],]),
+            'vmi_raw' : np.array([[np.nan,],]),
+            'vmi_corr' : np.array([[np.nan,],]),
+            'vmi_reduced' : np.array([[np.nan,],]),
+            'vmi_inverse' : np.array([[np.nan,],]),
+            'vmi_fit' : np.array([[np.nan,],]),
+            'eke' : np.array([]),
+            'pes' : np.array([]),
+            'betas' : np.zeros(shape=(1,4)),
+            'radial' : np.array([]),
+            'rdf' : np.array([]),
             'eke_start' : None,
             'eke_end' : None,
             'eke_bins' : None,
             'tof_start' : None,
             'tof_end' : None,
             'tof_bins' : None,
-            'tof_fore' : np.array([[0,], [0,],]),
-            'tof_back' : np.array([[0,], [0,],]),
-            'tof_subt' : np.array([[0,], [0,],]),
-            'mq_subt' : np.array([[0,], [0,],]),
+            'tof_fore' : [np.array([]), np.array([])],
+            'tof_back' : [np.array([]), np.array([])],
+            'tof_subt' : [np.array([]), np.array([])],
+            'mq_subt' : [np.array([]), np.array([])],
             'mq_start' : None,
             'mq_end' : None,
             'mq_bins' : None,
+        }
+        
+        self.image_correction_data = {
+            'center' : (None, None),
+            'zoom' : (1, 1),
+            'rotate' : 0,
+            'reduce_size' : None,
         }
 
         self.pes_calibration_constant = 1
@@ -1261,9 +1330,13 @@ class Ui_MainWindow(object):
         self.threadpool = QThreadPool()
         if self.terminal_print: print("Multithreading with maximum %d threads" % self.threadpool.maxThreadCount())
 
-        self.vmi_data = np.zeros(shape=(4,1,1,1))
-        self.tof_data = np.zeros(shape=(1,)), np.zeros(shape=(4,1,1))
-        self.mq_data = np.zeros(shape=(1,)), np.zeros(shape=(4,1,1))
+        # self.vmi_data = np.zeros(shape=(4,1,1))
+        self.vmi_data = np.zeros(shape=(4,0,0))
+        self.tof_data = np.zeros(shape=(1)), np.zeros(shape=(4,1))
+        self.mq_data = np.zeros(shape=(1,)), np.zeros(shape=(4,1))
+        # self.vmi_data = np.array([],]), np.array([[],])
+        # self.vmi_data = np.array([[],])
+        # self.vmi_data = np.array([[],])
         self.gdata = None
         self.betas = [] # the existent beta values from gdata
 
@@ -1287,6 +1360,7 @@ class Ui_MainWindow(object):
         self.box_make_cache.toggled.connect(self.apply_settings)
         self.box_load_from_cache.toggled.connect(self.apply_settings)
         self.combobox_tof_yscale.currentIndexChanged.connect(self.redraw_tof_data) # still need to do
+        self.button_apply_vmi_corrections.clicked.connect(self.apply_settings)
 
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_data_if_change)
@@ -1453,7 +1527,7 @@ class Ui_MainWindow(object):
             vmi_data = self.vmi_data
             return vmi_data
         # vmi_data = simplify_data(vmi_data, single_run=True, single_rule=True)
-
+        vmi_data = [data[0] for data in vmi_data]
         self.vmi_data = vmi_data
         return vmi_data
 
@@ -1494,6 +1568,7 @@ class Ui_MainWindow(object):
             return tof_data
         # vmi_data = simplify_data(vmi_data, single_run=True, single_rule=True)
 
+        tof_data = tof_data[0], [data[0] for data in tof_data[1]]
         self.tof_data = tof_data
         return tof_data
     
@@ -1534,6 +1609,10 @@ class Ui_MainWindow(object):
         worker.signals.finished.connect(self.redraw_tof_data)
         self.threadpool.start(worker)
 
+    def combine_process_redraw_vmi_data_and_start_get_tof_data_in_worker(self):
+        self.start_get_tof_data_in_worker()
+        self.process_redraw_vmi_data()
+
     def update_data(self, multithreading=True):
 
         if multithreading:  # complicated structure, because updating the GUI is NOT thread-safe!
@@ -1541,27 +1620,68 @@ class Ui_MainWindow(object):
             self.borrow_background_key()
             worker = Worker(self.get_new_vmi_data)
             worker.signals.finished.connect(self.return_background_key)
-            worker.signals.finished.connect(self.redraw_vmi_data)
-            worker.signals.finished.connect(self.start_get_tof_data_in_worker)
+            if True:
+                worker.signals.finished.connect(self.combine_process_redraw_vmi_data_and_start_get_tof_data_in_worker)
+                # I don't know why I need to combine these two. Maybe because when the thread is finished executing
+                # it can only take one more worker request and "finishes" so that a second request does not work?
+            else:
+                worker.signals.finished.connect(self.process_redraw_vmi_data)
+                worker.signals.finished.connect(self.start_get_tof_data_in_worker)
             self.threadpool.start(worker)
         else:
             self.get_new_vmi_data()
             self.get_new_tof_data()
-            self.redraw_data()
+            self.redraw_canvasses()
 
-
-    def redraw_data(self):
+    def update_canvases(self):
         self.redraw_vmi_data()
         self.redraw_tof_data()
 
-    def redraw_vmi_data(self):
-        # VMI section
+    def set_image_correction_from_panel(self):
+        xcenter_text = self.text_edit_correct_xcenter.toPlainText()
+        if xcenter_text == '':
+            xcenter = None
+        else:
+            xcenter = int(xcenter_text)
+        ycenter_text = self.text_edit_correct_ycenter.toPlainText()
+        if ycenter_text == '':
+            ycenter = None
+        else:
+            ycenter = int(ycenter_text)
+        self.image_correction_data['center'] = (xcenter, ycenter)
 
+        xzoom_text = self.text_edit_correct_xzoom.toPlainText()
+        if xzoom_text == '':
+            xzoom = 1
+        else:
+            xzoom = float(xzoom_text)
+        yzoom_text = self.text_edit_correct_yzoom.toPlainText()
+        if yzoom_text == '':
+            yzoom = 1
+        else:
+            yzoom = float(yzoom_text)
+        self.image_correction_data['zoom'] = (xzoom, yzoom)
+
+        rotate_text = self.text_edit_correct_rotate.toPlainText()
+        if rotate_text == '':
+            rotate = 1
+        else:
+            rotate = float(self.text_edit_correct_rotate.toPlainText())
+        self.image_correction_data['rotate'] = rotate
+        reduce_image_size_text = self.text_edit_reduce_image_size.toPlainText()
+        if reduce_image_size_text == '':
+            reduce_image_size = None
+        else:
+            reduce_image_size = int(reduce_image_size_text)
+        self.image_correction_data['reduce_size'] = reduce_image_size
+
+    def remake_vmi_data(self):
+        # VMI section
         vmi_data = self.vmi_data  # obtained through the self.get_new_vmi_data() method
         if self.box_slu_parity.isChecked():
-            vmi_felon_sluoff, vmi_felon_sluon, vmi_feloff_sluoff, vmi_feloff_sluon = (data[0] for data in vmi_data)
+            vmi_felon_sluoff, vmi_felon_sluon, vmi_feloff_sluoff, vmi_feloff_sluon = (data for data in vmi_data)
         else:
-            vmi_felon_sluon, vmi_felon_sluoff, vmi_feloff_sluon, vmi_feloff_sluoff = (data[0] for data in vmi_data)
+            vmi_felon_sluon, vmi_felon_sluoff, vmi_feloff_sluon, vmi_feloff_sluoff = (data for data in vmi_data)
 
         vmi_fore = (
             (-1)**self.box_flip_felonsluon.isChecked() * self.box_fore_felonsluon.isChecked() * vmi_felon_sluon
@@ -1579,43 +1699,117 @@ class Ui_MainWindow(object):
         self.graph_data['vmi_fore'] = vmi_fore
         self.graph_data['vmi_back'] = vmi_back
         self.graph_data['vmi_subt'] = vmi_subt
-
+        
 
         ### VMI INVERSION PLACE
 
-        vmi_center = (264, 260)
-        vmi_rotation = 0
-        vmi_ellip = (1, 1.1)
         half_filter = [True, True]
+        
 
-        vmi = resize(vmi_subt, (512, 512), axis=(0,1))
-        corrected = stretch(rotate(center_image(vmi, vmi_center), vmi_rotation), vmi_ellip)
-        folded = foldHalf(corrected, half_filter=half_filter)
+        reduce_image_size = self.image_correction_data['reduce_size']
+        if reduce_image_size is None:
+            reduce_image_size = self.gdata_size
+        raw_image_size = vmi_subt.shape[0]
+        
+        raw_vmi_center = self.image_correction_data['center']
+        vmi_center = list(raw_vmi_center)
+        if raw_vmi_center[0] is None:
+            vmi_center[0] = int(raw_image_size//2)
+        if vmi_center[1] is None:
+            vmi_center[1] = int(raw_image_size//2)
+        vmi_center = tuple(vmi_center)
+
+        raw_vmi_zoom = self.image_correction_data['zoom']
+        vmi_zoom = list(raw_vmi_zoom)
+        vmi_zoom = tuple(vmi_zoom)
+        
+        vmi_rotation = self.image_correction_data['rotate']
+
+        corrected = stretch(rotate(center_image(vmi_subt, vmi_center), vmi_rotation), vmi_zoom)
+        vmi = resize(corrected, (reduce_image_size, reduce_image_size), axis=(0,1))
+        folded = foldHalf(vmi, half_filter=half_filter)
         # resized = resizeFoldedHalf(folded, 256)
         resized = folded
 
-        if self.gdata is None: 
-            gData = loadG(self.status['gdata_filepath'], make_images=True)
-            self.gdata = gData
-            self.betas = gData['l']
 
-        out = cpbasex_energy_inversion(resized, self.gdata, make_images=True, shape='half')
+        self.graph_data['vmi_raw'] = vmi_subt
+        self.graph_data['vmi_corr'] = corrected
+        self.graph_data['vmi_reduced'] = vmi
 
-        rsquare = out['E']
-        rsquare_spectrum = out['IE']
-        betas = out['betas']
+        if self.valid_inversion_condition():
 
-        slope = self.pes_calibration_constant
-        rsquare_to_energy = lambda x: slope * x
-        energies = rsquare_to_energy(rsquare)
-        pes = rsquare_spectrum / slope # jacobian correction
+            if self.gdata is None: 
+                gData = loadG(self.status['gdata_filepath'], make_images=True)
+                self.gdata = gData
+                self.betas = gData['l']
 
-        self.graph_data['pes'] = pes
-        self.graph_data['betas'] = betas
-        self.graph_data['eke'] = energies
+            out = cpbasex_energy_inversion(resized, self.gdata, make_images=True, shape='half')
+            try:
+                inv = out['inv'][:,:]/2
+            except KeyError:
+                inv = vmi * np.nan
+            try:
+                fit = out['fit'][:,:]/2
+            except KeyError:
+                fit = vmi * np.nan
+
+            rsquare = out['E']
+            rsquare_spectrum = out['IE']
+            betas = out['betas']
+
+            slope = self.pes_calibration_constant
+            rsquare_to_energy = lambda x: slope * x
+            energies = rsquare_to_energy(rsquare)
+            pes = rsquare_spectrum / slope # jacobian correction
+            radial = self.gdata['x']
+            rdf = pes * 2/radial  # radial distirubtion function w/ jacobian correction
+
+            self.graph_data['radial'] = radial
+            self.graph_data['rdf'] = rdf
+            self.graph_data['pes'] = pes
+            self.graph_data['betas'] = betas
+            self.graph_data['eke'] = energies
+            self.graph_data['vmi_inverse'] = inv
+            self.graph_data['vmi_fit'] = fit
+
+
+    def process_redraw_vmi_data(self):
+        self.load_gdata()
+        self.set_image_correction_from_panel()
+
+        if True: # this is what I want, but if I do this, the TOF portion won't run?
+            worker = Worker(self.remake_vmi_data)
+            worker.signals.finished.connect(self.redraw_vmi_data)
+            self.threadpool.start(worker)
+        else:
+            self.remake_vmi_data()
+            self.redraw_vmi_data()
+
+
+    def redraw_vmi_data(self):
 
         self.update_pes_window()
         self.update_main_vmi_window()
+        
+    def load_gdata(self):
+        if (self.gdata is None) or self.flags['changed_gdata_filepath']: 
+            gData = loadG(self.status['gdata_filepath'], make_images=True)
+            self.gdata = gData
+            self.betas = gData['l']
+            Nx = len(gData['x'])
+            image_size = Nx * 2
+            self.gdata_size = image_size
+            self.text_browser_gdata_image_size.setText(str(self.gdata_size))
+        self.flags['changed_gdata'] = True
+        
+        
+        if self.image_correction_data['reduce_size'] is None:
+            self.image_correction_data['reduce_size'] = self.gdata_size
+    
+    def valid_inversion_condition(self):
+        
+        reduce_size_matches_gdata =  self.gdata_size == self.image_correction_data['reduce_size']
+        return reduce_size_matches_gdata
 
     def redraw_tof_data(self):
 
@@ -1623,9 +1817,9 @@ class Ui_MainWindow(object):
 
         tof_coor, tof_data = self.tof_data  # obtained through the self.get_new_tof_data() method
         if self.box_slu_parity.isChecked():
-            tof_felon_sluoff, tof_felon_sluon, tof_feloff_sluoff, tof_feloff_sluon = (data[0] for data in tof_data)
+            tof_felon_sluoff, tof_felon_sluon, tof_feloff_sluoff, tof_feloff_sluon = tof_data
         else:
-            tof_felon_sluon, tof_felon_sluoff, tof_feloff_sluon, tof_feloff_sluoff = (data[0] for data in tof_data)
+            tof_felon_sluon, tof_felon_sluoff, tof_feloff_sluon, tof_feloff_sluoff = tof_data
 
         tof_fore = -(
             (-1)**self.box_flip_felonsluon.isChecked() * self.box_fore_felonsluon.isChecked() * tof_felon_sluon
@@ -1640,10 +1834,10 @@ class Ui_MainWindow(object):
             + (-1)**self.box_flip_feloffsluoff.isChecked() * self.box_back_feloffsluoff.isChecked() * tof_feloff_sluoff
         )
         tof_subt = tof_fore - tof_back
-        self.graph_data['tof_fore'] = np.array([tof_coor, tof_fore])
-        self.graph_data['tof_back'] = np.array([tof_coor, tof_back])
-        self.graph_data['tof_subt'] = np.array([tof_coor, tof_subt])
-        self.graph_data['tof_coor'] = np.array([tof_coor, tof_subt])
+        self.graph_data['tof_fore'] = tof_coor, tof_fore
+        self.graph_data['tof_back'] = tof_coor, tof_back
+        self.graph_data['tof_subt'] = tof_coor, tof_subt
+        self.graph_data['tof_coor'] = tof_coor, tof_subt
 
         self.update_main_tof_window()
     
@@ -1709,14 +1903,75 @@ class Ui_MainWindow(object):
             
         else:
             self._fore_ax_data.set_data(self.graph_data['vmi_fore'])
+            data_shape = self.graph_data['vmi_fore'].shape
+            extent = (0, data_shape[0], 0, data_shape[1])
+            with IgnoreWarnings("makes transformation singular"):
+                self._fore_ax_data.set_extent(extent)
             self._fore_ax_data.autoscale()
             self._back_ax_data.set_data(self.graph_data['vmi_back'])
+            data_shape = self.graph_data['vmi_back'].shape
+            extent = (0, data_shape[0], 0, data_shape[1])
+            with IgnoreWarnings("makes transformation singular"):
+                self._back_ax_data.set_extent(extent)
             self._back_ax_data.autoscale()
             self._subt_ax_data.set_data(self.graph_data['vmi_subt'])
+            data_shape = self.graph_data['vmi_subt'].shape
+            extent = (0, data_shape[0], 0, data_shape[1])
+            with IgnoreWarnings("makes transformation singular"):
+                self._subt_ax_data.set_extent(extent)
             self._subt_ax_data.autoscale()
             self._fore_ax_data.figure.canvas.draw()
             self._back_ax_data.figure.canvas.draw()
             self._subt_ax_data.figure.canvas.draw()
+            
+            self._vmi_raw_ax_data.set_data(self.graph_data['vmi_raw'])
+            data_shape = self.graph_data['vmi_raw'].shape
+            extent = (0, data_shape[0], 0, data_shape[1])
+            with IgnoreWarnings("makes transformation singular"):
+                self._vmi_raw_ax_data.set_extent(extent)
+            self._vmi_raw_ax_data.autoscale()
+            self._vmi_raw_ax.figure.canvas.draw()
+            
+            self._vmi_corr_ax_data.set_data(self.graph_data['vmi_corr'])
+            data_shape = self.graph_data['vmi_corr'].shape
+            extent = (0, data_shape[0], 0, data_shape[1])
+            with IgnoreWarnings("makes transformation singular"):
+                self._vmi_corr_ax_data.set_extent(extent)
+            self._vmi_corr_ax_data.autoscale()
+            self._vmi_corr_ax.figure.canvas.draw()
+            
+            self._vmi_reduced_ax_data.set_data(self.graph_data['vmi_reduced'])
+            data_shape = self.graph_data['vmi_reduced'].shape
+            extent = (0, data_shape[0], 0, data_shape[1])
+            with IgnoreWarnings("makes transformation singular"):
+                self._vmi_reduced_ax_data.set_extent(extent)
+            self._vmi_reduced_ax_data.autoscale()
+            self._vmi_reduced_ax.figure.canvas.draw()
+
+            self._vmi_fit_ax_data.set_data(self.graph_data['vmi_fit'])
+            data_shape = self.graph_data['vmi_fit'].shape
+            extent = (0, data_shape[0], 0, data_shape[1])
+            with IgnoreWarnings("makes transformation singular"):
+                self._vmi_fit_ax_data.set_extent(extent)
+            self._vmi_fit_ax_data.autoscale()
+            self._vmi_fit_ax.figure.canvas.draw()
+
+            self._vmi_inverse_ax_data.set_data(self.graph_data['vmi_inverse'])
+            data_shape = self.graph_data['vmi_inverse'].shape
+            extent = (0, data_shape[0], 0, data_shape[1])
+            with IgnoreWarnings("makes transformation singular"):
+                self._vmi_inverse_ax_data.set_extent(extent)
+            self._vmi_inverse_ax_data.autoscale()
+            self._vmi_inverse_ax.figure.canvas.draw()
+
+            # PES in the image correction tab
+            radial = self.graph_data['radial']
+            rdf = self.graph_data['rdf']
+            self._vmi_rdf_ax_data.set_data(radial, rdf)
+            self.set_new_xlim_ylim(radial, rdf, self._vmi_rdf_ax, 
+                None, None)
+            self._vmi_rdf_ax.figure.canvas.draw()
+
     
     def get_mq_lim_data(self, mq_coor):
         mq_start_string = self.text_edit_mq_start.toPlainText()
@@ -1805,9 +2060,10 @@ class Ui_MainWindow(object):
     def update_main_tof_window(self):
         tof_start, tof_end, tof_bins = self.get_tof_lim_data()
         new_tof_coor = np.linspace(tof_start, tof_end, num=tof_bins)
-        new_fore_tof = rebinning(new_tof_coor, *self.graph_data['tof_fore'])
-        new_back_tof = rebinning(new_tof_coor, *self.graph_data['tof_back'])
-        new_subt_tof = rebinning(new_tof_coor, *self.graph_data['tof_subt'])
+        with IgnoreWarnings("length one"):
+            new_fore_tof = rebinning(new_tof_coor, *self.graph_data['tof_fore'])
+            new_back_tof = rebinning(new_tof_coor, *self.graph_data['tof_back'])
+            new_subt_tof = rebinning(new_tof_coor, *self.graph_data['tof_subt'])
         
         self._line_fore_tof.set_data(new_tof_coor, new_fore_tof)
         self._line_back_tof.set_data(new_tof_coor, new_back_tof)
@@ -1816,7 +2072,7 @@ class Ui_MainWindow(object):
         self._fore_tof_ax.set_yscale(yscale)
         self._back_tof_ax.set_yscale(yscale)
         self._subt_tof_ax.set_yscale(yscale)
-
+        
         self.set_new_xlim_ylim(*self.graph_data['tof_fore'], self._fore_tof_ax, 
             self.graph_data['tof_start'], self.graph_data['tof_end'], kind=yscale)
         self.set_new_xlim_ylim(*self.graph_data['tof_back'], self._back_tof_ax, 
@@ -1831,7 +2087,9 @@ class Ui_MainWindow(object):
         # update calibration part here!
         
         tof_coor, raw_tof = self.graph_data['tof_subt']
-        self._line_raw_tof.set_data(new_tof_coor, rebinning(new_tof_coor, tof_coor, raw_tof))
+        with IgnoreWarnings("length one"):
+            new_raw_tof = rebinning(new_tof_coor, tof_coor, raw_tof)
+        self._line_raw_tof.set_data(new_tof_coor, new_raw_tof)
 
 
         # perform calibration here!
@@ -1892,6 +2150,7 @@ class Ui_MainWindow(object):
             *self.get_tof_lim_data()[:2])
         self.set_new_xlim_ylim(*self.graph_data['mq_subt'], self._mq_tof_ax, 
             *self.get_mq_lim_data(tof_mq_coor_func(tof_coor))[:2])
+        # self._mq_tof_ax.ticklabel_format(axis='y', useOffset=False)  # setting the ylim resets the format! This is a quick fix
         
 
         self._line_raw_tof.figure.canvas.draw()
@@ -1908,14 +2167,6 @@ class Ui_MainWindow(object):
         self.text_edit_tof_constant_t0.setText(str(round_to_n(self.ion_tof_calibration_constants[0], 8)))
         self.text_edit_tof_constant_c.setText(str(round_to_n(self.ion_tof_calibration_constants[1], 8)))
 
-
-    def update_canvases(self):
-        # making this multi-threaded doesn't make sense
-        self.redraw_data()
-        # self.update_pes_window()
-        # self.update_main_vmi_window()
-        # self.update_main_tof_window()
-
     def click_fetch_new_files(self):
         self.status['fetch_new_files'] = True
         self.text_display_update_status.setText('Fetch')
@@ -1929,6 +2180,7 @@ class Ui_MainWindow(object):
 
     def click_stop_fetch(self):
         self.status['fetch_new_files'] = False
+        self.text_display_update_status.setText('Stopped')
         self.text_display_update_status_2.setText('Stopped')
         self.stop_timer()
 
@@ -2043,6 +2295,21 @@ class Worker(QRunnable):
         finally:
             self.signals.finished.emit()  # Done
 
+import warnings
+
+# the threadpool won't be closed until program exit, so we'll ignore this "pool not closed" warning
+warnings.filterwarnings(action='ignore', category=ResourceWarning, module='.*pool')
+
+class IgnoreWarnings(object):
+    def __init__(self, message):
+        self.message = message
+    
+    def __enter__(self):
+        warnings.filterwarnings("ignore", message=f".*{self.message}.*")
+    
+    def __exit__(self, *_):
+        warnings.filterwarnings("default", message=f".*{self.message}.*")
+
 
 class MainWindow(QMainWindow):
 
@@ -2100,7 +2367,7 @@ class MainWindow(QMainWindow):
         pes_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
         
         
-        x_lin, y_lin = np.linspace(-3,3,num=450), np.linspace(-3,3,num=450)
+        x_lin, y_lin = np.linspace(-3,3,num=300), np.linspace(-3,3,num=300)
         x, y = np.meshgrid(x_lin, y_lin, indexing='ij')
         subt_placeholder = np.exp(-np.sqrt(x**2+y**2)/2) * 10
         back_placeholder = np.random.normal(size=np.shape(x))*1
@@ -2112,7 +2379,8 @@ class MainWindow(QMainWindow):
         app.vmi_fore.addWidget(fore_canvas)
         app.vmi_fore.addWidget(NavigationToolbar(fore_canvas, self))
         app._fore_ax = fore_canvas.figure.subplots()
-        app._fore_ax_data = app._fore_ax.imshow(fore_placeholder)
+        with IgnoreWarnings("makes transformation singular"):
+            app._fore_ax_data = app._fore_ax.imshow([[],])
         app.fore_fig.colorbar(app._fore_ax_data, ax=app._fore_ax)
         plt.tight_layout()
         
@@ -2121,7 +2389,8 @@ class MainWindow(QMainWindow):
         app.vmi_back.addWidget(back_canvas)
         app.vmi_back.addWidget(NavigationToolbar(back_canvas, self))
         app._back_ax = back_canvas.figure.subplots()
-        app._back_ax_data = app._back_ax.imshow(back_placeholder)
+        with IgnoreWarnings("makes transformation singular"):
+            app._back_ax_data = app._back_ax.imshow([[],])
         app.back_fig.colorbar(app._back_ax_data, ax=app._back_ax)
         plt.tight_layout()
         
@@ -2130,7 +2399,8 @@ class MainWindow(QMainWindow):
         app.vmi_subt.addWidget(subt_canvas)
         app.vmi_subt.addWidget(NavigationToolbar(subt_canvas, self))
         app._subt_ax = subt_canvas.figure.subplots()
-        app._subt_ax_data = app._subt_ax.imshow(subt_placeholder)
+        with IgnoreWarnings("makes transformation singular"):
+            app._subt_ax_data = app._subt_ax.imshow([[],])
         app.subt_fig.colorbar(app._subt_ax_data, ax=app._subt_ax)
         plt.tight_layout()
 
@@ -2144,23 +2414,75 @@ class MainWindow(QMainWindow):
         vmi_raw_canvas = FigureCanvas(vmi_raw_fig)
         app.vmi_show_raw.addWidget(vmi_raw_canvas)
         app.vmi_show_raw.addWidget(NavigationToolbar(vmi_raw_canvas, self))
-        self._vmi_raw_ax = vmi_raw_canvas.figure.subplots()
-        self._vmi_raw_ax.imshow(subt_placeholder)
-        self._vmi_raw_ax.text(0, 200, 'Placeholder!', fontsize=20)
+        app._vmi_raw_ax = vmi_raw_canvas.figure.subplots()
+        app._vmi_raw_ax_data = app._vmi_raw_ax.imshow([[np.nan,],])
+        app._vmi_raw_ax.set_xlabel('y')
+        app._vmi_raw_ax.set_ylabel('x')
+        # self._vmi_raw_ax.text(0, 200, 'Placeholder!', fontsize=20)
         plt.tight_layout()
         
-        vmi_corrected_fig = Figure(figsize=(7, 7))
-        vmi_corrected_canvas = FigureCanvas(vmi_corrected_fig)
-        app.vmi_show_corrected.addWidget(vmi_corrected_canvas)
-        app.vmi_show_corrected.addWidget(NavigationToolbar(vmi_corrected_canvas, self))
-        self._vmi_corrected_ax = vmi_corrected_canvas.figure.subplots()
-        self._vmi_corrected_ax.imshow(subt_placeholder)
-        self._vmi_corrected_ax.text(0, 200, 'Placeholder!', fontsize=20)
+        vmi_corr_fig = Figure(figsize=(7, 7))
+        vmi_corr_canvas = FigureCanvas(vmi_corr_fig)
+        app.vmi_show_corr.addWidget(vmi_corr_canvas)
+        app.vmi_show_corr.addWidget(NavigationToolbar(vmi_corr_canvas, self))
+        app._vmi_corr_ax = vmi_corr_canvas.figure.subplots()
+        app._vmi_corr_ax_data = app._vmi_corr_ax.imshow([[np.nan,],])
+        app._vmi_corr_ax.set_xlabel('y')
+        app._vmi_corr_ax.set_ylabel('x')
+        # self._vmi_corr_ax.text(0, 200, 'Placeholder!', fontsize=20)
+        plt.tight_layout()
+        
+        vmi_reduced_fig = Figure(figsize=(7, 7))
+        vmi_reduced_canvas = FigureCanvas(vmi_reduced_fig)
+        app.vmi_show_reduced.addWidget(vmi_reduced_canvas)
+        app.vmi_show_reduced.addWidget(NavigationToolbar(vmi_reduced_canvas, self))
+        app._vmi_reduced_ax = vmi_reduced_canvas.figure.subplots()
+        app._vmi_reduced_ax_data = app._vmi_reduced_ax.imshow([[np.nan,],])
+        app._vmi_reduced_ax.set_xlabel('y')
+        app._vmi_reduced_ax.set_ylabel('x')
+        # self._vmi_reduced_ax.text(0, 200, 'Placeholder!', fontsize=20)
+        plt.tight_layout()
+
+        vmi_fit_fig = Figure(figsize=(7, 7))
+        vmi_fit_canvas = FigureCanvas(vmi_fit_fig)
+        app.vmi_show_fit.addWidget(vmi_fit_canvas)
+        app.vmi_show_fit.addWidget(NavigationToolbar(vmi_fit_canvas, self))
+        app._vmi_fit_ax = vmi_fit_canvas.figure.subplots()
+        app._vmi_fit_ax_data = app._vmi_fit_ax.imshow([[np.nan,],])
+        app._vmi_fit_ax.set_xlabel('y')
+        app._vmi_fit_ax.set_ylabel('x')
+        # self._vmi_fit_ax.text(0, 200, 'Placeholder!', fontsize=20)
+        plt.tight_layout()
+        
+        vmi_inverse_fig = Figure(figsize=(7, 7))
+        vmi_inverse_canvas = FigureCanvas(vmi_inverse_fig)
+        app.vmi_show_inverse.addWidget(vmi_inverse_canvas)
+        app.vmi_show_inverse.addWidget(NavigationToolbar(vmi_inverse_canvas, self))
+        app._vmi_inverse_ax = vmi_inverse_canvas.figure.subplots()
+        app._vmi_inverse_ax_data = app._vmi_inverse_ax.imshow([[np.nan,],])
+        app._vmi_inverse_ax.set_xlabel('y')
+        app._vmi_inverse_ax.set_ylabel('x')
+        # self._vmi_inverse_ax.text(0, 200, 'Placeholder!', fontsize=20)
+        plt.tight_layout()
+
+        vmi_rdf_fig = Figure(figsize=(7, 7))
+        vmi_rdf_canvas = FigureCanvas(vmi_rdf_fig)
+        app.vmi_show_rdf.addWidget(vmi_rdf_canvas)
+        app.vmi_show_rdf.addWidget(NavigationToolbar(vmi_rdf_canvas, self))
+        app._vmi_rdf_ax = vmi_rdf_canvas.figure.subplots()
+        app._vmi_rdf_ax_data, *_ = app._vmi_rdf_ax.plot([], [])
+        app._vmi_rdf_ax.set_xlabel('radius')
+        app._vmi_rdf_ax.set_ylabel('RDF')
+        # self._vmi_rdf_ax.text(0, 200, 'Placeholder!', fontsize=20)
         plt.tight_layout()
         
         vmi_raw_fig.subplots_adjust(bottom=0.15, left=0.05, right=1.0, top=0.95)
-        vmi_corrected_fig.subplots_adjust(bottom=0.15, left=0.05, right=1.0, top=0.95)
-
+        vmi_corr_fig.subplots_adjust(bottom=0.15, left=0.05, right=1.0, top=0.95)
+        vmi_reduced_fig.subplots_adjust(bottom=0.15, left=0.05, right=1.0, top=0.95)
+        vmi_fit_fig.subplots_adjust(bottom=0.15, left=0.05, right=1.0, top=0.95)
+        vmi_inverse_fig.subplots_adjust(bottom=0.15, left=0.05, right=1.0, top=0.95)
+        vmi_rdf_fig.subplots_adjust(bottom=0.15, left=0.05, right=0.95, top=0.95)
+        
         # TOF calibratino plot
         cal_tof_fig = Figure(figsize=(5, 3))
         cal_tof_canvas = FigureCanvas(cal_tof_fig)
@@ -2228,10 +2550,11 @@ class MainWindow(QMainWindow):
         app.tof_show_raw.addWidget(NavigationToolbar(raw_tof_canvas, self))
         app._raw_tof_ax = raw_tof_canvas.figure.subplots()
         app._raw_tof_ax.set_ylabel('TOF signal')
+        app._raw_tof_ax.set_xlabel('TOF (ns)')
         app._line_raw_tof, = app._raw_tof_ax.plot([], [])
         app._line_raw_tof_points, = app._raw_tof_ax.plot([], [], marker='v', linestyle='')
         app._raw_tof_ax.xaxis.labelpad = 0
-        raw_tof_fig.subplots_adjust(bottom=0.26, left=0.20, right=0.95, top=0.95)
+        raw_tof_fig.subplots_adjust(bottom=0.16, left=0.15, right=0.95, top=0.95)
         plt.tight_layout()
         
         mq_tof_fig = Figure(figsize=(5,3))
@@ -2240,13 +2563,22 @@ class MainWindow(QMainWindow):
         app.tof_show_mq.addWidget(NavigationToolbar(mq_tof_canvas, self))
         app._mq_tof_ax = mq_tof_canvas.figure.subplots()
         app._mq_tof_ax.set_ylabel('m/q-signal')
+        app._mq_tof_ax.set_xlabel('m/q')
         app._line_mq_tof, = app._mq_tof_ax.plot([], [])
         app._mq_tof_ax.xaxis.labelpad = 0
-        mq_tof_fig.subplots_adjust(bottom=0.26, left=0.20, right=0.95, top=0.95)
+        app._mq_tof_ax.ticklabel_format(axis='y', useOffset=False, scilimits=(0,0))
+        # from matplotlib import ticker
+        # # app._mq_tof_ax.yaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=False))
+        # try:
+        #     app._mq_tof_ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: '{:.0e}'.format(x)))
+        #     app._mq_tof_ax.set_yticklabels(['$10^{'+str(int(np.log10(y)))+'}$' for y in app._mq_tof_ax.get_yticks()])
+        # except ValueError:
+        #     pass
+        mq_tof_fig.subplots_adjust(bottom=0.16, left=0.15, right=0.95, top=0.92)
         plt.tight_layout()
         
         # tof_raw_fig.subplots_adjust(bottom=0.15, left=0.05, right=1.0, top=0.95)
-        # tof_corrected_fig.subplots_adjust(bottom=0.15, left=0.05, right=1.0, top=0.95)
+        # tof_corr_fig.subplots_adjust(bottom=0.15, left=0.05, right=1.0, top=0.95)
         
         self.show()
 

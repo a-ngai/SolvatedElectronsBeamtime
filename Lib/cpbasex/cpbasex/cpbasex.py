@@ -27,7 +27,8 @@ def cpbasex_energy(images, gData, make_images=False, weights=None, regularizatio
 	E = alpha*gData['x']**2
 	IEB = 1/(2*alpha)*np.diag(gData['x']).dot(gData['frk'].dot(c.reshape(nl,nk,nim).swapaxes(0,1).reshape(nk,nl*nim)))
 	IE = IEB[:,:nim]
-	with np.errstate(divide='ignore'):
+	# with np.errstate(divide='ignore'):
+	with np.errstate(invalid='ignore'):
 		betas = IEB[:,nim:].reshape(nx,nl-1,nim)/IE[:,None,:]
 
 	if make_images:
