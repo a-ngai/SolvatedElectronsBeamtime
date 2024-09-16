@@ -40,7 +40,7 @@ class Ui_MainWindow(object):
         self.tab_vmi_main.setObjectName(u"tab_vmi_main")
         self.scrollArea = QScrollArea(self.tab_vmi_main)
         self.scrollArea.setObjectName(u"scrollArea")
-        self.scrollArea.setGeometry(QRect(210, 90, 161, 161))
+        self.scrollArea.setGeometry(QRect(210, 120, 161, 161))
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
@@ -60,7 +60,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.button_fetch_new_files = QCommandLinkButton(self.tab_vmi_main)
         self.button_fetch_new_files.setObjectName(u"button_fetch_new_files")
-        self.button_fetch_new_files.setGeometry(QRect(10, 210, 181, 31))
+        self.button_fetch_new_files.setGeometry(QRect(10, 240, 181, 31))
         self.tabWidget_2 = QTabWidget(self.tab_vmi_main)
         self.tabWidget_2.setObjectName(u"tabWidget_2")
         self.tabWidget_2.setGeometry(QRect(440, 10, 311, 321))
@@ -97,7 +97,7 @@ class Ui_MainWindow(object):
         self.tabWidget_2.addTab(self.tab_10, "")
         self.scrollArea_2 = QScrollArea(self.tab_vmi_main)
         self.scrollArea_2.setObjectName(u"scrollArea_2")
-        self.scrollArea_2.setGeometry(QRect(30, 320, 91, 154))
+        self.scrollArea_2.setGeometry(QRect(30, 350, 91, 154))
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollAreaWidgetContents_2 = QWidget()
         self.scrollAreaWidgetContents_2.setObjectName(u"scrollAreaWidgetContents_2")
@@ -132,37 +132,37 @@ class Ui_MainWindow(object):
         self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_2)
         self.label_files_used = QLabel(self.tab_vmi_main)
         self.label_files_used.setObjectName(u"label_files_used")
-        self.label_files_used.setGeometry(QRect(210, 70, 61, 16))
+        self.label_files_used.setGeometry(QRect(210, 100, 61, 16))
         self.label_current_folder = QLabel(self.tab_vmi_main)
         self.label_current_folder.setObjectName(u"label_current_folder")
         self.label_current_folder.setGeometry(QRect(20, 10, 81, 16))
         self.text_edit_current_folder = QTextEdit(self.tab_vmi_main)
         self.text_edit_current_folder.setObjectName(u"text_edit_current_folder")
-        self.text_edit_current_folder.setGeometry(QRect(20, 30, 251, 31))
+        self.text_edit_current_folder.setGeometry(QRect(20, 30, 351, 41))
         self.label_update_status = QLabel(self.tab_vmi_main)
         self.label_update_status.setObjectName(u"label_update_status")
-        self.label_update_status.setGeometry(QRect(20, 180, 91, 16))
+        self.label_update_status.setGeometry(QRect(20, 210, 91, 16))
         self.text_display_update_status = QTextBrowser(self.tab_vmi_main)
         self.text_display_update_status.setObjectName(u"text_display_update_status")
-        self.text_display_update_status.setGeometry(QRect(100, 180, 71, 31))
+        self.text_display_update_status.setGeometry(QRect(100, 210, 71, 31))
         self.button_stop_fetch = QCommandLinkButton(self.tab_vmi_main)
         self.button_stop_fetch.setObjectName(u"button_stop_fetch")
-        self.button_stop_fetch.setGeometry(QRect(10, 240, 181, 31))
+        self.button_stop_fetch.setGeometry(QRect(10, 270, 181, 31))
         self.label_abel_inversion = QLabel(self.tab_vmi_main)
         self.label_abel_inversion.setObjectName(u"label_abel_inversion")
-        self.label_abel_inversion.setGeometry(QRect(20, 300, 91, 16))
+        self.label_abel_inversion.setGeometry(QRect(20, 330, 91, 16))
         self.button_auto_newest_folder = QCommandLinkButton(self.tab_vmi_main)
         self.button_auto_newest_folder.setObjectName(u"button_auto_newest_folder")
-        self.button_auto_newest_folder.setGeometry(QRect(10, 100, 181, 31))
+        self.button_auto_newest_folder.setGeometry(QRect(10, 130, 181, 31))
         self.button_stay_current_folder = QCommandLinkButton(self.tab_vmi_main)
         self.button_stay_current_folder.setObjectName(u"button_stay_current_folder")
-        self.button_stay_current_folder.setGeometry(QRect(10, 130, 181, 31))
+        self.button_stay_current_folder.setGeometry(QRect(10, 160, 181, 31))
         self.test_display_folder_status = QTextBrowser(self.tab_vmi_main)
         self.test_display_folder_status.setObjectName(u"test_display_folder_status")
-        self.test_display_folder_status.setGeometry(QRect(100, 70, 71, 31))
+        self.test_display_folder_status.setGeometry(QRect(100, 100, 71, 31))
         self.label_folder_status = QLabel(self.tab_vmi_main)
         self.label_folder_status.setObjectName(u"label_folder_status")
-        self.label_folder_status.setGeometry(QRect(20, 70, 91, 16))
+        self.label_folder_status.setGeometry(QRect(20, 100, 91, 16))
         self.verticalLayoutWidget = QWidget(self.tab_vmi_main)
         self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
         self.verticalLayoutWidget.setGeometry(QRect(150, 330, 601, 211))
@@ -789,30 +789,36 @@ class Ui_MainWindow(object):
         self.text_browser_max_cores.setObjectName(u"text_browser_max_cores")
         self.text_browser_max_cores.setGeometry(QRect(90, 410, 41, 31))
         self.text_browser_max_cores.setStyleSheet(u"background-color: rgb(144, 144, 144);")
+        self.label_tof_baseline_points = QLabel(self.tab_settings)
+        self.label_tof_baseline_points.setObjectName(u"label_tof_baseline_points")
+        self.label_tof_baseline_points.setGeometry(QRect(20, 240, 121, 16))
+        self.text_edit_tof_baseline_points = QTextEdit(self.tab_settings)
+        self.text_edit_tof_baseline_points.setObjectName(u"text_edit_tof_baseline_points")
+        self.text_edit_tof_baseline_points.setGeometry(QRect(20, 260, 71, 31))
         self.tabWidget.addTab(self.tab_settings, "")
         self.print_browser = QTextBrowser(self.centralwidget)
         self.print_browser.setObjectName(u"print_browser")
         self.print_browser.setGeometry(QRect(10, 580, 761, 91))
         MainWindow.setCentralWidget(self.centralwidget)
+        self.statusbar = QStatusBar(MainWindow)
+        self.statusbar.setObjectName(u"statusbar")
+        MainWindow.setStatusBar(self.statusbar)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
         self.menubar.setGeometry(QRect(0, 0, 776, 21))
         self.menuFERMI_On_line_analysis_tool = QMenu(self.menubar)
         self.menuFERMI_On_line_analysis_tool.setObjectName(u"menuFERMI_On_line_analysis_tool")
         MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QStatusBar(MainWindow)
-        self.statusbar.setObjectName(u"statusbar")
-        MainWindow.setStatusBar(self.statusbar)
 
         self.menubar.addAction(self.menuFERMI_On_line_analysis_tool.menuAction())
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(5)
         self.tabWidget_2.setCurrentIndex(2)
         self.tabWidget_4.setCurrentIndex(0)
         self.tabWidget_5.setCurrentIndex(0)
-        self.tabWidget_3.setCurrentIndex(2)
+        self.tabWidget_3.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -1218,6 +1224,15 @@ class Ui_MainWindow(object):
         self.label_num_cores.setText(QCoreApplication.translate("MainWindow", u"Max # cores for multiprocess", None))
         self.label_max_cores.setText(QCoreApplication.translate("MainWindow", u"/", None))
         self.label_search_dir_for_newest_folder_2.setText(QCoreApplication.translate("MainWindow", u"Auto-search regex", None))
+        self.label_tof_baseline_points.setText(QCoreApplication.translate("MainWindow", u"TOF baseline points", None))
+        self.text_edit_tof_baseline_points.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_settings), QCoreApplication.translate("MainWindow", u"Settings", None))
         self.menuFERMI_On_line_analysis_tool.setTitle(QCoreApplication.translate("MainWindow", u"FERMI LDM On-line analysis tool", None))
     # retranslateUi
@@ -1232,7 +1247,6 @@ class Ui_MainWindow(object):
             print('not found...?')
             CURRENT_SCRIPT_DIR = os.path.abspath('')
         
-        print('top level dir is: ', CURRENT_SCRIPT_DIR)
         top_level_dir = resolve_path(CURRENT_SCRIPT_DIR, '../')
         print('top level dir is: ', top_level_dir)
 
@@ -1261,6 +1275,7 @@ class Ui_MainWindow(object):
             match_filename = ''
         # self.text_edit_abel_inversion_data_path.setText(f'{top_level_dir}/examples/G_r256_k64_l4_half.h5')
         self.text_edit_abel_inversion_data_path.setText(match_filename)
+        self.text_edit_tof_baseline_points.setText('1000')
 
     
     def __init__(self):
@@ -1280,6 +1295,7 @@ class Ui_MainWindow(object):
             'subfolder_extension' : '',
             'background_process_active' : False,
             'gdata_filepath' : '',
+            'tof_baseline_points' : 0,
         }
         self.flags = {
             'changed_gdata_filepath' : False,
@@ -1308,6 +1324,8 @@ class Ui_MainWindow(object):
             'tof_fore' : [np.array([]), np.array([])],
             'tof_back' : [np.array([]), np.array([])],
             'tof_subt' : [np.array([]), np.array([])],
+            'mq_fore' : [np.array([]), np.array([])],
+            'mq_back' : [np.array([]), np.array([])],
             'mq_subt' : [np.array([]), np.array([])],
             'mq_start' : None,
             'mq_end' : None,
@@ -1397,11 +1415,13 @@ class Ui_MainWindow(object):
             self.graph_data['eke_bins'] = float(eke_bins)
         self.status['make_cache'] = self.box_make_cache.isChecked()
         self.status['load_from_cache'] = self.box_load_from_cache.isChecked()
+        self.status['tof_baseline_points'] = int(self.text_edit_tof_baseline_points.toPlainText())
 
         time_string = strftime("%Y-%m-%d %H:%M:%S", localtime())
         self.update_print_box(f'{time_string}: settings applied')
 
-        self.update_canvases()
+        self.redraw_vmi_data()
+        self.redraw_tof_data()
         
     def get_newest_folder(self):
         main_directory = self.status['search_in_directory']
@@ -1633,10 +1653,6 @@ class Ui_MainWindow(object):
             self.get_new_tof_data()
             self.redraw_canvasses()
 
-    def update_canvases(self):
-        self.redraw_vmi_data()
-        self.redraw_tof_data()
-
     def set_image_correction_from_panel(self):
         xcenter_text = self.text_edit_correct_xcenter.toPlainText()
         if xcenter_text == '':
@@ -1673,6 +1689,8 @@ class Ui_MainWindow(object):
             reduce_image_size = None
         else:
             reduce_image_size = int(reduce_image_size_text)
+        if reduce_image_size is None and self.gdata_size is not None:
+            reduce_image_size = self.gdata_size
         self.image_correction_data['reduce_size'] = reduce_image_size
 
     def remake_vmi_data(self):
@@ -1736,12 +1754,13 @@ class Ui_MainWindow(object):
         self.graph_data['vmi_corr'] = corrected
         self.graph_data['vmi_reduced'] = vmi
 
+        if self.gdata is None: 
+            gData = loadG(self.status['gdata_filepath'], make_images=True)
+            self.gdata = gData
+            self.betas = gData['l']
+
         if self.valid_inversion_condition():
 
-            if self.gdata is None: 
-                gData = loadG(self.status['gdata_filepath'], make_images=True)
-                self.gdata = gData
-                self.betas = gData['l']
 
             out = cpbasex_energy_inversion(resized, self.gdata, make_images=True, shape='half')
             try:
@@ -1802,7 +1821,6 @@ class Ui_MainWindow(object):
             self.text_browser_gdata_image_size.setText(str(self.gdata_size))
         self.flags['changed_gdata'] = True
         
-        
         if self.image_correction_data['reduce_size'] is None:
             self.image_correction_data['reduce_size'] = self.gdata_size
     
@@ -1833,11 +1851,15 @@ class Ui_MainWindow(object):
             + (-1)**self.box_flip_feloffsluon.isChecked() * self.box_back_feloffsluon.isChecked() * tof_feloff_sluon
             + (-1)**self.box_flip_feloffsluoff.isChecked() * self.box_back_feloffsluoff.isChecked() * tof_feloff_sluoff
         )
+        
+        Nbaseline = self.status['tof_baseline_points']
+        tof_fore -= np.average(tof_fore[:Nbaseline])
+        tof_back -= np.average(tof_fore[:Nbaseline])
+
         tof_subt = tof_fore - tof_back
         self.graph_data['tof_fore'] = tof_coor, tof_fore
         self.graph_data['tof_back'] = tof_coor, tof_back
         self.graph_data['tof_subt'] = tof_coor, tof_subt
-        self.graph_data['tof_coor'] = tof_coor, tof_subt
 
         self.update_main_tof_window()
     
@@ -2152,12 +2174,76 @@ class Ui_MainWindow(object):
             *self.get_mq_lim_data(tof_mq_coor_func(tof_coor))[:2])
         # self._mq_tof_ax.ticklabel_format(axis='y', useOffset=False)  # setting the ylim resets the format! This is a quick fix
         
-
         self._line_raw_tof.figure.canvas.draw()
         self._line_cal_tof.figure.canvas.draw()
         self._line_cal_tof_points.figure.canvas.draw()
         self._line_mq_tof.figure.canvas.draw()
         self._line_raw_tof_points.figure.canvas.draw()
+
+        mq_raw_coor, mq_raw_fore = tof_to_mq(*self.graph_data['tof_fore'])
+        mq_start, mq_end, mq_bins = self.get_mq_lim_data(tof_mq_coor_func(tof_coor))
+        mq_coor = np.linspace(mq_start, mq_end, num=mq_bins)
+        if len(mq_raw_coor) < 2:
+            mq_coor = np.array([])
+            mq_fore = np.array([])
+        else:
+            mq_fore = rebinning(mq_coor, mq_raw_coor, mq_raw_fore)
+            
+        mq_raw_coor, mq_raw_back = tof_to_mq(*self.graph_data['tof_back'])
+        mq_start, mq_end, mq_bins = self.get_mq_lim_data(tof_mq_coor_func(tof_coor))
+        mq_coor = np.linspace(mq_start, mq_end, num=mq_bins)
+        if len(mq_raw_coor) < 2:
+            mq_coor = np.array([])
+            mq_back = np.array([])
+        else:
+            mq_back = rebinning(mq_coor, mq_raw_coor, mq_raw_back)
+
+        mq_raw_coor, mq_raw_subt = tof_to_mq(*self.graph_data['tof_subt'])
+        mq_start, mq_end, mq_bins = self.get_mq_lim_data(tof_mq_coor_func(tof_coor))
+        mq_coor = np.linspace(mq_start, mq_end, num=mq_bins)
+        if len(mq_raw_coor) < 2:
+            mq_coor = np.array([])
+            mq_subt = np.array([])
+        else:
+            mq_subt = rebinning(mq_coor, mq_raw_coor, mq_raw_subt)
+
+        self.graph_data['mq_fore'] = mq_coor, mq_fore
+        self.graph_data['mq_back'] = mq_coor, mq_back
+        self.graph_data['mq_subt'] = mq_coor, mq_subt
+        
+
+
+
+
+
+        mq_start, mq_end, mq_bins = self.get_mq_lim_data(mq_coor)
+        new_mq_coor = np.linspace(mq_start, mq_end, num=mq_bins)
+        with IgnoreWarnings("length one"):
+            new_fore_mq = rebinning(new_mq_coor, *self.graph_data['mq_fore'])
+            new_back_mq = rebinning(new_mq_coor, *self.graph_data['mq_back'])
+            new_subt_mq = rebinning(new_mq_coor, *self.graph_data['mq_subt'])
+        
+        self._line_fore_mq.set_data(new_mq_coor, new_fore_mq)
+        self._line_back_mq.set_data(new_mq_coor, new_back_mq)
+        self._line_subt_mq.set_data(new_mq_coor, new_subt_mq)
+        yscale = self.combobox_tof_yscale.currentText().lower()
+        self._fore_mq_ax.set_yscale(yscale)
+        self._back_mq_ax.set_yscale(yscale)
+        self._subt_mq_ax.set_yscale(yscale)
+        
+        self.set_new_xlim_ylim(*self.graph_data['mq_fore'], self._fore_mq_ax, 
+            self.graph_data['mq_start'], self.graph_data['mq_end'], kind=yscale)
+        self.set_new_xlim_ylim(*self.graph_data['mq_back'], self._back_mq_ax, 
+            self.graph_data['mq_start'], self.graph_data['mq_end'], kind=yscale)
+        self.set_new_xlim_ylim(*self.graph_data['mq_subt'], self._subt_mq_ax, 
+            self.graph_data['mq_start'], self.graph_data['mq_end'], kind=yscale)
+
+        self._line_fore_mq.figure.canvas.draw()
+        self._line_back_mq.figure.canvas.draw()
+        self._line_subt_mq.figure.canvas.draw()
+
+
+        
         
         self.change_ion_tof_calibration_constants()
 
@@ -2507,7 +2593,8 @@ class MainWindow(QMainWindow):
         app.tof_fore.addWidget(NavigationToolbar(fore_tof_canvas, self))
         app._fore_tof_ax = fore_tof_canvas.figure.subplots()
         app._line_fore_tof, = app._fore_tof_ax.plot([], [])
-        app._fore_tof_ax.set_xlabel('m/q')
+        app._fore_tof_ax.set_ylabel('TOF signal')
+        app._fore_tof_ax.set_xlabel('TOF (ns)')
         app._fore_tof_ax.xaxis.labelpad = 0
         plt.tight_layout()
         app.fore_tof_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
@@ -2521,7 +2608,8 @@ class MainWindow(QMainWindow):
         app.tof_back.addWidget(NavigationToolbar(back_tof_canvas, self))
         app._back_tof_ax = back_tof_canvas.figure.subplots()
         app._line_back_tof, = app._back_tof_ax.plot([], [])
-        app._back_tof_ax.set_xlabel('m/q')
+        app._fore_tof_ax.set_ylabel('TOF signal')
+        app._back_tof_ax.set_xlabel('TOF (ns)')
         app._back_tof_ax.xaxis.labelpad = 0
         plt.tight_layout()
         app.back_tof_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
@@ -2533,7 +2621,8 @@ class MainWindow(QMainWindow):
         app.tof_subt.addWidget(NavigationToolbar(subt_tof_canvas, self))
         app._subt_tof_ax = subt_tof_canvas.figure.subplots()
         app._line_subt_tof, = app._subt_tof_ax.plot([], [])
-        app._subt_tof_ax.set_xlabel('m/q')
+        app._fore_tof_ax.set_ylabel('TOF signal')
+        app._subt_tof_ax.set_xlabel('TOF (ns)')
         app._subt_tof_ax.xaxis.labelpad = 0
         plt.tight_layout()
         app.subt_tof_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
@@ -2567,19 +2656,46 @@ class MainWindow(QMainWindow):
         app._line_mq_tof, = app._mq_tof_ax.plot([], [])
         app._mq_tof_ax.xaxis.labelpad = 0
         app._mq_tof_ax.ticklabel_format(axis='y', useOffset=False, scilimits=(0,0))
-        # from matplotlib import ticker
-        # # app._mq_tof_ax.yaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=False))
-        # try:
-        #     app._mq_tof_ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: '{:.0e}'.format(x)))
-        #     app._mq_tof_ax.set_yticklabels(['$10^{'+str(int(np.log10(y)))+'}$' for y in app._mq_tof_ax.get_yticks()])
-        # except ValueError:
-        #     pass
         mq_tof_fig.subplots_adjust(bottom=0.16, left=0.15, right=0.95, top=0.92)
         plt.tight_layout()
         
         # tof_raw_fig.subplots_adjust(bottom=0.15, left=0.05, right=1.0, top=0.95)
         # tof_corr_fig.subplots_adjust(bottom=0.15, left=0.05, right=1.0, top=0.95)
         
+        app.fore_mq_fig = Figure(figsize=(7, 7))
+        fore_mq_canvas = FigureCanvas(app.fore_mq_fig)
+        app.mq_fore.addWidget(fore_mq_canvas)
+        app.mq_fore.addWidget(NavigationToolbar(fore_mq_canvas, self))
+        app._fore_mq_ax = fore_mq_canvas.figure.subplots()
+        app._fore_mq_ax.set_xlabel('m/q')
+        app._line_fore_mq, = app._fore_mq_ax.plot([], [])
+        app._fore_mq_ax.xaxis.labelpad = 0
+        plt.tight_layout()
+        app.fore_mq_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
+
+        app.back_mq_fig = Figure(figsize=(7, 7))
+        back_mq_canvas = FigureCanvas(app.back_mq_fig)
+        app.mq_back.addWidget(back_mq_canvas)
+        app.mq_back.addWidget(NavigationToolbar(back_mq_canvas, self))
+        app._back_mq_ax = back_mq_canvas.figure.subplots()
+        app._back_mq_ax.set_xlabel('m/q')
+        app._line_back_mq, = app._back_mq_ax.plot([], [])
+        app._back_mq_ax.xaxis.labelpad = 0
+        plt.tight_layout()
+        app.back_mq_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
+
+        app.subt_mq_fig = Figure(figsize=(7, 7))
+        subt_mq_canvas = FigureCanvas(app.subt_mq_fig)
+        app.mq_subt.addWidget(subt_mq_canvas)
+        app.mq_subt.addWidget(NavigationToolbar(subt_mq_canvas, self))
+        app._subt_mq_ax = subt_mq_canvas.figure.subplots()
+        app._subt_mq_ax.set_xlabel('m/q')
+        app._line_subt_mq, = app._subt_mq_ax.plot([], [])
+        app._subt_mq_ax.xaxis.labelpad = 0
+        plt.tight_layout()
+        app.subt_mq_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
+
+
         self.show()
 
 
@@ -2589,6 +2705,8 @@ if __name__ == '__main__':
     w = MainWindow()
 
     tabWidgetApp.setupUi(w)
+    # w.setObjectName(u"FERMI LDM On-line analysis tool")
+    w.setWindowTitle(QCoreApplication.translate("FERMI LDM On-line analysis tool", u"FERMI LDM On-line analysis tool", None))
     tabWidgetApp.setup_signals()
     w.add_canvas(tabWidgetApp)
     
