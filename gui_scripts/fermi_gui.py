@@ -398,9 +398,9 @@ class Ui_MainWindow(object):
         self.groupBox_3 = QGroupBox(self.frame_4)
         self.groupBox_3.setObjectName(u"groupBox_3")
         self.groupBox_3.setGeometry(QRect(10, 60, 201, 91))
-        self.box_pes_2 = QCheckBox(self.groupBox_3)
-        self.box_pes_2.setObjectName(u"box_pes_2")
-        self.box_pes_2.setGeometry(QRect(10, 60, 111, 22))
+        self.box_ring_ellipticity = QCheckBox(self.groupBox_3)
+        self.box_ring_ellipticity.setObjectName(u"box_ring_ellipticity")
+        self.box_ring_ellipticity.setGeometry(QRect(10, 60, 111, 22))
         self.text_edit_show_rings = QTextEdit(self.groupBox_3)
         self.text_edit_show_rings.setObjectName(u"text_edit_show_rings")
         self.text_edit_show_rings.setGeometry(QRect(80, 30, 101, 31))
@@ -1057,9 +1057,9 @@ class Ui_MainWindow(object):
         font1 = QFont()
         font1.setPointSize(14)
         self.label_max_cores.setFont(font1)
-        self.text_edit_search_dir_for_newest_folder_2 = QTextEdit(self.tab_settings)
-        self.text_edit_search_dir_for_newest_folder_2.setObjectName(u"text_edit_search_dir_for_newest_folder_2")
-        self.text_edit_search_dir_for_newest_folder_2.setGeometry(QRect(600, 30, 141, 51))
+        self.text_edit_search_regex = QTextEdit(self.tab_settings)
+        self.text_edit_search_regex.setObjectName(u"text_edit_search_regex")
+        self.text_edit_search_regex.setGeometry(QRect(600, 30, 141, 51))
         self.label_search_dir_for_newest_folder_2 = QLabel(self.tab_settings)
         self.label_search_dir_for_newest_folder_2.setObjectName(u"label_search_dir_for_newest_folder_2")
         self.label_search_dir_for_newest_folder_2.setGeometry(QRect(610, 10, 111, 16))
@@ -1098,9 +1098,9 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(3)
+        self.tabWidget.setCurrentIndex(0)
         self.tabWidget_2.setCurrentIndex(2)
-        self.tabWidget_4.setCurrentIndex(3)
+        self.tabWidget_4.setCurrentIndex(0)
         self.tabWidget_5.setCurrentIndex(0)
         self.tabWidget_3.setCurrentIndex(2)
 
@@ -1198,7 +1198,7 @@ class Ui_MainWindow(object):
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
         self.button_get_guess_vmi_corrections.setText(QCoreApplication.translate("MainWindow", u"Get guess", None))
         self.groupBox_3.setTitle(QCoreApplication.translate("MainWindow", u"Visual aids", None))
-        self.box_pes_2.setText(QCoreApplication.translate("MainWindow", u"Ring ellipticity", None))
+        self.box_ring_ellipticity.setText(QCoreApplication.translate("MainWindow", u"Ring ellipticity", None))
         self.text_edit_show_rings.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -1517,7 +1517,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">1</p></body></html>", None))
-        self.label_num_cores.setText(QCoreApplication.translate("MainWindow", u"Max # cores for multiprocess", None))
+        self.label_num_cores.setText(QCoreApplication.translate("MainWindow", u"Num. cores for multiprocess", None))
         self.label_max_cores.setText(QCoreApplication.translate("MainWindow", u"/", None))
         self.label_search_dir_for_newest_folder_2.setText(QCoreApplication.translate("MainWindow", u"Auto-search regex", None))
         self.label_tof_baseline_points.setText(QCoreApplication.translate("MainWindow", u"TOF baseline points", None))
@@ -1575,6 +1575,8 @@ class Ui_MainWindow(object):
         # self.text_edit_abel_inversion_data_path.setText(f'{top_level_dir}/examples/G_r256_k64_l4_half.h5')
         self.text_edit_abel_inversion_data_path.setText(match_filename)
         self.text_edit_tof_baseline_points.setText('1000')
+        self.text_edit_search_regex.setText(r'Run_(\d+)')
+        self.text_edit_show_rings.setText('2, 150, 300')
 
     
     def __init__(self):
@@ -1596,23 +1598,26 @@ class Ui_MainWindow(object):
             'gdata_filepath' : '',
             'tof_baseline_points' : 0,
         }
+
         self.flags = {
             'changed_gdata_filepath' : False,
             'changed_gdata' : False,  # not implemented yet!
         }
+
         self._vmi_shape = (1, 1)
         self._image_vmi_shape = (1, 1)
+        self._image_small_vmi_shape = (1, 1)
         self.graph_data = {
-            'vmi_fore' : np.array([[np.nan,],]),
-            'vmi_back' : np.array([[np.nan,],]),
-            'vmi_subt' : np.array([[np.nan,],]),
-            'vmi_raw' : np.array([[np.nan,],]),
-            'vmi_corr' : np.array([[np.nan,],]),
-            'vmi_reduced' : np.array([[np.nan,],]),
-            'vmi_inverse' : np.array([[np.nan,],]),
-            'vmi_fit' : np.array([[np.nan,],]),
+            'vmi_fore' : np.array([[np.nan,],], dtype=float),
+            'vmi_back' : np.array([[np.nan,],], dtype=float),
+            'vmi_subt' : np.array([[np.nan,],], dtype=float),
+            'vmi_raw' : np.array([[np.nan,],], dtype=float),
+            'vmi_corr' : np.array([[np.nan,],], dtype=float),
+            'vmi_reduced' : np.array([[np.nan,],], dtype=float),
+            'vmi_inverse' : np.array([[np.nan,],], dtype=float),
+            'vmi_fit' : np.array([[np.nan,],], dtype=float),
             # 'pes_subt' : [np.array([]), np.array([])],
-            'pes_subt' : [np.array([0,]), np.array([0,])],
+            'pes_subt' : [np.array([]), np.array([])],
             'betas' : [np.array([]), np.zeros(shape=(0,4))],
             'radial' : np.array([]),
             'rsquare' : np.array([]),
@@ -1625,12 +1630,19 @@ class Ui_MainWindow(object):
             'tof_fore' : [np.array([]), np.array([])],
             'tof_back' : [np.array([]), np.array([])],
             'tof_subt' : [np.array([]), np.array([])],
+            'new_tof_fore' : [np.array([]), np.array([])],
+            'new_tof_back' : [np.array([]), np.array([])],
+            'new_tof_subt' : [np.array([]), np.array([])],
             'mq_fore' : [np.array([]), np.array([])],
             'mq_back' : [np.array([]), np.array([])],
             'mq_subt' : [np.array([]), np.array([])],
+            'new_mq_fore' : [np.array([]), np.array([])],
+            'new_mq_back' : [np.array([]), np.array([])],
+            'new_mq_subt' : [np.array([]), np.array([])],
             'mq_start' : None,
             'mq_end' : None,
             'mq_bins' : None,
+            'ring_guide' : [np.array([]), np.array([])],
         }
         
         self.image_correction_data = {
@@ -1638,6 +1650,7 @@ class Ui_MainWindow(object):
             'zoom' : (1, 1),
             'rotate' : 0,
             'reduce_size' : None,
+            'show_ellipticity' : False,
         }
 
         self.calibration_data = {
@@ -1656,13 +1669,9 @@ class Ui_MainWindow(object):
         self.threadpool = QThreadPool()
         if self.terminal_print: print("Multithreading with maximum %d threads" % self.threadpool.maxThreadCount())
 
-        # self.vmi_data = np.zeros(shape=(4,1,1))
         self.vmi_data = np.zeros(shape=(4,0,0))
         self.tof_data = np.zeros(shape=(1)), np.zeros(shape=(4,1))
         self.mq_data = np.zeros(shape=(1,)), np.zeros(shape=(4,1))
-        # self.vmi_data = np.array([],]), np.array([[],])
-        # self.vmi_data = np.array([[],])
-        # self.vmi_data = np.array([[],])
         self.gdata = None
         self.betas = [] # the existent beta values from gdata
 
@@ -1713,6 +1722,7 @@ class Ui_MainWindow(object):
         self.status['make_cache'] = self.box_make_cache.isChecked()
         self.status['load_from_cache'] = self.box_load_from_cache.isChecked()
         self.status['tof_baseline_points'] = int(self.text_edit_tof_baseline_points.toPlainText())
+        self.status['search_regex'] = self.text_edit_search_regex.toPlainText()
 
         time_string = strftime("%Y-%m-%d %H:%M:%S", localtime())
         self.update_print_box(f'{time_string}: settings applied')
@@ -1727,10 +1737,13 @@ class Ui_MainWindow(object):
         except FileNotFoundError:
             if self.terminal_print: print(f'search_in_directory ({main_directory}) cannot be found')
             list_of_folders = []
-        number_rule = re.compile(r'\d+')
-        numbered_folders = [name for name in list_of_folders if number_rule.search(name) is not None]
+        number_rule = self.status['search_regex']
+        # number_rule_re = re.compile(r'\d+')
+        number_rule_re = re.compile(number_rule)
+
+        numbered_folders = [name for name in list_of_folders if number_rule_re.search(name)]
         if len(numbered_folders) > 0:
-            numbers = np.array([number_rule.search(name)[0] for name in numbered_folders], dtype=int)
+            numbers = np.array([number_rule_re.search(name).group(1) for name in numbered_folders], dtype=int)
             max_index = np.argmax(numbers)
             highest_numbered_folder = numbered_folders[max_index]
         else:
@@ -1746,7 +1759,6 @@ class Ui_MainWindow(object):
         joined_text = '\n'.join(self.status['print_list'])
         self.print_browser.setText(joined_text)
         QApplication.processEvents()
-    
 
     def check_filechange(self):
         if self.status['auto_newest_folder']:
@@ -1785,21 +1797,14 @@ class Ui_MainWindow(object):
     def update_filechange(self):
         self.status['current_files'] = self.get_filechange()
         self.text_browser_files.setText('\n'.join([filename[-20:] for filename in self.status['current_files']][::-1]))
+        self.text_browser_num_files.setText(str(len(self.status['current_files'])))
 
-
-    # def update_files(self):
-    #     current_folder = self.status['current_folder']
-    #     subfolder_ext = self.status['subfolder_extension']
-    #     look_in_folder = f'{current_folder}/{subfolder_ext}'
-    #     found_files = os.listdir(look_in_folder)
-    #     self.status['current_files'] = sorted(found_files)
-    
     def update_data_if_change(self):
         time_string = strftime("%Y-%m-%d %H:%M:%S", localtime())
         if self.check_filechange() and not self.background_key:
             num_files = len(self.get_filechange())
-            if self.terminal_print: print(f'{time_string}: new files found ({num_files}), but background process unfinishd. Nothing done.')
-            self.update_print_box(f'{time_string}: new files found ({num_files}), but background process unfinishd. Nothing done.')
+            if self.terminal_print: print(f'{time_string}: new files found ({num_files}), but background process unfinished. Nothing done.')
+            self.update_print_box(f'{time_string}: new files found ({num_files}), but background process unfinished. Nothing done.')
 
         elif self.check_filechange() and self.background_key:
             num_files = len(self.get_filechange())
@@ -1890,20 +1895,6 @@ class Ui_MainWindow(object):
         self.tof_data = tof_data
         return tof_data
     
-    # def get_new_data_and_redraw_data(self):
-
-    #     '''
-    #     Separating the vmi and tof update is intentional; each of them take a significant
-    #     amount of time, so it's best to update one of them first, redraw the vmi data,
-    #     then update the tof and redraw the tof graphs.
-        
-    #     If I do combine them in other methods, it's probably unintentional :)
-    #     '''
-
-    #     self.get_new_vmi_data()
-    #     self.redraw_vmi_data()
-    #     self.get_new_tof_data()
-    #     self.redraw_tof_data()
 
     def return_background_key(self):
         if self.background_key is False:
@@ -1982,6 +1973,8 @@ class Ui_MainWindow(object):
         else:
             yzoom = float(yzoom_text)
         self.image_correction_data['zoom'] = (xzoom, yzoom)
+        # reversed, because cpbasex requires polarization axis along second axis i.e. transposed
+        self.image_correction_data['zoom'] = (yzoom, xzoom)
 
         rotate_text = self.text_edit_correct_rotate.toPlainText()
         if rotate_text == '':
@@ -2023,6 +2016,7 @@ class Ui_MainWindow(object):
         self.graph_data['vmi_back'] = vmi_back
         self.graph_data['vmi_subt'] = vmi_subt
         
+        self.image_correction_data['show_ellipticity'] = self.box_ring_ellipticity.isChecked()
 
         ### VMI INVERSION PLACE
 
@@ -2095,6 +2089,22 @@ class Ui_MainWindow(object):
             self.graph_data['betas'] = rsquare, betas
             self.graph_data['vmi_inverse'] = inv
             self.graph_data['vmi_fit'] = fit
+            
+        xcenter, ycenter = self.image_correction_data['center']
+        if xcenter is None: xcenter = np.shape(self.graph_data['vmi_raw'])[0]/2
+        if ycenter is None: ycenter = np.shape(self.graph_data['vmi_raw'])[1]/2
+        ring_radii = np.array(re.sub(' ', '', self.text_edit_show_rings.toPlainText()).split(','), dtype=float)
+        t = np.linspace(0, 2*np.pi, num=1000)
+        if self.image_correction_data['show_ellipticity']:
+            xe, ye = self.image_correction_data['zoom']
+            if xe is None: xe = 1
+            if ye is None: ye = 1
+        else:
+            xe, ye = 1, 1
+        x_ring = np.concatenate([np.concatenate((xcenter + 1/xe * radius * np.cos(t), [np.nan,])) for radius in ring_radii], dtype=float)
+        y_ring = np.concatenate([np.concatenate((ycenter + 1/ye * radius * np.sin(t), [np.nan,])) for radius in ring_radii], dtype=float)
+        self.graph_data['ring_guide'] = x_ring, y_ring
+        self.graph_data['ring_guide'] = y_ring, x_ring  # transposed, because of cpbasex.
 
 
     def process_redraw_vmi_data(self):
@@ -2189,18 +2199,25 @@ class Ui_MainWindow(object):
 
         
         self.remake_mq_data()
+    
+    @staticmethod
+    def string_to_pairs(string, dtype=str):
+        string = re.sub(' ', '', string)
+        pairs = string.split('\n')
+        pairs = [item for item in pairs if item != '']
+        output_pairs = []
+        for pair in pairs:
+            output_pairs.append(list(pair.split(',')))
+        output_pairs = np.array(output_pairs, dtype=dtype)
+        return output_pairs
+
 
     def remake_mq_data(self):
     
         # perform calibration here!
 
         cal_points_string = self.text_edit_tof_cal_points.toPlainText()
-        cal_points_string = re.sub(' ', '', cal_points_string)
-        pairs = cal_points_string.split('\n')
-        ion_tof_mq_peaks = []
-        for pair in pairs:
-            ion_tof_mq_peaks.append(np.array(list(pair.split(',')), dtype=float))
-        ion_tof_mq_peaks = np.array(ion_tof_mq_peaks)
+        ion_tof_mq_peaks = self.string_to_pairs(cal_points_string, dtype=float)
         tof_points, mq_points = ion_tof_mq_peaks.T
 
 
@@ -2264,20 +2281,44 @@ class Ui_MainWindow(object):
         self.graph_data['mq_fore'] = mq_coor, mq_fore
         self.graph_data['mq_back'] = mq_coor, mq_back
         self.graph_data['mq_subt'] = mq_coor, mq_subt
-
-
-    def redraw_tof_data(self):
-
+        
+    
         tof_start, tof_end, tof_bins = self.get_tof_lim_data()
         new_tof_coor = np.linspace(tof_start, tof_end, num=tof_bins)
         with IgnoreWarnings("length one"):
-            new_fore_tof = rebinning(new_tof_coor, *self.graph_data['tof_fore'])
-            new_back_tof = rebinning(new_tof_coor, *self.graph_data['tof_back'])
-            new_subt_tof = rebinning(new_tof_coor, *self.graph_data['tof_subt'])
+            new_tof_fore = rebinning(new_tof_coor, *self.graph_data['tof_fore'])
+            new_tof_back = rebinning(new_tof_coor, *self.graph_data['tof_back'])
+            new_tof_subt = rebinning(new_tof_coor, *self.graph_data['tof_subt'])
+            
+        self.graph_data['new_tof_fore'] = new_tof_coor, new_tof_fore
+        self.graph_data['new_tof_back'] = new_tof_coor, new_tof_back
+        self.graph_data['new_tof_subt'] = new_tof_coor, new_tof_subt
 
-        self._line_fore_tof.set_data(new_tof_coor, new_fore_tof)
-        self._line_back_tof.set_data(new_tof_coor, new_back_tof)
-        self._line_subt_tof.set_data(new_tof_coor, new_subt_tof)
+        mq_start, mq_end, mq_bins = self.get_mq_lim_data(self.graph_data['mq_subt'][0])
+        new_mq_coor = np.linspace(mq_start, mq_end, num=mq_bins)
+        with IgnoreWarnings("length one"):
+            new_mq_fore = rebinning(new_mq_coor, *self.graph_data['mq_fore'])
+            new_mq_back = rebinning(new_mq_coor, *self.graph_data['mq_back'])
+            new_mq_subt = rebinning(new_mq_coor, *self.graph_data['mq_subt'])
+
+        self.graph_data['new_mq_fore'] = new_mq_coor, new_mq_fore
+        self.graph_data['new_mq_back'] = new_mq_coor, new_mq_back
+        self.graph_data['new_mq_subt'] = new_mq_coor, new_mq_subt
+
+
+    def redraw_tof_data(self):
+        time_start = time.time()
+
+        new_tof_coor, new_tof_fore = self.graph_data['new_tof_fore']
+        new_tof_coor, new_tof_back = self.graph_data['new_tof_back']
+        new_tof_coor, new_tof_subt = self.graph_data['new_tof_subt']
+        new_mq_coor, new_mq_fore = self.graph_data['new_mq_fore']
+        new_mq_coor, new_mq_back = self.graph_data['new_mq_back']
+        new_mq_coor, new_mq_subt = self.graph_data['new_mq_subt']
+
+        self._line_fore_tof.set_data(new_tof_coor, new_tof_fore)
+        self._line_back_tof.set_data(new_tof_coor, new_tof_back)
+        self._line_subt_tof.set_data(new_tof_coor, new_tof_subt)
         yscale = self.combobox_tof_yscale.currentText().lower()
         self._fore_tof_ax.set_yscale(yscale)
         self._back_tof_ax.set_yscale(yscale)
@@ -2320,21 +2361,15 @@ class Ui_MainWindow(object):
         # self._mq_tof_ax.ticklabel_format(axis='y', useOffset=False)  # setting the ylim resets the format! This is a quick fix
         
         self._line_raw_tof.figure.canvas.draw()
+        self._line_raw_tof_points.figure.canvas.draw()
         self._line_cal_tof.figure.canvas.draw()
         self._line_cal_tof_points.figure.canvas.draw()
         self._line_mq_tof.figure.canvas.draw()
-        self._line_raw_tof_points.figure.canvas.draw()
 
-        mq_start, mq_end, mq_bins = self.get_mq_lim_data(self.graph_data['mq_subt'][0])
-        new_mq_coor = np.linspace(mq_start, mq_end, num=mq_bins)
-        with IgnoreWarnings("length one"):
-            new_fore_mq = rebinning(new_mq_coor, *self.graph_data['mq_fore'])
-            new_back_mq = rebinning(new_mq_coor, *self.graph_data['mq_back'])
-            new_subt_mq = rebinning(new_mq_coor, *self.graph_data['mq_subt'])
 
-        self._line_fore_mq.set_data(new_mq_coor, new_fore_mq)
-        self._line_back_mq.set_data(new_mq_coor, new_back_mq)
-        self._line_subt_mq.set_data(new_mq_coor, new_subt_mq)
+        self._line_fore_mq.set_data(new_mq_coor, new_mq_fore)
+        self._line_back_mq.set_data(new_mq_coor, new_mq_back)
+        self._line_subt_mq.set_data(new_mq_coor, new_mq_subt)
         yscale = self.combobox_tof_yscale.currentText().lower()
         self._fore_mq_ax.set_yscale(yscale)
         self._back_mq_ax.set_yscale(yscale)
@@ -2351,19 +2386,18 @@ class Ui_MainWindow(object):
         self._line_back_mq.figure.canvas.draw()
         self._line_subt_mq.figure.canvas.draw()
 
-
+        time_end = time.time()
+        print('time elapsed (redraw_tof_data): ', time_end-time_start)
 
 
     def update_pes_window(self):
         '''
         Draw the PES window in the Main VMI tab. This function is fine.
         '''
-        
 
         self.update_pes_calibration_window()
 
         energies, pes = self.graph_data['pes_subt']
-        # beta1, beta2, beta3, beta4, *_ = self.graph_data['betas']
         rsquared, betas = self.graph_data['betas']
         l_values = self.betas
         betas_to_axes = {
@@ -2440,14 +2474,19 @@ class Ui_MainWindow(object):
             self._fore_ax_data.figure.canvas.draw()
             self._back_ax_data.figure.canvas.draw()
             self._subt_ax_data.figure.canvas.draw()
-            self._vmi_shape = self.graph_data['vmi_fore'].shape
+
+        self._vmi_shape = self.graph_data['vmi_fore'].shape
 
     def update_image_window(self):
-        if do_blitting := self.graph_data['vmi_reduced'].shape == self._image_vmi_shape:
+        if do_blitting := ((self.graph_data['vmi_raw'].shape == self._image_vmi_shape)
+                           and (self.graph_data['vmi_reduced'].shape==self._image_small_vmi_shape)
+        ):
             vmi_raw_background = self.vmi_raw_fig.canvas.copy_from_bbox(self._vmi_raw_ax.bbox)
             self.vmi_raw_fig.canvas.restore_region(vmi_raw_background)
             self._vmi_raw_ax_data.set_data(self.graph_data['vmi_raw'])
+            self._vmi_raw_guide_ax_data.set_data(self.graph_data['ring_guide'])
             self._vmi_raw_ax.draw_artist(self._vmi_raw_ax_data)
+            self._vmi_raw_ax.draw_artist(self._vmi_raw_guide_ax_data)
             # self._vmi_raw_ax_data.autoscale()
             self.vmi_raw_fig.canvas.blit(self._vmi_raw_ax.bbox)
             
@@ -2483,7 +2522,11 @@ class Ui_MainWindow(object):
             data_shape = self.graph_data['vmi_raw'].shape
             extent = (0, data_shape[0], data_shape[1], 0)
             
+            small_data_shape = self.graph_data['vmi_reduced'].shape
+            small_extent = (0, small_data_shape[0], small_data_shape[1], 0)
+            
             self._vmi_raw_ax_data.set_data(self.graph_data['vmi_raw'])
+            self._vmi_raw_guide_ax_data.set_data(self.graph_data['ring_guide'])
             with IgnoreWarnings("makes transformation singular"):
                 self._vmi_raw_ax_data.set_extent(extent)
             self._vmi_raw_ax_data.autoscale()
@@ -2497,23 +2540,24 @@ class Ui_MainWindow(object):
             
             self._vmi_reduced_ax_data.set_data(self.graph_data['vmi_reduced'])
             with IgnoreWarnings("makes transformation singular"):
-                self._vmi_reduced_ax_data.set_extent(extent)
+                self._vmi_reduced_ax_data.set_extent(small_extent)
             self._vmi_reduced_ax_data.autoscale()
             self._vmi_reduced_ax.figure.canvas.draw()
 
             self._vmi_fit_ax_data.set_data(self.graph_data['vmi_fit'])
             with IgnoreWarnings("makes transformation singular"):
-                self._vmi_fit_ax_data.set_extent(extent)
+                self._vmi_fit_ax_data.set_extent(small_extent)
             self._vmi_fit_ax_data.autoscale()
             self._vmi_fit_ax.figure.canvas.draw()
 
             self._vmi_inverse_ax_data.set_data(self.graph_data['vmi_inverse'])
             with IgnoreWarnings("makes transformation singular"):
-                self._vmi_inverse_ax_data.set_extent(extent)
+                self._vmi_inverse_ax_data.set_extent(small_extent)
             self._vmi_inverse_ax_data.autoscale()
             self._vmi_inverse_ax.figure.canvas.draw()
 
-            self._image_vmi_shape = self.graph_data['vmi_reduced'].shape
+        self._image_vmi_shape = self.graph_data['vmi_raw'].shape
+        self._image_small_vmi_shape = self.graph_data['vmi_reduced'].shape
 
         # PES in the image correction tab
         radial, rdf = self.graph_data['subt_rdf']
@@ -2607,7 +2651,6 @@ class Ui_MainWindow(object):
         ax.set_ylim(new_ylim)
 
 
-
     def get_ke_lim_data(self, ke_coor):
         ke_start_string = self.text_edit_ke_start.toPlainText()
         ke_end_string = self.text_edit_ke_end.toPlainText()
@@ -2643,13 +2686,7 @@ class Ui_MainWindow(object):
         # perform calibration here!
 
         cal_points_string = self.test_edit_cal_points.toPlainText()
-        cal_points_string = re.sub(' ', '', cal_points_string)
-        pairs = cal_points_string.split('\n')
-        pairs = [item for item in pairs if item != '']
-        rsquare_ke_peaks = []
-        for pair in pairs:
-            rsquare_ke_peaks.append(np.array(list(pair.split(',')), dtype=float))
-        rsquare_ke_peaks = np.array(rsquare_ke_peaks)
+        rsquare_ke_peaks = self.string_to_pairs(cal_points_string, dtype=float)
         rsquare_points, ke_points = rsquare_ke_peaks.T
 
 
@@ -2675,9 +2712,6 @@ class Ui_MainWindow(object):
         self._line_ke_rsquare.set_data(new_ke_coor, new_raw_pes)
 
 
-        #########
-
-
         model_rsquare = np.linspace(np.min(rsquare_points), np.max(rsquare_points), num=1000)
 
         self._line_cal_rsquare.set_data(model_rsquare, rsquare_ke_coor_func(model_rsquare))
@@ -2688,11 +2722,8 @@ class Ui_MainWindow(object):
 
         self.graph_data['ke_subt'] = ke, pes
 
-
-
         self._line_raw_rsquare.set_data(*self.graph_data['subt_rsdf'])
         self._line_raw_rsquare_points.set_data(rsquare_points, subt_rsdf[closest(rsquare_points, rsquare)])
-
         
         self.set_new_xlim_ylim(*self.graph_data['subt_rsdf'], self._raw_rsquare_ax, 
             None, None)
@@ -2700,7 +2731,6 @@ class Ui_MainWindow(object):
         self.set_new_xlim_ylim(*self.graph_data['pes_subt'], self._ke_rsquare_ax, 
             *self.get_ke_lim_data(ke)[:2])
         # self._mq_tof_ax.ticklabel_format(axis='y', useOffset=False)  # setting the ylim resets the format! This is a quick fix
-
 
         self._line_cal_rsquare_points.figure.canvas.draw()
         self._line_raw_rsquare.figure.canvas.draw()
@@ -2887,7 +2917,14 @@ class MainWindow(QMainWindow):
         pes_fig = Figure(figsize=(5, 3))
         pes_canvas = FigureCanvas(pes_fig)
         app.vmi_abel.addWidget(pes_canvas)
-        app.vmi_abel.addWidget(NavigationToolbar(pes_canvas, self))
+        pes_toolbar = NavigationToolbar(pes_canvas, self)
+        app.vmi_abel.addWidget(pes_toolbar)
+
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        pes_toolbar.setSizePolicy(sizePolicy1)
+        # pes_toolbar.setMinimumSize(QSize(200, 50))
+        # pes_toolbar.setMaximumSize(QSize(200, 100))
+
         app._pes_ax = pes_canvas.figure.subplots()
         app._betas_ax = app._pes_ax.twinx()
 
@@ -2897,10 +2934,12 @@ class MainWindow(QMainWindow):
         app._line_beta3, = app._betas_ax.plot([], [])
         app._line_beta4, = app._betas_ax.plot([], [])
         app._betas_ax.set_ylim(-2, 2)
-        app._pes_ax.set_xlabel('eKE (eV)')
+        app._pes_ax.set_xlabel('PES signal')
+        app._pes_ax.set_ylabel('eKE (eV)')
+        app._betas_ax.set_ylabel(r'$\beta$-value')
         app._pes_ax.xaxis.labelpad = 0
         plt.tight_layout()
-        pes_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
+        pes_fig.subplots_adjust(bottom=0.26, left=0.15, right=0.90, top=0.95)
         
         x_lin, y_lin = np.linspace(-3,3,num=300), np.linspace(-3,3,num=300)
         x, y = np.meshgrid(x_lin, y_lin, indexing='ij')
@@ -2951,6 +2990,7 @@ class MainWindow(QMainWindow):
         app.vmi_show_raw.addWidget(NavigationToolbar(vmi_raw_canvas, self))
         app._vmi_raw_ax = vmi_raw_canvas.figure.subplots()
         with IgnoreWarnings("makes transformation singular"):
+            app._vmi_raw_guide_ax_data, *_ = app._vmi_raw_ax.plot([], [], color='red', linewidth=0.5)
             app._vmi_raw_ax_data = app._vmi_raw_ax.imshow([[],])
         plt.tight_layout()
         
@@ -3173,7 +3213,6 @@ class MainWindow(QMainWindow):
         app._cal_rsquare_ax.yaxis.labelpad = 0
         plt.tight_layout()
         cal_rsquare_fig.subplots_adjust(bottom=0.26, left=0.15, right=0.95, top=0.95)
-
 
         self.show()
 

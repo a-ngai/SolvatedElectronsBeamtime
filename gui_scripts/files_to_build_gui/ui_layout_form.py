@@ -398,9 +398,9 @@ class Ui_MainWindow(object):
         self.groupBox_3 = QGroupBox(self.frame_4)
         self.groupBox_3.setObjectName(u"groupBox_3")
         self.groupBox_3.setGeometry(QRect(10, 60, 201, 91))
-        self.box_pes_2 = QCheckBox(self.groupBox_3)
-        self.box_pes_2.setObjectName(u"box_pes_2")
-        self.box_pes_2.setGeometry(QRect(10, 60, 111, 22))
+        self.box_ring_ellipticity = QCheckBox(self.groupBox_3)
+        self.box_ring_ellipticity.setObjectName(u"box_ring_ellipticity")
+        self.box_ring_ellipticity.setGeometry(QRect(10, 60, 111, 22))
         self.text_edit_show_rings = QTextEdit(self.groupBox_3)
         self.text_edit_show_rings.setObjectName(u"text_edit_show_rings")
         self.text_edit_show_rings.setGeometry(QRect(80, 30, 101, 31))
@@ -1057,9 +1057,9 @@ class Ui_MainWindow(object):
         font1 = QFont()
         font1.setPointSize(14)
         self.label_max_cores.setFont(font1)
-        self.text_edit_search_dir_for_newest_folder_2 = QTextEdit(self.tab_settings)
-        self.text_edit_search_dir_for_newest_folder_2.setObjectName(u"text_edit_search_dir_for_newest_folder_2")
-        self.text_edit_search_dir_for_newest_folder_2.setGeometry(QRect(600, 30, 141, 51))
+        self.text_edit_search_regex = QTextEdit(self.tab_settings)
+        self.text_edit_search_regex.setObjectName(u"text_edit_search_regex")
+        self.text_edit_search_regex.setGeometry(QRect(600, 30, 141, 51))
         self.label_search_dir_for_newest_folder_2 = QLabel(self.tab_settings)
         self.label_search_dir_for_newest_folder_2.setObjectName(u"label_search_dir_for_newest_folder_2")
         self.label_search_dir_for_newest_folder_2.setGeometry(QRect(610, 10, 111, 16))
@@ -1098,9 +1098,9 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(3)
+        self.tabWidget.setCurrentIndex(0)
         self.tabWidget_2.setCurrentIndex(2)
-        self.tabWidget_4.setCurrentIndex(3)
+        self.tabWidget_4.setCurrentIndex(0)
         self.tabWidget_5.setCurrentIndex(0)
         self.tabWidget_3.setCurrentIndex(2)
 
@@ -1198,7 +1198,7 @@ class Ui_MainWindow(object):
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
         self.button_get_guess_vmi_corrections.setText(QCoreApplication.translate("MainWindow", u"Get guess", None))
         self.groupBox_3.setTitle(QCoreApplication.translate("MainWindow", u"Visual aids", None))
-        self.box_pes_2.setText(QCoreApplication.translate("MainWindow", u"Ring ellipticity", None))
+        self.box_ring_ellipticity.setText(QCoreApplication.translate("MainWindow", u"Ring ellipticity", None))
         self.text_edit_show_rings.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -1517,7 +1517,7 @@ class Ui_MainWindow(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">1</p></body></html>", None))
-        self.label_num_cores.setText(QCoreApplication.translate("MainWindow", u"Max # cores for multiprocess", None))
+        self.label_num_cores.setText(QCoreApplication.translate("MainWindow", u"Num. cores for multiprocess", None))
         self.label_max_cores.setText(QCoreApplication.translate("MainWindow", u"/", None))
         self.label_search_dir_for_newest_folder_2.setText(QCoreApplication.translate("MainWindow", u"Auto-search regex", None))
         self.label_tof_baseline_points.setText(QCoreApplication.translate("MainWindow", u"TOF baseline points", None))

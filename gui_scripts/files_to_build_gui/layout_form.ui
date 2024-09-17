@@ -54,7 +54,7 @@
        <string notr="true"/>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_vmi_main">
        <property name="sizePolicy">
@@ -472,7 +472,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
            <item>
             <widget class="QTabWidget" name="tabWidget_4">
              <property name="currentIndex">
-              <number>3</number>
+              <number>0</number>
              </property>
              <widget class="QWidget" name="tab_4">
               <property name="sizePolicy">
@@ -820,7 +820,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
               <property name="title">
                <string>Visual aids</string>
               </property>
-              <widget class="QCheckBox" name="box_pes_2">
+              <widget class="QCheckBox" name="box_ring_ellipticity">
                <property name="geometry">
                 <rect>
                  <x>10</x>
@@ -2832,7 +2832,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </rect>
         </property>
         <property name="text">
-         <string>Max # cores for multiprocess</string>
+         <string>Num. cores for multiprocess</string>
         </property>
        </widget>
        <widget class="QLabel" name="label_max_cores">
@@ -2853,7 +2853,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
          <string>/</string>
         </property>
        </widget>
-       <widget class="QTextEdit" name="text_edit_search_dir_for_newest_folder_2">
+       <widget class="QTextEdit" name="text_edit_search_regex">
         <property name="geometry">
          <rect>
           <x>600</x>
