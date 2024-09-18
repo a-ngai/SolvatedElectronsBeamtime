@@ -146,7 +146,7 @@ ranges.
 
 # BEAMTIME_DIR =  '/net/online4ldm/store/20234049/results/Beamtime/'  # expected directory at FERMI
 BEAMTIME_DIR =  f'{CURRENT_SCRIPT_DIR}/TestBeamtime/'
-BEAMTIME_DIR = find_subdir('TestBeamtime', resolve_path(CURRENT_SCRIPT_DIR, '../..'))
+BEAMTIME_DIR = find_subdir('TestBeamtime', resolve_path(CURRENT_SCRIPT_DIR, '..'))
 DATA_DIR = f'{BEAMTIME_DIR}/Beamtime/'  # change from fictitious to the real raw data directory!
 SAVE_DIR = f'{BEAMTIME_DIR}/results/evaluation/'#'/net/online4ldm/store/20234049/results/results' # ditto
 
@@ -367,8 +367,8 @@ plt.imshow(sub_vmi[:,:,0])
 plt.title(f'VMI of Run {run_numbers[0]:03d}')
 plt.show()
 
-rebinned_vmi = rebinning(np.linspace(0, 900, 512), np.arange(900), sub_vmi, axis=1)
-rebinned_vmi = rebinning(np.linspace(0, 900, 512), np.arange(900), rebinned_vmi, axis=0)
+rebinned_vmi = rebinning(np.linspace(0, 900, 450), np.arange(900), sub_vmi, axis=1)
+rebinned_vmi = rebinning(np.linspace(0, 900, 450), np.arange(900), rebinned_vmi, axis=0)
 
 plt.imshow(rebinned_vmi[:,:,0])
 plt.title(f'rebinned VMI of Run {run_numbers[0]:03d}')
@@ -378,7 +378,7 @@ plt.show()
 x0, y0 = 264, 260
 half_filter = [1,1]
 folded = foldHalf(rebinned_vmi, x0=x0, y0=y0, half_filter=half_filter)
-resized = resizeFoldedHalf(folded, 256)
+resized = resizeFoldedHalf(folded, 225)
 
 plt.imshow(resized[:,:,0])
 plt.title('half-folded')
@@ -393,7 +393,7 @@ Load Abel inversion data
 # %%
 MAKE_IMAGES = True
 PROJECT_DIRECTORY = resolve_path(CURRENT_SCRIPT_DIR, '../..')
-gData = loadG(f'{PROJECT_DIRECTORY}/G_r256_k64_l4_half.h5', make_images=MAKE_IMAGES)
+gData = loadG(f'{PROJECT_DIRECTORY}/G_r225_k57_l4_half.h5', make_images=MAKE_IMAGES)
 
 # %%
 """

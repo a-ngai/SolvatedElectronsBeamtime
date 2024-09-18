@@ -673,7 +673,7 @@ def lrange(start, end, step=1, remove=None):
     return changed_list
 
 def closest(locs, array):
-    indices = np.array([np.argmin((array - loc)**2) for loc in locs])
+    indices = np.array([np.argmin((array - loc)**2) for loc in locs], dtype=int)
     return indices
 
 def non_normalized_gaussians(params, x):
@@ -895,10 +895,15 @@ def find_subdir(name: str, root: str, skip: int=0, give_single: bool=True) -> st
             full_filepath = os.path.join(path, subdir)
             rel_path = resolve_path(full_filepath)[Nchar:]
             all_paths.append(rel_path)
+        all_paths.append(path)
+    all_paths = list(set(all_paths))
 
     found_paths = []
     levels = []
+    print(standard_name)
     for filepath in all_paths:
+        if filepath[-len(standard_name):] != standard_name:
+            continue
         if standard_name not in filepath:
             continue
         found_paths.append(f'{standard_root}{filepath}')

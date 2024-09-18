@@ -7725,7 +7725,7 @@ ambiguity.</p>
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># BEAMTIME_DIR =  '/net/online4ldm/store/20234049/results/Beamtime/'  # expected directory at FERMI</span>
 <span class="n">BEAMTIME_DIR</span> <span class="o">=</span>  <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">CURRENT_SCRIPT_DIR</span><span class="si">}</span><span class="s1">/TestBeamtime/'</span>
-<span class="n">BEAMTIME_DIR</span> <span class="o">=</span> <span class="n">find_subdir</span><span class="p">(</span><span class="s1">'TestBeamtime'</span><span class="p">,</span> <span class="n">resolve_path</span><span class="p">(</span><span class="n">CURRENT_SCRIPT_DIR</span><span class="p">,</span> <span class="s1">'../..'</span><span class="p">))</span>
+<span class="n">BEAMTIME_DIR</span> <span class="o">=</span> <span class="n">find_subdir</span><span class="p">(</span><span class="s1">'TestBeamtime'</span><span class="p">,</span> <span class="n">resolve_path</span><span class="p">(</span><span class="n">CURRENT_SCRIPT_DIR</span><span class="p">,</span> <span class="s1">'..'</span><span class="p">))</span>
 <span class="n">DATA_DIR</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">BEAMTIME_DIR</span><span class="si">}</span><span class="s1">/Beamtime/'</span>  <span class="c1"># change from fictitious to the real raw data directory!</span>
 <span class="n">SAVE_DIR</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">BEAMTIME_DIR</span><span class="si">}</span><span class="s1">/results/evaluation/'</span><span class="c1">#'/net/online4ldm/store/20234049/results/results' # ditto</span>
 
@@ -7753,7 +7753,8 @@ ambiguity.</p>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Run numbers: [1]
+<pre>TestBeamtime/
+Run numbers: [1]
 </pre>
 </div>
 </div>
@@ -7816,7 +7817,7 @@ directory. I don't expect this to ever change.</p>
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Data set contains 1 run(s).
-Save directory: ...cts/SolvatedElectronsBeamtime/examples/TestBeamtime//results/evaluation/run_0001_test
+Save directory: ...edElectronsBeamtime/examples/TestBeamtime//results/evaluation/run_0001_test
 </pre>
 </div>
 </div>

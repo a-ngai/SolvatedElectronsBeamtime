@@ -69,7 +69,7 @@ ranges.
 # %%
 # BEAMTIME_DIR =  '/net/online4ldm/store/20234049/results/Beamtime/'  # expected directory at FERMI
 BEAMTIME_DIR =  f'{CURRENT_SCRIPT_DIR}/TestBeamtime/'
-BEAMTIME_DIR = find_subdir('TestBeamtime', resolve_path(CURRENT_SCRIPT_DIR, '../..'))
+BEAMTIME_DIR = find_subdir('TestBeamtime', resolve_path(CURRENT_SCRIPT_DIR, '..'))
 DATA_DIR = f'{BEAMTIME_DIR}/Beamtime/'  # change from fictitious to the real raw data directory!
 SAVE_DIR = f'{BEAMTIME_DIR}/results/evaluation/'#'/net/online4ldm/store/20234049/results/results' # ditto
 
@@ -160,7 +160,7 @@ from cpbasex.image_mod import resize, resizeFoldedHalf, foldHalf
 sub_vmi = fore_vmi - back_vmi
 sub_vmi = sub_vmi.transpose(1,2,0)
 
-vmi = resize(sub_vmi, (512, 512), axis=(0,1))
+vmi = resize(sub_vmi, (450, 450), axis=(0,1))
 
 show_raw_vmi = sub_vmi[:,:,0]
 show_bin_vmi = vmi[:,:,0]
@@ -220,7 +220,7 @@ Fold the VMI images in preparation for the Abel inversion
 x0, y0 = 264, 260
 half_filter = [True, True]
 folded = foldHalf(vmi, x0=x0, y0=y0, half_filter=half_filter)
-resized = resizeFoldedHalf(folded, 256)
+resized = resizeFoldedHalf(folded, 225)
 
 plt.imshow(resized[:,:,0])
 plt.title(f'Half-folded. [left, right]={half_filter}')
@@ -237,7 +237,7 @@ Load the (large) Abel inversion object
 # load inversion object
 MAKE_IMAGES = True
 PROJECT_DIRECTORY = resolve_path(CURRENT_SCRIPT_DIR, '../..')
-gData = loadG(f'{PROJECT_DIRECTORY}/G_r256_k64_l4_half.h5', make_images=MAKE_IMAGES)
+gData = loadG(f'{PROJECT_DIRECTORY}/G_r225_k57_l4_half.h5', make_images=MAKE_IMAGES)
 
 # %%
 """
