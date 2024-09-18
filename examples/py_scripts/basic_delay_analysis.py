@@ -367,8 +367,8 @@ plt.imshow(sub_vmi[:,:,0])
 plt.title(f'VMI of Run {run_numbers[0]:03d}')
 plt.show()
 
-rebinned_vmi = rebinning(np.linspace(0, 900, 512), np.arange(900), sub_vmi, axis=1)
-rebinned_vmi = rebinning(np.linspace(0, 900, 512), np.arange(900), rebinned_vmi, axis=0)
+rebinned_vmi = rebinning(np.linspace(0, 900, 450), np.arange(900), sub_vmi, axis=1)
+rebinned_vmi = rebinning(np.linspace(0, 900, 450), np.arange(900), rebinned_vmi, axis=0)
 
 plt.imshow(rebinned_vmi[:,:,0])
 plt.title(f'rebinned VMI of Run {run_numbers[0]:03d}')
