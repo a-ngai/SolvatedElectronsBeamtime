@@ -1697,6 +1697,7 @@ class Ui_MainWindow(object):
         self.combobox_tof_yscale.currentIndexChanged.connect(self.redraw_tof_data) # still need to do
         self.button_apply_vmi_corrections.clicked.connect(self.process_redraw_vmi_data)
         self.button_apply_pes_calibration.clicked.connect(self.update_pes_calibration_window)
+        # self.text_edit_current_folder.textChanged.connect(self.change_folder)
 
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_data_if_change)
@@ -1711,6 +1712,19 @@ class Ui_MainWindow(object):
         self.timer.start(2000)
     def stop_timer(self):
         self.timer.stop()
+        
+
+    def change_folder(self):
+        current_folder = self.status['current_folder']
+        if (look_folder := self.text_edit_current_folder.toPlainText()) != current_folder:
+            new_folder = look_folder
+        elif (look_folder := self.text_edit_current_folder_2.toPlainText()) != current_folder:
+            new_folder = look_folder
+        else: 
+            new_folder = current_folder
+        self.status['current_folder'] = new_folder
+        self.text_edit_current_folder.setText(new_folder)
+        self.text_edit_current_folder_2.setText(new_folder)
         
     def apply_settings(self):
         """ get all the settings from the settings tab"""
@@ -1772,6 +1786,8 @@ class Ui_MainWindow(object):
                 self.text_edit_current_folder.setText(newest_folder)
                 self.text_edit_current_folder_2.setText(newest_folder)
                 # self.text_edit_current_folder.setReadOnly(True)
+        else:
+            self.change_folder()
 
         sorted_found_files = self.get_filechange()
         if sorted_found_files is None:
