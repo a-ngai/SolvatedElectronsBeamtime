@@ -378,7 +378,7 @@ plt.show()
 x0, y0 = 264, 260
 half_filter = [1,1]
 folded = foldHalf(rebinned_vmi, x0=x0, y0=y0, half_filter=half_filter)
-resized = resizeFoldedHalf(folded, 256)
+resized = resizeFoldedHalf(folded, 225)
 
 plt.imshow(resized[:,:,0])
 plt.title('half-folded')
@@ -393,7 +393,7 @@ Load Abel inversion data
 # %%
 MAKE_IMAGES = True
 PROJECT_DIRECTORY = resolve_path(CURRENT_SCRIPT_DIR, '../..')
-gData = loadG(f'{PROJECT_DIRECTORY}/G_r256_k64_l4_half.h5', make_images=MAKE_IMAGES)
+gData = loadG(f'{PROJECT_DIRECTORY}/G_r225_k57_l4_half.h5', make_images=MAKE_IMAGES)
 
 # %%
 """

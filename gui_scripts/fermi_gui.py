@@ -1572,7 +1572,7 @@ class Ui_MainWindow(object):
             match_filename = f'{look_in_dir}/{list_of_files[matches[0][0]]}'
         else:
             match_filename = ''
-        # self.text_edit_abel_inversion_data_path.setText(f'{top_level_dir}/examples/G_r256_k64_l4_half.h5')
+        # self.text_edit_abel_inversion_data_path.setText(f'{top_level_dir}/examples/G_r225_k57_l4_half.h5')
         self.text_edit_abel_inversion_data_path.setText(match_filename)
         self.text_edit_tof_baseline_points.setText('1000')
         self.text_edit_search_regex.setText(r'Run_(\d+)')
@@ -2045,7 +2045,7 @@ class Ui_MainWindow(object):
         corrected = stretch(rotate(center_image(vmi_subt, vmi_center), vmi_rotation), vmi_zoom)
         vmi = resize(corrected, (reduce_image_size, reduce_image_size), axis=(0,1))
         folded = foldHalf(vmi, half_filter=half_filter)
-        # resized = resizeFoldedHalf(folded, 256)
+        # resized = resizeFoldedHalf(folded, 225)
         resized = folded
 
 
@@ -3230,5 +3230,5 @@ if __name__ == '__main__':
     
     tabWidgetApp.apply_settings()
 
-    # sys.exit(app.exec())
-    app.exec()
+    sys.exit(app.exec())
+    # app.exec()
