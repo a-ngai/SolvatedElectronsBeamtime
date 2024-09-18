@@ -1677,6 +1677,9 @@ class Ui_MainWindow(object):
         self.vmi_data = np.zeros(shape=(4,0,0))
         self.tof_data = np.zeros(shape=(1)), np.zeros(shape=(4,1))
         self.mq_data = np.zeros(shape=(1,)), np.zeros(shape=(4,1))
+        self.default_vmi_data = np.zeros(shape=(4,0,0))
+        self.default_tof_data = np.zeros(shape=(1)), np.zeros(shape=(4,1))
+        self.default_mq_data = np.zeros(shape=(1,)), np.zeros(shape=(4,1))
         self.gdata = None
         self.betas = [] # the existent beta values from gdata
 
@@ -1864,11 +1867,13 @@ class Ui_MainWindow(object):
                 back_sep=back_sep, slu_sep=slu_sep, make_cache=make_cache,
                 num_files_per_cache=num_files_per_cache, use_cache=load_from_cache)
 
-        except (FileNotFoundError, OSError):
+        except (FileNotFoundError, OSError, IndexError) as e:
             # this is a race condition, where h5py is trying to open a file that is currently being written into
             # easiest solution is to wait for the next update
-            if self.terminal_print: print("can't open here! Returning None")
-            vmi_data = self.vmi_data
+            if self.terminal_print: print("Can't open VMI here! Returning None")
+            print("Error message: ", e)
+            # vmi_data = self.vmi_data
+            vmi_data = self.default_vmi_data
             return vmi_data
         # vmi_data = simplify_data(vmi_data, single_run=True, single_rule=True)
         vmi_data = [data[0] for data in vmi_data]
@@ -1904,11 +1909,12 @@ class Ui_MainWindow(object):
             tof_coor = np.arange(np.shape(tof_signal)[-1])
             tof_data = tof_coor, tof_signal
 
-        except (FileNotFoundError, OSError):
+        except (FileNotFoundError, OSError, IndexError):
             # this is a race condition, where h5py is trying to open a file that is currently being written into
             # easiest solution is to wait for the next update
-            if self.terminal_print: print("can't open here! Returning None")
-            tof_data = self.tof_data
+            if self.terminal_print: print("Can't open TOF data here! Returning None")
+            # tof_data = self.tof_data
+            tof_data = self.default_tof_data
             return tof_data
         # vmi_data = simplify_data(vmi_data, single_run=True, single_rule=True)
 
@@ -2134,12 +2140,18 @@ class Ui_MainWindow(object):
 
         if True: # this is what I want, but if I do this, the TOF portion won't run?
             worker = Worker(self.remake_vmi_data)
-            worker.signals.finished.connect(self.redraw_vmi_data)
+            # worker.signals.finished.connect(self.redraw_vmi_data)
+            worker.signals.finished.connect(self.worker_redraw_vmi_data)
             self.threadpool.start(worker)
         else:
             self.remake_vmi_data()
             self.redraw_vmi_data()
 
+    def worker_redraw_vmi_data(self):
+        worker = Worker(self.redraw_vmi_data)
+        worker.signals.finished.connect(self.change_pes_calibration_constants)
+        self.threadpool.start(worker)
+        
 
     def redraw_vmi_data(self):
         
@@ -2182,7 +2194,7 @@ class Ui_MainWindow(object):
 
         self.change_ion_tof_calibration_constants()
         worker = Worker(self.remake_tof_data)
-        worker.signals.finished.connect(self.redraw_tof_data)
+        worker.signals.finished.connect(self.worker_redraw_tof_data)
         self.threadpool.start(worker)
     
     def remake_tof_data(self):
@@ -2327,6 +2339,10 @@ class Ui_MainWindow(object):
         self.graph_data['new_mq_subt'] = new_mq_coor, new_mq_subt
 
 
+    def worker_redraw_tof_data(self):
+        worker = Worker(self.redraw_tof_data)
+        self.threadpool.start(worker)
+        
     def redraw_tof_data(self):
         time_start = time.time()
 
@@ -2757,7 +2773,6 @@ class Ui_MainWindow(object):
         self._line_raw_rsquare.figure.canvas.draw()
         # self._line_subt_ke.figure.canvas.draw()
         self._line_ke_rsquare.figure.canvas.draw()
-        self.change_pes_calibration_constants()
 
 
     def change_pes_calibration_constants(self):
