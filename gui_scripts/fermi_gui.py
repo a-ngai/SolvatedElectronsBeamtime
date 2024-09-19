@@ -1923,11 +1923,17 @@ class Ui_MainWindow(object):
         return tof_data
     
 
+    def return_background_key_start_get_tof_data_in_worker(self):
+        if self.background_key is False:
+            self.background_key = True
+        else:
+            raise Exception(f'background key was duplicated (start_get_tof_data_in_worker)!')
+
     def return_background_key(self):
         if self.background_key is False:
             self.background_key = True
         else:
-            raise Exception('background key was duplicated!')
+            raise Exception(f'background key was duplicated ({message})!')
     
     def borrow_background_key(self):
         if self.background_key is True:
@@ -1937,13 +1943,16 @@ class Ui_MainWindow(object):
             return False
     
     def start_get_tof_data_in_worker(self):
+        if DEBUG: print(f'stepped in start_get_tof_data_in_worker, background_key is {self.background_key}')
         if not self.borrow_background_key():
             print('background process running, cannot execute tof data retrieval!')
             return None
         if True:
             if DEBUG: print('getting tof data!')
+            if DEBUG: print(f'DEBUG: expect background_key to be False ({self.background_key})')
+            assert self.background_key == False
             worker = Worker(self.get_new_tof_data)
-            worker.signals.finished.connect(self.return_background_key)
+            worker.signals.finished.connect(self.return_background_key_start_get_tof_data_in_worker)
             worker.signals.finished.connect(self.process_redraw_tof_data)
             self.threadpool.start(worker)
         else:
@@ -1952,15 +1961,20 @@ class Ui_MainWindow(object):
             self.process_redraw_tof_data()
 
     def combine_process_redraw_vmi_data_and_start_get_tof_data_in_worker(self):
+        if DEBUG: print(f'DEBUG: expect background_key to be True ({self.background_key})')
+        assert self.background_key == True
         self.start_get_tof_data_in_worker()
         if DEBUG: print('I got here!')
         self.process_redraw_vmi_data()
-        self.return_background_key()
+        # self.return_background_key()
+        assert self.background_key == False
+        if DEBUG: print(f'DEBUG: expect background_key to be False ({self.background_key})')
 
     def update_data(self, multithreading=True):
 
         if multithreading:  # complicated structure, because updating the GUI is NOT thread-safe!
             # i.e. the threaded processes must not touch the GUI elements
+            if DEBUG: print(f'stepped in update_data, background_key is {self.background_key}')
             self.borrow_background_key()
             worker = Worker(self.get_new_vmi_data)
             worker.signals.finished.connect(self.return_background_key)
@@ -2195,7 +2209,8 @@ class Ui_MainWindow(object):
 
     def process_redraw_tof_data(self):
         if DEBUG: print('process redrawing tof data')
-
+        if DEBUG: print(f'DEBUG: expect background_key to be True ({self.background_key})')
+        assert self.background_key == True
         self.change_ion_tof_calibration_constants()
         worker = Worker(self.remake_tof_data)
         worker.signals.finished.connect(self.worker_redraw_tof_data)
@@ -3261,6 +3276,9 @@ def close_app_threadpool(w, app, tabwidget):
     value = app.exec()
     tabwidget.threadpool.waitForDone()
     return value
+
+# import traceback
+# print(traceback.format_exc())
 
 DEBUG = False
 
