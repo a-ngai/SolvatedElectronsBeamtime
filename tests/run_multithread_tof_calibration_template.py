@@ -11,7 +11,10 @@ def test_multithread_tof_calibration_template():
                 r"from fermi_libraries.run_module import Run, RunSets",
                 r"from fermi_libraries.run_module import MultithreadRun as Run, RunSets",
                 mod_line)
-
+            mod_line = re.sub(
+                r"BEAMTIME_DIR = '/net/online4ldm/store/20234049/results/Beamtime'",
+                r"BEAMTIME_DIR = find_subdir('TestBeamtime', resolve_path(CURRENT_SCRIPT_DIR, '..'))",
+                mod_line)
             new_lines.append(mod_line)
         g.writelines(new_lines)
     try:

@@ -144,10 +144,8 @@ ranges.
 
 # %%
 
-# BEAMTIME_DIR =  '/net/online4ldm/store/20234049/results/Beamtime/'  # expected directory at FERMI
-BEAMTIME_DIR =  f'{CURRENT_SCRIPT_DIR}/TestBeamtime/'
 BEAMTIME_DIR = find_subdir('TestBeamtime', resolve_path(CURRENT_SCRIPT_DIR, '..'))
-DATA_DIR = f'{BEAMTIME_DIR}/Beamtime/'  # change from fictitious to the real raw data directory!
+DATA_DIR = f'{BEAMTIME_DIR}/Beamtime/'
 SAVE_DIR = f'{BEAMTIME_DIR}/results/evaluation/'#'/net/online4ldm/store/20234049/results/results' # ditto
 
 
@@ -419,4 +417,49 @@ plt.xlabel('delay (fs)')
 plt.ylabel('eKE (eV)')
 plt.title(f'PES for Runs {run_numbers[0]:03d}-{run_numbers[-1]:03d}')
 plt.colorbar()
+plt.show()
+
+# %% 
+"""
+Nice looking graphs for integrating over peaks
+"""
+
+# %%
+
+name_peak_bounds = [  # change me here according to your (peak-integrating) needs!
+    ['1' , [0.0, 0.2]],
+    ['2' , [0.2, 0.8]],
+    ['3' , [1.2, 1.8]],
+    ['4' , [2.2, 2.8]],
+]
+
+import matplotlib as mpl
+def get_colour(i):
+    return mpl.rcParams['axes.prop_cycle'].by_key()['color'][i%10]
+
+fig, ax = plt.subplots(1,1,figsize=(12,4))
+for (runnumber, pes_line) in zip( run_numbers, pes.T):
+    ax.plot(energies, pes_line, label=f"Run_{runnumber:03d}")
+
+ax.legend(bbox_to_anchor=(1.04, 1), borderaxespad=0, ncol = 2)
+ax.set_xlabel('eKE (eV)')
+ax.set_ylabel('PES')
+ax.set_title(f'Runs {run_numbers[0]}-{run_numbers[-1]} Average of the complete Run')
+ax_ylim = ax.set_ylim()
+for i, (label, (lo, hi)) in enumerate(name_peak_bounds):
+    ax.fill_between([lo, hi], *ax_ylim, alpha=0.5, color=get_colour(i))
+    ax.text((hi + lo)/2, ax_ylim[1], label, ha='center', va='top')
+ax.set_ylim(ax_ylim)
+plt.show()
+
+integrated_area = np.array([np.sum(pes.T[:,(energies>=lo) * (energies<hi)], axis=1) for _, (lo, hi) in name_peak_bounds])
+print(name_peak_bounds)
+
+fig, axes = plt.subplots(1,len(name_peak_bounds),figsize=(16,3), dpi=120)
+for i, ((label, (lo, hi)), areas) in enumerate(zip(name_peak_bounds, integrated_area)):
+    axes[i].plot(delays, areas, label=label, marker='o', color=get_colour(i))
+    axes[i].legend()
+    axes[i].set_xlabel('PPD (fs)')
+    axes[i].set_title(label)
+axes[0].set_ylabel('peak integral')
 plt.show()

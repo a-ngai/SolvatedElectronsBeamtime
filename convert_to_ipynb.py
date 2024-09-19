@@ -1,4 +1,5 @@
 # %%
+import re
 import nbformat
 import asyncio
 asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
@@ -30,12 +31,33 @@ py_files_to_convert = [
     'basic_delay_analysis',
 ]
 
+def convert_testbeamtime_to_beamtime(lines):
+    new_lines = []
+    for line in lines:
+        mod_line = re.sub(
+            r"BEAMTIME_DIR = find_subdir\('TestBeamtime', resolve_path\(CURRENT_SCRIPT_DIR, '\.\.'\)\)",
+            r"BEAMTIME_DIR = '/net/online4ldm/store/20234049'",
+            line)
+        new_lines.append(mod_line)
+    return new_lines
+
 def main():
 
     for filename in py_files_to_convert:
         script_filepath = f'{py_dir}/{filename}.py'
+        modified_filepath = f'{py_dir}/_temp_{filename}.py'
+        with open(script_filepath, 'r') as f:
+            modified_file_lines = f.readlines()
+        modified_filestring = ''.join(
+                convert_testbeamtime_to_beamtime(modified_file_lines))
+        with open(modified_filepath, 'w') as f:
+            f.write(modified_filestring)
+
         save_notebook_filepath = f'{ipynb_dir}/{filename}.ipynb'
-        success = os.system(f'ipynb-py-convert {script_filepath} {save_notebook_filepath}') == 0
+
+
+        success = os.system(f'ipynb-py-convert {modified_filepath} {save_notebook_filepath}') == 0
+        os.remove(modified_filepath)
         if not success:
             raise OSError(f'Could not convert ({script_filepath}) to ({save_notebook_filepath})')
 
