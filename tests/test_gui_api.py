@@ -112,7 +112,7 @@ class TestGUIMethods(unittest.TestCase):
         time_current = time.time()
         max_time_allowed = 8  # max one second for process to end
         while (time_current - time_start < max_time_allowed) and not tabWidgetApp.background_key:
-            time.sleep(0.4)
+            time.sleep(0.7)
             app.processEvents()
             time_current = time.time()
         self.assertTrue(tabWidgetApp.background_key)
