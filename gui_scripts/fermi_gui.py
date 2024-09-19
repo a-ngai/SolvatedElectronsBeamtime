@@ -1851,7 +1851,7 @@ class Ui_MainWindow(object):
             }
         folderpath = self.status['current_folder'] + '/rawdata'
         filepaths = [folderpath+'/'+filename for filename in os.listdir(folderpath)[::]]
-        self.run = Run(filepaths,
+        self.run = MultithreadRun(filepaths,
             alias_dict=alias_dict, search_symbols=search_symbols,
             keyword_functions=keyword_functions)
         self.run.num_cores = self.status['num_cores']
@@ -1941,18 +1941,21 @@ class Ui_MainWindow(object):
             print('background process running, cannot execute tof data retrieval!')
             return None
         if True:
+            if DEBUG: print('getting tof data!')
             worker = Worker(self.get_new_tof_data)
             worker.signals.finished.connect(self.return_background_key)
             worker.signals.finished.connect(self.process_redraw_tof_data)
             self.threadpool.start(worker)
         else:
-            print('not threading here')
+            if DEBUG: print('not threading here')
             self.get_new_tof_data()
             self.process_redraw_tof_data()
 
     def combine_process_redraw_vmi_data_and_start_get_tof_data_in_worker(self):
         self.start_get_tof_data_in_worker()
+        if DEBUG: print('I got here!')
         self.process_redraw_vmi_data()
+        self.return_background_key()
 
     def update_data(self, multithreading=True):
 
@@ -2191,6 +2194,7 @@ class Ui_MainWindow(object):
         self.process_redraw_tof_data()
 
     def process_redraw_tof_data(self):
+        if DEBUG: print('process redrawing tof data')
 
         self.change_ion_tof_calibration_constants()
         worker = Worker(self.remake_tof_data)
@@ -2199,6 +2203,7 @@ class Ui_MainWindow(object):
     
     def remake_tof_data(self):
 
+        if DEBUG: print('remake tof data')
         # TOF section
 
         tof_coor, tof_data = self.tof_data  # obtained through the self.get_new_tof_data() method
@@ -2818,8 +2823,8 @@ from matplotlib.backends.backend_qtagg import \
 from PySide6.QtCore import QObject, Signal, QThreadPool, Signal, Slot, QRunnable, QTimer
 from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QApplication
 
-from fermi_libraries.run_module import MultithreadRun as Run
-# from fermi_libraries.run_module import Run
+from fermi_libraries.run_module import MultithreadRun
+from fermi_libraries.run_module import Run
 from fermi_libraries.common_functions import (
     set_recursion_limit, resolve_path, closest, set_default_labels, rebinning)
 from fermi_libraries.dictionary_search import search_symbols
@@ -3256,6 +3261,8 @@ def close_app_threadpool(w, app, tabwidget):
     value = app.exec()
     tabwidget.threadpool.waitForDone()
     return value
+
+DEBUG = False
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
