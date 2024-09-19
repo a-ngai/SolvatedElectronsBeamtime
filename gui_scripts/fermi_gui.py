@@ -2008,7 +2008,7 @@ class Ui_MainWindow(object):
 
         rotate_text = self.text_edit_correct_rotate.toPlainText()
         if rotate_text == '':
-            rotate = 1
+            rotate = 0
         else:
             rotate = float(self.text_edit_correct_rotate.toPlainText())
         self.image_correction_data['rotate'] = rotate
