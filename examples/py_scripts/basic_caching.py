@@ -97,17 +97,18 @@ ambiguity.
 
 # %%
 BEAMTIME_DIR = find_subdir('TestBeamtime', resolve_path(CURRENT_SCRIPT_DIR, '..'))
-DATA_DIR = f'{BEAMTIME_DIR}/Beamtime/'
-SAVE_DIR = f'{BEAMTIME_DIR}/results/evaluation/'#'/net/online4ldm/store/20234049/results/results' # ditto
+DATA_DIR = f'{BEAMTIME_DIR}/Beamtime'
+SAVE_DIR = f'{BEAMTIME_DIR}/results/evaluation'
 
-SAVE_FILES = False
+SAVE_FILES = True
 
 BACKGROUND = True  # Only set to False if you want to sum up everything
 NAMEADD = 'test' # your name here
+NAMEADD = 'cachingexample_XX' # your name here
 run_numbers = [1, 2]
 
 MAKE_CACHE = True
-LOAD_FROM_CACHE = False
+LOAD_FROM_CACHE = True
 
 CALIBRATION_RUN_NUMBER = 1
 

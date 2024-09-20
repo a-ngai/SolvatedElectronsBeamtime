@@ -79,29 +79,27 @@ ranges.
 
 # %%
 BEAMTIME_DIR = find_subdir('TestBeamtime', resolve_path(CURRENT_SCRIPT_DIR, '..'))
-DATA_DIR = f'{BEAMTIME_DIR}/Beamtime/'
-SAVE_DIR = f'{BEAMTIME_DIR}/results/evaluation/'#'/net/online4ldm/store/20234049/results/results' # ditto
+DATA_DIR = f'{BEAMTIME_DIR}/Beamtime'
+SAVE_DIR = f'{BEAMTIME_DIR}/results/evaluation'
 
-
-SAVE_FILES = False
-
-NAMEADD = 'test' # your name here
+SAVE_FILES = True
+BACKGROUND = True  # Only set to False if you want to sum up everything
+NAMEADD = 'tofcal_XX' # your name here
 run_numbers = np.arange(1,5)  # Run numbers to be analyzed in this script
 
 ION_TOF_REBIN = 5  # rebinning factor for data visualization
 ion_tof_range = (4000, 30000, 1) # select ion tof range for extraction
 
-BACKGROUND = True  # Only set to False if you want to sum up everything
 MAKE_CACHE = True  # You can keep this True
 LOAD_FROM_CACHE = False # if data looks weird, set to False to refresh the cache
 
 CALIBRATION_RUN_NUMBER = 1
 
 # %%
-
 ion_tof_slices = [ion_tof_range]
 raw_ion_tof = np.arange(*ion_tof_slices[0])
 ion_tof = raw_ion_tof[::ION_TOF_REBIN]
+print(run_numbers)
 
 # %%
 """
@@ -177,7 +175,7 @@ ax.set_ylabel('ion TOF signal; rebinned (arb.u.)')
 ax.set_title(f'{run_name}: run averages')
 ax.set_ylim(-1,1)
 
-if SAVE_FILES: fig.savefig(outdir+'/Average_of_complete_run.png')
+if SAVE_FILES: fig.savefig(f'{outdir}/Average_of_complete_run.png')
 plt.show()
 
 # %%
@@ -214,6 +212,7 @@ set_default_labels(ax1, title='calibration points', xlabel='tof (ns)', ylabel='t
 ax2.plot(tof_points, mq_points, marker='o', linestyle='', label='points')
 ax2.plot(model_tof, tof_mq_coor_func(model_tof), color='black')
 set_default_labels(ax2, title='calibration fit', xlabel='tof (ns)', ylabel='m/q')
+if SAVE_FILES: fig.savefig(f'{outdir}/tof_calibration.png')
 plt.show()
 
 
@@ -239,4 +238,5 @@ ax2.set_xlabel('m/q')
 ax2.set_ylabel('ion TOF signal; rebinned (arb.u.)')
 ax2.set_title(f'{run_name}: run averages')
 ax2.grid()
+if SAVE_FILES: fig.savefig(f'{outdir}/tof_spectra.png')
 plt.show()
