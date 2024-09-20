@@ -1907,9 +1907,9 @@ class Ui_MainWindow(object):
         self._line_cal_tof_points.figure.canvas.draw()
         self._line_mq_tof.figure.canvas.draw()
 
-        self.line_fore_mq.set_color('grey')
-        self.line_back_mq.set_color('grey')
-        self.line_subt_mq.set_color('grey')
+        self._line_fore_mq.set_color('grey')
+        self._line_back_mq.set_color('grey')
+        self._line_subt_mq.set_color('grey')
 
         self._line_fore_mq.figure.canvas.draw()
         self._line_back_mq.figure.canvas.draw()
