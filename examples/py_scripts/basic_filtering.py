@@ -91,30 +91,28 @@ ranges.
 
 # %%
 BEAMTIME_DIR = find_subdir('TestBeamtime', resolve_path(CURRENT_SCRIPT_DIR, '..'))
-DATA_DIR = f'{BEAMTIME_DIR}/Beamtime/'
-SAVE_DIR = f'{BEAMTIME_DIR}/results/evaluation/'#'/net/online4ldm/store/20234049/results/results' # ditto
+DATA_DIR = f'{BEAMTIME_DIR}/Beamtime'
+SAVE_DIR = f'{BEAMTIME_DIR}/results/evaluation'
 
-SAVE_FILES = False
-
+SAVE_FILES = True
 BACKGROUND = True  # Only set to False if you want to sum up everything
-NAMEADD = 'test' # your name here
+NAMEADD = 'filtering_XX' # your name here
 run_numbers = np.arange(1,3)
-
 
 # variables for data extraction ans rebinning
 ION_TOF_REBIN = 10
 ion_tof_range = (4000, 30000, 1) # select ion tof range for plotting
 new_ion_mq = np.linspace(0.1,200,num=1200)
 
-ion_tof_slices = [ion_tof_range]
-
-raw_ion_tof = np.arange(*ion_tof_slices[0])
-ion_tof = raw_ion_tof[::ION_TOF_REBIN]
-
 MAKE_CACHE = True
-LOAD_FROM_CACHE = False
+LOAD_FROM_CACHE = True
 
 CALIBRATION_RUN_NUMBER = 1
+
+# %%
+ion_tof_slices = [ion_tof_range]
+raw_ion_tof = np.arange(*ion_tof_slices[0])
+ion_tof = raw_ion_tof[::ION_TOF_REBIN]
 
 print(run_numbers)
 
@@ -188,6 +186,7 @@ ax.set_ylabel('I0M (uJ)')
 ax.set_xlabel('shot number')
 ax.set_title('shot-by-shot I0M values')
 plt.tight_layout()
+if SAVE_FILES: fig.savefig(f'{outdir}/i0m_shot_by_shot.png')
 plt.show()
 
 # %%
@@ -233,7 +232,7 @@ axes[0].set_ylabel('ion TOF signal signal (arb.u.)')
 axes[0].set_title(f'Ion TOF spectra\nfilter rule: {i0m_filter_rules[0]}')
 axes[-1].set_xlabel('ion TOF (ns)')
 plt.tight_layout()
-
+if SAVE_FILES: fig.savefig(f'{outdir}/i0m_filter_rules.png')
 plt.show()
 
 
@@ -273,6 +272,7 @@ axes[0].set_ylabel('ion m/q signal (arb.u.)')
 axes[0].set_title(f'Ion mass/charge spectra\nfilter rule: {i0m_filter_rules[0]}')
 axes[-1].set_xlabel('m/q')
 plt.tight_layout()
+if SAVE_FILES: fig.savefig(f'{outdir}/mq_spectra_filtered.png')
 plt.show()
 
 # %%
@@ -302,4 +302,5 @@ for i, (rule, collected_data) in enumerate(zip(i0m_filter_rules, subt_vmi_rawdat
     ax[0].set_ylabel(f'VMI filter rule:\n{rule}')
 # axes[0].set_title(f'Ion TOF spectra\nfilter rule: {i0m_filter_rules[0]}')
 plt.tight_layout()
+if SAVE_FILES: fig.savefig(f'{outdir}/vmi_filtered.png')
 plt.show()

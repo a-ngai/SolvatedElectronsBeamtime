@@ -1,4 +1,5 @@
 # %%
+
 """
 ## Import statements
 
@@ -142,13 +143,12 @@ ambiguity.
 
 # %%
 BEAMTIME_DIR = find_subdir('TestBeamtime', resolve_path(CURRENT_SCRIPT_DIR, '..'))
-DATA_DIR = f'{BEAMTIME_DIR}/Beamtime/'
-SAVE_DIR = f'{BEAMTIME_DIR}/results/evaluation/'#'/net/online4ldm/store/20234049/results/results' # ditto
+DATA_DIR = f'{BEAMTIME_DIR}/Beamtime'
+SAVE_DIR = f'{BEAMTIME_DIR}/results/evaluation'
 
-SAVE_FILES = False
-
+SAVE_FILES = True
 BACKGROUND = True  # Only set to False if you want to sum up everything
-NAMEADD = 'test' # your name here
+NAMEADD = 'tutorial_XX' # your name here
 run_numbers = [1,]
 
 MAKE_CACHE = True
@@ -156,6 +156,7 @@ LOAD_FROM_CACHE = False
 
 CALIBRATION_RUN_NUMBER = 1
 
+# %%
 print(f'Run numbers: {run_numbers}')
 
 # %%
@@ -275,6 +276,8 @@ Here's an easy plot example below.
 """
 
 # %%
-plt.imshow(fore_vmi - back_vmi)
-plt.title('Example of a VMI image!')
+fig, ax = plt.subplots(1,1)
+ax.imshow(fore_vmi - back_vmi)
+ax.set_title('Example of a VMI image!')
+if SAVE_FILES: fig.savefig(f'{outdir}/example_vmi.png')
 plt.show()

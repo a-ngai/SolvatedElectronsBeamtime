@@ -143,34 +143,29 @@ ranges.
 """
 
 # %%
-
 BEAMTIME_DIR = find_subdir('TestBeamtime', resolve_path(CURRENT_SCRIPT_DIR, '..'))
-DATA_DIR = f'{BEAMTIME_DIR}/Beamtime/'
-SAVE_DIR = f'{BEAMTIME_DIR}/results/evaluation/'#'/net/online4ldm/store/20234049/results/results' # ditto
+DATA_DIR = f'{BEAMTIME_DIR}/Beamtime'
+SAVE_DIR = f'{BEAMTIME_DIR}/results/evaluation'
 
-
-SAVE_FILES = False
-
+SAVE_FILES = True
 BACKGROUND = True  # Only set to False if you want to sum up everything
-NAMEADD = 'test' # your name here
+NAMEADD = 'delayscan_XX' # your name here
 run_numbers = np.arange(1,3)
-
 
 # variables for data extraction ans rebinning
 ION_TOF_REBIN = 10
 ion_tof_range = (4000, 30000, 1) # select ion tof range for plotting
 new_ion_mq = np.linspace(0.1,200,num=1200)
 
-ion_tof_slices = [ion_tof_range]
-
-raw_ion_tof = np.arange(*ion_tof_slices[0])
-ion_tof = raw_ion_tof[::ION_TOF_REBIN]
-
 MAKE_CACHE = True
 LOAD_FROM_CACHE = False
 
 CALIBRATION_RUN_NUMBER = 1
 
+# %%
+ion_tof_slices = [ion_tof_range]
+raw_ion_tof = np.arange(*ion_tof_slices[0])
+ion_tof = raw_ion_tof[::ION_TOF_REBIN]
 print(run_numbers)
 
 # %%
@@ -249,7 +244,7 @@ ax.set_ylabel('ion TOF signal; rebinned (arb.u.)')
 ax.set_title(f'{run_name}: run averages')
 ax.set_ylim(-1,1)
 
-if SAVE_FILES: fig.savefig(outdir+'/Average_of_complete_run.png')
+if SAVE_FILES: fig.savefig(f'{outdir}/Average_of_complete_run.png')
 plt.show()
 
 # %%
@@ -330,8 +325,7 @@ ax2.legend()
 #ax2.legend(bbox_to_anchor=(1.04, 1), borderaxespad=0, ncol = 2)
 plt.tight_layout()
 
-if SAVE_FILES:
-    plt.savefig(outdir+'/I0M_time_and_bins.png')
+if SAVE_FILES: fig.savefig(f'{outdir}/I0M_time_and_bins.png')
 plt.show()
 
 # %%
@@ -363,6 +357,7 @@ sub_vmi = sub_vmi.transpose(1,2,0)
 print(np.shape(sub_vmi))
 plt.imshow(sub_vmi[:,:,0])
 plt.title(f'VMI of Run {run_numbers[0]:03d}')
+if SAVE_FILES: plt.savefig(outdir+'/vmi.png')
 plt.show()
 
 rebinned_vmi = rebinning(np.linspace(0, 900, 450), np.arange(900), sub_vmi, axis=1)
@@ -371,6 +366,7 @@ rebinned_vmi = rebinning(np.linspace(0, 900, 450), np.arange(900), rebinned_vmi,
 plt.imshow(rebinned_vmi[:,:,0])
 plt.title(f'rebinned VMI of Run {run_numbers[0]:03d}')
 plt.grid()
+if SAVE_FILES: plt.savefig(outdir+'/rebinned_vmi.png')
 plt.show()
 
 x0, y0 = 264, 260
@@ -381,6 +377,7 @@ resized = resizeFoldedHalf(folded, 225)
 plt.imshow(resized[:,:,0])
 plt.title('half-folded')
 plt.grid()
+if SAVE_FILES: plt.savefig(outdir+'/folded_vmi.png')
 plt.show()
 
 # %%
@@ -417,6 +414,7 @@ plt.xlabel('delay (fs)')
 plt.ylabel('eKE (eV)')
 plt.title(f'PES for Runs {run_numbers[0]:03d}-{run_numbers[-1]:03d}')
 plt.colorbar()
+if SAVE_FILES: plt.savefig(outdir+'/pes.png')
 plt.show()
 
 # %% 
@@ -450,6 +448,7 @@ for i, (label, (lo, hi)) in enumerate(name_peak_bounds):
     ax.fill_between([lo, hi], *ax_ylim, alpha=0.5, color=get_colour(i))
     ax.text((hi + lo)/2, ax_ylim[1], label, ha='center', va='top')
 ax.set_ylim(ax_ylim)
+if SAVE_FILES: plt.savefig(outdir+'/pes_integration_regions.png')
 plt.show()
 
 integrated_area = np.array([np.sum(pes.T[:,(energies>=lo) * (energies<hi)], axis=1) for _, (lo, hi) in name_peak_bounds])
@@ -462,4 +461,5 @@ for i, ((label, (lo, hi)), areas) in enumerate(zip(name_peak_bounds, integrated_
     axes[i].set_xlabel('PPD (fs)')
     axes[i].set_title(label)
 axes[0].set_ylabel('peak integral')
+if SAVE_FILES: plt.savefig(outdir+'/peak_integral_delays.png')
 plt.show()

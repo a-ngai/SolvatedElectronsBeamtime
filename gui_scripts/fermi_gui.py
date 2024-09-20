@@ -3282,7 +3282,7 @@ def close_app_threadpool(w, app, tabwidget):
 
 DEBUG = False
 
-if __name__ == '__main__':
+def setup_window_app_tabwidget():
     app = QApplication(sys.argv)
     app.setQuitOnLastWindowClosed(True)
     tabWidgetApp = Ui_MainWindow()
@@ -3301,6 +3301,11 @@ if __name__ == '__main__':
     tabWidgetApp.pushButton.clicked.connect(wait_for_threads_and_close)
     
     tabWidgetApp.apply_settings()
+    
+    return w, app, tabWidgetApp
+
+if __name__ == '__main__':
+    w, app, tabWidgetApp = setup_window_app_tabwidget()
 
     # sys.exit(app.exec())
     sys.exit(close_app_threadpool(w, app, tabWidgetApp))
