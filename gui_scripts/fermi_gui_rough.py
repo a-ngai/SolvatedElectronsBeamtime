@@ -1698,7 +1698,7 @@ class Ui_MainWindow(object):
         self.box_beta3.toggled.connect(self.update_pes_window)
         self.box_beta4.toggled.connect(self.update_pes_window)
         self.box_slu_parity.toggled.connect(self.update_main_vmi_window)
-        self.button_apply_tof_calibration.clicked.connect(self.update_main_tof_window)
+        self.button_apply_tof_calibration.clicked.connect(self.update_calibration_lines)
         self.applyChangesSettings.clicked.connect(self.apply_settings)
         self.box_make_cache.toggled.connect(self.apply_settings)
         self.box_load_from_cache.toggled.connect(self.apply_settings)
@@ -1706,6 +1706,7 @@ class Ui_MainWindow(object):
         self.button_apply_vmi_corrections.clicked.connect(self.process_redraw_vmi_data)
         self.button_apply_pes_calibration.clicked.connect(self.update_pes_calibration_window)
         # self.text_edit_current_folder.textChanged.connect(self.change_folder)
+        self.button_apply_tof_use_constants.clicked.connect(self.update_main_tof_window)
 
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_data_if_change)
@@ -1880,6 +1881,45 @@ class Ui_MainWindow(object):
         self.vmi_data = vmi_data
         return vmi_data
 
+    def update_calibration_lines(self):
+        time_start = time.time()
+
+        new_tof_coor, _ = self.graph_data['new_tof_fore']
+
+        tof_coor, raw_tof = self.graph_data['tof_fore']
+        with IgnoreWarnings("length one"):
+            new_raw_tof = rebinning(new_tof_coor, tof_coor, raw_tof)
+        self._line_raw_tof.set_data(new_tof_coor, new_raw_tof)
+
+        tof_points, mq_points = self.calibration_data['tof_mq_points']
+        tof_model, mq_model = self.calibration_data['tof_mq_model']
+
+        self._line_raw_tof_points.set_data(tof_points, raw_tof[closest(tof_points, tof_coor)])
+        self._line_cal_tof.set_data(tof_model, mq_model)
+        self._line_cal_tof_points.set_data(tof_points, mq_points)
+
+        self.set_new_xlim_ylim(tof_points, mq_points, self._cal_tof_ax, None, None)
+
+        self._line_mq_tof.set_data(self.graph_data['mq_fore'])
+
+        self._line_raw_tof_points.figure.canvas.draw()
+        self._line_cal_tof.figure.canvas.draw()
+        self._line_cal_tof_points.figure.canvas.draw()
+        self._line_mq_tof.figure.canvas.draw()
+
+        self.line_fore_mq.set_color('grey')
+        self.line_back_mq.set_color('grey')
+        self.line_subt_mq.set_color('grey')
+
+        self._line_fore_mq.figure.canvas.draw()
+        self._line_back_mq.figure.canvas.draw()
+        self._line_subt_mq.figure.canvas.draw()
+
+        time_end = time.time()
+        print('time elapsed (update_calibration_lines): ', time_end-time_start)
+
+
+
     def get_new_tof_data(self):
         @set_recursion_limit(1)
         def keyword_functions(keyword, aliasFunc, DictionaryObject):
@@ -1969,21 +2009,51 @@ class Ui_MainWindow(object):
         # self.return_background_key()
         assert self.background_key == False
         if DEBUG: print(f'DEBUG: expect background_key to be False ({self.background_key})')
+    
+    def vmi_data_plot_tof_data_plot(self):
+        if not self.borrow_background_key():
+            print('background process running, cannot execute tof data retrieval!')
+        self.get_new_vmi_data() # good
+        self.set_image_correction_from_panel() # good
+        self.remake_vmi_data() # good
+        self.redraw_vmi_data()  # not sure
+        self.get_new_tof_data()
+        self.remake_tof_data()
+        self.redraw_tof_data()
+
+    def finish_up_rough_update_data(self):
+        self.change_ion_tof_calibration_constants()
+        self.change_pes_calibration_constants()
+        self.return_background_key()
+        
 
     def update_data(self, multithreading=True):
-
-        if multithreading:  # complicated structure, because updating the GUI is NOT thread-safe!
-            # i.e. the threaded processes must not touch the GUI elements
-            if DEBUG: print(f'stepped in update_data, background_key is {self.background_key}')
-            self.borrow_background_key()
-            worker = Worker(self.get_new_vmi_data)
-            worker.signals.finished.connect(self.return_background_key)
-            worker.signals.finished.connect(self.combine_process_redraw_vmi_data_and_start_get_tof_data_in_worker)
+        
+        ROUGH = True
+        if ROUGH:
+            self.load_gdata()
+            worker = Worker(self.vmi_data_plot_tof_data_plot)
+            worker.signals.finished.connect(self.finish_up_rough_update_data)
             self.threadpool.start(worker)
+
+            time_string = strftime("%Y-%m-%d %H:%M:%S", localtime())
+            self.update_print_box(f'{time_string}: update finished')
+            print(f'{time_string}: update finished')
+    
+            
         else:
-            self.get_new_vmi_data()
-            self.get_new_tof_data()
-            self.redraw_canvasses()
+            if multithreading:  # complicated structure, because updating the GUI is NOT thread-safe!
+                # i.e. the threaded processes must not touch the GUI elements
+                if DEBUG: print(f'stepped in update_data, background_key is {self.background_key}')
+                self.borrow_background_key()
+                worker = Worker(self.get_new_vmi_data)
+                worker.signals.finished.connect(self.return_background_key)
+                worker.signals.finished.connect(self.combine_process_redraw_vmi_data_and_start_get_tof_data_in_worker)
+                self.threadpool.start(worker)
+            else:
+                self.get_new_vmi_data()
+                self.get_new_tof_data()
+                self.redraw_canvasses()
 
     def set_image_correction_from_panel(self):
         xcenter_text = self.text_edit_correct_xcenter.toPlainText()
