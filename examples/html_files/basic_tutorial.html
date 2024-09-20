@@ -7509,23 +7509,40 @@ a.anchor-link {
 </style>
 <!-- End of mermaid configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
-<main>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<main><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Import-statements">Import statements<a class="anchor-link" href="#Import-statements">¶</a></h2><ul>
-<li><p>numpy, matplotlib are the usual libraries.</p>
-</li>
-<li><p>fermi_libraries.run_module contains the data structure scripts used for compiling the raw data into easy-to-handle data.</p>
-</li>
-<li><p>fermi_libraries.common_functions has generally useful functions with no specific goal.</p>
-</li>
-<li><p>fermi_libraries.dictionary_search allows the filter capability of the Run.give_average_data() functions.</p>
-</li>
-</ul>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="sd">"""</span>
+<span class="sd">## Import statements</span>
+
+<span class="sd">- numpy, matplotlib are the usual libraries.</span>
+
+<span class="sd">- fermi_libraries.run_module contains the data structure scripts used for compiling the raw data into easy-to-handle data.</span>
+
+<span class="sd">- fermi_libraries.common_functions has generally useful functions with no specific goal.</span>
+
+<span class="sd">- fermi_libraries.dictionary_search allows the filter capability of the Run.give_average_data() functions.</span>
+
+<span class="sd">"""</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[1]:</div>
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
+<pre>'\n## Import statements\n\n- numpy, matplotlib are the usual libraries.\n\n- fermi_libraries.run_module contains the data structure scripts used for compiling the raw data into easy-to-handle data.\n\n- fermi_libraries.common_functions has generally useful functions with no specific goal.\n\n- fermi_libraries.dictionary_search allows the filter capability of the Run.give_average_data() functions.\n\n'</pre>
+</div>
 </div>
 </div>
 </div>
@@ -7534,7 +7551,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># uncomment the following line when you want to interact with the matplotlib plots</span>
@@ -7572,7 +7589,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
@@ -7603,7 +7620,7 @@ such as "average_TOF&gt;4". Here is an extreme example below.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nd">@set_recursion_limit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
@@ -7681,7 +7698,7 @@ such as "average_TOF&gt;4". Here is an extreme example below.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Alternative names for the HDF5 groupnames</span>
@@ -7720,25 +7737,22 @@ ambiguity.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">BEAMTIME_DIR</span> <span class="o">=</span> <span class="n">find_subdir</span><span class="p">(</span><span class="s1">'TestBeamtime'</span><span class="p">,</span> <span class="n">resolve_path</span><span class="p">(</span><span class="n">CURRENT_SCRIPT_DIR</span><span class="p">,</span> <span class="s1">'..'</span><span class="p">))</span>
-<span class="n">DATA_DIR</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">BEAMTIME_DIR</span><span class="si">}</span><span class="s1">/Beamtime/'</span>  <span class="c1"># change from fictitious to the real raw data directory!</span>
-<span class="n">SAVE_DIR</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">BEAMTIME_DIR</span><span class="si">}</span><span class="s1">/results/evaluation/'</span><span class="c1">#'/net/online4ldm/store/20234049/results/results' # ditto</span>
+<span class="n">DATA_DIR</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">BEAMTIME_DIR</span><span class="si">}</span><span class="s1">/Beamtime'</span>
+<span class="n">SAVE_DIR</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">BEAMTIME_DIR</span><span class="si">}</span><span class="s1">/results/evaluation'</span>
 
-<span class="n">SAVE_FILES</span> <span class="o">=</span> <span class="kc">False</span>
-
+<span class="n">SAVE_FILES</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">BACKGROUND</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># Only set to False if you want to sum up everything</span>
-<span class="n">NAMEADD</span> <span class="o">=</span> <span class="s1">'test'</span> <span class="c1"># your name here</span>
+<span class="n">NAMEADD</span> <span class="o">=</span> <span class="s1">'tutorial_XX'</span> <span class="c1"># your name here</span>
 <span class="n">run_numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,]</span>
 
 <span class="n">MAKE_CACHE</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">LOAD_FROM_CACHE</span> <span class="o">=</span> <span class="kc">False</span>
 
 <span class="n">CALIBRATION_RUN_NUMBER</span> <span class="o">=</span> <span class="mi">1</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Run numbers: </span><span class="si">{</span><span class="n">run_numbers</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -7752,7 +7766,33 @@ ambiguity.</p>
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>TestBeamtime/
-Run numbers: [1]
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Run numbers: </span><span class="si">{</span><span class="n">run_numbers</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Run numbers: [1]
 </pre>
 </div>
 </div>
@@ -7775,7 +7815,7 @@ directory. I don't expect this to ever change.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># This block loads all the relevent HDF5 filepaths into their respective Run.</span>
@@ -7815,7 +7855,7 @@ directory. I don't expect this to ever change.</p>
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Data set contains 1 run(s).
-Save directory: ...edElectronsBeamtime/examples/TestBeamtime//results/evaluation/run_0001_test
+Save directory: ...edElectronsBeamtime/examples/TestBeamtime//results/evaluation\run_0001_tutorial_XX
 </pre>
 </div>
 </div>
@@ -7837,7 +7877,7 @@ Save directory: ...edElectronsBeamtime/examples/TestBeamtime//results/evaluation
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">if</span> <span class="n">SAVE_FILES</span><span class="p">:</span>
@@ -7891,7 +7931,7 @@ axis stands for what by looking at the shape of the output_data:</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">##%%time</span>
@@ -7934,7 +7974,7 @@ data has axes (condition, rules, ...data...)
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">##%%time</span>
@@ -7979,7 +8019,7 @@ as shown below.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">fore_vmi</span><span class="p">,</span> <span class="n">back_vmi</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="o">=</span> <span class="n">simplify_data</span><span class="p">(</span><span class="n">runset_vmi</span><span class="p">,</span> <span class="n">single_rule</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">single_run</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -8024,11 +8064,13 @@ can do as you wish!</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">fore_vmi</span> <span class="o">-</span> <span class="n">back_vmi</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Example of a VMI image!'</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">fore_vmi</span> <span class="o">-</span> <span class="n">back_vmi</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Example of a VMI image!'</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">SAVE_FILES</span><span class="p">:</span> <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">outdir</span><span class="si">}</span><span class="s1">/example_vmi.png'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>

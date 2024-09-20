@@ -3,10 +3,13 @@
 ### How to set up in JupyterLab
 
 In the terminal, create a virtual environment with the command
+
 > python -m venv venv
 
 To make your JupyterNotebooks see the virtual environment, run the following commands on the terminal
+
 > pip install ipykernel
+
 > python -m ipykernel install --user --name=venv 
 
 
@@ -26,9 +29,10 @@ Once Python is properly installed, use your terminal to go into our data analysi
 - README.md (you're here!)
 
 Now install the necessary modules through pip, which includes our custom libraries:
+
 > pip install -r requirements.txt
 
-### Opening a Jupyter Notebook
+### !!! Opening a Jupyter Notebook !!!
 
 Open any Notebook file. To run the notebook in the virtual environment, you must swap the kernel (upper-right hand corner) from "Python 3 (ipykernel)" -> "venv".
 

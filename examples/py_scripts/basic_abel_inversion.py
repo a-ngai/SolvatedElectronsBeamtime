@@ -68,20 +68,20 @@ ranges.
 
 # %%
 BEAMTIME_DIR = find_subdir('TestBeamtime', resolve_path(CURRENT_SCRIPT_DIR, '..'))
-DATA_DIR = f'{BEAMTIME_DIR}/Beamtime/'
-SAVE_DIR = f'{BEAMTIME_DIR}/results/evaluation/'#'/net/online4ldm/store/20234049/results/results' # ditto
+DATA_DIR = f'{BEAMTIME_DIR}/Beamtime'
+SAVE_DIR = f'{BEAMTIME_DIR}/results/evaluation'
 
-SAVE_FILES = False
-
+SAVE_FILES = True
 BACKGROUND = True  # Only set to False if you want to sum up everything
-NAMEADD = 'test' # your name here
+NAMEADD = 'abelinv_XX' # your name here
 run_numbers = np.arange(1,3)
 
 MAKE_CACHE = True
-LOAD_FROM_CACHE = False
+LOAD_FROM_CACHE = True
 
 CALIBRATION_RUN_NUMBER = 1
 
+# %%
 print(run_numbers)
 
 # %%
@@ -171,6 +171,7 @@ cax2 = ax2.imshow(show_bin_vmi)
 ax2.set_title(f'binned VMI image\nshape={show_bin_vmi.shape}')
 fig.colorbar(cax2, ax=ax2)
 ax2.grid()
+if SAVE_FILES: fig.savefig(f'{outdir}/resized_vmi.png')
 plt.show()
 
 # %%
@@ -204,6 +205,7 @@ cax2 = ax2.imshow(test_correction)
 ax2.set_title('corrected image')
 ax2.grid()
 fig.colorbar(cax2, ax=ax2)
+if SAVE_FILES: fig.savefig(f'{outdir}/corrected_vmi.png')
 plt.show()
 
 corrected = [stretch(rotate(center_image(image, guess_cen), guess_rot), [1,1.1]) for image in vmi]
@@ -223,6 +225,7 @@ resized = resizeFoldedHalf(folded, 225)
 plt.imshow(resized[:,:,0])
 plt.title(f'Half-folded. [left, right]={half_filter}')
 plt.grid()
+if SAVE_FILES: fig.savefig(f'{outdir}/folded_vmi.png')
 plt.show()
 
 # %%
@@ -288,6 +291,7 @@ ax2.set_ylabel(r'KE (eV)')
 ax2.set_title('calibration fit')
 ax2.set_ylim(0, None)
 ax2.set_xlim(0, None)
+if SAVE_FILES: fig.savefig(f'{outdir}/pes_calibration.png')
 plt.tight_layout()
 plt.show()
 
@@ -307,6 +311,7 @@ ax.set_ylabel('eKE (eV)')
 ax.set_title(f'PES for Runs {run_numbers[0]:03d}-{run_numbers[-1]:03d}')
 fig.colorbar(cax, ax=ax)
 plt.tight_layout()
+if SAVE_FILES: fig.savefig(f'{outdir}/pes.png')
 plt.show()
 
 # %%
@@ -349,5 +354,6 @@ for i, run_number in zip(range(Nimages), run_numbers):
     fig.colorbar(cax3, ax=ax[3])
     cax4 = ax[4].imshow(out['inv'][:,:,i]/2)
     fig.colorbar(cax4, ax=ax[4])
+if SAVE_FILES: fig.savefig(f'{outdir}/pes_and_betas.png')
 plt.tight_layout()
 plt.show()

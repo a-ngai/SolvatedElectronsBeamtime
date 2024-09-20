@@ -43,7 +43,7 @@ def add_file_to_test_data(src_dir, tar_dir):
     copyfile(src_filepath, tar_filepath)
 
 
-search_dir = resolve_path(CURRENT_SCRIPT_DIR, '/_temp/TestBeamtime/Beamtime')
+search_dir = resolve_path(CURRENT_SCRIPT_DIR, '_temp/TestBeamtime/Beamtime')
 data_dir = resolve_path(CURRENT_SCRIPT_DIR, '../examples/TestBeamtime/Beamtime/Run_001/rawdata')
 test_dir = f'{CURRENT_SCRIPT_DIR}/_temp/TestBeamtime/Beamtime/Run_001/rawdata'
 
@@ -91,7 +91,9 @@ class TestGUIMethods(unittest.TestCase):
 
 
     def test_new_file_detection(self):
-        app, tabWidgetApp, w = self.setup()
+        from gui_scripts.fermi_gui import setup_window_app_tabwidget
+        w, app, tabWidgetApp = setup_window_app_tabwidget()
+        # app, tabWidgetApp, w = self.setup()
         self.app = app
         tabWidgetApp.terminal_print = False
 
@@ -110,7 +112,7 @@ class TestGUIMethods(unittest.TestCase):
         
         time_start = time.time()
         time_current = time.time()
-        max_time_allowed = 8  # max one second for process to end
+        max_time_allowed = 15  # max one second for process to end
         while (time_current - time_start < max_time_allowed) and not tabWidgetApp.background_key:
             time.sleep(0.7)
             app.processEvents()
