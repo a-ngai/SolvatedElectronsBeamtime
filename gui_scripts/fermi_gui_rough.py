@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 ################################################################################
 ## Form generated from reading UI file 'layout_form.ui'
 ##
@@ -82,16 +80,16 @@ class Ui_MainWindow(object):
         self.frame_3.setFrameShadow(QFrame.Shadow.Raised)
         self.label_current_folder = QLabel(self.frame_3)
         self.label_current_folder.setObjectName(u"label_current_folder")
-        self.label_current_folder.setGeometry(QRect(10, 10, 81, 16))
+        self.label_current_folder.setGeometry(QRect(10, 10, 121, 16))
         self.button_stay_current_folder = QCommandLinkButton(self.frame_3)
         self.button_stay_current_folder.setObjectName(u"button_stay_current_folder")
-        self.button_stay_current_folder.setGeometry(QRect(0, 160, 181, 31))
+        self.button_stay_current_folder.setGeometry(QRect(0, 160, 201, 31))
         self.button_auto_newest_folder = QCommandLinkButton(self.frame_3)
         self.button_auto_newest_folder.setObjectName(u"button_auto_newest_folder")
-        self.button_auto_newest_folder.setGeometry(QRect(0, 130, 181, 31))
+        self.button_auto_newest_folder.setGeometry(QRect(0, 130, 201, 31))
         self.label_files_used = QLabel(self.frame_3)
         self.label_files_used.setObjectName(u"label_files_used")
-        self.label_files_used.setGeometry(QRect(200, 90, 61, 16))
+        self.label_files_used.setGeometry(QRect(200, 90, 81, 16))
         self.scrollArea = QScrollArea(self.frame_3)
         self.scrollArea.setObjectName(u"scrollArea")
         self.scrollArea.setGeometry(QRect(200, 120, 161, 161))
@@ -114,10 +112,10 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.text_display_update_status = QTextBrowser(self.frame_3)
         self.text_display_update_status.setObjectName(u"text_display_update_status")
-        self.text_display_update_status.setGeometry(QRect(90, 210, 71, 31))
+        self.text_display_update_status.setGeometry(QRect(110, 210, 71, 31))
         self.text_browser_num_files = QTextBrowser(self.frame_3)
         self.text_browser_num_files.setObjectName(u"text_browser_num_files")
-        self.text_browser_num_files.setGeometry(QRect(260, 80, 51, 31))
+        self.text_browser_num_files.setGeometry(QRect(280, 80, 51, 31))
         self.text_browser_num_files.setStyleSheet(u"background-color: rgb(158, 158, 158);")
         self.text_edit_current_folder = QTextEdit(self.frame_3)
         self.text_edit_current_folder.setObjectName(u"text_edit_current_folder")
@@ -125,9 +123,9 @@ class Ui_MainWindow(object):
         self.button_stop_fetch = QCommandLinkButton(self.frame_3)
         self.button_stop_fetch.setObjectName(u"button_stop_fetch")
         self.button_stop_fetch.setGeometry(QRect(0, 270, 181, 31))
-        self.test_display_folder_status = QTextBrowser(self.frame_3)
-        self.test_display_folder_status.setObjectName(u"test_display_folder_status")
-        self.test_display_folder_status.setGeometry(QRect(90, 100, 71, 31))
+        self.text_display_folder_status = QTextBrowser(self.frame_3)
+        self.text_display_folder_status.setObjectName(u"text_display_folder_status")
+        self.text_display_folder_status.setGeometry(QRect(110, 100, 71, 31))
         self.label_folder_status = QLabel(self.frame_3)
         self.label_folder_status.setObjectName(u"label_folder_status")
         self.label_folder_status.setGeometry(QRect(10, 100, 91, 16))
@@ -358,34 +356,34 @@ class Ui_MainWindow(object):
         self.groupBox_4.setObjectName(u"groupBox_4")
         self.label_guess_ycenter = QLabel(self.groupBox_4)
         self.label_guess_ycenter.setObjectName(u"label_guess_ycenter")
-        self.label_guess_ycenter.setGeometry(QRect(60, 20, 49, 16))
+        self.label_guess_ycenter.setGeometry(QRect(70, 20, 61, 16))
         self.label_guess_rotate = QLabel(self.groupBox_4)
         self.label_guess_rotate.setObjectName(u"label_guess_rotate")
-        self.label_guess_rotate.setGeometry(QRect(130, 20, 49, 16))
+        self.label_guess_rotate.setGeometry(QRect(150, 20, 49, 16))
         self.label_guess_xzoom = QLabel(self.groupBox_4)
         self.label_guess_xzoom.setObjectName(u"label_guess_xzoom")
-        self.label_guess_xzoom.setGeometry(QRect(10, 80, 49, 16))
+        self.label_guess_xzoom.setGeometry(QRect(10, 80, 51, 16))
         self.label_guess_xcenter = QLabel(self.groupBox_4)
         self.label_guess_xcenter.setObjectName(u"label_guess_xcenter")
-        self.label_guess_xcenter.setGeometry(QRect(10, 20, 49, 16))
+        self.label_guess_xcenter.setGeometry(QRect(10, 20, 61, 16))
         self.label_guess_yzoom = QLabel(self.groupBox_4)
         self.label_guess_yzoom.setObjectName(u"label_guess_yzoom")
-        self.label_guess_yzoom.setGeometry(QRect(60, 80, 49, 16))
+        self.label_guess_yzoom.setGeometry(QRect(70, 80, 51, 16))
         self.text_display_guess_xcenter = QTextBrowser(self.groupBox_4)
         self.text_display_guess_xcenter.setObjectName(u"text_display_guess_xcenter")
         self.text_display_guess_xcenter.setGeometry(QRect(10, 40, 41, 31))
         self.text_dsplay_guess_ycenter = QTextBrowser(self.groupBox_4)
         self.text_dsplay_guess_ycenter.setObjectName(u"text_dsplay_guess_ycenter")
-        self.text_dsplay_guess_ycenter.setGeometry(QRect(60, 40, 41, 31))
+        self.text_dsplay_guess_ycenter.setGeometry(QRect(70, 40, 41, 31))
         self.text_display_guess_rotate = QTextBrowser(self.groupBox_4)
         self.text_display_guess_rotate.setObjectName(u"text_display_guess_rotate")
-        self.text_display_guess_rotate.setGeometry(QRect(130, 40, 41, 31))
+        self.text_display_guess_rotate.setGeometry(QRect(150, 40, 41, 31))
         self.text_display_guess_xzoom = QTextBrowser(self.groupBox_4)
         self.text_display_guess_xzoom.setObjectName(u"text_display_guess_xzoom")
         self.text_display_guess_xzoom.setGeometry(QRect(10, 100, 41, 31))
         self.text_diesplay_guess_yzoom = QTextBrowser(self.groupBox_4)
         self.text_diesplay_guess_yzoom.setObjectName(u"text_diesplay_guess_yzoom")
-        self.text_diesplay_guess_yzoom.setGeometry(QRect(60, 100, 41, 31))
+        self.text_diesplay_guess_yzoom.setGeometry(QRect(70, 100, 41, 31))
         self.button_get_guess_vmi_corrections = QCommandLinkButton(self.groupBox_4)
         self.button_get_guess_vmi_corrections.setObjectName(u"button_get_guess_vmi_corrections")
         self.button_get_guess_vmi_corrections.setGeometry(QRect(120, 100, 111, 41))
@@ -401,13 +399,13 @@ class Ui_MainWindow(object):
         self.groupBox_3.setGeometry(QRect(10, 60, 201, 91))
         self.box_ring_ellipticity = QCheckBox(self.groupBox_3)
         self.box_ring_ellipticity.setObjectName(u"box_ring_ellipticity")
-        self.box_ring_ellipticity.setGeometry(QRect(10, 60, 111, 22))
+        self.box_ring_ellipticity.setGeometry(QRect(10, 60, 121, 22))
         self.text_edit_show_rings = QTextEdit(self.groupBox_3)
         self.text_edit_show_rings.setObjectName(u"text_edit_show_rings")
-        self.text_edit_show_rings.setGeometry(QRect(80, 30, 101, 31))
+        self.text_edit_show_rings.setGeometry(QRect(90, 30, 101, 31))
         self.label_show_rings = QLabel(self.groupBox_3)
         self.label_show_rings.setObjectName(u"label_show_rings")
-        self.label_show_rings.setGeometry(QRect(10, 30, 71, 16))
+        self.label_show_rings.setGeometry(QRect(10, 30, 81, 16))
         self.label_subfolder_extension_3 = QLabel(self.frame_4)
         self.label_subfolder_extension_3.setObjectName(u"label_subfolder_extension_3")
         self.label_subfolder_extension_3.setGeometry(QRect(90, 30, 31, 31))
@@ -419,7 +417,7 @@ class Ui_MainWindow(object):
         self.label_gdata_image_size.setGeometry(QRect(120, 10, 101, 16))
         self.label_reduce_image_size = QLabel(self.frame_4)
         self.label_reduce_image_size.setObjectName(u"label_reduce_image_size")
-        self.label_reduce_image_size.setGeometry(QRect(10, 10, 101, 16))
+        self.label_reduce_image_size.setGeometry(QRect(10, 10, 151, 16))
         self.text_browser_gdata_image_size = QTextBrowser(self.frame_4)
         self.text_browser_gdata_image_size.setObjectName(u"text_browser_gdata_image_size")
         self.text_browser_gdata_image_size.setGeometry(QRect(130, 30, 51, 31))
@@ -434,13 +432,13 @@ class Ui_MainWindow(object):
         self.groupBox_5.setObjectName(u"groupBox_5")
         self.text_edit_correct_yzoom = QTextEdit(self.groupBox_5)
         self.text_edit_correct_yzoom.setObjectName(u"text_edit_correct_yzoom")
-        self.text_edit_correct_yzoom.setGeometry(QRect(60, 100, 41, 31))
+        self.text_edit_correct_yzoom.setGeometry(QRect(70, 100, 41, 31))
         self.label_correct_ycenter = QLabel(self.groupBox_5)
         self.label_correct_ycenter.setObjectName(u"label_correct_ycenter")
-        self.label_correct_ycenter.setGeometry(QRect(60, 20, 49, 16))
+        self.label_correct_ycenter.setGeometry(QRect(70, 20, 61, 16))
         self.text_edit_correct_rotate = QTextEdit(self.groupBox_5)
         self.text_edit_correct_rotate.setObjectName(u"text_edit_correct_rotate")
-        self.text_edit_correct_rotate.setGeometry(QRect(130, 40, 41, 31))
+        self.text_edit_correct_rotate.setGeometry(QRect(150, 40, 41, 31))
         self.text_edit_correct_xcenter = QTextEdit(self.groupBox_5)
         self.text_edit_correct_xcenter.setObjectName(u"text_edit_correct_xcenter")
         self.text_edit_correct_xcenter.setGeometry(QRect(10, 40, 41, 31))
@@ -449,19 +447,19 @@ class Ui_MainWindow(object):
         self.text_edit_correct_xzoom.setGeometry(QRect(10, 100, 41, 31))
         self.text_edit_correct_ycenter = QTextEdit(self.groupBox_5)
         self.text_edit_correct_ycenter.setObjectName(u"text_edit_correct_ycenter")
-        self.text_edit_correct_ycenter.setGeometry(QRect(60, 40, 41, 31))
+        self.text_edit_correct_ycenter.setGeometry(QRect(70, 40, 41, 31))
         self.label_correct_rotate = QLabel(self.groupBox_5)
         self.label_correct_rotate.setObjectName(u"label_correct_rotate")
-        self.label_correct_rotate.setGeometry(QRect(130, 20, 49, 16))
+        self.label_correct_rotate.setGeometry(QRect(150, 20, 49, 16))
         self.label_correct_xzoom = QLabel(self.groupBox_5)
         self.label_correct_xzoom.setObjectName(u"label_correct_xzoom")
-        self.label_correct_xzoom.setGeometry(QRect(10, 80, 49, 16))
+        self.label_correct_xzoom.setGeometry(QRect(10, 80, 51, 16))
         self.label_correct_xcenter = QLabel(self.groupBox_5)
         self.label_correct_xcenter.setObjectName(u"label_correct_xcenter")
-        self.label_correct_xcenter.setGeometry(QRect(10, 20, 49, 16))
+        self.label_correct_xcenter.setGeometry(QRect(10, 20, 61, 16))
         self.label_correct_yzoom = QLabel(self.groupBox_5)
         self.label_correct_yzoom.setObjectName(u"label_correct_yzoom")
-        self.label_correct_yzoom.setGeometry(QRect(60, 80, 49, 16))
+        self.label_correct_yzoom.setGeometry(QRect(70, 80, 51, 16))
         self.button_apply_vmi_corrections = QCommandLinkButton(self.groupBox_5)
         self.button_apply_vmi_corrections.setObjectName(u"button_apply_vmi_corrections")
         self.button_apply_vmi_corrections.setGeometry(QRect(120, 100, 161, 41))
@@ -561,9 +559,9 @@ class Ui_MainWindow(object):
         self.label_cal_points = QLabel(self.frame_14)
         self.label_cal_points.setObjectName(u"label_cal_points")
         self.label_cal_points.setGeometry(QRect(10, 0, 101, 21))
-        self.test_edit_cal_points = QTextEdit(self.frame_14)
-        self.test_edit_cal_points.setObjectName(u"test_edit_cal_points")
-        self.test_edit_cal_points.setGeometry(QRect(10, 30, 91, 131))
+        self.text_edit_cal_points = QTextEdit(self.frame_14)
+        self.text_edit_cal_points.setObjectName(u"text_edit_cal_points")
+        self.text_edit_cal_points.setGeometry(QRect(10, 30, 91, 131))
         self.text_edit_cal_constant = QTextEdit(self.frame_14)
         self.text_edit_cal_constant.setObjectName(u"text_edit_cal_constant")
         self.text_edit_cal_constant.setGeometry(QRect(160, 30, 121, 31))
@@ -578,7 +576,7 @@ class Ui_MainWindow(object):
         self.label_pes_constant_alpha.setGeometry(QRect(120, 30, 61, 16))
         self.button_apply_pes_use_constants = QCommandLinkButton(self.frame_14)
         self.button_apply_pes_use_constants.setObjectName(u"button_apply_pes_use_constants")
-        self.button_apply_pes_use_constants.setGeometry(QRect(150, 100, 131, 41))
+        self.button_apply_pes_use_constants.setGeometry(QRect(140, 100, 151, 41))
         self.label_ke_end = QLabel(self.frame_14)
         self.label_ke_end.setObjectName(u"label_ke_end")
         self.label_ke_end.setGeometry(QRect(160, 260, 51, 16))
@@ -622,79 +620,31 @@ class Ui_MainWindow(object):
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.tabWidget_3 = QTabWidget(self.frame_9)
         self.tabWidget_3.setObjectName(u"tabWidget_3")
-        self.tab_9 = QWidget()
-        self.tab_9.setObjectName(u"tab_9")
-        sizePolicy.setHeightForWidth(self.tab_9.sizePolicy().hasHeightForWidth())
-        self.tab_9.setSizePolicy(sizePolicy)
-        self.tab_9.setAutoFillBackground(False)
-        self.gridLayout_20 = QGridLayout(self.tab_9)
+        self.tab_tofmain_tof = QWidget()
+        self.tab_tofmain_tof.setObjectName(u"tab_tofmain_tof")
+        sizePolicy.setHeightForWidth(self.tab_tofmain_tof.sizePolicy().hasHeightForWidth())
+        self.tab_tofmain_tof.setSizePolicy(sizePolicy)
+        self.tab_tofmain_tof.setAutoFillBackground(False)
+        self.gridLayout_20 = QGridLayout(self.tab_tofmain_tof)
         self.gridLayout_20.setObjectName(u"gridLayout_20")
-        self.tof_fore = QGridLayout()
-        self.tof_fore.setObjectName(u"tof_fore")
+        self.tofmain_tof = QGridLayout()
+        self.tofmain_tof.setObjectName(u"tofmain_tof")
 
-        self.gridLayout_20.addLayout(self.tof_fore, 0, 0, 1, 1)
+        self.gridLayout_20.addLayout(self.tofmain_tof, 0, 0, 1, 1)
 
-        self.tabWidget_3.addTab(self.tab_9, "")
-        self.tab_11 = QWidget()
-        self.tab_11.setObjectName(u"tab_11")
-        sizePolicy.setHeightForWidth(self.tab_11.sizePolicy().hasHeightForWidth())
-        self.tab_11.setSizePolicy(sizePolicy)
-        self.gridLayout_21 = QGridLayout(self.tab_11)
-        self.gridLayout_21.setObjectName(u"gridLayout_21")
-        self.tof_back = QGridLayout()
-        self.tof_back.setObjectName(u"tof_back")
-
-        self.gridLayout_21.addLayout(self.tof_back, 0, 0, 1, 1)
-
-        self.tabWidget_3.addTab(self.tab_11, "")
-        self.tab_12 = QWidget()
-        self.tab_12.setObjectName(u"tab_12")
-        sizePolicy.setHeightForWidth(self.tab_12.sizePolicy().hasHeightForWidth())
-        self.tab_12.setSizePolicy(sizePolicy)
-        self.gridLayout_22 = QGridLayout(self.tab_12)
-        self.gridLayout_22.setObjectName(u"gridLayout_22")
-        self.tof_subt = QGridLayout()
-        self.tof_subt.setObjectName(u"tof_subt")
-
-        self.gridLayout_22.addLayout(self.tof_subt, 0, 0, 1, 1)
-
-        self.tabWidget_3.addTab(self.tab_12, "")
-        self.tab_2 = QWidget()
-        self.tab_2.setObjectName(u"tab_2")
-        sizePolicy.setHeightForWidth(self.tab_2.sizePolicy().hasHeightForWidth())
-        self.tab_2.setSizePolicy(sizePolicy)
-        self.gridLayout = QGridLayout(self.tab_2)
+        self.tabWidget_3.addTab(self.tab_tofmain_tof, "")
+        self.tab_tofmain_mq = QWidget()
+        self.tab_tofmain_mq.setObjectName(u"tab_tofmain_mq")
+        sizePolicy.setHeightForWidth(self.tab_tofmain_mq.sizePolicy().hasHeightForWidth())
+        self.tab_tofmain_mq.setSizePolicy(sizePolicy)
+        self.gridLayout = QGridLayout(self.tab_tofmain_mq)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.mq_fore = QGridLayout()
-        self.mq_fore.setObjectName(u"mq_fore")
+        self.tofmain_mq = QGridLayout()
+        self.tofmain_mq.setObjectName(u"tofmain_mq")
 
-        self.gridLayout.addLayout(self.mq_fore, 0, 0, 1, 1)
+        self.gridLayout.addLayout(self.tofmain_mq, 0, 0, 1, 1)
 
-        self.tabWidget_3.addTab(self.tab_2, "")
-        self.tab_3 = QWidget()
-        self.tab_3.setObjectName(u"tab_3")
-        sizePolicy.setHeightForWidth(self.tab_3.sizePolicy().hasHeightForWidth())
-        self.tab_3.setSizePolicy(sizePolicy)
-        self.gridLayout_2 = QGridLayout(self.tab_3)
-        self.gridLayout_2.setObjectName(u"gridLayout_2")
-        self.mq_back = QGridLayout()
-        self.mq_back.setObjectName(u"mq_back")
-
-        self.gridLayout_2.addLayout(self.mq_back, 0, 0, 1, 1)
-
-        self.tabWidget_3.addTab(self.tab_3, "")
-        self.tab = QWidget()
-        self.tab.setObjectName(u"tab")
-        sizePolicy.setHeightForWidth(self.tab.sizePolicy().hasHeightForWidth())
-        self.tab.setSizePolicy(sizePolicy)
-        self.gridLayout_3 = QGridLayout(self.tab)
-        self.gridLayout_3.setObjectName(u"gridLayout_3")
-        self.mq_subt = QGridLayout()
-        self.mq_subt.setObjectName(u"mq_subt")
-
-        self.gridLayout_3.addLayout(self.mq_subt, 0, 0, 1, 1)
-
-        self.tabWidget_3.addTab(self.tab, "")
+        self.tabWidget_3.addTab(self.tab_tofmain_mq, "")
 
         self.verticalLayout_4.addWidget(self.tabWidget_3)
 
@@ -712,9 +662,9 @@ class Ui_MainWindow(object):
         self.label_update_status_2 = QLabel(self.frame_8)
         self.label_update_status_2.setObjectName(u"label_update_status_2")
         self.label_update_status_2.setGeometry(QRect(200, 70, 91, 16))
-        self.test_display_folder_status_2 = QTextBrowser(self.frame_8)
-        self.test_display_folder_status_2.setObjectName(u"test_display_folder_status_2")
-        self.test_display_folder_status_2.setGeometry(QRect(90, 70, 71, 31))
+        self.text_display_folder_status_2 = QTextBrowser(self.frame_8)
+        self.text_display_folder_status_2.setObjectName(u"text_display_folder_status_2")
+        self.text_display_folder_status_2.setGeometry(QRect(110, 70, 71, 31))
         self.button_stay_current_folder_2 = QCommandLinkButton(self.frame_8)
         self.button_stay_current_folder_2.setObjectName(u"button_stay_current_folder_2")
         self.button_stay_current_folder_2.setGeometry(QRect(0, 130, 181, 31))
@@ -723,13 +673,13 @@ class Ui_MainWindow(object):
         self.button_fetch_new_files_2.setGeometry(QRect(190, 100, 181, 31))
         self.text_display_update_status_2 = QTextBrowser(self.frame_8)
         self.text_display_update_status_2.setObjectName(u"text_display_update_status_2")
-        self.text_display_update_status_2.setGeometry(QRect(280, 70, 71, 31))
+        self.text_display_update_status_2.setGeometry(QRect(300, 70, 71, 31))
         self.label_folder_status_2 = QLabel(self.frame_8)
         self.label_folder_status_2.setObjectName(u"label_folder_status_2")
         self.label_folder_status_2.setGeometry(QRect(10, 70, 91, 16))
         self.text_edit_current_folder_2 = QTextEdit(self.frame_8)
         self.text_edit_current_folder_2.setObjectName(u"text_edit_current_folder_2")
-        self.text_edit_current_folder_2.setGeometry(QRect(10, 30, 341, 31))
+        self.text_edit_current_folder_2.setGeometry(QRect(110, 10, 431, 51))
         self.button_stop_fetch_2 = QCommandLinkButton(self.frame_8)
         self.button_stop_fetch_2.setObjectName(u"button_stop_fetch_2")
         self.button_stop_fetch_2.setGeometry(QRect(190, 130, 181, 31))
@@ -740,12 +690,19 @@ class Ui_MainWindow(object):
         self.combobox_tof_yscale.setGeometry(QRect(570, 20, 131, 21))
         self.label_current_folder_2 = QLabel(self.frame_8)
         self.label_current_folder_2.setObjectName(u"label_current_folder_2")
-        self.label_current_folder_2.setGeometry(QRect(10, 10, 81, 16))
+        self.label_current_folder_2.setGeometry(QRect(10, 20, 121, 16))
+        self.box_tof_fore = QCheckBox(self.frame_8)
+        self.box_tof_fore.setObjectName(u"box_tof_fore")
+        self.box_tof_fore.setGeometry(QRect(570, 60, 121, 26))
+        self.box_tof_back = QCheckBox(self.frame_8)
+        self.box_tof_back.setObjectName(u"box_tof_back")
+        self.box_tof_back.setGeometry(QRect(570, 90, 121, 26))
+        self.box_tof_subt = QCheckBox(self.frame_8)
+        self.box_tof_subt.setObjectName(u"box_tof_subt")
+        self.box_tof_subt.setGeometry(QRect(570, 120, 121, 26))
 
         self.verticalLayout_4.addWidget(self.frame_8)
 
-        self.verticalLayout_4.setStretch(0, 10)
-        self.verticalLayout_4.setStretch(1, 5)
 
         self.verticalLayout_5.addWidget(self.frame_9)
 
@@ -835,7 +792,7 @@ class Ui_MainWindow(object):
         self.text_edit_tof_end.setGeometry(QRect(160, 220, 41, 31))
         self.button_apply_tof_calibration = QCommandLinkButton(self.frame_11)
         self.button_apply_tof_calibration.setObjectName(u"button_apply_tof_calibration")
-        self.button_apply_tof_calibration.setGeometry(QRect(0, 160, 161, 41))
+        self.button_apply_tof_calibration.setGeometry(QRect(0, 160, 171, 41))
         self.label_tof_constant_t0 = QLabel(self.frame_11)
         self.label_tof_constant_t0.setObjectName(u"label_tof_constant_t0")
         self.label_tof_constant_t0.setGeometry(QRect(130, 60, 31, 16))
@@ -862,16 +819,16 @@ class Ui_MainWindow(object):
         self.text_edit_mq_start.setGeometry(QRect(90, 280, 41, 31))
         self.label_tof_end = QLabel(self.frame_11)
         self.label_tof_end.setObjectName(u"label_tof_end")
-        self.label_tof_end.setGeometry(QRect(160, 200, 51, 16))
+        self.label_tof_end.setGeometry(QRect(160, 200, 61, 16))
         self.label_mq_start = QLabel(self.frame_11)
         self.label_mq_start.setObjectName(u"label_mq_start")
-        self.label_mq_start.setGeometry(QRect(90, 260, 51, 16))
+        self.label_mq_start.setGeometry(QRect(90, 260, 71, 16))
         self.button_apply_tof_use_constants = QCommandLinkButton(self.frame_11)
         self.button_apply_tof_use_constants.setObjectName(u"button_apply_tof_use_constants")
-        self.button_apply_tof_use_constants.setGeometry(QRect(150, 100, 131, 41))
+        self.button_apply_tof_use_constants.setGeometry(QRect(140, 100, 151, 41))
         self.label_tof_bins = QLabel(self.frame_11)
         self.label_tof_bins.setObjectName(u"label_tof_bins")
-        self.label_tof_bins.setGeometry(QRect(230, 200, 51, 16))
+        self.label_tof_bins.setGeometry(QRect(230, 200, 61, 16))
         self.label_tof_constants = QLabel(self.frame_11)
         self.label_tof_constants.setObjectName(u"label_tof_constants")
         self.label_tof_constants.setGeometry(QRect(180, 0, 91, 21))
@@ -883,13 +840,13 @@ class Ui_MainWindow(object):
         self.text_edit_tof_bins.setGeometry(QRect(230, 220, 41, 31))
         self.label_mq_end = QLabel(self.frame_11)
         self.label_mq_end.setObjectName(u"label_mq_end")
-        self.label_mq_end.setGeometry(QRect(160, 260, 51, 16))
+        self.label_mq_end.setGeometry(QRect(160, 260, 61, 16))
         self.label_mq_bins = QLabel(self.frame_11)
         self.label_mq_bins.setObjectName(u"label_mq_bins")
-        self.label_mq_bins.setGeometry(QRect(230, 260, 51, 16))
+        self.label_mq_bins.setGeometry(QRect(230, 260, 61, 16))
         self.label_tof_start = QLabel(self.frame_11)
         self.label_tof_start.setObjectName(u"label_tof_start")
-        self.label_tof_start.setGeometry(QRect(90, 200, 51, 16))
+        self.label_tof_start.setGeometry(QRect(90, 200, 61, 16))
         self.text_edit_tof_start = QTextEdit(self.frame_11)
         self.text_edit_tof_start.setObjectName(u"text_edit_tof_start")
         self.text_edit_tof_start.setGeometry(QRect(90, 220, 41, 31))
@@ -910,22 +867,22 @@ class Ui_MainWindow(object):
         self.tab_settings.setObjectName(u"tab_settings")
         self.label_search_dir_for_newest_folder = QLabel(self.tab_settings)
         self.label_search_dir_for_newest_folder.setObjectName(u"label_search_dir_for_newest_folder")
-        self.label_search_dir_for_newest_folder.setGeometry(QRect(320, 10, 211, 16))
+        self.label_search_dir_for_newest_folder.setGeometry(QRect(320, 10, 271, 16))
         self.text_edit_search_dir_for_newest_folder = QTextEdit(self.tab_settings)
         self.text_edit_search_dir_for_newest_folder.setObjectName(u"text_edit_search_dir_for_newest_folder")
         self.text_edit_search_dir_for_newest_folder.setGeometry(QRect(320, 30, 271, 51))
         self.label_extract_tof_start = QLabel(self.tab_settings)
         self.label_extract_tof_start.setObjectName(u"label_extract_tof_start")
-        self.label_extract_tof_start.setGeometry(QRect(20, 170, 81, 16))
+        self.label_extract_tof_start.setGeometry(QRect(20, 170, 101, 16))
         self.text_edit_extract_tof_start = QTextEdit(self.tab_settings)
         self.text_edit_extract_tof_start.setObjectName(u"text_edit_extract_tof_start")
         self.text_edit_extract_tof_start.setGeometry(QRect(20, 190, 71, 31))
         self.label_extract_tof_stop = QLabel(self.tab_settings)
         self.label_extract_tof_stop.setObjectName(u"label_extract_tof_stop")
-        self.label_extract_tof_stop.setGeometry(QRect(110, 170, 81, 16))
+        self.label_extract_tof_stop.setGeometry(QRect(120, 170, 91, 16))
         self.text_edit_extract_tof_stop = QTextEdit(self.tab_settings)
         self.text_edit_extract_tof_stop.setObjectName(u"text_edit_extract_tof_stop")
-        self.text_edit_extract_tof_stop.setGeometry(QRect(110, 190, 71, 31))
+        self.text_edit_extract_tof_stop.setGeometry(QRect(120, 190, 71, 31))
         self.box_slu_parity = QCheckBox(self.tab_settings)
         self.box_slu_parity.setObjectName(u"box_slu_parity")
         self.box_slu_parity.setGeometry(QRect(320, 346, 21, 22))
@@ -969,64 +926,64 @@ class Ui_MainWindow(object):
 
         self.groupBox_2 = QGroupBox(self.tab_settings)
         self.groupBox_2.setObjectName(u"groupBox_2")
-        self.groupBox_2.setGeometry(QRect(320, 176, 241, 147))
+        self.groupBox_2.setGeometry(QRect(320, 176, 281, 147))
         self.label_fore = QLabel(self.groupBox_2)
         self.label_fore.setObjectName(u"label_fore")
-        self.label_fore.setGeometry(QRect(12, 31, 23, 16))
+        self.label_fore.setGeometry(QRect(12, 31, 31, 16))
         self.label_back = QLabel(self.groupBox_2)
         self.label_back.setObjectName(u"label_back")
-        self.label_back.setGeometry(QRect(50, 32, 25, 16))
+        self.label_back.setGeometry(QRect(60, 32, 31, 16))
         self.box_fore_felonsluon = QCheckBox(self.groupBox_2)
         self.box_fore_felonsluon.setObjectName(u"box_fore_felonsluon")
         self.box_fore_felonsluon.setGeometry(QRect(12, 53, 16, 16))
         self.box_back_felonsluon = QCheckBox(self.groupBox_2)
         self.box_back_felonsluon.setObjectName(u"box_back_felonsluon")
-        self.box_back_felonsluon.setGeometry(QRect(50, 54, 16, 16))
+        self.box_back_felonsluon.setGeometry(QRect(60, 54, 16, 16))
         self.label_felonsluon = QLabel(self.groupBox_2)
         self.label_felonsluon.setObjectName(u"label_felonsluon")
-        self.label_felonsluon.setGeometry(QRect(140, 50, 84, 16))
+        self.label_felonsluon.setGeometry(QRect(160, 50, 111, 16))
         self.box_fore_felonsluoff = QCheckBox(self.groupBox_2)
         self.box_fore_felonsluoff.setObjectName(u"box_fore_felonsluoff")
         self.box_fore_felonsluoff.setGeometry(QRect(12, 75, 16, 16))
         self.box_back_felonsluoff = QCheckBox(self.groupBox_2)
         self.box_back_felonsluoff.setObjectName(u"box_back_felonsluoff")
-        self.box_back_felonsluoff.setGeometry(QRect(50, 76, 16, 16))
+        self.box_back_felonsluoff.setGeometry(QRect(60, 76, 16, 16))
         self.label_felonsluoff = QLabel(self.groupBox_2)
         self.label_felonsluoff.setObjectName(u"label_felonsluoff")
-        self.label_felonsluoff.setGeometry(QRect(140, 72, 85, 16))
+        self.label_felonsluoff.setGeometry(QRect(160, 72, 111, 16))
         self.box_fore_feloffsluon = QCheckBox(self.groupBox_2)
         self.box_fore_feloffsluon.setObjectName(u"box_fore_feloffsluon")
         self.box_fore_feloffsluon.setGeometry(QRect(12, 97, 16, 16))
         self.box_back_feloffsluon = QCheckBox(self.groupBox_2)
         self.box_back_feloffsluon.setObjectName(u"box_back_feloffsluon")
-        self.box_back_feloffsluon.setGeometry(QRect(50, 98, 16, 16))
+        self.box_back_feloffsluon.setGeometry(QRect(60, 98, 16, 16))
         self.label_feloffsluon = QLabel(self.groupBox_2)
         self.label_feloffsluon.setObjectName(u"label_feloffsluon")
-        self.label_feloffsluon.setGeometry(QRect(140, 94, 85, 16))
+        self.label_feloffsluon.setGeometry(QRect(160, 94, 111, 16))
         self.box_fore_feloffsluoff = QCheckBox(self.groupBox_2)
         self.box_fore_feloffsluoff.setObjectName(u"box_fore_feloffsluoff")
         self.box_fore_feloffsluoff.setGeometry(QRect(12, 119, 16, 16))
         self.box_back_feloffsluoff = QCheckBox(self.groupBox_2)
         self.box_back_feloffsluoff.setObjectName(u"box_back_feloffsluoff")
-        self.box_back_feloffsluoff.setGeometry(QRect(50, 120, 16, 16))
+        self.box_back_feloffsluoff.setGeometry(QRect(60, 120, 16, 16))
         self.lafel_feloffsluon = QLabel(self.groupBox_2)
         self.lafel_feloffsluon.setObjectName(u"lafel_feloffsluon")
-        self.lafel_feloffsluon.setGeometry(QRect(140, 116, 86, 16))
+        self.lafel_feloffsluon.setGeometry(QRect(160, 116, 111, 16))
         self.box_flip_feloffsluon = QCheckBox(self.groupBox_2)
         self.box_flip_feloffsluon.setObjectName(u"box_flip_feloffsluon")
-        self.box_flip_feloffsluon.setGeometry(QRect(90, 98, 16, 16))
+        self.box_flip_feloffsluon.setGeometry(QRect(110, 98, 16, 16))
         self.box_flip_felonsluon = QCheckBox(self.groupBox_2)
         self.box_flip_felonsluon.setObjectName(u"box_flip_felonsluon")
-        self.box_flip_felonsluon.setGeometry(QRect(90, 54, 16, 16))
+        self.box_flip_felonsluon.setGeometry(QRect(110, 54, 16, 16))
         self.label_back_2 = QLabel(self.groupBox_2)
         self.label_back_2.setObjectName(u"label_back_2")
-        self.label_back_2.setGeometry(QRect(90, 32, 25, 16))
+        self.label_back_2.setGeometry(QRect(110, 32, 31, 16))
         self.box_flip_felonsluoff = QCheckBox(self.groupBox_2)
         self.box_flip_felonsluoff.setObjectName(u"box_flip_felonsluoff")
-        self.box_flip_felonsluoff.setGeometry(QRect(90, 76, 16, 16))
+        self.box_flip_felonsluoff.setGeometry(QRect(110, 76, 16, 16))
         self.box_flip_feloffsluoff = QCheckBox(self.groupBox_2)
         self.box_flip_feloffsluoff.setObjectName(u"box_flip_feloffsluoff")
-        self.box_flip_feloffsluoff.setGeometry(QRect(90, 120, 16, 16))
+        self.box_flip_feloffsluoff.setGeometry(QRect(110, 120, 16, 16))
         self.applyChangesSettings = QCommandLinkButton(self.tab_settings)
         self.applyChangesSettings.setObjectName(u"applyChangesSettings")
         self.applyChangesSettings.setGeometry(QRect(420, 416, 141, 31))
@@ -1051,7 +1008,7 @@ class Ui_MainWindow(object):
         self.text_edit_num_cores.setGeometry(QRect(20, 412, 41, 31))
         self.label_num_cores = QLabel(self.tab_settings)
         self.label_num_cores.setObjectName(u"label_num_cores")
-        self.label_num_cores.setGeometry(QRect(20, 390, 171, 16))
+        self.label_num_cores.setGeometry(QRect(20, 390, 181, 16))
         self.label_max_cores = QLabel(self.tab_settings)
         self.label_max_cores.setObjectName(u"label_max_cores")
         self.label_max_cores.setGeometry(QRect(70, 410, 41, 31))
@@ -1063,14 +1020,14 @@ class Ui_MainWindow(object):
         self.text_edit_search_regex.setGeometry(QRect(600, 30, 141, 51))
         self.label_search_dir_for_newest_folder_2 = QLabel(self.tab_settings)
         self.label_search_dir_for_newest_folder_2.setObjectName(u"label_search_dir_for_newest_folder_2")
-        self.label_search_dir_for_newest_folder_2.setGeometry(QRect(610, 10, 111, 16))
+        self.label_search_dir_for_newest_folder_2.setGeometry(QRect(610, 10, 131, 16))
         self.text_browser_max_cores = QTextBrowser(self.tab_settings)
         self.text_browser_max_cores.setObjectName(u"text_browser_max_cores")
         self.text_browser_max_cores.setGeometry(QRect(90, 410, 41, 31))
         self.text_browser_max_cores.setStyleSheet(u"background-color: rgb(144, 144, 144);")
         self.label_tof_baseline_points = QLabel(self.tab_settings)
         self.label_tof_baseline_points.setObjectName(u"label_tof_baseline_points")
-        self.label_tof_baseline_points.setGeometry(QRect(20, 240, 121, 16))
+        self.label_tof_baseline_points.setGeometry(QRect(20, 240, 141, 16))
         self.text_edit_tof_baseline_points = QTextEdit(self.tab_settings)
         self.text_edit_tof_baseline_points.setObjectName(u"text_edit_tof_baseline_points")
         self.text_edit_tof_baseline_points.setGeometry(QRect(20, 260, 71, 31))
@@ -1102,11 +1059,11 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(5)
+        self.tabWidget.setCurrentIndex(2)
         self.tabWidget_2.setCurrentIndex(2)
-        self.tabWidget_4.setCurrentIndex(0)
+        self.tabWidget_4.setCurrentIndex(1)
         self.tabWidget_5.setCurrentIndex(0)
-        self.tabWidget_3.setCurrentIndex(2)
+        self.tabWidget_3.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -1127,7 +1084,7 @@ class Ui_MainWindow(object):
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Stopped</p></body></html>", None))
         self.button_stop_fetch.setText(QCoreApplication.translate("MainWindow", u"Stop", None))
-        self.test_display_folder_status.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.text_display_folder_status.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -1276,7 +1233,7 @@ class Ui_MainWindow(object):
         self.groupBox_11.setTitle(QCoreApplication.translate("MainWindow", u"Calibration fit", None))
         self.label_pes_cal_constants.setText(QCoreApplication.translate("MainWindow", u"Cal. constant", None))
         self.label_cal_points.setText(QCoreApplication.translate("MainWindow", u"r-squared, energy", None))
-        self.test_edit_cal_points.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.text_edit_cal_points.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -1324,15 +1281,11 @@ class Ui_MainWindow(object):
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_calibration), QCoreApplication.translate("MainWindow", u"Cal. (PES)", None))
-        self.tabWidget_3.setTabText(self.tabWidget_3.indexOf(self.tab_9), QCoreApplication.translate("MainWindow", u"Fore", None))
-        self.tabWidget_3.setTabText(self.tabWidget_3.indexOf(self.tab_11), QCoreApplication.translate("MainWindow", u"Back", None))
-        self.tabWidget_3.setTabText(self.tabWidget_3.indexOf(self.tab_12), QCoreApplication.translate("MainWindow", u"Subt", None))
-        self.tabWidget_3.setTabText(self.tabWidget_3.indexOf(self.tab_2), QCoreApplication.translate("MainWindow", u"Fore (m/q)", None))
-        self.tabWidget_3.setTabText(self.tabWidget_3.indexOf(self.tab_3), QCoreApplication.translate("MainWindow", u"Back (m/q)", None))
-        self.tabWidget_3.setTabText(self.tabWidget_3.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"Subt (m/q)", None))
+        self.tabWidget_3.setTabText(self.tabWidget_3.indexOf(self.tab_tofmain_tof), QCoreApplication.translate("MainWindow", u"Time-of-Flight", None))
+        self.tabWidget_3.setTabText(self.tabWidget_3.indexOf(self.tab_tofmain_mq), QCoreApplication.translate("MainWindow", u"Mass-Charge", None))
         self.button_auto_newest_folder_2.setText(QCoreApplication.translate("MainWindow", u"Auto newest folder", None))
         self.label_update_status_2.setText(QCoreApplication.translate("MainWindow", u"Update status:", None))
-        self.test_display_folder_status_2.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.text_display_folder_status_2.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -1356,6 +1309,9 @@ class Ui_MainWindow(object):
         self.combobox_tof_yscale.setItemText(1, QCoreApplication.translate("MainWindow", u"Log", None))
 
         self.label_current_folder_2.setText(QCoreApplication.translate("MainWindow", u"Current folder", None))
+        self.box_tof_fore.setText(QCoreApplication.translate("MainWindow", u"Foreground", None))
+        self.box_tof_back.setText(QCoreApplication.translate("MainWindow", u"Background", None))
+        self.box_tof_subt.setText(QCoreApplication.translate("MainWindow", u"Subtracted", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_tof_main), QCoreApplication.translate("MainWindow", u"TOF main", None))
         self.groupBox_7.setTitle(QCoreApplication.translate("MainWindow", u"TOF", None))
         self.groupBox_6.setTitle(QCoreApplication.translate("MainWindow", u"Mass/Charge", None))
@@ -1567,7 +1523,7 @@ class Ui_MainWindow(object):
         # self.text_edit_tof_cal_points.setText('0, 0\n1, 1')
         self.text_edit_tof_cal_points.setText('5000, 0\n10600, 14\n13000, 28')
         self.text_browser_max_cores.setText(str(os.cpu_count()))
-        self.test_edit_cal_points.setText('0,0\n2500,1')
+        self.text_edit_cal_points.setText('0,0\n2500,1')
 
         look_in_dir = resolve_path(CURRENT_SCRIPT_DIR, '..')
         list_of_files = os.listdir(look_in_dir)
@@ -1708,15 +1664,19 @@ class Ui_MainWindow(object):
         # self.text_edit_current_folder.textChanged.connect(self.change_folder)
         self.button_apply_tof_use_constants.clicked.connect(self.update_main_tof_window)
 
+        self.box_tof_fore.toggled.connect(self.update_tofmain_window)
+        self.box_tof_back.toggled.connect(self.update_tofmain_window)
+        self.box_tof_subt.toggled.connect(self.update_tofmain_window)
+
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_data_if_change)
 
         self.background_process_timer = QTimer()
         self.background_process_timer.timeout.connect(self.check_background_process_status)
-    
+
     def check_background_process_status(self):
         raise NotImplementedError
-        
+    
     def resume_timer(self):
         self.timer.start(2000)
     def stop_timer(self):
@@ -1882,6 +1842,9 @@ class Ui_MainWindow(object):
         return vmi_data
 
     def update_calibration_lines(self):
+        time_string = strftime("%Y-%m-%d %H:%M:%S", localtime())
+        self.update_print_box(f'{time_string}: testing new tof calibration')
+        print(f'{time_string}: testing new tof calibration')
         time_start = time.time()
 
         new_tof_coor, _ = self.graph_data['new_tof_fore']
@@ -1900,7 +1863,13 @@ class Ui_MainWindow(object):
 
         self.set_new_xlim_ylim(tof_points, mq_points, self._cal_tof_ax, None, None)
 
+
+        self._line_mq_tof.set_color('grey')
         self._line_mq_tof.set_data(self.graph_data['mq_fore'])
+
+        # self._line_raw_tof, = self._raw_tof_ax.plot([], [])
+        # self._line_raw_tof_points, = self._raw_tof_ax.plot([], [], marker='v', linestyle='')
+        # self._line_raw_tof, = self._raw_tof_ax.plot([], [])
 
         self._line_raw_tof_points.figure.canvas.draw()
         self._line_cal_tof.figure.canvas.draw()
@@ -1916,6 +1885,10 @@ class Ui_MainWindow(object):
         self._line_subt_mq.figure.canvas.draw()
 
         time_end = time.time()
+
+        time_string = strftime("%Y-%m-%d %H:%M:%S", localtime())
+        self.update_print_box(f'{time_string}: showing new tof calibration points')
+        print(f'{time_string}: showing new tof calibration points')
         print('time elapsed (update_calibration_lines): ', time_end-time_start)
 
 
@@ -1961,19 +1934,12 @@ class Ui_MainWindow(object):
         tof_data = tof_data[0], [data[0] for data in tof_data[1]]
         self.tof_data = tof_data
         return tof_data
-    
-
-    def return_background_key_start_get_tof_data_in_worker(self):
-        if self.background_key is False:
-            self.background_key = True
-        else:
-            raise Exception(f'background key was duplicated (start_get_tof_data_in_worker)!')
 
     def return_background_key(self):
         if self.background_key is False:
             self.background_key = True
         else:
-            raise Exception(f'background key was duplicated ({message})!')
+            raise Exception(f'background key was duplicated!')
     
     def borrow_background_key(self):
         if self.background_key is True:
@@ -1981,42 +1947,14 @@ class Ui_MainWindow(object):
             return True
         else:
             return False
-    
-    def start_get_tof_data_in_worker(self):
-        if DEBUG: print(f'stepped in start_get_tof_data_in_worker, background_key is {self.background_key}')
-        if not self.borrow_background_key():
-            print('background process running, cannot execute tof data retrieval!')
-            return None
-        if True:
-            if DEBUG: print('getting tof data!')
-            if DEBUG: print(f'DEBUG: expect background_key to be False ({self.background_key})')
-            assert self.background_key == False
-            worker = Worker(self.get_new_tof_data)
-            worker.signals.finished.connect(self.return_background_key_start_get_tof_data_in_worker)
-            worker.signals.finished.connect(self.process_redraw_tof_data)
-            self.threadpool.start(worker)
-        else:
-            if DEBUG: print('not threading here')
-            self.get_new_tof_data()
-            self.process_redraw_tof_data()
 
-    def combine_process_redraw_vmi_data_and_start_get_tof_data_in_worker(self):
-        if DEBUG: print(f'DEBUG: expect background_key to be True ({self.background_key})')
-        assert self.background_key == True
-        self.start_get_tof_data_in_worker()
-        if DEBUG: print('I got here!')
-        self.process_redraw_vmi_data()
-        # self.return_background_key()
-        assert self.background_key == False
-        if DEBUG: print(f'DEBUG: expect background_key to be False ({self.background_key})')
-    
     def vmi_data_plot_tof_data_plot(self):
         if not self.borrow_background_key():
             print('background process running, cannot execute tof data retrieval!')
-        self.get_new_vmi_data() # good
-        self.set_image_correction_from_panel() # good
-        self.remake_vmi_data() # good
-        self.redraw_vmi_data()  # not sure
+        self.get_new_vmi_data()
+        self.set_image_correction_from_panel()
+        self.remake_vmi_data()
+        self.redraw_vmi_data()
         self.get_new_tof_data()
         self.remake_tof_data()
         self.redraw_tof_data()
@@ -2027,33 +1965,16 @@ class Ui_MainWindow(object):
         self.return_background_key()
         
 
-    def update_data(self, multithreading=True):
+    def update_data(self):
         
-        ROUGH = True
-        if ROUGH:
-            self.load_gdata()
-            worker = Worker(self.vmi_data_plot_tof_data_plot)
-            worker.signals.finished.connect(self.finish_up_rough_update_data)
-            self.threadpool.start(worker)
+        self.load_gdata()
+        worker = Worker(self.vmi_data_plot_tof_data_plot)
+        worker.signals.finished.connect(self.finish_up_rough_update_data)
+        self.threadpool.start(worker)
 
-            time_string = strftime("%Y-%m-%d %H:%M:%S", localtime())
-            self.update_print_box(f'{time_string}: update finished')
-            print(f'{time_string}: update finished')
-    
-            
-        else:
-            if multithreading:  # complicated structure, because updating the GUI is NOT thread-safe!
-                # i.e. the threaded processes must not touch the GUI elements
-                if DEBUG: print(f'stepped in update_data, background_key is {self.background_key}')
-                self.borrow_background_key()
-                worker = Worker(self.get_new_vmi_data)
-                worker.signals.finished.connect(self.return_background_key)
-                worker.signals.finished.connect(self.combine_process_redraw_vmi_data_and_start_get_tof_data_in_worker)
-                self.threadpool.start(worker)
-            else:
-                self.get_new_vmi_data()
-                self.get_new_tof_data()
-                self.redraw_canvasses()
+        time_string = strftime("%Y-%m-%d %H:%M:%S", localtime())
+        self.update_print_box(f'{time_string}: update finished')
+        print(f'{time_string}: update finished')
 
     def set_image_correction_from_panel(self):
         xcenter_text = self.text_edit_correct_xcenter.toPlainText()
@@ -2219,13 +2140,15 @@ class Ui_MainWindow(object):
         self.load_gdata()
         self.set_image_correction_from_panel()
 
-        if True: # this is what I want, but if I do this, the TOF portion won't run?
+        if False: # this is what I want, but if I do this, the TOF portion won't run?
             worker = Worker(self.remake_vmi_data)
             # worker.signals.finished.connect(self.redraw_vmi_data)
             worker.signals.finished.connect(self.worker_redraw_vmi_data)
             self.threadpool.start(worker)
         else:
+            print('remake_vmi_data in main thread!')
             self.remake_vmi_data()
+            print('redraw_vmi_data in main thread!')
             self.redraw_vmi_data()
 
     def worker_redraw_vmi_data(self):
@@ -2272,6 +2195,7 @@ class Ui_MainWindow(object):
         self.process_redraw_tof_data()
 
     def process_redraw_tof_data(self):
+        print('stepped into process_redraw_tof_data; will spawn a worker!')
         if DEBUG: print('process redrawing tof data')
         if DEBUG: print(f'DEBUG: expect background_key to be True ({self.background_key})')
         assert self.background_key == True
@@ -2430,31 +2354,16 @@ class Ui_MainWindow(object):
     def redraw_tof_data(self):
         time_start = time.time()
 
-        new_tof_coor, new_tof_fore = self.graph_data['new_tof_fore']
-        new_tof_coor, new_tof_back = self.graph_data['new_tof_back']
         new_tof_coor, new_tof_subt = self.graph_data['new_tof_subt']
         new_mq_coor, new_mq_fore = self.graph_data['new_mq_fore']
         new_mq_coor, new_mq_back = self.graph_data['new_mq_back']
         new_mq_coor, new_mq_subt = self.graph_data['new_mq_subt']
 
-        self._line_fore_tof.set_data(new_tof_coor, new_tof_fore)
-        self._line_back_tof.set_data(new_tof_coor, new_tof_back)
-        self._line_subt_tof.set_data(new_tof_coor, new_tof_subt)
         yscale = self.combobox_tof_yscale.currentText().lower()
-        self._fore_tof_ax.set_yscale(yscale)
-        self._back_tof_ax.set_yscale(yscale)
-        self._subt_tof_ax.set_yscale(yscale)
-        
-        self.set_new_xlim_ylim(*self.graph_data['tof_fore'], self._fore_tof_ax, 
-            self.graph_data['tof_start'], self.graph_data['tof_end'], kind=yscale)
-        self.set_new_xlim_ylim(*self.graph_data['tof_back'], self._back_tof_ax, 
-            self.graph_data['tof_start'], self.graph_data['tof_end'], kind=yscale)
-        self.set_new_xlim_ylim(*self.graph_data['tof_subt'], self._subt_tof_ax, 
-            self.graph_data['tof_start'], self.graph_data['tof_end'], kind=yscale)
-
-        self._line_fore_tof.figure.canvas.draw()
-        self._line_back_tof.figure.canvas.draw()
-        self._line_subt_tof.figure.canvas.draw()
+        self._tof_ax.set_yscale(yscale)
+        self._line_fore_mq.set_color(get_colour(0))
+        self._line_back_mq.set_color(get_colour(1))
+        self._line_subt_mq.set_color(get_colour(2))
         
         tof_coor, raw_tof = self.graph_data['tof_subt']
         with IgnoreWarnings("length one"):
@@ -2472,44 +2381,81 @@ class Ui_MainWindow(object):
         self.set_new_xlim_ylim(tof_points, mq_points, self._cal_tof_ax, None, None)
 
 
-        self._line_mq_tof.set_data(self.graph_data['mq_subt'])
+        self._line_mq_tof.set_color(get_colour(0))
+        self._line_mq_tof.set_data(self.graph_data['mq_fore'])
 
         
-        self.set_new_xlim_ylim(*self.graph_data['tof_subt'], self._raw_tof_ax, 
+        self.set_new_xlim_ylim(*self.graph_data['tof_fore'], self._raw_tof_ax, 
             *self.get_tof_lim_data()[:2])
-        self.set_new_xlim_ylim(*self.graph_data['mq_subt'], self._mq_tof_ax, 
-            *self.get_mq_lim_data(self.graph_data['mq_subt'][0])[:2])
+        self.set_new_xlim_ylim(*self.graph_data['mq_fore'], self._mq_tof_ax, 
+            *self.get_mq_lim_data(self.graph_data['mq_fore'][0])[:2])
         # self._mq_tof_ax.ticklabel_format(axis='y', useOffset=False)  # setting the ylim resets the format! This is a quick fix
-        
+
         self._line_raw_tof.figure.canvas.draw()
         self._line_raw_tof_points.figure.canvas.draw()
         self._line_cal_tof.figure.canvas.draw()
         self._line_cal_tof_points.figure.canvas.draw()
         self._line_mq_tof.figure.canvas.draw()
-
-
-        self._line_fore_mq.set_data(new_mq_coor, new_mq_fore)
-        self._line_back_mq.set_data(new_mq_coor, new_mq_back)
-        self._line_subt_mq.set_data(new_mq_coor, new_mq_subt)
-        yscale = self.combobox_tof_yscale.currentText().lower()
-        self._fore_mq_ax.set_yscale(yscale)
-        self._back_mq_ax.set_yscale(yscale)
-        self._subt_mq_ax.set_yscale(yscale)
         
-        self.set_new_xlim_ylim(*self.graph_data['mq_fore'], self._fore_mq_ax, 
-            self.graph_data['mq_start'], self.graph_data['mq_end'], kind=yscale)
-        self.set_new_xlim_ylim(*self.graph_data['mq_back'], self._back_mq_ax, 
-            self.graph_data['mq_start'], self.graph_data['mq_end'], kind=yscale)
-        self.set_new_xlim_ylim(*self.graph_data['mq_subt'], self._subt_mq_ax, 
-            self.graph_data['mq_start'], self.graph_data['mq_end'], kind=yscale)
 
-        self._line_fore_mq.figure.canvas.draw()
-        self._line_back_mq.figure.canvas.draw()
-        self._line_subt_mq.figure.canvas.draw()
+        self._line_fore_mq.set_color(get_colour(0))
+        self._line_back_mq.set_color(get_colour(1))
+        self._line_subt_mq.set_color(get_colour(2))
+
+        yscale = self.combobox_tof_yscale.currentText().lower()
+        self._mq_ax.set_yscale(yscale)
+        
+        self.update_tofmain_window()
 
         time_end = time.time()
         print('time elapsed (redraw_tof_data): ', time_end-time_start)
 
+    def update_tofmain_window(self):
+        """ copy the update_pes_window method!
+        """
+        tof_coor, tof_fore = self.graph_data['new_tof_fore']
+        tof_coor, tof_back = self.graph_data['new_tof_back']
+        tof_coor, tof_subt = self.graph_data['new_tof_subt']
+        self._tof_ax.set_xlim(-1000,1000)
+        if self.box_tof_fore.isChecked():
+            self._line_fore_tof.set_data(tof_coor, tof_fore)
+        else:
+            self._line_fore_tof.set_data(tof_coor, np.zeros(np.shape(tof_fore))*np.nan)
+        if self.box_tof_back.isChecked():
+            self._line_back_tof.set_data(tof_coor, tof_back)
+        else:
+            self._line_back_tof.set_data(tof_coor, np.zeros(np.shape(tof_back))*np.nan)
+        if self.box_tof_subt.isChecked():
+            self._line_subt_tof.set_data(tof_coor, tof_subt)
+        else:
+            self._line_subt_tof.set_data(tof_coor, np.zeros(np.shape(tof_subt))*np.nan)
+
+        self.set_new_xlim_ylim(tof_coor, tof_fore, self._tof_ax, 
+            *self.get_tof_lim_data()[:2])
+
+        self._tof_ax.figure.canvas.draw()
+        
+        mq_coor, mq_fore = self.graph_data['new_mq_fore']
+        mq_coor, mq_back = self.graph_data['new_mq_back']
+        mq_coor, mq_subt = self.graph_data['new_mq_subt']
+        self._mq_ax.set_xlim(-1000,1000)
+        if self.box_tof_fore.isChecked():
+            self._line_fore_mq.set_data(mq_coor, mq_fore)
+        else:
+            self._line_fore_mq.set_data(mq_coor, np.zeros(np.shape(mq_fore))*np.nan)
+        if self.box_tof_back.isChecked():
+            self._line_back_mq.set_data(mq_coor, mq_back)
+        else:
+            self._line_back_mq.set_data(mq_coor, np.zeros(np.shape(mq_back))*np.nan)
+        if self.box_tof_subt.isChecked():
+            self._line_subt_mq.set_data(mq_coor, mq_subt)
+        else:
+            self._line_subt_mq.set_data(mq_coor, np.zeros(np.shape(mq_subt))*np.nan)
+
+        self.set_new_xlim_ylim(mq_coor, mq_fore, self._mq_ax, 
+            *self.get_mq_lim_data(mq_coor)[:2])
+
+        self._mq_ax.figure.canvas.draw()
 
     def update_pes_window(self):
         '''
@@ -2799,19 +2745,14 @@ class Ui_MainWindow(object):
             ke_bins = int(ke_bins_string)
         return ke_start, ke_end, ke_bins
 
-
     def update_pes_calibration_window(self):
 
         rsquare, subt_rsdf = self.graph_data['subt_rsdf']
 
         # perform calibration here!
-
-        cal_points_string = self.test_edit_cal_points.toPlainText()
+        cal_points_string = self.text_edit_cal_points.toPlainText()
         rsquare_ke_peaks = self.string_to_pairs(cal_points_string, dtype=float)
         rsquare_points, ke_points = rsquare_ke_peaks.T
-
-
-        from fermi_libraries.common_functions import weighted_linear_regression
 
         slope, *_ = weighted_linear_regression(rsquare_points, ke_points, zero_intercept=True)
 
@@ -2821,9 +2762,7 @@ class Ui_MainWindow(object):
 
         ke = rsquare_ke_coor_func(rsquare)
         pes = subt_rsdf / slope # jacobian correction
-
         self.graph_data['pes_subt'] = ke, pes
-
 
         ke_start, ke_end, ke_bins = self.get_ke_lim_data(ke)
         new_ke_coor = np.linspace(ke_start, ke_end, num=ke_bins)
@@ -2831,7 +2770,6 @@ class Ui_MainWindow(object):
         with IgnoreWarnings("length one"):
             new_raw_pes = rebinning(new_ke_coor, ke_coor, raw_pes)
         self._line_ke_rsquare.set_data(new_ke_coor, new_raw_pes)
-
 
         model_rsquare = np.linspace(np.min(rsquare_points), np.max(rsquare_points), num=1000)
 
@@ -2848,7 +2786,6 @@ class Ui_MainWindow(object):
         
         self.set_new_xlim_ylim(*self.graph_data['subt_rsdf'], self._raw_rsquare_ax, 
             None, None)
-        test_data = self.get_ke_lim_data(ke)[:2]
         self.set_new_xlim_ylim(*self.graph_data['pes_subt'], self._ke_rsquare_ax, 
             *self.get_ke_lim_data(ke)[:2])
         # self._mq_tof_ax.ticklabel_format(axis='y', useOffset=False)  # setting the ylim resets the format! This is a quick fix
@@ -2874,8 +2811,8 @@ class Ui_MainWindow(object):
     
     def click_auto_newest_folder(self):
         self.status['auto_newest_folder'] = True
-        self.test_display_folder_status.setText('Search')
-        self.test_display_folder_status_2.setText('Search')
+        self.text_display_folder_status.setText('Search')
+        self.text_display_folder_status_2.setText('Search')
 
     def click_stop_fetch(self):
         self.status['fetch_new_files'] = False
@@ -2885,8 +2822,8 @@ class Ui_MainWindow(object):
 
     def click_stay_folder(self):
         self.status['auto_newest_folder'] = False
-        self.test_display_folder_status.setText('Stay')
-        self.test_display_folder_status_2.setText('Stay')
+        self.text_display_folder_status.setText('Stay')
+        self.text_display_folder_status_2.setText('Stay')
 
 import os, sys, traceback, re, pathlib
 import numpy as np
@@ -2902,10 +2839,10 @@ from matplotlib.backends.backend_qtagg import \
 from PySide6.QtCore import QObject, Signal, QThreadPool, Signal, Slot, QRunnable, QTimer
 from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QApplication
 
-from fermi_libraries.run_module import MultithreadRun
-from fermi_libraries.run_module import Run
+from fermi_libraries.run_module import MultithreadRun, Run
 from fermi_libraries.common_functions import (
-    set_recursion_limit, resolve_path, closest, set_default_labels, rebinning)
+    set_recursion_limit, resolve_path, closest, set_default_labels, rebinning,
+    weighted_linear_regression, get_colour)
 from fermi_libraries.dictionary_search import search_symbols
 from fermi_libraries.calibration_tools import (
     tof_mq_calibration, tof_mq_coordinate_func, mq_tof_coordinate_func, 
@@ -2913,9 +2850,8 @@ from fermi_libraries.calibration_tools import (
 
 from cpbasex.cpbasex import cpbasex_energy as cpbasex_energy_inversion
 from cpbasex.gData import loadG
-from cpbasex.image_mod import resize, resizeFoldedHalf, foldHalf
-from cpbasex.image_mod import find_center, find_rotation, find_ellipticity
-from cpbasex.image_mod import center_image, rotate, stretch
+from cpbasex.image_mod import (resize, resizeFoldedHalf, foldHalf,
+   find_center, find_rotation, find_ellipticity, center_image, rotate, stretch)
 
 class MplCanvas(FigureCanvasQTAgg):
     def __init__(self, parent=None, width=5, height=4, dpi=100):
@@ -3169,47 +3105,36 @@ class MainWindow(QMainWindow):
         app.vmi_rdf_fig.subplots_adjust(bottom=0.15, left=0.05, right=0.95, top=0.95)
         
 
-        # fore, back, and subt plots
-        app.fore_tof_fig = Figure(figsize=(5, 3))
-        fore_tof_canvas = FigureCanvas(app.fore_tof_fig)
-        app.tof_fore.addWidget(fore_tof_canvas)
-        app.tof_fore.addWidget(NavigationToolbar(fore_tof_canvas, self))
-        app._fore_tof_ax = fore_tof_canvas.figure.subplots()
-        app._line_fore_tof, = app._fore_tof_ax.plot([], [])
-        app._fore_tof_ax.set_ylabel('TOF signal')
-        app._fore_tof_ax.set_xlabel('TOF (ns)')
-        app._fore_tof_ax.xaxis.labelpad = 0
+        # main tof window: fore, back, and subt plots for tof
+        app.tof_fig = Figure(figsize=(5, 3))
+        tof_canvas = FigureCanvas(app.tof_fig)
+        app.tofmain_tof.addWidget(tof_canvas)
+        app.tofmain_tof.addWidget(NavigationToolbar(tof_canvas, self))
+        app._tof_ax = tof_canvas.figure.subplots()
+        app._line_fore_tof, = app._tof_ax.plot([], [])
+        app._line_back_tof, = app._tof_ax.plot([], [])
+        app._line_subt_tof, = app._tof_ax.plot([], [])
+        app._tof_ax.set_ylabel('TOF signal')
+        app._tof_ax.set_xlabel('TOF (ns)')
+        app._tof_ax.xaxis.labelpad = 0
         plt.tight_layout()
-        app.fore_tof_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
-
-
-
-        # back, back, and subt plots
-        app.back_tof_fig = Figure(figsize=(5, 3))
-        back_tof_canvas = FigureCanvas(app.back_tof_fig)
-        app.tof_back.addWidget(back_tof_canvas)
-        app.tof_back.addWidget(NavigationToolbar(back_tof_canvas, self))
-        app._back_tof_ax = back_tof_canvas.figure.subplots()
-        app._line_back_tof, = app._back_tof_ax.plot([], [])
-        app._fore_tof_ax.set_ylabel('TOF signal')
-        app._back_tof_ax.set_xlabel('TOF (ns)')
-        app._back_tof_ax.xaxis.labelpad = 0
-        plt.tight_layout()
-        app.back_tof_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
-
-        # subt, subt, and subt plots
-        app.subt_tof_fig = Figure(figsize=(5, 3))
-        subt_tof_canvas = FigureCanvas(app.subt_tof_fig)
-        app.tof_subt.addWidget(subt_tof_canvas)
-        app.tof_subt.addWidget(NavigationToolbar(subt_tof_canvas, self))
-        app._subt_tof_ax = subt_tof_canvas.figure.subplots()
-        app._line_subt_tof, = app._subt_tof_ax.plot([], [])
-        app._fore_tof_ax.set_ylabel('TOF signal')
-        app._subt_tof_ax.set_xlabel('TOF (ns)')
-        app._subt_tof_ax.xaxis.labelpad = 0
-        plt.tight_layout()
-        app.subt_tof_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
+        app.tof_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
         
+        # main tof window: fore, back, and subt plots for m/q
+        app.mq_fig = Figure(figsize=(7, 7))
+        mq_canvas = FigureCanvas(app.mq_fig)
+        app.tofmain_mq.addWidget(mq_canvas)
+        app.tofmain_mq.addWidget(NavigationToolbar(mq_canvas, self))
+        app._mq_ax = mq_canvas.figure.subplots()
+        app._mq_ax.set_xlabel('m/q')
+        app._line_fore_mq, = app._mq_ax.plot([], [])
+        app._line_back_mq, = app._mq_ax.plot([], [])
+        app._line_subt_mq, = app._mq_ax.plot([], [])
+        app._mq_ax.xaxis.labelpad = 0
+        plt.tight_layout()
+        app.mq_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
+        
+
         # TOF calibration tab
         raw_tof_fig = Figure(figsize=(5,3))
         raw_tof_canvas = FigureCanvas(raw_tof_fig)
@@ -3258,38 +3183,7 @@ class MainWindow(QMainWindow):
         # tof_raw_fig.subplots_adjust(bottom=0.15, left=0.05, right=1.0, top=0.95)
         # tof_corr_fig.subplots_adjust(bottom=0.15, left=0.05, right=1.0, top=0.95)
         
-        app.fore_mq_fig = Figure(figsize=(7, 7))
-        fore_mq_canvas = FigureCanvas(app.fore_mq_fig)
-        app.mq_fore.addWidget(fore_mq_canvas)
-        app.mq_fore.addWidget(NavigationToolbar(fore_mq_canvas, self))
-        app._fore_mq_ax = fore_mq_canvas.figure.subplots()
-        app._fore_mq_ax.set_xlabel('m/q')
-        app._line_fore_mq, = app._fore_mq_ax.plot([], [])
-        app._fore_mq_ax.xaxis.labelpad = 0
-        plt.tight_layout()
-        app.fore_mq_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
 
-        app.back_mq_fig = Figure(figsize=(7, 7))
-        back_mq_canvas = FigureCanvas(app.back_mq_fig)
-        app.mq_back.addWidget(back_mq_canvas)
-        app.mq_back.addWidget(NavigationToolbar(back_mq_canvas, self))
-        app._back_mq_ax = back_mq_canvas.figure.subplots()
-        app._back_mq_ax.set_xlabel('m/q')
-        app._line_back_mq, = app._back_mq_ax.plot([], [])
-        app._back_mq_ax.xaxis.labelpad = 0
-        plt.tight_layout()
-        app.back_mq_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
-
-        app.subt_mq_fig = Figure(figsize=(7, 7))
-        subt_mq_canvas = FigureCanvas(app.subt_mq_fig)
-        app.mq_subt.addWidget(subt_mq_canvas)
-        app.mq_subt.addWidget(NavigationToolbar(subt_mq_canvas, self))
-        app._subt_mq_ax = subt_mq_canvas.figure.subplots()
-        app._subt_mq_ax.set_xlabel('m/q')
-        app._line_subt_mq, = app._subt_mq_ax.plot([], [])
-        app._subt_mq_ax.xaxis.labelpad = 0
-        plt.tight_layout()
-        app.subt_mq_fig.subplots_adjust(bottom=0.26, left=0.1, right=0.95, top=0.95)
 
         # PES calibration tab
         raw_rsquare_fig = Figure(figsize=(5,3))
