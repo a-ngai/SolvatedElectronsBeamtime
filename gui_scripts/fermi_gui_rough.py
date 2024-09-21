@@ -1963,6 +1963,11 @@ class Ui_MainWindow(object):
         self.change_ion_tof_calibration_constants()
         self.change_pes_calibration_constants()
         self.return_background_key()
+
+        time_string = strftime("%Y-%m-%d %H:%M:%S", localtime())
+        self.update_print_box(f'{time_string}: update finished')
+        print(f'{time_string}: update finished')
+
         
 
     def update_data(self):
@@ -1971,10 +1976,6 @@ class Ui_MainWindow(object):
         worker = Worker(self.vmi_data_plot_tof_data_plot)
         worker.signals.finished.connect(self.finish_up_rough_update_data)
         self.threadpool.start(worker)
-
-        time_string = strftime("%Y-%m-%d %H:%M:%S", localtime())
-        self.update_print_box(f'{time_string}: update finished')
-        print(f'{time_string}: update finished')
 
     def set_image_correction_from_panel(self):
         xcenter_text = self.text_edit_correct_xcenter.toPlainText()
