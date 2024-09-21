@@ -118,8 +118,8 @@ def center_image(image, center, show_image=False, axes=(-2, -1)):
     size_raw, size_col = np.array(np.shape(transposed_images))[np.array(axes, dtype=int)]
     diff_center_raw = int(size_raw/2) - center[0] 
     diff_center_col = int(size_col/2) - center[1] 
-    images_centered = np.roll(images,diff_center_raw,0)
-    images_centered = np.roll(images_centered,diff_center_col,1)
+    images_centered = np.roll(images,diff_center_raw, -2)
+    images_centered = np.roll(images_centered,diff_center_col, -1)
     if show_image:
         plt.figure(figsize = (8,3))
         plt.imshow(images[0], cmap = hot_cmap)
