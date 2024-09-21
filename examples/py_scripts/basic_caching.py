@@ -248,3 +248,12 @@ runset_vmi = BasicRunSet.average_run_data('vmi',back_sep=BACKGROUND,
                                     make_cache=MAKE_CACHE, use_cache=LOAD_FROM_CACHE)
 print(f'shape of output data is: {np.shape(runset_vmi)}')
 print('data has axes (condition, run, rules, ...data...)')
+
+# %%
+##%%time
+runset_vmi = BasicRunSet.average_run_data('vmi',back_sep=BACKGROUND,
+                                    make_cache=MAKE_CACHE, use_cache=LOAD_FROM_CACHE,
+                                    num_files_per_cache=1)
+print(f'shape of output data is: {np.shape(runset_vmi)}')
+print('data has axes (condition, run, rules, ...data...)')
+

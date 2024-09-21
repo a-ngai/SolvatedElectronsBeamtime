@@ -838,7 +838,7 @@ class Run:
                     dataname, back_sep=back_sep, slu_sep=slu_sep, slice_range=slice_range,
                     rules=rules, use_cache=use_cache, make_cache=save_part_cache, _filepaths=subset,
                     num_files_per_cache=None,
-                    _save_incomplete_cache=True
+                    _save_incomplete_cache=True # possibly a problem? save_in_complete_cache variable is unused...
                 )
                 partial_run_avg.append(block_avg)
                 partial_run_weights.append(block_weights)
@@ -873,6 +873,16 @@ class Run:
             run_file_data, run_file_weights = self.give_sums_counts_filedata(
                                     dataname, back_sep=back_sep, slu_sep=slu_sep,
                                     slice_range=slice_range, rules=rules)
+            
+        # print()
+        # print()
+        # print()
+        # print(f'num_files_per_cache: {num_files_per_cache}')
+        # print(f'filepaths: {filepaths}')
+        # print(f'_filepaths: {_filepaths}')
+        # print()
+        # print()
+        # print()
 
         for filedata_sum, filedata_count in zip(run_file_data, run_file_weights):
             for i, (split_sum, split_count) in enumerate(zip(filedata_sum, filedata_count)):
@@ -1099,11 +1109,16 @@ class RunSets:
 
     @_alias
     def average_run_data_weights(self, dataname, back_sep=False, slu_sep=False, slice_range=None,
-                                 rules=[None,], use_cache=True, make_cache=True):
+                                 rules=[None,], use_cache=True, make_cache=True,
+                                 num_files_per_cache=None):
         '''
         Output has axes: (average/weights, condition, run, average)
         '''
 
+        print(f'num_files_per_cache: {num_files_per_cache}')
+        print(f'use_cache: {use_cache}')
+        print(f'make_cache: {make_cache}')
+        print(f'dataname: {dataname}')
         compiled_averages = []
         compiled_weights = []
         for i, run_instance in enumerate(self.run_instances):
@@ -1111,7 +1126,8 @@ class RunSets:
                     zip(*run_instance.average_run_data_weights(
                         dataname, back_sep=back_sep, slu_sep=slu_sep,
                         slice_range=slice_range, rules=rules,
-                        use_cache=use_cache, make_cache=make_cache))):
+                        use_cache=use_cache, make_cache=make_cache,
+                        num_files_per_cache=num_files_per_cache, ))):
 
                 if len(compiled_averages)<=j:
                     compiled_averages.append([])
@@ -1123,19 +1139,23 @@ class RunSets:
 
     @_alias
     def average_run_data(self, dataname, back_sep=False, slu_sep=False, slice_range=None,
-                         rules=[None,], use_cache=True, make_cache=True):
+                         rules=[None,], use_cache=True, make_cache=True,
+                         num_files_per_cache=None):
         return self.average_run_data_weights(dataname, back_sep=back_sep, slu_sep=slu_sep,
                                          slice_range=slice_range, rules=rules,
-                                         use_cache=use_cache, make_cache=make_cache)[0]
+                                         use_cache=use_cache, make_cache=make_cache,
+                                         num_files_per_cache=num_files_per_cache, )[0]
 
     @_alias
     def average_set_data_weights(self, dataname, back_sep=False, slu_sep=False, slice_range=None,
-                                 rules=[None,], use_cache=True, make_cache=True):
+                                 rules=[None,], use_cache=True, make_cache=True,
+                                 num_files_per_cache=None):
 
         run_averages, run_weights = self.average_run_data_weights(
                 dataname, back_sep=back_sep, slu_sep=slu_sep,
                 slice_range=slice_range, rules=rules,
-                use_cache=use_cache, make_cache=make_cache)
+                use_cache=use_cache, make_cache=make_cache,
+                num_files_per_cache=num_files_per_cache, )
 
         set_averages = []
         set_weights = []
