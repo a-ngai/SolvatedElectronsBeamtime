@@ -89,22 +89,47 @@ def find_center(image, center_guess, r_max, show_image = False):
         plt.tight_layout()
     return output
 
-def center_image(image, center, show_image=False):
+def center_image(image, center, show_image=False, axes=(-2, -1)):
     """
     Takes an image (image) and center (center) and returns the centered image.
     Center is a list of two elements, the first element is the center along the 1st dimension, the second element is the center along the 2nd dimension of the image.
     """
-    size_raw, size_col = np.shape(image)
+    if (dim := np.ndim(image)) > 2:
+        is_single = False
+        images = image
+    elif dim == 2:
+        is_single = True
+        images = image[np.newaxis,:,:]
+    else:
+         raise IndexError(f'image dim ({dim}) must be >= 2')
+    transpose_order = np.arange(np.ndim(images))
+    (transpose_order[-2],
+     transpose_order[-1],
+     transpose_order[axes[0]],
+     transpose_order[axes[1]]) = (
+    transpose_order[axes[0]],
+    transpose_order[axes[1]],
+    transpose_order[-2],
+    transpose_order[-1],
+    )
+     
+    transposed_images = np.transpose(images, axes=transpose_order)
+    
+    size_raw, size_col = np.array(np.shape(transposed_images))[np.array(axes, dtype=int)]
     diff_center_raw = int(size_raw/2) - center[0] 
     diff_center_col = int(size_col/2) - center[1] 
-    image_centered = np.roll(image,diff_center_raw,0)
-    image_centered = np.roll(image_centered,diff_center_col,1)
+    images_centered = np.roll(images,diff_center_raw,0)
+    images_centered = np.roll(images_centered,diff_center_col,1)
     if show_image:
         plt.figure(figsize = (8,3))
-        plt.imshow(image, cmap = hot_cmap)
+        plt.imshow(images[0], cmap = hot_cmap)
         plt.plot( 450, 450,'.', markersize = '10', color = 'red')
         print('center now at: ' + str([450, 450]))
-    return image_centered
+    
+    images_centered = np.transpose(images_centered, axes=transpose_order)
+    if is_single:
+        images_centered = images_centered[0]
+    return images_centered
 
 def center_image_interp(image, center, show_image=False):
     dim = np.shape(image)

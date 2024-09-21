@@ -72,4 +72,5 @@ class TestNotebooks():
         from convert_to_ipynb import main
         assert main() is None
 
-from tests.test_gui_api import TestGUIMethods
+# from tests.test_gui_api import TestGUIMethods
+from tests.test_gui_api import TestGUIMethodsRough

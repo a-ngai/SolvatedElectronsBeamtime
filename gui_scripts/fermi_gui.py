@@ -1978,13 +1978,7 @@ class Ui_MainWindow(object):
             self.borrow_background_key()
             worker = Worker(self.get_new_vmi_data)
             worker.signals.finished.connect(self.return_background_key)
-            if True:
-                worker.signals.finished.connect(self.combine_process_redraw_vmi_data_and_start_get_tof_data_in_worker)
-                # I don't know why I need to combine these two. Maybe because when the thread is finished executing
-                # it can only take one more worker request and "finishes" so that a second request does not work?
-            else:
-                worker.signals.finished.connect(self.process_redraw_vmi_data)
-                worker.signals.finished.connect(self.start_get_tof_data_in_worker)
+            worker.signals.finished.connect(self.combine_process_redraw_vmi_data_and_start_get_tof_data_in_worker)
             self.threadpool.start(worker)
         else:
             self.get_new_vmi_data()

@@ -803,7 +803,7 @@ class Run:
     def average_run_data_weights(self, dataname, back_sep=False, slu_sep=False, slice_range=None,
                                  rules=[None,], use_cache=True, make_cache=True, _filepaths=None,
                                  num_files_per_cache=None, 
-                                 _save_incomplete_cache=False, _save_total_cache=False):
+                                 _save_incomplete_cache=False, _save_total_cache=True):
         '''
         Output axes: (sum/counts, conditions, rules, data)
         '''
@@ -817,8 +817,9 @@ class Run:
         look_for_filepaths = filepaths[:num_files_per_cache]
         outdir = filepaths[0].split('/rawdata/')[0] + '/work/average_run_data_weights_cache'
         args = (filepaths, dataname, back_sep, slu_sep, slice_range, rules)
-        cache_found = os.path.exists(get_cache_filepath(
-            outdir, look_for_filepaths, args, ['rundata','runweights'], use_cache=use_cache))
+        cache_filepath = get_cache_filepath(
+                        outdir, look_for_filepaths, args, ['rundata','runweights'], use_cache=use_cache)
+        cache_found = os.path.exists(cache_filepath)
         if num_files_per_cache is not None: _files_per_cache = num_files_per_cache
         
         # call recursively, but only on subsets of all files
@@ -888,7 +889,6 @@ class Run:
             run_average.append(np.sum(split_data, axis=0)/divisor)
             run_weight.append(np.sum(split_count, axis=0))
         
-
         if make_cache and (_filepaths is not None) and filepaths:
             rundata = np.array(run_average, dtype=float)
             runweights = np.array(run_weight, dtype=int)
@@ -1009,7 +1009,7 @@ class Run:
     @_alias
     def average_run_data(self, dataname, back_sep=False, slu_sep=False, slice_range=None,
                          rules=[None,], use_cache=True, make_cache=True, num_files_per_cache=None,
-                         ):
+                         _save_total_cache=True):
         '''
         Same as Run.saverage_run_data_weights(), but just returning the "data" part of the tuple)
 
@@ -1020,7 +1020,7 @@ class Run:
                 dataname, back_sep=back_sep, slu_sep=slu_sep,
                 slice_range=slice_range, rules=rules,
                 use_cache=use_cache, make_cache=make_cache,
-                num_files_per_cache=num_files_per_cache)[0]
+                num_files_per_cache=num_files_per_cache, _save_total_cache=_save_total_cache)[0]
 
 
     @_alias
@@ -1304,14 +1304,16 @@ class MultithreadRun(Run):
         for look_for_filepaths in subsets_of_filepaths:
             outdir = filepaths[0].split('/rawdata/')[0] + '/work/average_run_data_weights_cache'
             args = (look_for_filepaths, dataname, back_sep, slu_sep, slice_range, rules)
-            cache_found = os.path.exists(get_cache_filepath(
-                outdir, look_for_filepaths, args, ['rundata','runweights'], use_cache=use_cache))
+            cache_filepath = get_cache_filepath(
+                outdir, look_for_filepaths, args, ['rundata','runweights'], use_cache=use_cache)
+            cache_found = os.path.exists(cache_filepath)
             if cache_found and use_cache:
                 cache_return = cache_function(outdir, look_for_filepaths, args, ['rundata','runweights'], use_cache=use_cache)
                 if type(cache_return)==str:
                     raise Exception(f'cache is a string! ({cache_return})')
                 blocks_data.append(cache_return)
             else:
+                
                 uncached_filepath_blocks.append(look_for_filepaths)
 
         from itertools import chain
