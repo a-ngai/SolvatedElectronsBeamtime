@@ -799,6 +799,18 @@ class Run:
 
         return rundata_collect
 
+    def get_cache_filepath(self, dataname, back_sep=False, slu_sep=False, slice_range=None,
+                                 rules=[None,], use_cache=True, make_cache=True, _filepaths=None,
+                                 num_files_per_cache=None, 
+                                 _save_incomplete_cache=False, _save_total_cache=True):
+        _files_per_cache = len(filepaths)
+        look_for_filepaths = filepaths[:num_files_per_cache]
+        outdir = filepaths[0].split('/rawdata/')[0] + '/work/average_run_data_weights_cache'
+        args = (filepaths, dataname, back_sep, slu_sep, slice_range, rules)
+        cache_filepath = get_cache_filepath(
+                        outdir, look_for_filepaths, args, ['rundata','runweights'], use_cache=use_cache)
+        return cache_filepath
+
     @_alias
     def average_run_data_weights(self, dataname, back_sep=False, slu_sep=False, slice_range=None,
                                  rules=[None,], use_cache=True, make_cache=True, _filepaths=None,

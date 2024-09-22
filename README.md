@@ -8,7 +8,7 @@ In the terminal, create a virtual environment with the command
 
 Now enter into the virtual environment:
 
-> . .venv/bin/activate
+> . venv/bin/activate
 
 To make your JupyterNotebooks see the virtual environment, run the following commands on the terminal
 
