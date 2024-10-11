@@ -1933,7 +1933,7 @@ class Ui_MainWindow(object):
         if self.background_key is False:
             self.background_key = True
         else:
-            raise Exception(f'background key was duplicated ({message})!')
+            raise Exception(f'background key was duplicated!')
     
     def borrow_background_key(self):
         if self.background_key is True:

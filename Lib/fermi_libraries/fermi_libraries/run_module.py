@@ -803,6 +803,11 @@ class Run:
                                  rules=[None,], use_cache=True, make_cache=True, _filepaths=None,
                                  num_files_per_cache=None, 
                                  _save_incomplete_cache=False, _save_total_cache=True):
+        if _filepaths is None:
+            filepaths = self.filepaths
+        else:
+            filepaths = _filepaths
+
         _files_per_cache = len(filepaths)
         look_for_filepaths = filepaths[:num_files_per_cache]
         outdir = filepaths[0].split('/rawdata/')[0] + '/work/average_run_data_weights_cache'

@@ -147,36 +147,42 @@ class TestGUIMethodsRough(unittest.TestCase):
             app = QApplication(sys.argv)
         return app
 
+    # def setup(self):
+
+    #     app = self.setup_qapplication()
+    #     tabWidgetApp = Ui_MainWindow()
+    #     w = MainWindow()
+
+    #     tabWidgetApp.setupUi(w)
+    #     tabWidgetApp.setup_signals()
+    #     w.add_canvas(tabWidgetApp)
+
+    #     tabWidgetApp.text_edit_search_dir_for_newest_folder.setText(search_dir)
+
+    #     tabWidgetApp.apply_settings()
+
+    #     return app, tabWidgetApp, w
+
     def setup(self):
-
-        app = self.setup_qapplication()
-        tabWidgetApp = Ui_MainWindow()
-        w = MainWindow()
-
-        tabWidgetApp.setupUi(w)
-        tabWidgetApp.setup_signals()
-        w.add_canvas(tabWidgetApp)
-
-        tabWidgetApp.text_edit_search_dir_for_newest_folder.setText(search_dir)
-
-        tabWidgetApp.apply_settings()
-
-        return app, tabWidgetApp, w
+        from gui_scripts.fermi_gui_rough import setup_window_app_tabwidget
+        w, app, tabWidgetApp = setup_window_app_tabwidget()
+        self.w = w
+        self.app = app
+        self.tabWidgetApp = tabWidgetApp
     
     def tear_down(self):
         self.app.exit()
         self.app.shutdown()
 
-
     def test_new_file_detection(self):
-        from gui_scripts.fermi_gui_rough import setup_window_app_tabwidget
-        
+        self.setup()
+
+        w = self.w
+        app = self.app
+        tabWidgetApp = self.tabWidgetApp
 
         try:
-        
-            w, app, tabWidgetApp = setup_window_app_tabwidget()
             # app, tabWidgetApp, w = self.setup()
-            self.app = app
             tabWidgetApp.terminal_print = False
 
             clear_test_data_folder(test_dir)
