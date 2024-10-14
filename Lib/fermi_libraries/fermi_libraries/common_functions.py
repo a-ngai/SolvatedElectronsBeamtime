@@ -854,11 +854,13 @@ def resolve_path(basepath: str, addpath: str = '') -> str:
     '''
     compat_basepath = re.sub(r'\\\\', '/', basepath)
     compat_basepath = re.sub(r'\\', '/', compat_basepath)
+    compat_basepath = re.sub(r'//', '/', compat_basepath)
     if compat_basepath[-1] == '/':
         compat_basepath = compat_basepath[:-1]
     base_hierarchy_list = compat_basepath.split('/')
     compat_addpath = re.sub(r'\\\\', '/', addpath)
     compat_addpath = re.sub(r'\\', '/', compat_addpath)
+    compat_addpath = re.sub(r'//', '/', compat_addpath)
     if compat_addpath[:2] == './':
         compat_addpath = compat_addpath[2:]
     add_hierarchy_list = compat_addpath.split('/')

@@ -94,13 +94,13 @@ def cache_function(outdir, args, datanames, use_cache=True):
 
 
 
-def function_for_imap(filepath, run_object_attributes, dataname, back_sep=True, slu_sep=True, slice_range=None, rules=[None,]):
+def function_for_imap(filename, run_object_attributes, dataname, back_sep=True, slu_sep=True, slice_range=None, rules=[None,]):
     run_object = Run([])
     for name, value in run_object_attributes:
         setattr(run_object, name, value)
     data_sum, data_count = list(run_object.yield_sums_counts_filedata(
         dataname, back_sep=back_sep, slu_sep=slu_sep,
-        slice_range=slice_range, rules=rules, filepaths=[filepath,]))[0]
+        slice_range=slice_range, rules=rules, filenames=[filename,]))[0]
     return data_sum, data_count
 
 from itertools import repeat
@@ -911,9 +911,8 @@ class Run:
         # checking possible caches
         _files_per_cache = len(filepaths)
         outdir = filepaths[0].split('/rawdata/')[0] + '/work/average_run_data_weights_cache'
-        args = (filepaths, dataname, back_sep, slu_sep, slice_range, rules)
-        cache_filepath = get_cache_filepath(
-                        outdir, args)
+        args = (filenames, dataname, back_sep, slu_sep, slice_range, rules)
+        cache_filepath = get_cache_filepath( outdir, args)
         cache_found = os.path.exists(cache_filepath)
         if num_files_per_cache is not None: _files_per_cache = num_files_per_cache
 
@@ -1481,10 +1480,10 @@ class MultithreadRun(Run):
         return name
 
     @_alias
-    def average_run_data_weights(self, dataname, back_sep=False, slu_sep=False, slice_range=None,
+    def average_run_data_weights_cache_info(self, dataname, back_sep=False, slu_sep=False, slice_range=None,
                                 rules=[None,], use_cache=True, make_cache=True, _filepaths=None,
                                 num_files_per_cache=None, 
-                                _save_incomplete_cache=False, _save_total_cache=False):
+                                _save_incomplete_cache=False, _save_total_cache=True, _filenames=None, _cache_info=None):
         '''
         Output axes: (sum/counts, conditions, rules, data)
 
@@ -1492,37 +1491,48 @@ class MultithreadRun(Run):
         file regardless of num_files_per_cache, and only after they are returned, do we sort them back into
         blocks.
         '''
-
-        if _filepaths is None:
-            filepaths = self.filepaths
+        if _cache_info is None:
+            cache_info = {
+                "saved" : [],
+                "loaded" : [],
+            }
         else:
-            filepaths = _filepaths
+            cache_info = _cache_info
 
-        num_files = len(filepaths)
-        if num_files_per_cache is None: num_files_per_cache = num_files
-        num_blocks = int(np.ceil(num_files / num_files_per_cache))
-        subsets_of_filepaths = [filepaths[i*num_files_per_cache:(i+1)*num_files_per_cache] for i in range(num_blocks)]
+        if _filenames is None:
+            filenames = self.filenames
+        else:
+            filenames = _filenames
+        filepaths = self.filepaths(filenames=filenames)
 
-        uncached_filepath_blocks = []
+        num_files = len(filenames)
+        if num_files_per_cache is None: 
+            _num_files_per_cache = num_files
+        else:
+            _num_files_per_cache = num_files_per_cache
+        num_blocks = int(np.ceil(num_files / _num_files_per_cache))
+        subsets_of_filenames = [filenames[i*_num_files_per_cache:(i+1)*_num_files_per_cache] for i in range(num_blocks)]
+
+        uncached_filenames_blocks = []
         blocks_data = []
         # checking possible caches
-        for look_for_filepaths in subsets_of_filepaths:
+        for look_for_filenames in subsets_of_filenames:
             outdir = filepaths[0].split('/rawdata/')[0] + '/work/average_run_data_weights_cache'
-            args = (look_for_filepaths, dataname, back_sep, slu_sep, slice_range, rules)
-            cache_filepath = get_cache_filepath(
-                outdir, look_for_filepaths, args, ['rundata','runweights'], use_cache=use_cache)
+            args = (look_for_filenames, dataname, back_sep, slu_sep, slice_range, rules)
+            cache_filepath = get_cache_filepath( outdir, args)
             cache_found = os.path.exists(cache_filepath)
             if cache_found and use_cache:
-                cache_return = cache_function(outdir, look_for_filepaths, args, ['rundata','runweights'], use_cache=use_cache)
-                if type(cache_return[0])==str:
-                    raise Exception(f'cache is a string! ({cache_return})')
-                blocks_data.append(cache_return)
+                cache_data, cache_filepath = cache_function(outdir, args, ['rundata','runweights'], use_cache=use_cache)
+                cache_info["loaded"].append((cache_filepath, look_for_filenames))
+                if type(cache_data)==str:
+                    raise Exception(f'cache is a string! ({cache_data})')
+                blocks_data.append(cache_data)
             else:
                 
-                uncached_filepath_blocks.append(look_for_filepaths)
+                uncached_filenames_blocks.append(look_for_filenames)
 
         from itertools import chain
-        uncached_filepaths = list(chain.from_iterable(uncached_filepath_blocks))
+        uncached_filenames = list(chain.from_iterable(uncached_filenames_blocks))
         time_start = time.time()
 
         N_max_processes = self.num_cores
@@ -1576,7 +1586,7 @@ class MultithreadRun(Run):
             attributes = inspect.getmembers(self, lambda a:not(inspect.isroutine(a)))
             object_attributes = [a for a in attributes if not(a[0].startswith('__') and a[0].endswith('__'))]
 
-            args_iter = zip(uncached_filepaths, repeat(object_attributes), repeat(dataname))
+            args_iter = zip(uncached_filenames, repeat(object_attributes), repeat(dataname))
             kwargs_iter = repeat(dict(back_sep=back_sep, slu_sep=slu_sep, slice_range=slice_range, rules=rules))
             pool_results = starmap_with_kwargs(pool, function_for_imap, args_iter, kwargs_iter)
 
@@ -1589,14 +1599,14 @@ class MultithreadRun(Run):
 
         time_start = time.time()
         # function_for_process()
-        function_for_imap(filepaths[0], object_attributes, dataname)
+        function_for_imap(filenames[0], object_attributes, dataname)
         time_end = time.time()
 
         blocks_avg_counts = []
         _count = 0
-        for block_files in uncached_filepath_blocks:
-            n_files = len(block_files)
-            _incomplete = n_files != num_files_per_cache
+        for block_filenames in uncached_filenames_blocks:
+            n_files = len(block_filenames)
+            _incomplete = n_files != _num_files_per_cache
 
             separate_sums = np.array([item[0] for item in data_sums_counts[_count:_count+n_files]])
             separate_counts = np.array([item[1] for item in data_sums_counts[_count:_count+n_files]])
@@ -1613,13 +1623,12 @@ class MultithreadRun(Run):
             rundata = block_avg
             runweights = block_counts
 
-            filepaths = block_files
             # outdir = filepaths[0].split('/rawdata/')[0] + '/work/average_run_data_weights_cache'
-            args = (filepaths, dataname, back_sep, slu_sep, slice_range, rules)
-            cache_return = cache_function(outdir, filepaths, args, ['rundata','runweights'], use_cache=use_cache)
+            args = (block_filenames, dataname, back_sep, slu_sep, slice_range, rules)
+            cache_data, cache_filepath = cache_function(outdir, args, ['rundata','runweights'], use_cache=use_cache)
             if make_cache and (not _incomplete or _save_incomplete_cache):
-                print(f'saving cache with files {block_files}')
-                np.savez_compressed(cache_return[0],
+                cache_info["saved"].append((cache_filepath, block_filenames))
+                np.savez_compressed(cache_filepath,
                         rundata=rundata,
                         runweights=runweights,)
 
@@ -1705,13 +1714,15 @@ class MultithreadRun(Run):
             run_average.append(np.sum(split_data, axis=0)/divisor)
             run_weight.append(np.sum(split_count, axis=0))
 
-        if make_cache and filepaths and _save_total_cache:
+        if make_cache and filepaths and _save_total_cache and (num_files_per_cache is not None):
             rundata = np.array(run_average, dtype=float)
             runweights = np.array(run_weight, dtype=int)
-
-            np.savez_compressed(cache_return,
+            args = (filenames, dataname, back_sep, slu_sep, slice_range, rules)
+            cache_data, cache_filepath = cache_function(outdir, args, ['rundata','runweights'], use_cache=use_cache)
+            cache_info["saved"].append((cache_filepath, filenames))
+            np.savez_compressed(cache_filepath,
                     rundata=rundata,
                     runweights=runweights,
                     )
         
-        return run_average, run_weight
+        return (run_average, run_weight), cache_info

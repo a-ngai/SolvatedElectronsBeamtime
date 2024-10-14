@@ -53,14 +53,13 @@ directory. I don't expect this to ever change.
 # This block loads all the relevent HDF5 filepaths into their respective Run.
 RunCollection = {}  # We will put all the 'Runs' in thes dictionary
 for run_id in (list(run_numbers) + [CALIBRATION_RUN_NUMBER,]):
-    folderpath = os.path.join(DATA_DIR, f'Run_{run_id:03d}/rawdata')
+    folderpath = resolve_path(f'{DATA_DIR}/Run_{run_id:03d}/rawdata')
     filepaths = os.listdir(folderpath)
     RunCollection[run_id] = Run(filepaths,
                                 filedir=folderpath,
                                 alias_dict=alias_dict, search_symbols=search_symbols,
                                 keyword_functions=keyword_functions,
                                 )  # create a Run object with its respective filepaths
-
 # This is a single Run object
 CalibrationRun = RunCollection[CALIBRATION_RUN_NUMBER]
 
@@ -117,6 +116,8 @@ assert len(cache_info['loaded']) == 2
 no_cache_vmi, cache_info = CalibrationRun.average_run_data_cache_info('vmi',back_sep=BACKGROUND,
                                     make_cache=True, use_cache=False,
                                     num_files_per_cache=None)
+saved = cache_info['saved']
+loaded = cache_info['loaded']
 assert len(cache_info['saved']) == 1
 assert len(cache_info['loaded']) == 0
 

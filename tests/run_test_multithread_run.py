@@ -18,7 +18,8 @@ def test_multithread_run():
             new_lines.append(mod_line)
         g.writelines(new_lines)
     try:
-        from tests import _temp_multithread_run
+        from tests._temp_multithread_run import main
+        main()
     except Exception as e:
         # if os.path.exists("test/_temp_multithread_run.py"): os.remove("test/_temp_multithread_run.py")
         raise e
