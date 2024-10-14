@@ -94,10 +94,11 @@ Create RunCollection (main data structure), and print location of our save direc
 RunCollection = {}  # We will put all the 'Runs' in thes dictionary
 for run_id in (list(run_numbers) + [CALIBRATION_RUN_NUMBER,]):
     folderpath = os.path.join(DATA_DIR, f'Run_{run_id:03d}/rawdata')
-    filepaths = [folderpath+'/'+filename for filename in os.listdir(folderpath)[::]]
-    RunCollection[run_id] = Run(filepaths,
+    filenames = os.listdir(folderpath)
+    RunCollection[run_id] = Run(filenames,
                                 alias_dict=alias_dict, search_symbols=search_symbols,
                                 keyword_functions=keyword_functions,
+                                filedir=folderpath
                                 )  # create a Run object with its respective filepaths
 
 # This creates a set out of the run_numbers selected above

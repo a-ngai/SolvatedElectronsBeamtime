@@ -1,12 +1,24 @@
 import pytest
 
+class TestFunctions():
+    def setUp(self) -> None:
+        print(self.__dict__.items())
+
+    def test_cache_function(self):
+        from tests.run_cache_saving_loading import test_cache_function
+        assert test_cache_function() is None
+
+    def test_multithread_cache_function(self):
+        from tests.run_multithread_cache_saving_loading import test_multithread_cache_function
+        assert test_multithread_cache_function() is None
+
 class TestTemplates():
     def setUp(self) -> None:
         print(self.__dict__.items())
     
     def test_tutorial_template(self):
         from tests.run_tutorial_template import test_tutorial_template
-        test_tutorial_template()
+        assert test_tutorial_template() is None
 
     def test_tof_calibration_template(self):
         from tests.run_tof_calibration_template import test_tof_calibration_template
@@ -28,7 +40,7 @@ class TestTemplates():
         from tests.run_save_gdata import test_save_gdata
         assert test_save_gdata() is None
 
-    def test_cache_function(self):
+    def test_cache_template(self):
         from tests.run_cache_test import test_cache
         assert test_cache() is None
 

@@ -7822,10 +7822,11 @@ directory. I don't expect this to ever change.</p>
 <span class="n">RunCollection</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># We will put all the 'Runs' in thes dictionary</span>
 <span class="k">for</span> <span class="n">run_id</span> <span class="ow">in</span> <span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">run_numbers</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="n">CALIBRATION_RUN_NUMBER</span><span class="p">,]):</span>
     <span class="n">folderpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DATA_DIR</span><span class="p">,</span> <span class="sa">f</span><span class="s1">'Run_</span><span class="si">{</span><span class="n">run_id</span><span class="si">:</span><span class="s1">03d</span><span class="si">}</span><span class="s1">/rawdata'</span><span class="p">)</span>
-    <span class="n">filepaths</span> <span class="o">=</span> <span class="p">[</span><span class="n">folderpath</span><span class="o">+</span><span class="s1">'/'</span><span class="o">+</span><span class="n">filename</span> <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">folderpath</span><span class="p">)[::]]</span>
-    <span class="n">RunCollection</span><span class="p">[</span><span class="n">run_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">Run</span><span class="p">(</span><span class="n">filepaths</span><span class="p">,</span>
+    <span class="n">filenames</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">folderpath</span><span class="p">)</span>
+    <span class="n">RunCollection</span><span class="p">[</span><span class="n">run_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">Run</span><span class="p">(</span><span class="n">filenames</span><span class="p">,</span>
                                 <span class="n">alias_dict</span><span class="o">=</span><span class="n">alias_dict</span><span class="p">,</span> <span class="n">search_symbols</span><span class="o">=</span><span class="n">search_symbols</span><span class="p">,</span>
                                 <span class="n">keyword_functions</span><span class="o">=</span><span class="n">keyword_functions</span><span class="p">,</span>
+                                <span class="n">filedir</span><span class="o">=</span><span class="n">folderpath</span>
                                 <span class="p">)</span>  <span class="c1"># create a Run object with its respective filepaths</span>
 
 <span class="c1"># This is a single Run object</span>
@@ -7998,16 +7999,6 @@ data has axes (condition, rules, ...data...)
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>num_files_per_cache: None
-use_cache: False
-make_cache: True
-dataname: vmi
-</pre>
-</div>
-</div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">

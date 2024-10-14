@@ -5,6 +5,7 @@ import time
 from shutil import copyfile
 from fermi_libraries.common_functions import resolve_path
 import unittest
+from PySide6.QtWidgets import QApplication
 
 try:
     CURRENT_SCRIPT_DIR = str(pathlib.Path(__file__).parent.resolve())
