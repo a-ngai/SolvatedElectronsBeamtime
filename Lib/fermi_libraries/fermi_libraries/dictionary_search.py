@@ -221,8 +221,8 @@ def standardize_string(string,
     context_starts = [i.start(1) for i in re_context.finditer(temp_string)]
 
     re_keyword_start = re.compile(
-            '[ {}\(\)]'.format(operator_symbols_for_re+function_symbols_for_re)  # no space, functions, operators, nor brackets
-            + '([^ {}\(\)]+)[{}]'.format(operator_symbols_for_re+function_symbols_for_re, context_symbols_for_re)
+            r'[ {}\(\)]'.format(operator_symbols_for_re+function_symbols_for_re)  # no space, functions, operators, nor brackets
+            + r'([^ {}\(\)]+)[{}]'.format(operator_symbols_for_re+function_symbols_for_re, context_symbols_for_re)
             )
     #keyword_names = [i.group(1) for i in re_keyword_start.finditer(temp_string)]
     keyword_starts = [i.start(1) for i in re_keyword_start.finditer(temp_string)]
@@ -305,7 +305,7 @@ def standardize_string(string,
 
 #    print('replacing spaces and inserting operators: ', temp_string)
 
-    re_missing_function = re.compile('([^{}\(])[{}]'.format(operator_symbols_for_re, function_symbols_for_re))
+    re_missing_function = re.compile(r'([^{}\(])[{}]'.format(operator_symbols_for_re, function_symbols_for_re))
     missing_function_locations = [item.end(1) for item in re_missing_function.finditer(temp_string)]
 
     for loc in missing_function_locations[::-1]:
@@ -336,7 +336,7 @@ def separate_keyword_options(string,
     re_context_symbols = '\\'+'\\'.join(context_symbols)
 
 
-    keywords = re.compile('(\S*)[{}]'.format(re_context_symbols))
+    keywords = re.compile(r'(\S*)[{}]'.format(re_context_symbols))
 
     keys = re.findall(keywords, string)
     key = keys[0]
@@ -351,9 +351,9 @@ def separate_keyword_options(string,
     between_parts = options.replace(' ','')
 
     separate_options = re.compile(
-        '([ \(\){}]*)'.format(re_operator_symbols+re_function_symbols)
-        + '([^ \(\){}]*)'.format(re_operator_symbols+re_function_symbols)
-        + '([ \(\){}]*)'.format(re_operator_symbols+re_function_symbols)
+        r'([ \(\){}]*)'.format(re_operator_symbols+re_function_symbols)
+        + r'([^ \(\){}]*)'.format(re_operator_symbols+re_function_symbols)
+        + r'([ \(\){}]*)'.format(re_operator_symbols+re_function_symbols)
         )
 
     option = between_parts
@@ -434,7 +434,7 @@ def keywords_postfix_simplification(string,
     context_symbols_for_re = '\\'+'\\'.join(context_list)
 
     re_keyword_start = re.compile(
-        '\(([^ {}\(\)]+)[{}]'.format(operator_symbols_for_re+function_symbols_for_re, context_symbols_for_re)
+        r'\(([^ {}\(\)]+)[{}]'.format(operator_symbols_for_re+function_symbols_for_re, context_symbols_for_re)
             )
     keyword_starts = [i.start(1) for i in re_keyword_start.finditer(string)]
 
@@ -795,15 +795,15 @@ def operator_xor(bool1, bool2):
 def operator_not(bool1):
     return ~bool1
 def keyword_string_equal(keyword, option, input_func):
-    return np.array(input_func(keyword),dtype=str) == str(option)
+    return np.asarray(input_func(keyword),dtype=str) == str(option)
 def keyword_float_greater(keyword, option, input_func):
-    return np.array(input_func(keyword),dtype=float) > float(option)
+    return np.asarray(input_func(keyword),dtype=float) > float(option)
 def keyword_float_lesser(keyword, option, input_func):
-    return np.array(input_func(keyword),dtype=float) < float(option)
+    return np.asarray(input_func(keyword),dtype=float) < float(option)
 def keyword_float_equal(keyword, option, input_func):
-    return np.array(input_func(keyword),dtype=float) == float(option)
+    return np.asarray(input_func(keyword),dtype=float) == float(option)
 def keyword_any(keyword, option, input_func):
-    return np.array([True,])#slice(0,None,1)
+    return np.asarray([True,])#slice(0,None,1)
 
 array_operator_dict = {
     '&' : OperatorInfo(num_args=2,
@@ -839,16 +839,16 @@ search_symbols = {
     'context_dict' : array_context_dict}
 
 def wavelength_sigma_geq(input_func, option):
-    bool_array = np.array(input_func('wavelength')[:,1], dtype=float) >= float(option)
+    bool_array = np.asarray(input_func('wavelength')[:,1], dtype=float) >= float(option)
     return bool_array
 def wavelength_sigma_leq(input_func, option):
-    bool_array = np.array(input_func('wavelength')[:,1], dtype=float) <= float(option)
+    bool_array = np.asarray(input_func('wavelength')[:,1], dtype=float) <= float(option)
     return bool_array
 def wavelength_mu_geq(input_func, option):
-    bool_array = np.array(input_func('wavelength')[:,0], dtype=float) >= float(option)
+    bool_array = np.asarray(input_func('wavelength')[:,0], dtype=float) >= float(option)
     return bool_array
 def wavelength_mu_leq(input_func, option):
-    bool_array = np.array(input_func('wavelength')[:,0], dtype=float) <= float(option)
+    bool_array = np.asarray(input_func('wavelength')[:,0], dtype=float) <= float(option)
     return bool_array
 
 ExtendedFunctions = {

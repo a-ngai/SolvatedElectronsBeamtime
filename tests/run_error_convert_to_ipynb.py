@@ -22,7 +22,7 @@ PREPROCESS = True
 CONVERT_TO_HTML = True
 
 py_files_to_convert = [
-    '_test_script_with_error',
+    'test_script_with_error',
 ]
 
 def main():

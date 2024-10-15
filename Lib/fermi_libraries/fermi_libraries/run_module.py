@@ -7,7 +7,7 @@ import hashlib
 import numpy as np
 import h5py
 from functools import wraps
-from multiprocessing import cpu_count, pool
+from multiprocessing import cpu_count, Pool
 from scipy.interpolate import interp1d
 from .dictionary_search import SearchClass, search_symbols as default_search_symbols
 from .common_functions import single_pass_moment_sums
@@ -1450,7 +1450,6 @@ class RunSets:
 
         return output, cache_info
 
-
 class MultithreadRun(Run):
 
     def __init__(self, hdf5_filenames,
@@ -1461,7 +1460,7 @@ class MultithreadRun(Run):
                  alias_dict=alias_dict, search_symbols=search_symbols,
                  keyword_functions=keyword_functions,
                  background_offset=background_offset, filedir=filedir)
-        self.num_cores = 1
+        self.num_cores = cpu_count()-2
 
     def _alias(func):
         @wraps(func)
@@ -1528,7 +1527,6 @@ class MultithreadRun(Run):
                     raise Exception(f'cache is a string! ({cache_data})')
                 blocks_data.append(cache_data)
             else:
-                
                 uncached_filenames_blocks.append(look_for_filenames)
 
         from itertools import chain
@@ -1578,7 +1576,7 @@ class MultithreadRun(Run):
             pool.join()
 
         elif True:
-            from multiprocessing import cpu_count, pool, Pool
+            from multiprocessing import Pool
             pool_results = []
             pool = Pool(processes=N_max_processes)
 
@@ -1597,10 +1595,10 @@ class MultithreadRun(Run):
 
         time_end = time.time()
 
-        time_start = time.time()
-        # function_for_process()
-        function_for_imap(filenames[0], object_attributes, dataname)
-        time_end = time.time()
+        # time_start = time.time()
+        # # function_for_process()
+        # function_for_imap(filenames[0], object_attributes, dataname)
+        # time_end = time.time()
 
         blocks_avg_counts = []
         _count = 0

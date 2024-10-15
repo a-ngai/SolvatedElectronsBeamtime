@@ -767,11 +767,36 @@ def swap_rules_runs(data, single_rule=False, single_run=False, single_shot = Fal
     return output
 
 def simplify_data(data, single_rule=False, single_run=False, file_level=False, no_slu_cycling=False):
+    '''
+    Original data has axes: (condition, runs, rules, data)
+    Transformed data has axes: (condition, rules, runs, data)
+
+    See documentation for swap_rules_runs().
+
+    Parameters
+    ----------
+    data: list
+        Expected axes of (condition, runs, rules, data)
+    single_rule: bool
+        If True, deletes the dimension of rules. Default is False.
+    single_run: bool
+        If True, deletes the dimension of runs. Default is False.
+    no_slu_cycling: bool
+        If True, returns only the first two indices of "condition". Default is False.
+    
+    Returns
+    -------
+    transformed: list
+        Has axes of (condition, rules, runs, data), where the "rules" and "runs"
+        axes may be cut depending on the single_rule and single_run keywords
+        respectively.
+    '''
     if no_slu_cycling:
         less_data = remove_slu_cycling(data), 
     else:
         less_data = data
-    return swap_rules_runs(data, single_rule=single_rule, single_run=single_run, file_level=file_level)
+    transformed = swap_rules_runs(data, single_rule=single_rule, single_run=single_run, file_level=file_level)
+    return transformed
 
 def remove_slu_cycling(data):
     '''

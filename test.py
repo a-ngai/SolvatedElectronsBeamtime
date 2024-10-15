@@ -1,16 +1,33 @@
 import pytest
 
-class TestFunctions():
-    def setUp(self) -> None:
-        print(self.__dict__.items())
+class TestModules():
+    def test_common_functions(self):
+        from tests.run_common_functions_test import test_common_functions
+        assert test_common_functions() is None
+    
+    def test_run_module_caching(self):
+        from tests.run_run_module_test import test_caching
+        assert test_caching() is None
 
-    def test_cache_function(self):
-        from tests.run_cache_saving_loading import test_cache_function
-        assert test_cache_function() is None
+    def test_run_module_run_class(self):
+        from tests.run_run_module_test import test_run_class
+        assert test_run_class() is None
 
-    def test_multithread_cache_function(self):
-        from tests.run_multithread_cache_saving_loading import test_multithread_cache_function
-        assert test_multithread_cache_function() is None
+    def test_run_module_runset_class(self):
+        from tests.run_run_module_test import test_runset_class
+        assert test_runset_class() is None
+
+    def test_run_module_multithread_caching(self):
+        from tests.run_run_module_multithread_test import test_caching
+        assert test_caching() is None
+
+    def test_run_module_multithread_run_class(self):
+        from tests.run_run_module_multithread_test import test_run_class
+        assert test_run_class() is None
+
+    def test_run_module_multithread_runset_class(self):
+        from tests.run_run_module_multithread_test import test_runset_class
+        assert test_runset_class() is None
 
 class TestTemplates():
     def setUp(self) -> None:
@@ -76,7 +93,7 @@ class TestNotebooks():
         from tests.run_convert_to_ipynb_basic_tutorial import main
         assert main() is None
 
-    def test_notebook_processing_error(self):
+    def test_notebook_processing_negative_control(self):
         from tests.run_error_convert_to_ipynb import main
         with pytest.raises(RuntimeError) as e_info: main()
 
