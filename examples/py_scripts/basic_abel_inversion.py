@@ -188,14 +188,18 @@ from cpbasex.image_mod import find_center, find_rotation, find_ellipticity
 from cpbasex.image_mod import center_image, rotate, stretch
 
 
-if True: # straightforward way; rotation -> ellipticity -> center
+if False: # straightforward way; rotation -> ellipticity -> center
     guess_rot = find_rotation(test_image)
     guess_ell = find_ellipticity(test_image)
     guess_cen = find_center(test_image, center_guess=(250,250), r_max=30)
     print('center found at: ' + str(guess_cen))
+else: # straightforward way; rotation -> ellipticity -> center
+    guess_rot = 0
+    guess_ell = (1, 1.1)
+    guess_cen = find_center(test_image, center_guess=(250,250), r_max=30)
+    print('center found at: ' + str(guess_cen))
 
-# guess_corrrection = zoom(rotate(center_image(test_image, guess_cen), guess_rot), guess_ell)
-test_correction = stretch(rotate(center_image(test_image, guess_cen), guess_rot), [1,1.1])
+test_correction = stretch(rotate(center_image(test_image, guess_cen), guess_rot), guess_ell)
 
 fig, (ax1, ax2) = plt.subplots(1,2, figsize=(9,4))
 cax1 = ax1.imshow(test_image)

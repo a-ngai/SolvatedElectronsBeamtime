@@ -894,6 +894,7 @@ def resolve_path(basepath: str, addpath: str = '') -> str:
         base_hierarchy_list.pop()
         reverse_add_list.pop()
     newpath = '/'.join(base_hierarchy_list + reverse_add_list[::-1])
+    if newpath[-1] == '/': newpath = newpath[:-1]
 
     return newpath
 
@@ -909,31 +910,30 @@ def find_subdir(name: str, root: str, skip: int=0, give_single: bool=True) -> st
     skip=-1: give the found subdirectory with the longest path
     
     '''
-
     standard_root = resolve_path(root)
     standard_name = resolve_path(name)
     Nchar = len(standard_root)
     all_paths = []
     for path, subdirs, files in list(os.walk(root))[:]:
-        rel_path = resolve_path(path)[Nchar:]
+        rel_path = resolve_path(path)[Nchar+1:]  # +1 to remove the extra '/'
         if (len(rel_path)>0) and (rel_path[-1] == '/'): rel_path = rel_path[:-1]
         all_paths.append(rel_path)
         for subdir in subdirs:
             full_filepath = os.path.join(path, subdir)
-            rel_path = resolve_path(full_filepath)[Nchar:]
+            rel_path = resolve_path(full_filepath)[Nchar+1:]
             all_paths.append(rel_path)
-        all_paths.append(path)
     all_paths = list(set(all_paths))
 
     found_paths = []
     levels = []
-    print(standard_name)
     for filepath in all_paths:
+        if len(filepath) == 0: continue
+        # filepath = resolve_path(filepath)
         if filepath[-len(standard_name):] != standard_name:
             continue
         if standard_name not in filepath:
             continue
-        found_paths.append(f'{standard_root}{filepath}')
+        found_paths.append(f'{standard_root}/{filepath}')
         levels.append(len(filepath.split('/')))
     if found_paths == []: # none found
         return None
@@ -942,6 +942,6 @@ def find_subdir(name: str, root: str, skip: int=0, give_single: bool=True) -> st
     unique_levels = np.sort(list(set(levels)))
     target_depth = unique_levels[skip]
         
-    found_paths[levels==target_depth]
+    found_paths = found_paths[levels==target_depth]
     if give_single: found_paths = found_paths[0]
     return found_paths
