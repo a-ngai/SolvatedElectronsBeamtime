@@ -95,13 +95,17 @@ def cache_function(outdir, args, datanames, use_cache=True):
 
 
 def function_for_imap(filename, run_object_attributes, dataname, back_sep=True, slu_sep=True, slice_range=None, rules=[None,]):
+    _debug_info = {}
+    time_start = time.time()
     run_object = Run([])
     for name, value in run_object_attributes:
         setattr(run_object, name, value)
     data_sum, data_count = list(run_object.yield_sums_counts_filedata(
         dataname, back_sep=back_sep, slu_sep=slu_sep,
         slice_range=slice_range, rules=rules, filenames=[filename,]))[0]
-    return data_sum, data_count
+    time_end = time.time()
+    _debug_info['single_call_time'] = time_end-time_start
+    return data_sum, data_count, _debug_info
 
 from itertools import repeat
 
@@ -916,6 +920,8 @@ class Run:
         cache_found = os.path.exists(cache_filepath)
         if num_files_per_cache is not None: _files_per_cache = num_files_per_cache
 
+        if cache_found and use_cache:
+            cache_data, cache_filepath = cache_function(outdir, args, ['rundata','runweights'], use_cache=use_cache)
         
         # call recursively, but only on subsets of all files
         if (_filenames is None) and (num_files_per_cache is not None):
@@ -955,7 +961,7 @@ class Run:
         else:
             if filepaths:
                 outdir = filepaths[0].split('/rawdata/')[0] + '/work/average_run_data_weights_cache'
-                args = (filepaths, dataname, back_sep, slu_sep, slice_range, rules)
+                # args = (filenames, dataname, back_sep, slu_sep, slice_range, rules)
                 cache_data, cache_filepath = cache_function(outdir, args, ['rundata','runweights'], use_cache=use_cache)
                 if not isinstance(cache_data, str):
                     # print(f'found a cache with {len(filepaths)} files')
@@ -999,7 +1005,7 @@ class Run:
         if make_cache and (_filenames is not None) and filepaths:
             rundata = np.array(run_average, dtype=float)
             runweights = np.array(run_weight, dtype=int)
-            print(f'_filepath is list: saving cache with {len(filepaths)} files')
+            # print(f'_filepath is list: saving cache with {len(filepaths)} files')
 
             np.savez_compressed(cache_filepath,
                      rundata=rundata,
@@ -1010,7 +1016,7 @@ class Run:
         elif make_cache and (_filenames is None) and filepaths and _save_total_cache:
             rundata = np.array(run_average, dtype=float)
             runweights = np.array(run_weight, dtype=int)
-            print(f'_filepath is None: saving cache with {len(filepaths)} files')
+            # print(f'_filepath is None: saving cache with {len(filepaths)} files')
 
             np.savez_compressed(cache_filepath,
                      rundata=rundata,
@@ -1531,10 +1537,10 @@ class MultithreadRun(Run):
 
         from itertools import chain
         uncached_filenames = list(chain.from_iterable(uncached_filenames_blocks))
-        time_start = time.time()
 
         N_max_processes = self.num_cores
 
+        time_start = time.time()
         if False:  # multithreading using threadpool
             threadpool = pool.ThreadPool(N_max_processes)
             pool_results = []
@@ -1586,19 +1592,22 @@ class MultithreadRun(Run):
 
             args_iter = zip(uncached_filenames, repeat(object_attributes), repeat(dataname))
             kwargs_iter = repeat(dict(back_sep=back_sep, slu_sep=slu_sep, slice_range=slice_range, rules=rules))
+
             pool_results = starmap_with_kwargs(pool, function_for_imap, args_iter, kwargs_iter)
 
             data_sums_counts = []
             for ProcessedObject in pool_results:
-                data_sum, data_count = ProcessedObject
+                data_sum, data_count, _debug = ProcessedObject
                 data_sums_counts.append((data_sum, data_count))
 
         time_end = time.time()
-
-        # time_start = time.time()
-        # # function_for_process()
-        # function_for_imap(filenames[0], object_attributes, dataname)
-        # time_end = time.time()
+        total_processing_time = time_end-time_start
+        single_processing_times = [_debug['single_call_time'] for (_, _, _debug) in pool_results]
+        process_time_avg = np.average(single_processing_times)
+        process_time_std = np.std(single_processing_times, ddof=1)
+        
+        print(f'total processing time ({self.num_cores} cores): {total_processing_time}')
+        print(f'single processing time: {process_time_avg}+-{process_time_std}')
 
         blocks_avg_counts = []
         _count = 0
