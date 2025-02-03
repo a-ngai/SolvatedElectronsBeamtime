@@ -4,7 +4,7 @@ from .common_functions import (
     residuals, transpose_axis_to_zero, weighted_linear_regression, 
     first_arg_scalar_into_array)
 
-def get_tof_mq_constants(peaks=None, constants=None):
+def get_tof_mq_constants(peaks=None, constants=None, w=None):
     """
     Formulas are: m/q = C * (t-T0)^2, d(m/q) = C * 2 (t-T0) dt
 
@@ -59,7 +59,7 @@ def get_tof_mq_constants(peaks=None, constants=None):
         tof_peaks, mq_peaks = np.transpose(peaks)
         if len(peaks)==1:
             tof_peaks, mq_peaks = np.concatenate(([0,], tof_peaks)), np.concatenate(([0,], mq_peaks))
-        slope, const = weighted_linear_regression(np.sqrt(mq_peaks), tof_peaks)
+        slope, const = weighted_linear_regression(np.sqrt(mq_peaks), tof_peaks, w=w)
         timezero = const
         propconst = 1/slope**2
 

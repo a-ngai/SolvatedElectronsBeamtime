@@ -41,9 +41,9 @@ def cpbasex_energy(images, gData, make_images=False, weights=None, regularizatio
 			fit = unfoldQuadrant(gData['Up'].T.dot(np.diag((gData['S']**2+regularization)/gData['S']).dot(gData['V'].T.dot(c))).reshape(ny,nx,nim))
 			inv = unfoldQuadrant(gData['Ginv'].dot(c).reshape(nx,ny,nim))
 
-	out = {'E': E, 'IE': np.squeeze(IE), 'betas': np.squeeze(betas), 'c': np.squeeze(c)}
+	out = {'E': E, 'IE': IE, 'betas': betas, 'c': c}
 	if make_images:
-		out['fit'], out['inv'] = np.squeeze(fit), np.squeeze(inv)
+		out['fit'], out['inv'] = fit, inv
 
 	return out
 

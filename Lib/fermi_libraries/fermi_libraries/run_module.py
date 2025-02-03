@@ -800,10 +800,10 @@ class Run:
 
     @_alias
     def give_rundata(self, dataname, back_sep=False, slu_sep=False, slice_range=None,
-                     rules=[None,], filepaths=None, use_cache=False, make_cache=False,
+                     rules=[None,], filenames=None, use_cache=False, make_cache=False,
                      filter1=None, _cache_info=None):
         data, cache_info = self.give_rundata_cache_info(dataname, back_sep=back_sep, slu_sep=slu_sep, slice_range=slice_range,
-                        rules=rules, filepaths=filepaths, use_cache=use_cache, make_cache=make_cache,
+                        rules=rules, filenames=filenames, use_cache=use_cache, make_cache=make_cache,
                         filter1=filter1, _cache_info=_cache_info)
         return data
 
