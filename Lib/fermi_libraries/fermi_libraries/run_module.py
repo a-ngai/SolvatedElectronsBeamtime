@@ -175,7 +175,7 @@ class Run:
     @_alias
     def _check_background_split(self, check_name, data=None):
         '''
-        Checks if the dataset can be split irebinningnto measurement and background,
+        Checks if the dataset can be split into measurement and background,
         by matching the size of bunch_number list with the size of the
         check_name dataset.
 
@@ -494,8 +494,7 @@ class Run:
 
                     if len(fore)==0:
                         if not supress_warnings:
-                            warnings.warn(
-                                f'no foreground shots found with background period\
+                            warnings.warn(f'no foreground shots found with background period\
                                         ({background_period}) and rule ({rule})')
                         fore = empty_array
                     if len(back)==0:
@@ -515,6 +514,14 @@ class Run:
                         back_no_slu = empty_array
                     return fore, back, fore_no_slu, back_no_slu
 
+                if not self._check_background_split(name, data=h5_data):
+                    if back_sep:
+                        warnings.warn(f'back_sep keyword not valid for this dataframe ({name})')
+                        back_sep = False
+                    if slu_sep:
+                        warnings.warn(f'slu_sep keyword not valid for this dataframe ({name})')
+                        slu_sep = False
+
                 for rule in rules:
 
                     filter_search = SearchClass(
@@ -525,60 +532,26 @@ class Run:
                             )
 
                     rule_crit = filter_search.evaluate(input_function) + bunches!=bunches  # gets a bool array, with the shape of the bunches in the first dim
+                        
+                    is_fore = np.ones(shape=h5_shape[0], dtype=bool)
+                    if back_sep: is_fore = ~is_background
+                    is_slu = np.ones(shape=h5_shape[0], dtype=bool)
+                    if slu_sep: is_slu = ~is_slu_off
 
-                    if back_sep and slu_sep and self._check_background_split(name, data=h5_data):
-                        fore_slice = tuple([~is_background * ~is_slu_off * rule_crit,])
-                        back_slice = tuple([is_background * ~is_slu_off * rule_crit,])
-                        fore_no_slu_slice = tuple([~is_background * is_slu_off * rule_crit,])
-                        back_no_slu_slice = tuple([is_background * is_slu_off * rule_crit,])
+                    fore_slice = tuple([is_fore * is_slu * rule_crit,])
+                    back_slice = tuple([~is_fore * is_slu * rule_crit,])
+                    fore_no_slu_slice = tuple([is_fore * ~is_slu * rule_crit,])
+                    back_no_slu_slice = tuple([~is_fore * ~is_slu * rule_crit,])
 
-                        reshaped_data = reshape_data(h5_data)
-                        fore = reshaped_data[fore_slice]
-                        back = reshaped_data[back_slice]
-                        fore_no_slu= reshaped_data[fore_no_slu_slice]
-                        back_no_slu = reshaped_data[back_no_slu_slice]
+                    reshaped_data = reshape_data(h5_data)
+                    fore = reshaped_data[fore_slice]
+                    back = reshaped_data[back_slice]
+                    fore_no_slu= reshaped_data[fore_no_slu_slice]
+                    back_no_slu = reshaped_data[back_no_slu_slice]
 
-                        fore, back, fore_no_slu, back_no_slu = warnings_for_empty_sets(
-                                (fore, back, fore_no_slu, back_no_slu), rule,
-                                self.get_background_period(filepaths), back_sep=back_sep,slu_sep=slu_sep)
-
-                    elif back_sep and not slu_sep and self._check_background_split(name, data=h5_data):
-
-                        fore_slice = tuple([~is_background  * rule_crit,])
-                        back_slice = tuple([is_background  * rule_crit,])
-
-                        reshaped_data = reshape_data(h5_data)
-                        fore = reshaped_data[fore_slice]
-                        back = reshaped_data[back_slice]
-
-                        fore, back, fore_no_slu, back_no_slu = warnings_for_empty_sets(
-                                (fore, back, [], []), rule,
-                                self.get_background_period(filepaths), back_sep=back_sep,slu_sep=slu_sep)
-
-                    elif not back_sep and slu_sep and self._check_background_split(name, data=h5_data):
-                        fore_slice = tuple([ ~is_slu_off * rule_crit,])
-                        fore_no_slu_slice = tuple([ is_slu_off * rule_crit,])
-
-                        reshaped_data = reshape_data(h5_data)
-
-                        fore = reshaped_data[fore_slice]
-                        fore_no_slu = reshaped_data[fore_no_slu_slice]
-
-                        fore, back, fore_no_slu, back_no_slu = warnings_for_empty_sets(
-                                (fore, [], fore_no_slu, []), rule,
-                                self.get_background_period(filepaths), back_sep=back_sep,slu_sep=slu_sep)
-
-                    else:
-                        if back_sep:
-                            warnings.warn(f'back_sep keyword not valid for this dataframe ({name})')
-                        if slu_sep:
-                            warnings.warn(f'slu_sep keyword not valid for this dataframe ({name})')
-                        all_slice = tuple([(is_background+~is_background)*rule_crit,])
-                        fore = reshape_data(h5_data[all_slice])
-
-                        fore, back, fore_no_slu, back_no_slu = warnings_for_empty_sets(
-                                (fore, [], [], []), rule,
-                                self.get_background_period(filepaths), back_sep=back_sep,slu_sep=slu_sep)
+                    fore, back, fore_no_slu, back_no_slu = warnings_for_empty_sets(
+                            (fore, back, fore_no_slu, back_no_slu), rule,
+                            self.get_background_period(filepaths), back_sep=back_sep,slu_sep=slu_sep)
 
                     fore_out.append(fore)
                     back_out.append(back)
@@ -964,16 +937,6 @@ class Run:
                                     dataname, back_sep=back_sep, slu_sep=slu_sep,
                                     slice_range=slice_range, rules=rules)
             
-        # print()
-        # print()
-        # print()
-        # print(f'num_files_per_cache: {num_files_per_cache}')
-        # print(f'filepaths: {filepaths}')
-        # print(f'_filepaths: {_filepaths}')
-        # print()
-        # print()
-        # print()
-
         for filedata_sum, filedata_count in zip(run_file_data, run_file_weights):
             for i, (split_sum, split_count) in enumerate(zip(filedata_sum, filedata_count)):
                 if len(compiled_data)<=i:
@@ -1011,13 +974,6 @@ class Run:
                      )
             _cache_info["saved"].append((cache_filepath, filenames))
             
-            # h5_filepath = get_cache_filepath_h5(outdir, filepaths, args, ['rundata','runweights'])
-            # with h5py.File(h5_filepath, 'w') as f:
-            #     f.create_dataset('rundata', data=rundata, chunks=rundata.shape,
-            #             compression='gzip', compression_opts=5)
-            #     f.create_dataset('runweights', data=runweights, chunks=runweights.shape,
-            #             compression='gzip', compression_opts=5)
-
         return (run_average, run_weight), _cache_info
 
     @_alias
