@@ -836,6 +836,7 @@ class Run:
             cache_data, cache_filepath = cache_function(outdir, args, ['rundata',], use_cache=use_cache)
             if not isinstance(cache_data, str):
                 cache_info["saved"].append(cache_filepath)
+                cache_data = cache_data[0]  # saved cache data had an extra layer on top, due to possibly inhomogeneous dimensions
                 return cache_data, cache_info
 
 
