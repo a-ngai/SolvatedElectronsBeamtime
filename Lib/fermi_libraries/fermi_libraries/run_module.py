@@ -406,8 +406,9 @@ class Run:
             fore_no_slu_out = []
             back_no_slu_out = []
             with h5py.File(filepath,'r') as file:
+                input_function = lambda keyword: self.keyword_functions(keyword, self.keyword_alias, file)
                 try:
-                    h5_data = self.keyword_functions(name, lambda x:x, file)
+                    h5_data = input_function(name)
                 except KeyError as e:
                     logging.warning(f'Error getting data with keyword ({name})) in file ({filepath}), skipping. Error message: {e}')
                     if filepath == filepaths[-1] and error_in_all_files_flag:
@@ -431,7 +432,7 @@ class Run:
 
                 # we must load the while data; the chunks from FERMI data are too large, and
                 # slicing from the hdf5 data is actually much slower because of this!
-                h5_data = self.keyword_functions(name, lambda x:x, file)[()]
+                h5_data = input_function(name)[()]
                 h5_data = h5_data[slice_after_bunches]
 
                 # we will process all data as if everything were organized into shots.
@@ -523,8 +524,6 @@ class Run:
                             context_dict=search_symbols['context_dict'],
                             )
 
-                    alias_func = lambda keyword: self.keyword_alias(keyword)
-                    input_function = lambda keyword: self.keyword_functions(keyword, alias_func, file)
                     rule_crit = filter_search.evaluate(input_function) + bunches!=bunches  # gets a bool array, with the shape of the bunches in the first dim
 
                     if back_sep and slu_sep and self._check_background_split(name, data=h5_data):
