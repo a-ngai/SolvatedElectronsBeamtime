@@ -800,16 +800,16 @@ class Run:
     @_alias
     def give_rundata(self, dataname, back_sep=False, slu_sep=False, slice_range=None,
                      rules=[None,], filenames=None, use_cache=False, make_cache=False,
-                     filter1=None, _cache_info=None):
+                     _cache_info=None):
         data, cache_info = self.give_rundata_cache_info(dataname, back_sep=back_sep, slu_sep=slu_sep, slice_range=slice_range,
                         rules=rules, filenames=filenames, use_cache=use_cache, make_cache=make_cache,
-                        filter1=filter1, _cache_info=_cache_info)
+                        _cache_info=_cache_info)
         return data
 
     @_alias
     def give_rundata_cache_info(self, dataname, back_sep=False, slu_sep=False, slice_range=None,
                      rules=[None,], filenames=None, use_cache=False, make_cache=False,
-                     filter1=None, _cache_info=None):
+                     _cache_info=None):
         '''
         Give the raw data, with the nice "back_sep", "slu_sep", "slice_range", "rules" keywords.
         The individual files of the Run are concatenated.
@@ -826,16 +826,13 @@ class Run:
         else:
             cache_info = _cache_info
 
-        if filter1 is None:
-            filter1 = lambda x: x
-        
         if filenames is None:
             filenames = self.filenames
         filepaths = self.filepaths(filenames=filenames)
 
         if filepaths:
             outdir = filepaths[0].split('/rawdata/')[0] + '/work/get_rundata_cache'
-            args = (filenames, dataname, back_sep, slu_sep, slice_range, rules, filter1)
+            args = (filenames, dataname, back_sep, slu_sep, slice_range, rules)
             cache_data, cache_filepath = cache_function(outdir, args, ['rundata',], use_cache=use_cache)
             if not isinstance(cache_data, str):
                 cache_info["saved"].append(cache_filepath)
@@ -855,17 +852,7 @@ class Run:
                     if len(rundata_collect[i])<=j:
                         rundata_collect[i].append([])
 
-                    def _get_data_from_filter(data, data_filter):
-                        ''' This allows filtering of non-zero AND zero-size arrays. '''
-
-                        filtered_data = [filter1(line) for line in data]
-
-                        if len(data)==0:
-                            filtered_data = _make_zero_shape(np.array([filter1(_make_zero_inner(data)),]))
-
-                        return filtered_data
-
-                    rundata_collect[i][j].append(_get_data_from_filter(rule_data, filter1))
+                    rundata_collect[i][j].append(rule_data)
         for i, _ in enumerate(rundata_collect):
             for j, _ in enumerate(rundata_collect[0]):
                 rundata_collect[i][j] = np.concatenate(rundata_collect[i][j],axis=0)
