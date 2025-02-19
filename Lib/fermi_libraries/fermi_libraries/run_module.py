@@ -342,23 +342,13 @@ class Run:
     @_alias
     def yield_file_data(self, name, back_sep=False, slu_sep=False, slice_range=None, rules=[None,], filenames=None, supress_warnings=True):
         '''
-
         This is the base method for compiling data from the raw data files.
-       
+        
         Abbreviations:
-            g0 = "gas off"
-            g1 = "gas on"
-            s0 = "slu off"
-            s1 = "slu on"
-        e.g. "...g1s0..." = "gas on, slu off".
+            g1(g0) = "gas on(off)"
+            s1(s0) = "gas on(off)"
 
-        Filedata will be yielded in the following form:
-            yield (
-                [rule0_g1s1, rule1_g1s1,...,ruleN_g1s1],
-                [rule0_g0s1, rule1_back,...,ruleN_back],
-                [rule0_g1s0, rule1_g1s0,...,ruleN_g1s0],
-                [rule0_g0s0, rule1_g0s0,...,ruleN_g0s0],
-                )
+        Filedata will be yielded with axes = [g1s1/g0s1/g1s0/g0s0, rules]
 
         Parameters
         ----------
@@ -599,38 +589,18 @@ class Run:
         Returns
         -------
         file_data_sums : list
-            Contains sums of the sorted data.
+            Sums of the sorted data.
         file_data_counts : list
-            Contains number of shots used in the sum of the sorted data.
+            Number of shots used in the sum of the sorted data.
         
         Abbreviations:
-            g0 = "gas off"
-            g1 = "gas on"
-            s0 = "slu off"
-            s1 = "slu on"
-        e.g. "...g1s0..." = "gas on, slu off".
+            g1(g0) = "gas on(off)"
+            s1(s0) = "gas on(off)"
 
-        file_data_sums = [
-            [
-                [rule0_g1s1_sum0, rule1_g1s1_sum0, ...],
-                [rule0_g1s1_sum1, rule1_g1s1_sum1, ...],
-                ...  ],
-            [
-                [rule0_g0s1_sum0, rule1_g0s1_sum0, ...],
-                [rule0_g0s1_sum1, rule1_g0s1_sum1, ...],
-                ...  ], [
-                [rule0_g1s0_sum0, rule1_g1s0_sum0, ...],
-                [rule0_g1s0_sum1, rule1_g1s0_sum1, ...],
-                ...  ],
-            [
-                [rule0_g0s0_sum0, rule1_g0s0_sum0, ...],
-                [rule0_g0s0_sum1, rule1_g0s0_sum1, ...],
-                ...  ],
-        ]
-        
-        Identical structure for file_data_counts.
-
+        file_data_sums: Axes = [g1s1/g0s1/g1s0/g0s0, sums, rules]
+        file_data_counts: Axes = [g1s1/g0s1/g1s0/g0s0, counts, rules]
         '''
+
         if rules is None:
             rules = [None,]
         for _, file_level_data in enumerate(self.yield_file_data(
