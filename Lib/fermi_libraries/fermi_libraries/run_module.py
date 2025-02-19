@@ -340,7 +340,7 @@ class Run:
         return is_background_bool
 
     @_alias
-    def yield_file_data(self, name, back_sep=False, slu_sep=False, slice_range=None, rules=[None,], filenames=None, supress_warnings=True):
+    def yield_file_data(self, name, back_sep=False, slu_sep=False, slice_range=None, rules=[None,], filenames=None, suppress_warnings=True):
         '''
         This is the base method for compiling data from the raw data files.
         
@@ -468,7 +468,7 @@ class Run:
                 is_slu_off=self.slu_from_bunches(bunches, filenames=[filenames[0],])[0]
 
                 def warnings_for_empty_sets(input_tuple, rule, background_period,
-                                            back_sep=None,slu_sep=None, supress_warnings=True):
+                                            back_sep=None,slu_sep=None, suppress_warnings=True):
                     fore, back, fore_no_slu, back_no_slu = input_tuple
                     empty_array = None
                     for array in [fore,back,fore_no_slu,back_no_slu]:
@@ -477,28 +477,28 @@ class Run:
                             break
                     if empty_array is None:
                         empty_array = fore[:1]
-                        if not supress_warnings:
+                        if not suppress_warnings:
                             warnings.warn(
                                 f'All arrays (fore, back, fore_no_slu, back_no_slu) are\
                                         empty! rule ({rule})')
 
                     if len(fore)==0:
-                        if not supress_warnings:
+                        if not suppress_warnings:
                             warnings.warn(f'no foreground shots found with background period\
                                         ({background_period}) and rule ({rule})')
                         fore = empty_array
                     if len(back)==0:
-                        if back_sep and not supress_warnings:
+                        if back_sep and not suppress_warnings:
                             warnings.warn(f'no background shots found with background period\
                                     ({background_period}) and rule ({rule})')
                         back = empty_array
                     if len(fore_no_slu)==0:
-                        if slu_sep and not supress_warnings:
+                        if slu_sep and not suppress_warnings:
                             warnings.warn(f'no foreground+noSLU shots found with background period\
                                     ({background_period}) and rule ({rule})')
                         fore_no_slu = empty_array
                     if len(back_no_slu)==0:
-                        if back_sep and slu_sep and not supress_warnings:
+                        if back_sep and slu_sep and not suppress_warnings:
                             warnings.warn(f'no background+noSLU shots found with background period\
                                     ({background_period}) and rule ({rule})')
                         back_no_slu = empty_array
@@ -568,44 +568,19 @@ class Run:
         return compiled_data
 
     @_alias
-    def yield_sums_counts_filedata(self, dataname, back_sep=False, slu_sep=False, slice_range=None, rules=None, filenames=None):
+    def yield_sums_counts_filedata(self, dataname, back_sep=False, slu_sep=False, slice_range=None, rules=None, filenames=None, suppress_warnings=True):
         '''
-        Helps with computing the file-by-file or entire run average of the
-        datasets.
-
-        Output axes = (files, sum/counts, conditions,  rules)
-
-        Parameters
-        ----------
-        dataname : str
-            Name of the hdf5 dataset group.
-        back_sep : bool, optional
-            If True, separates out "background shots" determined by the "background_period" group. The default is False.
-        slice_range : TYPE, optional
-            DESCRIPTION. The default is None.
-        rules : list, optional
-            Additional sorting based on evaluations of self.keyword_functions. The default is None.
-
-        Returns
-        -------
-        file_data_sums : list
-            Sums of the sorted data.
-        file_data_counts : list
-            Number of shots used in the sum of the sorted data.
-        
-        Abbreviations:
-            g1(g0) = "gas on(off)"
-            s1(s0) = "gas on(off)"
-
-        file_data_sums: Axes = [g1s1/g0s1/g1s0/g0s0, sums, rules]
-        file_data_counts: Axes = [g1s1/g0s1/g1s0/g0s0, counts, rules]
+        Adapter for self.yield_filedata(), by collecting into sums and sample counts to reduce data size.
+        Yields the following per file:
+            file_data_sums: Axes = [g1s1/g0s1/g1s0/g0s0, rules, sums]
+            file_data_counts: Axes = [g1s1/g0s1/g1s0/g0s0, rules, counts]
         '''
 
         if rules is None:
             rules = [None,]
         for _, file_level_data in enumerate(self.yield_file_data(
             dataname, back_sep=back_sep, slu_sep=slu_sep,
-            slice_range=slice_range, rules=rules, filenames=filenames)):
+            slice_range=slice_range, rules=rules, filenames=filenames, suppress_warnings=suppress_warnings)):
 
             file_data_sums = []
             file_data_counts = []
@@ -629,29 +604,14 @@ class Run:
                                          filter1=None, filter2=None):
         '''
         Helps with computing the file-by-file statistics of the
-        datasets.
-
-        Output axes = (files, covar/sum/counts, conditions,  rules)
-
-        Parameters
-        ----------
-        dataname : TYPE
-            DESCRIPTION.
-        back_sep : TYPE, optional
-            DESCRIPTION. The default is False.
-        slice_range : TYPE, optional
-            DESCRIPTION. The default is None.
-        rule : TYPE, optional
-            DESCRIPTION. The default is None.
-
-        Returns
-        -------
-        file_data_sums : TYPE
-            DESCRIPTION.
-        file_data_counters : TYPE
-            DESCRIPTION.
-
+        datasets, similar to self.yield_sums_counts_filedata but with covariance.
+        Yields the following per file:
+            file_data_covar: Axes = [g1s1/g0s1/g1s0/g0s0, rules, covar]
+            file_data_sum1: Axes = [g1s1/g0s1/g1s0/g0s0, rules, sum1]
+            file_data_sum2: Axes = [g1s1/g0s1/g1s0/g0s0, rules, sum2]
+            file_data_counts: Axes = [g1s1/g0s1/g1s0/g0s0, rules, counts]
         '''
+
         if rules is None:
             rules = [None,]
         if filter1 is None:
